@@ -1,0 +1,17 @@
+<!-- Mostrar mientras carga -->
+<div *ngIf="cargando" class="cargando">Cargando invitación...</div>
+
+<!-- Si no se encontró -->
+<div *ngIf="!cargando && !(invitacion$ | async)" class="no-encontrada">
+  <p>Invitación no encontrada 😢</p>
+</div>
+
+<!-- Si se encontró una invitación -->
+<ng-container *ngIf="!cargando && (invitacion$ | async) as invitacion">
+  <!-- Invitación genérica desde Firestore -->
+  <app-invitacion-generica
+    *ngIf="invitacion.slug !== 'xv-nathalia'"
+    [data]="invitacion"
+  >
+  </app-invitacion-generica>
+</ng-container>

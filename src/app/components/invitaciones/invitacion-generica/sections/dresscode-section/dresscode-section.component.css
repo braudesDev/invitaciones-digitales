@@ -1,0 +1,60 @@
+.dresscode-section {
+  margin: 30px auto;
+  padding: 30px 25px;
+  max-width: 600px;
+  background: white;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.dresscode-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+.dresscode-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.dresscode-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.descripcion {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.sugerencia {
+  background: linear-gradient(135deg, #f5f7fa 0%, #f0f2f5 100%);
+  padding: 15px 20px;
+  border-radius: 16px;
+  margin-top: 15px;
+}
+
+.sugerencia-label {
+  display: inline-block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: #7e57c2;
+  margin-bottom: 8px;
+}
+
+.sugerencia p {
+  margin: 0;
+  color: #444;
+  font-size: 0.95rem;
+}

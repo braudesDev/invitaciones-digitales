@@ -1,0 +1,204 @@
+<div class="anfitrion-dashboard">
+  <div class="dashboard-header">
+    <div>
+      <!-- Sección de usuario -->
+      <div class="user-info">
+        <img
+          *ngIf="userPhotoURL"
+          [src]="userPhotoURL"
+          class="user-avatar"
+          alt="Avatar"
+        />
+        <div class="user-text">
+          <h2>📋 Dashboard del Anfitrión</h2>
+          <p class="user-greeting">
+            👋 ¡Hola, <strong>{{ userName || userEmail || "Anfitrión" }}</strong
+            >!
+          </p>
+        </div>
+      </div>
+      <div class="evento-selector">
+        <label>🎯 Evento actual: </label>
+        <!-- 👇 SOLO CAMBIA ESTA LÍNEA: (change)="cambiarEvento()" -->
+        <select [(ngModel)]="eventoSlug" (change)="cambiarEvento()">
+          <option *ngFor="let evento of misEventos" [value]="evento.slug">
+            {{ evento.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="header-buttons">
+      <a href="/validacion" target="_blank" class="btn-validar-qr">
+        📱 Validar QR en entrada
+      </a>
+      <button class="btn-logout" (click)="logout()" title="Cerrar sesión">
+        🚪 Salir
+      </button>
+    </div>
+  </div>
+
+  <!-- 🆕 MENÚ DE NAVEGACIÓN CENTRALIZADO -->
+  <div class="nav-central">
+    <a routerLink="/anfitrion/dashboard" class="nav-item" [class.active]="true">
+      📊 Dashboard
+    </a>
+    <a routerLink="/anfitrion/crear-invitacion" class="nav-item">
+      ✨ Crear invitación
+    </a>
+    <a
+      [routerLink]="['/anfitrion/editar-invitacion', eventoSlug]"
+      class="nav-item"
+      *ngIf="eventoSlug"
+    >
+      📝 Editar evento actual
+    </a>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div
+      class="tab"
+      [class.active]="tabActivo === 'pendiente'"
+      (click)="cambiarTab('pendiente')"
+    >
+      ⏳ Pendientes
+    </div>
+    <div
+      class="tab"
+      [class.active]="tabActivo === 'confirmado'"
+      (click)="cambiarTab('confirmado')"
+    >
+      ✅ Confirmados
+    </div>
+    <div
+      class="tab"
+      [class.active]="tabActivo === 'rechazado'"
+      (click)="cambiarTab('rechazado')"
+    >
+      ❌ Rechazados
+    </div>
+  </div>
+
+  <!-- Tabla de invitados -->
+  <div class="table-wrapper">
+    <table
+      class="table-invitados"
+      *ngIf="invitados$ | async as invitados; else cargando"
+    >
+      <thead>
+        <tr>
+          <th>👤 Invitado</th>
+          <th>🎫 Pases</th>
+          <th>💬 Mensaje</th>
+          <th>📌 Estado</th>
+          <th>🔗 Link único</th>
+          <th>⚡ Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inv of invitados">
+          <td>
+            <strong>{{ inv.nombre }}</strong>
+          </td>
+          <td>
+            <span class="pases-badge">{{ inv.pases }}</span>
+          </td>
+          <td class="mensaje-cell">{{ inv.mensajePersonalizado || "—" }}</td>
+          <td>
+            <span
+              class="estado-badge"
+              [class.pendiente]="inv.estado === 'pendiente'"
+              [class.confirmado]="inv.estado === 'confirmado'"
+              [class.rechazado]="inv.estado === 'rechazado'"
+            >
+              {{
+                inv.estado === "pendiente"
+                  ? "⏳ Pendiente"
+                  : inv.estado === "confirmado"
+                    ? "✅ Confirmado"
+                    : "❌ Rechazado"
+              }}
+            </span>
+          </td>
+          <td>
+            <code class="link-preview"
+              >{{ origin }}/invitaciones/{{ inv.slug }}</code
+            >
+            <button
+              class="btn-copy"
+              (click)="copiarLink(inv.slug)"
+              title="Copiar link"
+            >
+              📋
+            </button>
+          </td>
+          <td class="acciones-cell">
+            <button
+              class="btn-whatsapp"
+              (click)="enviarWhatsApp(inv)"
+              title="Enviar por WhatsApp"
+            >
+              💬
+            </button>
+            <button
+              class="btn-estado"
+              (click)="cambiarEstado(inv, 'confirmado')"
+              title="Confirmar"
+              *ngIf="inv.estado !== 'confirmado'"
+            >
+              ✅
+            </button>
+            <button
+              class="btn-estado rechazar"
+              (click)="cambiarEstado(inv, 'rechazado')"
+              title="Rechazar"
+              *ngIf="inv.estado !== 'rechazado'"
+            >
+              ❌
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #cargando>
+      <p>Cargando invitados...</p>
+    </ng-template>
+    <div *ngIf="(invitados$ | async)?.length === 0" class="no-data">
+      No hay invitados en esta categoría
+    </div>
+  </div>
+
+  <!-- Formulario agregar invitado -->
+  <div class="form-nuevo-invitado">
+    <h3>➕ Agregar nuevo invitado</h3>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>👤 Nombre completo</label>
+        <input
+          [(ngModel)]="nuevoInvitado.nombre"
+          placeholder="Ej: Iván Rodríguez"
+        />
+      </div>
+      <div class="form-field">
+        <label>🎫 Número de pases</label>
+        <input
+          type="number"
+          [(ngModel)]="nuevoInvitado.pases"
+          min="1"
+          max="20"
+        />
+      </div>
+      <div class="form-field full-width">
+        <label>💬 Mensaje personalizado (opcional)</label>
+        <textarea
+          [(ngModel)]="nuevoInvitado.mensajePersonalizado"
+          rows="2"
+          placeholder="Ej: Te esperamos con mucha alegría..."
+        ></textarea>
+      </div>
+    </div>
+    <button class="btn-agregar" (click)="agregarInvitado()">
+      ✨ Agregar invitado
+    </button>
+  </div>
+</div>
