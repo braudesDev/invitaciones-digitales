@@ -1,0 +1,142 @@
+.invitacion-valida-section {
+  margin: 40px auto;
+  padding: 20px;
+  max-width: 600px;
+}
+
+.valida-card {
+  background: white;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.valida-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.valida-icon { font-size: 48px; margin-bottom: 10px; }
+.valida-header h3 { margin: 0; font-size: 1.2rem; letter-spacing: 2px; }
+
+.valida-content { padding: 30px; text-align: center; }
+.invitado-nombre { margin-bottom: 25px; }
+.label { display: block; font-size: 0.85rem; color: #888; text-transform: uppercase; margin-bottom: 10px; }
+.invitado-nombre h2 { margin: 0; font-size: 2rem; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.pases-info {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+.pases-count { font-size: 3rem; font-weight: bold; color: #667eea; display: inline-block; margin-right: 10px; }
+.pases-label { font-size: 1rem; font-weight: 600; color: #555; }
+
+.mensaje-bubble {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 25px;
+}
+.quote { font-size: 24px; display: block; margin-bottom: 10px; }
+.mensaje-bubble p { margin: 0; font-size: 1rem; color: #555; font-style: italic; }
+
+.qr-card {
+  background: white;
+  border: 2px dashed #667eea;
+  border-radius: 20px;
+  padding: 20px;
+}
+.qr-header { font-size: 0.85rem; font-weight: bold; color: #667eea; margin-bottom: 15px; }
+.qr-code { width: 180px; height: 180px; margin: 10px auto; display: block; }
+.qr-footer { font-size: 0.75rem; color: #888; margin-top: 10px; }
+
+@media (max-width: 640px) {
+  .valida-content { padding: 20px; }
+  .invitado-nombre h2 { font-size: 1.5rem; }
+}
+
+/* QR Container */
+.qr-container {
+  margin: 20px 0;
+}
+
+.qr-card {
+  background: white;
+  border: 2px dashed #667eea;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.qr-header {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #667eea;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.qr-code {
+  width: 180px;
+  height: 180px;
+  margin: 10px auto;
+  display: block;
+}
+
+.qr-footer p {
+  font-size: 0.75rem;
+  color: #888;
+  margin: 10px 0;
+}
+
+.btn-descargar-qr {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-descargar-qr:hover {
+  transform: translateY(-2px);
+}
+
+/* Estado de acceso */
+.estado-acceso {
+  margin-top: 20px;
+}
+
+.acceso-confirmado {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.acceso-pendiente {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.acceso-rechazado {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-align: center;
+}

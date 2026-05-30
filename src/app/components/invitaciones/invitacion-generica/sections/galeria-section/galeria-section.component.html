@@ -1,0 +1,16 @@
+<div *ngIf="fotos && fotos.length > 0" class="galeria-section">
+  <div class="section-header">
+    <div class="section-icon">📸</div>
+    <h3>Galería de Recuerdos</h3>
+  </div>
+  <div class="swiper-container galeria-swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" *ngFor="let foto of fotos; let i = index">
+        <img [src]="foto" [alt]="'Foto ' + (i+1)" loading="lazy">
+      </div>
+    </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+</div>
