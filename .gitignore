@@ -43,3 +43,6 @@ Thumbs.db
 test-firebase.ts
 test-firebase.js
 *.backup
+test-firebase.ts
+test-firebase.js
+*.backup
