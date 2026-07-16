@@ -1,0 +1,107 @@
+<div class="landing-container">
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-icon">🎟️</div>
+      <h1>Invitaciones Digitales</h1>
+      <p class="subtitle">
+        Crea invitaciones personalizadas con códigos QR para tus eventos
+        especiales
+      </p>
+      <div class="hero-buttons">
+        <!-- Un solo botón de Google que hace todo -->
+        <button class="btn btn-google" (click)="registrarConGoogle()">
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Google"
+          />
+          Comenzar con Google
+        </button>
+        <a routerLink="/anfitrion/login" class="btn btn-secondary">
+          🔐 Iniciar sesión
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Características -->
+  <div class="features">
+    <div class="container">
+      <h2>¿Qué ofrece nuestra plataforma?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>Personalización total</h3>
+          <p>
+            Colores, fuentes, imágenes y textos personalizados para tu evento
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Códigos QR únicos</h3>
+          <p>Cada invitado recibe su propio QR para acceso rápido al evento</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">✅</div>
+          <h3>Confirmación de asistencia</h3>
+          <p>Los invitados confirman con un clic, tú ves quién asistirá</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎫</div>
+          <h3>Validación en entrada</h3>
+          <p>Escanea los QR en la entrada y controla el acceso</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cómo funciona -->
+  <div class="how-it-works">
+    <div class="container">
+      <h2>¿Cómo funciona?</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Regístrate</h3>
+          <p>Crea tu cuenta como anfitrión</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Crea tu evento</h3>
+          <p>Personaliza tu invitación con todos los detalles</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Invita a tus invitados</h3>
+          <p>Agrega invitados y envía sus links personalizados</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Valida en la entrada</h3>
+          <p>Escanea los QR y controla el acceso</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Demo / Invitación ejemplo -->
+  <div class="demo">
+    <div class="container">
+      <h2>¿Quieres ver un ejemplo?</h2>
+      <p>Mira cómo se ve una invitación creada con nuestra plataforma</p>
+      <a
+        routerLink="/invitaciones/boda-de-braulio-y-angeles"
+        class="btn btn-demo"
+      >
+        🎉 Ver invitación de ejemplo
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="container">
+      <p>© 2024 Invitaciones Digitales - Crea momentos inolvidables</p>
+    </div>
+  </div>
+</div>

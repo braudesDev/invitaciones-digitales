@@ -1,0 +1,102 @@
+<div
+  *ngIf="data"
+  class="invitacion-container"
+  [ngStyle]="{
+    '--primary-color': data.primaryColor,
+    '--secondary-color': data.secondaryColor,
+    'font-family': data.fontFamily,
+  }"
+>
+  <!-- Hero Section -->
+  <app-hero-section
+    *ngIf="data.heroImage"
+    [nombres]="data.nombres || ''"
+    [fecha]="fechaFormateada"
+    [lugar]="data.lugar || ''"
+    [heroImage]="data.heroImage"
+    [fuente]="data.fuente ?? 'Playfair Display, serif'"
+    [colorTexto]="data.colorTexto ?? '#ffffff'"
+  ></app-hero-section>
+
+  <!-- Nos Casamos -->
+  <app-nos-casamos-section
+    *ngIf="data.frasePrincipal || data.mensajePrincipal"
+    [frase]="data.frasePrincipal || ''"
+    [mensaje]="data.mensajePrincipal || ''"
+    [fontFamily]="data.fontFamily ?? 'Playfair Display, serif'"
+    [colorTexto]="data.secondaryColor ?? '#333333'"
+  ></app-nos-casamos-section>
+
+  <!-- 🎟️ INVITACIÓN VÁLIDA (nombre, pases, mensaje, QR) -->
+  <app-invitacion-valida-section
+    *ngIf="data"
+    [invitado]="data.invitado ?? 'Invitado especial'"
+    [pases]="data.pases ?? 1"
+    [mensajePersonalizado]="data.mensajePersonalizado"
+    [eventoData]="data"
+  >
+  </app-invitacion-valida-section>
+
+  <!-- Secciones del evento -->
+  <app-ceremonia-section
+    *ngIf="data.ceremonia"
+    [data]="data.ceremonia"
+  ></app-ceremonia-section>
+  <app-recepcion-section
+    *ngIf="data.recepcion"
+    [data]="data.recepcion"
+  ></app-recepcion-section>
+  <app-padres-section
+    *ngIf="data.padres"
+    [data]="data.padres"
+  ></app-padres-section>
+  <app-padrinos-section
+    *ngIf="data.padrinos"
+    [data]="data.padrinos"
+  ></app-padrinos-section>
+  <app-damas-section *ngIf="data.damas" [data]="data.damas"></app-damas-section>
+  <app-dresscode-section
+    *ngIf="data.dressCode"
+    [data]="data.dressCode"
+  ></app-dresscode-section>
+  <app-historia-section
+    *ngIf="data.historia"
+    [data]="data.historia"
+  ></app-historia-section>
+  <app-galeria-section
+    *ngIf="data.photos && data.photos.length > 0"
+    [fotos]="data.photos"
+  ></app-galeria-section>
+  <app-itinerario-section
+    *ngIf="data.itinerario"
+    [data]="data.itinerario"
+  ></app-itinerario-section>
+  <app-hospedaje-section
+    *ngIf="data.hospedaje"
+    [data]="data.hospedaje"
+  ></app-hospedaje-section>
+  <app-hashtag-section
+    *ngIf="data.hashtag"
+    [data]="data.hashtag"
+  ></app-hashtag-section>
+  <app-contador-section
+    *ngIf="data.contador"
+    [data]="data.contador"
+  ></app-contador-section>
+  <app-regalos-section
+    *ngIf="data.regalos"
+    [data]="data.regalos"
+  ></app-regalos-section>
+  <app-consideraciones-section
+    *ngIf="data.consideraciones"
+    [data]="data.consideraciones"
+  ></app-consideraciones-section>
+
+  <!-- ✅ CONFIRMACIÓN DE ASISTENCIA (botones, estado, contacto) -->
+  <app-confirmacion-section *ngIf="data" [eventoData]="data">
+  </app-confirmacion-section>
+
+  <app-footer-section></app-footer-section>
+</div>
+
+<div *ngIf="!data">Cargando invitación...</div>

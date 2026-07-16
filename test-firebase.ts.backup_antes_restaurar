@@ -1,0 +1,21 @@
+import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyDei4zM_0J9CwhiomAOl9IwNBaYwUZwbL8',
+  authDomain: 'invitaciones-cdbfe.firebaseapp.com',
+  projectId: 'invitaciones-cdbfe',
+  storageBucket: 'invitaciones-cdbfe.firebasestorage.app',
+  messagingSenderId: '29855805932',
+  appId: '1:29855805932:web:8f33222cae037dc4f950c9',
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+await setDoc(doc(db, 'test', 'prueba'), {
+  mensaje: 'Conexión exitosa',
+  fecha: new Date().toISOString(),
+});
+
+console.log('✅ Documento guardado en el proyecto correcto');

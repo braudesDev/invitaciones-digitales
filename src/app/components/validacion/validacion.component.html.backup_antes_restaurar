@@ -1,0 +1,105 @@
+<div class="validacion-container">
+  <div class="validacion-card">
+    <div class="header">
+      <div class="icon">🎟️</div>
+      <h1>Validación de Acceso</h1>
+      <p>Escanea el código QR del invitado para verificar su acceso</p>
+    </div>
+
+    <div class="modo-selector">
+      <button [class.active]="modoEscaneo" (click)="cambiarModo()">📷 Escanear QR</button>
+      <button [class.active]="!modoEscaneo" (click)="cambiarModo()">⌨️ Ingresar manual</button>
+    </div>
+
+    <!-- MODO ESCÁNER -->
+    <div class="scanner-area" *ngIf="modoEscaneo">
+      <div class="scanner-container" *ngIf="camaraDisponible">
+        <zxing-scanner
+          [enable]="scannerEnabled"
+          (scanSuccess)="onScanSuccess($event)"
+          (scanError)="onScanError($event)">
+        </zxing-scanner>
+        <div class="scanner-overlay">
+          <div class="scanner-frame"></div>
+        </div>
+        <p class="scanner-info">📷 Enfoca el código QR con la cámara</p>
+        <button class="btn-reiniciar" (click)="reiniciarEscanner()" *ngIf="!scannerEnabled">🔄 Escanear otro QR</button>
+      </div>
+      <div class="error-message" *ngIf="!camaraDisponible && modoEscaneo">
+        <span>⚠️</span> No se detectó cámara. Usa el modo manual.
+      </div>
+    </div>
+
+    <!-- MODO MANUAL -->
+    <div class="input-area" *ngIf="!modoEscaneo">
+      <label>📱 Código QR (pega el texto escaneado)</label>
+      <textarea 
+        [(ngModel)]="qrTexto" 
+        placeholder='Ej: {"tipo":"validacion-invitacion","invitadoId":"abc123",...}'
+        rows="4">
+      </textarea>
+      
+      <div class="buttons">
+        <button class="btn-validar" (click)="validarQR()" [disabled]="validando">
+          🔍 {{ validando ? 'Validando...' : 'Validar QR' }}
+        </button>
+        <button class="btn-limpiar" (click)="limpiar()">🧹 Limpiar</button>
+        <button class="btn-test" (click)="simularEscaneo()">🧪 Simular prueba</button>
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="error && error !== 'No se encontró cámara en este dispositivo'">
+      <span>❌</span> {{ error }}
+    </div>
+
+    <div class="resultado" *ngIf="resultadoValidacion">
+      <div class="resultado-header" 
+           [class.acceso-concedido]="resultadoValidacion.acceso"
+           [class.acceso-denegado]="!resultadoValidacion.acceso">
+        <span class="resultado-icon">{{ resultadoValidacion.acceso ? '✅' : '⛔' }}</span>
+        <h2>{{ resultadoValidacion.mensaje }}</h2>
+      </div>
+
+      <div class="resultado-detalles">
+        <div class="detalle">
+          <span class="detalle-label">🎫 Invitado:</span>
+          <span class="detalle-valor">{{ resultadoValidacion.invitado }}</span>
+        </div>
+        <div class="detalle">
+          <span class="detalle-label">📊 Pases:</span>
+          <span class="detalle-valor">{{ resultadoValidacion.pases }}</span>
+        </div>
+        <div class="detalle">
+          <span class="detalle-label">🎉 Evento:</span>
+          <span class="detalle-valor">{{ resultadoValidacion.evento }}</span>
+        </div>
+        <div class="detalle estado" [class.confirmado]="resultadoValidacion.confirmado">
+          <span class="detalle-label">📌 Confirmación:</span>
+          <span class="detalle-valor">{{ resultadoValidacion.confirmado ? '✅ Confirmado' : '❌ No confirmado' }}</span>
+        </div>
+        <div class="detalle" *ngIf="resultadoValidacion.yaIngreso">
+          <span class="detalle-label">🚪 Estado:</span>
+          <span class="detalle-valor">Ya ingresó al evento</span>
+        </div>
+      </div>
+
+      <div class="accion-rapida" *ngIf="resultadoValidacion.acceso && !resultadoValidacion.yaIngreso">
+        <button class="btn-marcar-ingreso" (click)="marcarIngreso()" [disabled]="registrando">
+          {{ registrando ? '⏳ Registrando...' : '🚪 Marcar como ingresado' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="instrucciones">
+      <h3>📖 Cómo usar:</h3>
+      <ol>
+        <li>Permite el acceso a la cámara cuando el navegador lo solicite</li>
+        <li>El invitado muestra su código QR en la entrada</li>
+        <li>Enfoca el QR con la cámara (se escaneará automáticamente)</li>
+        <li>Verifica que el acceso sea concedido</li>
+        <li>Presiona "Marcar como ingresado"</li>
+      </ol>
+      <p class="tip">💡 Tip: Si la cámara no funciona, usa el modo manual (ingresar texto)</p>
+    </div>
+  </div>
+</div>
