@@ -46,3 +46,11 @@ test-firebase.js
 test-firebase.ts
 test-firebase.js
 *.backup
+
+src/environments/environment.ts
+src/environments/environment.prod.ts
+src/environments/environment.*.ts
+.env
+.env.local
+
+!src/environments/environment.example.ts
