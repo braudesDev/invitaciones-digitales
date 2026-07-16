@@ -1,20 +1,75 @@
-/* You can add global styles to this file, and also import other style files */
-/* Estilos globales para invitaciones */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+/* ===========================
+   GOOGLE FONTS
+=========================== */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap");
 
+/* ===========================
+   VARIABLES GLOBALES (FIJAS)
+=========================== */
+:root {
+  --blanco: #ffffff;
+  --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 15px 40px rgba(0, 0, 0, 0.12);
+  --radius: 24px;
+}
+
+/* ===========================
+   VARIABLES DINÁMICAS (vienen del componente)
+   Estas se definen en .invitacion-container
+=========================== */
+/*
+  --primary: fondo principal, títulos
+  --secondary: fondos suaves, tarjetas
+  --accent: botones, bordes, detalles
+  --text: texto normal
+*/
+
+/* ===========================
+   RESET
+=========================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
+/* ===========================
+   BODY
+=========================== */
+html {
+  scroll-behavior: smooth;
 }
 
-/* Animaciones suaves */
+body {
+  background: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===========================
+   TIPOGRAFÍA
+=========================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--primary); /* 👈 DINÁMICO */
+}
+
+p {
+  line-height: 1.8;
+  color: var(--text); /* 👈 DINÁMICO */
+}
+
+/* ===========================
+   ANIMACIONES
+=========================== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -30,7 +85,99 @@ body {
   animation: fadeInUp 0.6s ease-out;
 }
 
-/* Estilos para todos los títulos */
-h1, h2, h3, h4 {
-  font-family: 'Playfair Display', serif;
+/* ===========================
+   CONTENEDORES
+=========================== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section {
+  padding: 6rem 1.5rem;
+}
+
+/* ===========================
+   TARJETAS (usando colores dinámicos)
+=========================== */
+.card {
+  background: var(--secondary); /* 👈 DINÁMICO */
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===========================
+   BOTONES (usando color de acento)
+=========================== */
+.btn-primary {
+  background: var(--accent); /* 👈 DINÁMICO */
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ===========================
+   LÍNEA DECORATIVA
+=========================== */
+.decorative-line {
+  width: 80px;
+  height: 3px;
+  background: var(--accent); /* 👈 DINÁMICO */
+  margin: 1rem auto;
+  border-radius: 999px;
+}
+
+/* ===========================
+   GRID RESPONSIVE
+=========================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+/* Eliminar márgenes entre componentes */
+.invitacion-container > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Espaciado interno controlado por cada componente */
+.section-card,
+app-hero-section,
+app-nos-casamos-section,
+app-ceremonia-section,
+app-recepcion-section,
+app-padres-section,
+app-padrinos-section,
+app-regalos-section,
+app-confirmacion-section,
+app-footer-section {
+  margin: 0 !important;
+  padding: 2rem 0;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 1rem;
+  }
 }

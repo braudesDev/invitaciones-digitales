@@ -42,6 +42,8 @@ export interface Invitacion {
   photos?: string[];
   primaryColor?: string;
   secondaryColor?: string;
+  accentColor?: string;
+  textColor?: string;
   fontFamily?: string;
   fuente?: string;
   colorTexto?: string;

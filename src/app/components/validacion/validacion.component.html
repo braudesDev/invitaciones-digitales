@@ -7,8 +7,12 @@
     </div>
 
     <div class="modo-selector">
-      <button [class.active]="modoEscaneo" (click)="cambiarModo()">📷 Escanear QR</button>
-      <button [class.active]="!modoEscaneo" (click)="cambiarModo()">⌨️ Ingresar manual</button>
+      <button [class.active]="modoEscaneo" (click)="cambiarModo()">
+        📷 Escanear QR
+      </button>
+      <button [class.active]="!modoEscaneo" (click)="cambiarModo()">
+        ⌨️ Ingresar manual
+      </button>
     </div>
 
     <!-- MODO ESCÁNER -->
@@ -17,13 +21,20 @@
         <zxing-scanner
           [enable]="scannerEnabled"
           (scanSuccess)="onScanSuccess($event)"
-          (scanError)="onScanError($event)">
+          (scanError)="onScanError($event)"
+        >
         </zxing-scanner>
         <div class="scanner-overlay">
           <div class="scanner-frame"></div>
         </div>
         <p class="scanner-info">📷 Enfoca el código QR con la cámara</p>
-        <button class="btn-reiniciar" (click)="reiniciarEscanner()" *ngIf="!scannerEnabled">🔄 Escanear otro QR</button>
+        <button
+          class="btn-reiniciar"
+          (click)="reiniciarEscanner()"
+          *ngIf="!scannerEnabled"
+        >
+          🔄 Escanear otro QR
+        </button>
       </div>
       <div class="error-message" *ngIf="!camaraDisponible && modoEscaneo">
         <span>⚠️</span> No se detectó cámara. Usa el modo manual.
@@ -33,30 +44,44 @@
     <!-- MODO MANUAL -->
     <div class="input-area" *ngIf="!modoEscaneo">
       <label>📱 Código QR (pega el texto escaneado)</label>
-      <textarea 
-        [(ngModel)]="qrTexto" 
+      <textarea
+        [(ngModel)]="qrTexto"
+        [ngModelOptions]="{ standalone: true }"
         placeholder='Ej: {"tipo":"validacion-invitacion","invitadoId":"abc123",...}'
-        rows="4">
-      </textarea>
-      
+        rows="4"
+      ></textarea>
+
       <div class="buttons">
-        <button class="btn-validar" (click)="validarQR()" [disabled]="validando">
-          🔍 {{ validando ? 'Validando...' : 'Validar QR' }}
+        <button
+          class="btn-validar"
+          (click)="validarQR()"
+          [disabled]="validando"
+        >
+          🔍 {{ validando ? "Validando..." : "Validar QR" }}
         </button>
         <button class="btn-limpiar" (click)="limpiar()">🧹 Limpiar</button>
-        <button class="btn-test" (click)="simularEscaneo()">🧪 Simular prueba</button>
+        <button class="btn-test" (click)="simularEscaneo()">
+          🧪 Simular prueba
+        </button>
       </div>
     </div>
 
-    <div class="error-message" *ngIf="error && error !== 'No se encontró cámara en este dispositivo'">
+    <div
+      class="error-message"
+      *ngIf="error && error !== 'No se encontró cámara en este dispositivo'"
+    >
       <span>❌</span> {{ error }}
     </div>
 
     <div class="resultado" *ngIf="resultadoValidacion">
-      <div class="resultado-header" 
-           [class.acceso-concedido]="resultadoValidacion.acceso"
-           [class.acceso-denegado]="!resultadoValidacion.acceso">
-        <span class="resultado-icon">{{ resultadoValidacion.acceso ? '✅' : '⛔' }}</span>
+      <div
+        class="resultado-header"
+        [class.acceso-concedido]="resultadoValidacion.acceso"
+        [class.acceso-denegado]="!resultadoValidacion.acceso"
+      >
+        <span class="resultado-icon">{{
+          resultadoValidacion.acceso ? "✅" : "⛔"
+        }}</span>
         <h2>{{ resultadoValidacion.mensaje }}</h2>
       </div>
 
@@ -73,9 +98,16 @@
           <span class="detalle-label">🎉 Evento:</span>
           <span class="detalle-valor">{{ resultadoValidacion.evento }}</span>
         </div>
-        <div class="detalle estado" [class.confirmado]="resultadoValidacion.confirmado">
+        <div
+          class="detalle estado"
+          [class.confirmado]="resultadoValidacion.confirmado"
+        >
           <span class="detalle-label">📌 Confirmación:</span>
-          <span class="detalle-valor">{{ resultadoValidacion.confirmado ? '✅ Confirmado' : '❌ No confirmado' }}</span>
+          <span class="detalle-valor">{{
+            resultadoValidacion.confirmado
+              ? "✅ Confirmado"
+              : "❌ No confirmado"
+          }}</span>
         </div>
         <div class="detalle" *ngIf="resultadoValidacion.yaIngreso">
           <span class="detalle-label">🚪 Estado:</span>
@@ -83,9 +115,16 @@
         </div>
       </div>
 
-      <div class="accion-rapida" *ngIf="resultadoValidacion.acceso && !resultadoValidacion.yaIngreso">
-        <button class="btn-marcar-ingreso" (click)="marcarIngreso()" [disabled]="registrando">
-          {{ registrando ? '⏳ Registrando...' : '🚪 Marcar como ingresado' }}
+      <div
+        class="accion-rapida"
+        *ngIf="resultadoValidacion.acceso && !resultadoValidacion.yaIngreso"
+      >
+        <button
+          class="btn-marcar-ingreso"
+          (click)="marcarIngreso()"
+          [disabled]="registrando"
+        >
+          {{ registrando ? "⏳ Registrando..." : "🚪 Marcar como ingresado" }}
         </button>
       </div>
     </div>
@@ -99,7 +138,9 @@
         <li>Verifica que el acceso sea concedido</li>
         <li>Presiona "Marcar como ingresado"</li>
       </ol>
-      <p class="tip">💡 Tip: Si la cámara no funciona, usa el modo manual (ingresar texto)</p>
+      <p class="tip">
+        💡 Tip: Si la cámara no funciona, usa el modo manual (ingresar texto)
+      </p>
     </div>
   </div>
 </div>

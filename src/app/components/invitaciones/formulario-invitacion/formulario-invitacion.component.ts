@@ -3,8 +3,16 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
+import {
+  Storage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from '@angular/fire/storage'; //
 import { ActivatedRoute } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
+import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 export interface InvitacionCompleta {
   id?: string;
@@ -17,26 +25,56 @@ export interface InvitacionCompleta {
   heroImage?: string;
   primaryColor: string;
   secondaryColor: string;
+  accentColor: string;
+  textColor: string;
   fontFamily: string;
   frasePrincipal?: string;
   mensajePrincipal?: string;
   historia?: string;
   photos: string[];
   anfitrionId?: string;
-  ceremonia: { lugar: string; direccion: string; hora: string };
-  recepcion: { lugar: string; direccion: string; hora: string };
+  ceremonia: {
+    lugar: string;
+    direccion: string;
+    hora: string;
+    mapaUrl?: string;
+    imagenTemplo?: string;
+  };
+  recepcion: {
+    lugar: string;
+    direccion: string;
+    hora: string;
+    mapaUrl?: string;
+    imagen?: string;
+    descripcion?: string;
+  };
   dressCode: { descripcion: string; sugerencia: string };
   padres: {
     padreNovia: string;
     madreNovia: string;
     padreNovio: string;
     madreNovio: string;
+    novio?: string;
+    novia?: string;
+    fotoNovia?: string;
+    fotoNovio?: string;
+    fotoMadreNovia?: string; // 👈 Nueva
+    fotoPadreNovia?: string; // 👈 Nueva
+    fotoMadreNovio?: string; // 👈 Nueva
+    fotoPadreNovio?: string; // 👈 Nueva
   };
   padrinos: string[];
   regalos: { texto: string; links: { nombre: string; url: string }[] };
   confirmacion: { telefono: string; whatsapp: string; link: string };
   hashtag: string;
   consideraciones: string;
+}
+
+interface Paleta {
+  primary: string;
+  secondary: string;
+  accent: string;
+  text: string;
 }
 
 @Component({
@@ -47,10 +85,59 @@ export interface InvitacionCompleta {
   styleUrls: ['./formulario-invitacion.component.css'],
 })
 export class FormularioInvitacionComponent implements OnInit {
+  paletas: { [key: string]: Paleta } = {
+    premium: {
+      primary: '#7A8B7D',
+      secondary: '#CBB89D',
+      accent: '#B08A4A',
+      text: '#3F4A42',
+    },
+    champagne: {
+      primary: '#DCC7A1',
+      secondary: '#F3E9D2',
+      accent: '#B8934E',
+      text: '#4E463B',
+    },
+    rosegold: {
+      primary: '#D8A7A7',
+      secondary: '#F3D9D9',
+      accent: '#B76E79',
+      text: '#5F4A4A',
+    },
+    lavender: {
+      primary: '#8A78A6',
+      secondary: '#E6DDF8',
+      accent: '#C8B6FF',
+      text: '#4F4662',
+    },
+    royal: {
+      primary: '#3D5A80',
+      secondary: '#E6EEF7',
+      accent: '#D4AF37',
+      text: '#243447',
+    },
+    black: {
+      primary: '#2B2B2B',
+      secondary: '#F5F5F5',
+      accent: '#C9A227',
+      text: '#333333',
+    },
+  };
+  paletaSeleccionada: string = '';
+
+  aplicarPaleta(tipo: string) {
+    const paleta = this.paletas[tipo];
+    if (paleta) {
+      this.paletaSeleccionada = tipo;
+      this.nuevaInvitacion.primaryColor = paleta.primary;
+      this.nuevaInvitacion.secondaryColor = paleta.secondary;
+      this.nuevaInvitacion.accentColor = paleta.accent;
+      this.nuevaInvitacion.textColor = paleta.text;
+    }
+  }
   invitacionId: string | null = null;
   cargando = false;
-  tabActivo: 'basicos' | 'diseno' | 'mensajes' | 'evento' | 'secciones' =
-    'basicos';
+  tabActivo: 'basico' | 'ceremonia' | 'extras' = 'basico';
 
   nuevaInvitacion: InvitacionCompleta = {
     name: '',
@@ -60,18 +147,39 @@ export class FormularioInvitacionComponent implements OnInit {
     fecha: new Date().toISOString().substring(0, 16),
     lugar: '',
     heroImage: '',
-    primaryColor: '#aef9b3',
-    secondaryColor: '#000000',
+    primaryColor: '#7A8B7D', // 👈 CAMBIADO (era #aef9b3)
+    secondaryColor: '#CBB89D', // 👈 CAMBIADO (era #000000)
+    accentColor: '#B08A4A', // 👈 AGREGADO
+    textColor: '#3F4A42',
     fontFamily: "'Playfair Display', serif",
     frasePrincipal: '',
     mensajePrincipal: '',
     historia: '',
     photos: [],
     anfitrionId: '',
-    ceremonia: { lugar: '', direccion: '', hora: '' },
+    ceremonia: {
+      lugar: '',
+      direccion: '',
+      hora: '',
+      mapaUrl: '',
+      imagenTemplo: '',
+    },
     recepcion: { lugar: '', direccion: '', hora: '' },
     dressCode: { descripcion: '', sugerencia: '' },
-    padres: { padreNovia: '', madreNovia: '', padreNovio: '', madreNovio: '' },
+    padres: {
+      padreNovia: '',
+      madreNovia: '',
+      padreNovio: '',
+      madreNovio: '',
+      novio: '',
+      novia: '',
+      fotoNovia: '',
+      fotoNovio: '',
+      fotoMadreNovia: '',
+      fotoPadreNovia: '',
+      fotoMadreNovio: '',
+      fotoPadreNovio: '',
+    },
     padrinos: [],
     regalos: { texto: '', links: [] },
     confirmacion: { telefono: '', whatsapp: '', link: '' },
@@ -79,10 +187,22 @@ export class FormularioInvitacionComponent implements OnInit {
     consideraciones: '',
   };
 
+  // Variables para acordeones (extras)
+  acordeonAbierto = false;
+  acordeonPadrinos = false;
+  acordeonRegalos = false;
+  acordeonGaleria = false;
+  acordeonConfirmacion = false;
+  acordeonConsideraciones = false;
+  acordeonHashtag = false;
+  imagenSubiendo = false;
+
   constructor(
     private firestore: Firestore,
     private route: ActivatedRoute,
     private auth: Auth,
+    private storage: Storage,
+    private http: HttpClient,
   ) {}
 
   async ngOnInit() {
@@ -98,8 +218,55 @@ export class FormularioInvitacionComponent implements OnInit {
           ...data,
           photos: data.photos || [], // 👈 FORZAR ARRAY VACÍO
         };
+
+        // Detectar paleta actual
+        this.detectarPaletaPorColores();
       }
       this.cargando = false;
+    }
+  }
+  async subirImagen(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      Swal.fire('Error', 'Solo se permiten imágenes', 'error');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      Swal.fire('Error', 'La imagen no debe superar los 5MB', 'error');
+      return;
+    }
+
+    this.imagenSubiendo = true;
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'invitaciones-app');
+
+      // 👇 TU CLOUD NAME
+      const cloudName = 'drsyb53ae';
+
+      const response = await this.http
+        .post<{
+          secure_url: string;
+        }>(
+          `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+          formData,
+        )
+        .toPromise();
+
+      if (response && response.secure_url) {
+        this.nuevaInvitacion.heroImage = response.secure_url;
+        Swal.fire('✅ Imagen subida correctamente', '', 'success');
+      }
+    } catch (error) {
+      console.error('Error al subir imagen:', error);
+      Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+    } finally {
+      this.imagenSubiendo = false;
     }
   }
 
@@ -179,8 +346,10 @@ export class FormularioInvitacionComponent implements OnInit {
         fecha: new Date().toISOString().substring(0, 16),
         lugar: '',
         heroImage: '',
-        primaryColor: '#aef9b3',
-        secondaryColor: '#000000',
+        primaryColor: '#7A8B7D', // 👈 CAMBIADO (era #aef9b3)
+        secondaryColor: '#CBB89D', // 👈 CAMBIADO (era #000000)
+        accentColor: '#B08A4A', // 👈 AGREGADO
+        textColor: '#3F4A42',
         fontFamily: "'Playfair Display', serif",
         frasePrincipal: '',
         mensajePrincipal: '',
@@ -202,10 +371,29 @@ export class FormularioInvitacionComponent implements OnInit {
         hashtag: '',
         consideraciones: '',
       };
-      this.tabActivo = 'basicos';
+      this.tabActivo = 'basico';
     } catch (err) {
       console.error(err);
       Swal.fire('Error', 'No se pudo guardar', 'error');
     }
+  }
+
+  detectarPaletaPorColores() {
+    for (const [key, paleta] of Object.entries(this.paletas)) {
+      if (
+        paleta.primary === this.nuevaInvitacion.primaryColor &&
+        paleta.secondary === this.nuevaInvitacion.secondaryColor &&
+        paleta.accent === this.nuevaInvitacion.accentColor &&
+        paleta.text === this.nuevaInvitacion.textColor
+      ) {
+        this.paletaSeleccionada = key;
+        return;
+      }
+    }
+    this.paletaSeleccionada = '';
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
   }
 }

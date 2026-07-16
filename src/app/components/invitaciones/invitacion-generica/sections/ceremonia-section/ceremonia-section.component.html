@@ -1,21 +1,97 @@
 <div
   *ngIf="data && (data.lugar || data.direccion || data.hora)"
-  class="ceremonia-section"
+  class="ceremonia-container"
 >
-  <div class="section-icon">⛪</div>
-  <h3>Ceremonia Religiosa</h3>
-  <div class="info-card">
-    <div class="info-item" *ngIf="data.lugar">
-      <span class="info-label">📍 Lugar</span>
-      <p class="info-value">{{ data.lugar }}</p>
+  <!-- Título de la sección -->
+  <h1 class="titulo-ceremonia">Donde Comienza Nuestra Historia</h1>
+
+  <div class="contenedor-tarjetas">
+    <!-- Tarjeta 1: Ceremonia -->
+    <div class="tarjeta" *ngIf="data.lugar || data.direccion || data.hora">
+      <img
+        *ngIf="data.imagenTemplo; else imgPlaceholder"
+        [src]="data.imagenTemplo"
+        alt="Ceremonia Religiosa"
+        class="imagen-tarjeta"
+      />
+      <ng-template #imgPlaceholder>
+        <div class="imagen-placeholder">⛪</div>
+      </ng-template>
+
+      <h2 class="titulo-tarjeta">Ceremonia Religiosa</h2>
+
+      <p class="descripcion-tarjeta" *ngIf="data.descripcion">
+        {{ data.descripcion }}
+      </p>
+
+      <address class="direccion-tarjeta" *ngIf="data.lugar || data.direccion">
+        <strong>📍 Ubicación:</strong> {{ data.lugar
+        }}<br *ngIf="data.lugar && data.direccion" />
+        {{ data.direccion }}
+      </address>
+
+      <p class="horario-tarjeta" *ngIf="data.hora">
+        <strong>⏰ Horario:</strong> {{ data.hora }}
+      </p>
+
+      <a
+        [href]="
+          data.mapaUrl ||
+          'https://maps.google.com/?q=' +
+            encodeURIComponent(data.direccion || data.lugar || '')
+        "
+        target="_blank"
+        class="boton-mapa"
+      >
+        🗺️ Cómo llegar
+      </a>
     </div>
-    <div class="info-item" *ngIf="data.direccion">
-      <span class="info-label">📌 Dirección</span>
-      <p class="info-value">{{ data.direccion }}</p>
-    </div>
-    <div class="info-item" *ngIf="data.hora">
-      <span class="info-label">⏰ Hora</span>
-      <p class="info-value">{{ data.hora }}</p>
+
+    <!-- Tarjeta 2: Recepción (opcional, si tienes datos) -->
+    <div class="tarjeta" *ngIf="recepcionData">
+      <img
+        *ngIf="recepcionData.imagen; else imgPlaceholder2"
+        [src]="recepcionData.imagen"
+        alt="Recepción"
+        class="imagen-tarjeta"
+      />
+      <ng-template #imgPlaceholder2>
+        <div class="imagen-placeholder">🎉</div>
+      </ng-template>
+
+      <h2 class="titulo-tarjeta">Recepción</h2>
+
+      <p class="descripcion-tarjeta" *ngIf="recepcionData.descripcion">
+        {{ recepcionData.descripcion }}
+      </p>
+
+      <address
+        class="direccion-tarjeta"
+        *ngIf="recepcionData.lugar || recepcionData.direccion"
+      >
+        <strong>📍 Ubicación:</strong> {{ recepcionData.lugar
+        }}<br *ngIf="recepcionData.lugar && recepcionData.direccion" />
+        {{ recepcionData.direccion }}
+      </address>
+
+      <p class="horario-tarjeta" *ngIf="recepcionData.hora">
+        <strong>⏰ Horario:</strong>
+        {{ recepcionData.hora | date: "EEEE d 'de' MMMM 'de' yyyy, h:mm a" }}
+      </p>
+
+      <a
+        [href]="
+          recepcionData.mapaUrl ||
+          'https://maps.google.com/?q=' +
+            encodeURIComponent(
+              recepcionData.direccion || recepcionData.lugar || ''
+            )
+        "
+        target="_blank"
+        class="boton-mapa"
+      >
+        🗺️ Cómo llegar
+      </a>
     </div>
   </div>
 </div>

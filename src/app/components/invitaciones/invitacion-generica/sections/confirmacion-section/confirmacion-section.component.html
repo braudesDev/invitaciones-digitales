@@ -1,4 +1,6 @@
-<div class="confirmacion-section">
+<div *ngIf="cargando" class="cargando-msg">⏳ Cargando tu invitación...</div>
+
+<div *ngIf="!cargando" class="confirmacion-section">
   <!-- Estado actual -->
   <div class="estado-card" *ngIf="estadoActual === 'confirmado'">
     <div class="estado-confirmado">
@@ -30,19 +32,32 @@
     </div>
   </div>
 
-  <!-- Botones de confirmación -->
-  <div class="botones-accion">
-    <button class="btn-confirmar" 
-            (click)="confirmarAsistencia()" 
-            [disabled]="estadoActual === 'confirmado' || confirmando">
-      ✅ {{ estadoActual === 'confirmado' ? 'Asistencia confirmada' : 'Confirmar asistencia' }}
+  <!-- Botones de confirmación - solo visibles si está pendiente -->
+  <div class="botones-accion" *ngIf="estadoActual === 'pendiente'">
+    <button
+      class="btn-confirmar"
+      (click)="confirmarAsistencia()"
+      [disabled]="confirmando"
+    >
+      ✅ Confirmar asistencia
     </button>
 
-    <button class="btn-rechazar" 
-            (click)="rechazarAsistencia()" 
-            [disabled]="estadoActual === 'rechazado' || confirmando">
-      💔 {{ estadoActual === 'rechazado' ? 'Asistencia rechazada' : 'No podré asistir' }}
+    <button
+      class="btn-rechazar"
+      (click)="rechazarAsistencia()"
+      [disabled]="confirmando"
+    >
+      💔 No podré asistir
     </button>
+  </div>
+
+  <!-- Mensaje cuando ya respondió -->
+  <div *ngIf="estadoActual === 'confirmado'" class="respuesta-final">
+    ✅ Ya confirmaste tu asistencia. ¡Te esperamos! 🎉
+  </div>
+
+  <div *ngIf="estadoActual === 'rechazado'" class="respuesta-final">
+    💔 Has rechazado la invitación. Gracias por avisar.
   </div>
 
   <!-- Guardar en calendario -->

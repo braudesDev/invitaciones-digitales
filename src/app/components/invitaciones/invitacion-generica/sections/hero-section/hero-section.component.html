@@ -9,13 +9,18 @@
       class="hero-title"
       [ngStyle]="{
         'font-family': fuente,
-        color: colorTexto
+        color: colorTexto,
       }"
     >
       {{ nombres }}
     </h1>
 
-    <p class="hero-date" [style.color]="colorTexto">{{ fecha }}</p>
-    <p class="hero-location" [style.color]="colorTexto">{{ lugar }}</p>
+    <p class="hero-date" [style.color]="colorTexto">
+      {{ fecha }}
+    </p>
+
+    <p class="hero-location" [style.color]="colorTexto">
+      {{ lugar }}
+    </p>
   </div>
 </section>

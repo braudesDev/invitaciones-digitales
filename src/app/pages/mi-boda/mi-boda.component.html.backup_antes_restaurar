@@ -1,14 +1,5 @@
-<div
-  *ngIf="data"
-  class="invitacion-container"
-  [ngStyle]="{
-    '--primary': data.primaryColor,
-    '--secondary': data.secondaryColor,
-    '--accent': data.accentColor,
-    '--text': data.textColor,
-    'font-family': data.fontFamily,
-  }"
->
+<!-- MI BODA - SIN variables de color en el HTML -->
+<div *ngIf="data" class="invitacion-container">
   <!-- Hero Section -->
   <app-hero-section
     *ngIf="data.heroImage"
@@ -16,23 +7,26 @@
     [fecha]="fechaFormateada"
     [lugar]="data.lugar || ''"
     [heroImage]="data.heroImage"
-    [fuente]="data.fuente ?? 'Playfair Display, serif'"
-    [colorTexto]="data.colorTexto ?? '#ffffff'"
+    [fuente]="'Playfair Display, serif'"
+    [colorTexto]="'#ffffff'"
   ></app-hero-section>
 
-  <!-- Nos Casamos (Frase principal) -->
+  <!-- Nos Casamos -->
   <app-nos-casamos-section
     *ngIf="data.frasePrincipal || data.mensajePrincipal"
     [frase]="data.frasePrincipal || ''"
     [mensaje]="data.mensajePrincipal || ''"
-    [fontFamily]="data.fontFamily ?? 'Playfair Display, serif'"
-    [primaryColor]="data.primaryColor ?? '#7A8B7D'"
-    [secondaryColor]="data.secondaryColor ?? '#CBB89D'"
-    [accentColor]="data.accentColor ?? '#B08A4A'"
-    [textColor]="data.textColor ?? '#3F4A42'"
+    [fontFamily]="'Playfair Display, serif'"
+    [colorTexto]="'#5c3d2e'"
   ></app-nos-casamos-section>
 
-  <!-- 🎟️ INVITACIÓN VÁLIDA (nombre, pases, mensaje, QR) -->
+  <!-- Historia -->
+  <app-historia-section
+    *ngIf="data.historia"
+    [data]="data.historia"
+  ></app-historia-section>
+
+  <!-- Invitación Válida -->
   <app-invitacion-valida-section
     *ngIf="data"
     [invitado]="data.invitado ?? 'Invitado especial'"
@@ -42,62 +36,82 @@
   >
   </app-invitacion-valida-section>
 
-  <!-- Secciones del evento -->
+  <!-- Ceremonia -->
   <app-ceremonia-section
     *ngIf="data.ceremonia"
     [data]="data.ceremonia"
   ></app-ceremonia-section>
+
+  <!-- Recepción -->
   <app-recepcion-section
     *ngIf="data.recepcion"
     [data]="data.recepcion"
   ></app-recepcion-section>
+
+  <!-- Padres -->
   <app-padres-section
     *ngIf="data.padres"
     [data]="data.padres"
   ></app-padres-section>
+
+  <!-- Padrinos -->
   <app-padrinos-section
     *ngIf="data.padrinos"
     [data]="data.padrinos"
   ></app-padrinos-section>
+
+  <!-- Damas -->
   <app-damas-section *ngIf="data.damas" [data]="data.damas"></app-damas-section>
+
+  <!-- Dress Code -->
   <app-dresscode-section
     *ngIf="data.dressCode"
     [data]="data.dressCode"
   ></app-dresscode-section>
-  <app-historia-section
-    *ngIf="data.historia"
-    [data]="data.historia"
-  ></app-historia-section>
+
+  <!-- Galería -->
   <app-galeria-section
     *ngIf="data.photos && data.photos.length > 0"
     [fotos]="data.photos"
   ></app-galeria-section>
+
+  <!-- Itinerario -->
   <app-itinerario-section
     *ngIf="data.itinerario"
     [data]="data.itinerario"
   ></app-itinerario-section>
+
+  <!-- Hospedaje -->
   <app-hospedaje-section
     *ngIf="data.hospedaje"
     [data]="data.hospedaje"
   ></app-hospedaje-section>
+
+  <!-- Hashtag -->
   <app-hashtag-section
     *ngIf="data.hashtag"
     [data]="data.hashtag"
   ></app-hashtag-section>
+
+  <!-- Contador -->
   <app-contador-section
     *ngIf="data.contador"
     [data]="data.contador"
   ></app-contador-section>
+
+  <!-- Regalos -->
   <app-regalos-section
     *ngIf="data.regalos"
     [data]="data.regalos"
   ></app-regalos-section>
+
+  <!-- Consideraciones -->
   <app-consideraciones-section
     *ngIf="data.consideraciones"
     [data]="data.consideraciones"
   ></app-consideraciones-section>
 
-  <!-- ✅ CONFIRMACIÓN DE ASISTENCIA (botones, estado, contacto) -->
+  <!-- Confirmación -->
   <app-confirmacion-section *ngIf="data" [eventoData]="data">
   </app-confirmacion-section>
 

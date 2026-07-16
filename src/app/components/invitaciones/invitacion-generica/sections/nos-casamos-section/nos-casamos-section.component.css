@@ -1,22 +1,36 @@
 .nos-casamos-section {
+  background: var(--secondary);
+  padding: 4rem 2rem;
   text-align: center;
-  padding: 3rem 1rem;
-  background-color: var(--primary-color, #fff);
-  color: var(--secondary-color, #333);
-  font-family: inherit;
+  margin: 0;
 }
 
-.nos-casamos-section h2,
-.nos-casamos-section p {
-  font-family: inherit; /* asegura que hereden la del section */
+.nos-casamos-section .section-icon {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
 }
 
-.nos-casamos-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+.nos-casamos-section .section-title {
+  color: var(--primary);
+  font-family: var(--font-title, "Cormorant Garamond", serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1rem;
 }
 
-.nos-casamos-section p {
-  font-size: 1.6rem;
-  opacity: 0.9;
+.nos-casamos-section .section-text {
+  color: var(--text);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  font-family: var(--font-body, "Georgia", serif);
+}
+
+.decorative-line {
+  width: 80px;
+  height: 3px;
+  background: var(--accent);
+  margin: 1rem auto;
+  border-radius: 999px;
 }

@@ -269,6 +269,34 @@
   border-color: #667eea;
 }
 
+.selector-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex: 1;
+}
+
+.selector-wrapper select {
+  flex: 1;
+}
+
+.btn-eliminar-evento {
+  background: #ff4444;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.btn-eliminar-evento:hover {
+  background: #cc0000;
+  transform: scale(1.05);
+}
+
 .dashboard-header {
   display: flex;
   justify-content: space-between;

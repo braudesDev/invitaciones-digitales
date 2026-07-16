@@ -19,12 +19,40 @@
       </div>
       <div class="evento-selector">
         <label>🎯 Evento actual: </label>
-        <!-- 👇 SOLO CAMBIA ESTA LÍNEA: (change)="cambiarEvento()" -->
-        <select [(ngModel)]="eventoSlug" (change)="cambiarEvento()">
-          <option *ngFor="let evento of misEventos" [value]="evento.slug">
-            {{ evento.name }}
-          </option>
-        </select>
+        <div class="selector-wrapper">
+          <!-- Si hay eventos, muestra el select con ngModel -->
+          <ng-container
+            *ngIf="misEventos && misEventos.length > 0; else sinEventos"
+          >
+            <select
+              [(ngModel)]="eventoSlug"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="cambiarEvento()"
+            >
+              <option *ngFor="let evento of misEventos" [value]="evento.slug">
+                {{ evento.name }}
+              </option>
+            </select>
+            <button
+              class="btn-eliminar-evento"
+              (click)="eliminarEvento(eventoSlug, obtenerNombreEvento())"
+              title="Eliminar evento"
+            >
+              🗑️
+            </button>
+          </ng-container>
+
+          <!-- Si no hay eventos, muestra un mensaje -->
+          <ng-template #sinEventos>
+            <span class="no-eventos-msg">🎯 No tienes eventos creados</span>
+            <a
+              routerLink="/anfitrion/crear-invitacion"
+              class="btn-crear-evento"
+            >
+              ✨ Crear evento
+            </a>
+          </ng-template>
+        </div>
       </div>
     </div>
     <div class="header-buttons">
@@ -176,6 +204,7 @@
         <label>👤 Nombre completo</label>
         <input
           [(ngModel)]="nuevoInvitado.nombre"
+          [ngModelOptions]="{ standalone: true }"
           placeholder="Ej: Iván Rodríguez"
         />
       </div>
@@ -184,6 +213,7 @@
         <input
           type="number"
           [(ngModel)]="nuevoInvitado.pases"
+          [ngModelOptions]="{ standalone: true }"
           min="1"
           max="20"
         />
@@ -192,6 +222,7 @@
         <label>💬 Mensaje personalizado (opcional)</label>
         <textarea
           [(ngModel)]="nuevoInvitado.mensajePersonalizado"
+          [ngModelOptions]="{ standalone: true }"
           rows="2"
           placeholder="Ej: Te esperamos con mucha alegría..."
         ></textarea>
