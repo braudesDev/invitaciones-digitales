@@ -3,384 +3,718 @@
     {{ invitacionId ? "✏️ Editar invitación" : "✨ Crear nueva invitación" }}
   </h2>
 
+  <!-- TABS (3) -->
   <div class="tabs">
     <button
-      [class.active]="tabActivo === 'basicos'"
-      (click)="tabActivo = 'basicos'"
+      [class.active]="tabActivo === 'basico'"
+      (click)="tabActivo = 'basico'"
     >
-      📋 Básicos
+      📋 Básico
     </button>
     <button
-      [class.active]="tabActivo === 'diseno'"
-      (click)="tabActivo = 'diseno'"
+      [class.active]="tabActivo === 'ceremonia'"
+      (click)="tabActivo = 'ceremonia'"
     >
-      🎨 Diseño
+      💒 Ceremonia
     </button>
     <button
-      [class.active]="tabActivo === 'mensajes'"
-      (click)="tabActivo = 'mensajes'"
+      [class.active]="tabActivo === 'extras'"
+      (click)="tabActivo = 'extras'"
     >
-      💬 Mensajes
-    </button>
-    <button
-      [class.active]="tabActivo === 'evento'"
-      (click)="tabActivo = 'evento'"
-    >
-      🎊 Evento
-    </button>
-    <button
-      [class.active]="tabActivo === 'secciones'"
-      (click)="tabActivo = 'secciones'"
-    >
-      📑 Secciones
+      ✨ Extras
     </button>
   </div>
 
   <form (ngSubmit)="guardarInvitacion()" #formInvitacion="ngForm">
-    <!-- TAB 1: BÁSICOS -->
-    <div class="tab-content" *ngIf="tabActivo === 'basicos'">
-      <h3>Información principal</h3>
-      <div class="campo">
-        <label>📌 Nombre del evento *</label>
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.name"
-          name="name"
-          required
-        />
-      </div>
-      <div class="campo">
-        <label>🎭 Tipo de evento *</label>
-        <select [(ngModel)]="nuevaInvitacion.tipo" name="tipo" required>
-          <option value="boda">💍 Boda</option>
-          <option value="xv">👗 XV Años</option>
-        </select>
-      </div>
-      <div class="campo">
-        <label>👰 Nombres del festejado(s) *</label>
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.nombres"
-          name="nombres"
-          required
-        />
-      </div>
-      <div class="campo">
-        <label>📅 Fecha y hora *</label>
-        <input
-          type="datetime-local"
-          [(ngModel)]="nuevaInvitacion.fecha"
-          name="fecha"
-          required
-        />
-      </div>
-      <div class="campo">
-        <label>📍 Lugar *</label>
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.lugar"
-          name="lugar"
-          required
-        />
-      </div>
-    </div>
+    <!-- ==================== TAB 1: BÁSICO ==================== -->
+    <div class="tab-content" *ngIf="tabActivo === 'basico'">
+      <div class="form-grid">
+        <!-- ⬇️⬇️⬇️ NUEVA SECCIÓN DE IMAGEN PRINCIPAL ⬇️⬇️⬇️ -->
+        <div class="campo full-width">
+          <label>🖼️ Imagen principal</label>
 
-    <!-- TAB 2: DISEÑO -->
-    <div class="tab-content" *ngIf="tabActivo === 'diseno'">
-      <h3>Personalización visual</h3>
-      <div class="campo">
-        <label>🖼️ Imagen principal (URL)</label>
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.heroImage"
-          name="heroImage"
-        />
-      </div>
-      <div class="campo">
-        <label>🎨 Color principal</label>
-        <div class="color-input">
-          <input
-            type="color"
-            [(ngModel)]="nuevaInvitacion.primaryColor"
-            name="primaryColor"
-          />
-          <input
-            type="text"
-            [(ngModel)]="nuevaInvitacion.primaryColor"
-            name="primaryColorText"
-          />
-        </div>
-      </div>
-      <div class="campo">
-        <label>🎨 Color secundario</label>
-        <div class="color-input">
-          <input
-            type="color"
-            [(ngModel)]="nuevaInvitacion.secondaryColor"
-            name="secondaryColor"
-          />
-          <input
-            type="text"
-            [(ngModel)]="nuevaInvitacion.secondaryColor"
-            name="secondaryColorText"
-          />
-        </div>
-      </div>
-      <div class="campo">
-        <label>✍️ Fuente del texto</label>
-        <select [(ngModel)]="nuevaInvitacion.fontFamily" name="fontFamily">
-          <option value="'Playfair Display', serif">Playfair Display</option>
-          <option value="'Great Vibes', cursive">Great Vibes</option>
-          <option value="'Dancing Script', cursive">Dancing Script</option>
-        </select>
-      </div>
-    </div>
+          <!-- Botón para subir imagen -->
+          <div class="upload-area">
+            <label class="btn-upload" [class.cargando]="imagenSubiendo">
+              📁 {{ imagenSubiendo ? "Subiendo..." : "Seleccionar imagen" }}
+              <input
+                type="file"
+                (change)="subirImagen($event)"
+                accept="image/*"
+                [disabled]="imagenSubiendo"
+              />
+            </label>
+            <span class="upload-info">PNG, JPG, WEBP (máx. 5MB)</span>
+          </div>
 
-    <!-- TAB 3: MENSAJES -->
-    <div class="tab-content" *ngIf="tabActivo === 'mensajes'">
-      <h3>Textos de la invitación</h3>
-      <div class="campo">
-        <label>💕 Frase principal</label>
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.frasePrincipal"
-          name="frasePrincipal"
-        />
-      </div>
-      <div class="campo">
-        <label>📖 Mensaje principal</label>
-        <textarea
-          [(ngModel)]="nuevaInvitacion.mensajePrincipal"
-          name="mensajePrincipal"
-          rows="4"
-        ></textarea>
-      </div>
-      <div class="campo">
-        <label>📚 Historia</label>
-        <textarea
-          [(ngModel)]="nuevaInvitacion.historia"
-          name="historia"
-          rows="5"
-        ></textarea>
-      </div>
-    </div>
-
-    <!-- TAB 4: EVENTO -->
-    <div class="tab-content" *ngIf="tabActivo === 'evento'">
-      <h3>Detalles del evento</h3>
-      <div class="subseccion">
-        <h4>⛪ Ceremonia</h4>
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.ceremonia.lugar"
-          name="ceremoniaLugar"
-          placeholder="Lugar"
-        />
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.ceremonia.direccion"
-          name="ceremoniaDireccion"
-          placeholder="Dirección"
-        />
-        <input
-          type="time"
-          [(ngModel)]="nuevaInvitacion.ceremonia.hora"
-          name="ceremoniaHora"
-        />
-      </div>
-      <div class="subseccion">
-        <h4>🎉 Recepción</h4>
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.recepcion.lugar"
-          name="recepcionLugar"
-          placeholder="Lugar"
-        />
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.recepcion.direccion"
-          name="recepcionDireccion"
-          placeholder="Dirección"
-        />
-        <input
-          type="time"
-          [(ngModel)]="nuevaInvitacion.recepcion.hora"
-          name="recepcionHora"
-        />
-      </div>
-      <div class="subseccion">
-        <h4>👗 Dress Code</h4>
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.dressCode.descripcion"
-          name="dressCodeDesc"
-          placeholder="Descripción"
-        />
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.dressCode.sugerencia"
-          name="dressCodeSug"
-          placeholder="Sugerencia"
-        />
-      </div>
-    </div>
-
-    <!-- TAB 5: SECCIONES EXTRA -->
-    <div class="tab-content" *ngIf="tabActivo === 'secciones'">
-      <h3>Secciones adicionales</h3>
-
-      <div class="subseccion">
-        <h4>👪 Padres</h4>
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.padres.padreNovia"
-          name="padreNovia"
-          placeholder="Padre de la novia"
-        />
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.padres.madreNovia"
-          name="madreNovia"
-          placeholder="Madre de la novia"
-        />
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.padres.padreNovio"
-          name="padreNovio"
-          placeholder="Padre del novio"
-        />
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.padres.madreNovio"
-          name="madreNovio"
-          placeholder="Madre del novio"
-        />
-      </div>
-
-      <div class="subseccion">
-        <h4>👑 Padrinos</h4>
-        <div *ngFor="let padrino of nuevaInvitacion.padrinos; let i = index">
-          <input
-            type="text"
-            [(ngModel)]="nuevaInvitacion.padrinos[i]"
-            name="padrino{{ i }}"
-            placeholder="Padrino {{ i + 1 }}"
-          />
-          <button type="button" (click)="eliminarPadrino(i)">❌</button>
-        </div>
-        <button type="button" (click)="agregarPadrino()">
-          + Agregar padrino
-        </button>
-      </div>
-
-      <div class="subseccion">
-        <h4>🎁 Mesa de regalos</h4>
-        <textarea
-          [(ngModel)]="nuevaInvitacion.regalos.texto"
-          name="regalosTexto"
-          placeholder="Texto de agradecimiento"
-        ></textarea>
-        <div *ngFor="let link of nuevaInvitacion.regalos.links; let i = index">
-          <input
-            type="text"
-            [(ngModel)]="link.nombre"
-            name="regaloNombre{{ i }}"
-            placeholder="Nombre tienda"
-          />
-          <input
-            type="url"
-            [(ngModel)]="link.url"
-            name="regaloUrl{{ i }}"
-            placeholder="URL"
-          />
-          <button type="button" (click)="eliminarRegaloLink(i)">❌</button>
-        </div>
-        <button type="button" (click)="agregarRegaloLink()">
-          + Agregar tienda
-        </button>
-      </div>
-
-      <div class="subseccion">
-        <h4>✅ Confirmar asistencia</h4>
-        <input
-          type="tel"
-          [(ngModel)]="nuevaInvitacion.confirmacion.telefono"
-          name="confirmacionTelefono"
-          placeholder="Teléfono"
-        />
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.confirmacion.whatsapp"
-          name="confirmacionWhatsapp"
-          placeholder="WhatsApp"
-        />
-      </div>
-
-      <div class="subseccion">
-        <h4>#️⃣ Hashtag</h4>
-        <input
-          type="text"
-          [(ngModel)]="nuevaInvitacion.hashtag"
-          name="hashtag"
-          placeholder="#MiBodaFeliz"
-        />
-      </div>
-
-      <div class="subseccion">
-        <h4>📋 Consideraciones</h4>
-        <textarea
-          [(ngModel)]="nuevaInvitacion.consideraciones"
-          name="consideraciones"
-          rows="3"
-          placeholder="Niños, alergias..."
-        ></textarea>
-      </div>
-
-      <!-- 📸 SECCIÓN GALERÍA DE FOTOS -->
-      <div class="subseccion">
-        <h4>📸 Galería de Fotos</h4>
-        <p class="ayuda">Agrega URLs de imágenes para mostrar una galería</p>
-        <div *ngFor="let foto of nuevaInvitacion.photos; let i = index">
-          <div class="campo-foto">
+          <!-- O pegar URL -->
+          <div class="url-input">
             <input
-              type="url"
-              [(ngModel)]="nuevaInvitacion.photos[i]"
-              name="foto{{ i }}"
-              placeholder="URL de la imagen"
-              class="foto-input"
+              type="text"
+              [(ngModel)]="nuevaInvitacion.heroImage"
+              name="heroImage"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="O pega una URL aquí"
+            />
+            <button
+              *ngIf="nuevaInvitacion.heroImage"
+              class="btn-limpiar-url"
+              (click)="nuevaInvitacion.heroImage = ''"
+              type="button"
+            >
+              ✕
+            </button>
+          </div>
+
+          <!-- Vista previa -->
+          <div class="preview-img" *ngIf="nuevaInvitacion.heroImage">
+            <img [src]="nuevaInvitacion.heroImage" alt="Preview" />
+            <button
+              class="btn-cambiar-img"
+              (click)="nuevaInvitacion.heroImage = ''"
+              type="button"
+            >
+              🔄 Cambiar imagen
+            </button>
+          </div>
+        </div>
+        <!-- ⬆️⬆️⬆️ FIN NUEVA SECCIÓN ⬆️⬆️⬆️ -->
+
+        <div class="campo">
+          <label>📌 Nombre del evento *</label>
+          <input
+            type="text"
+            [(ngModel)]="nuevaInvitacion.name"
+            name="name"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label>🎭 Tipo de evento *</label>
+          <select [(ngModel)]="nuevaInvitacion.tipo" name="tipo" required>
+            <option value="boda">💍 Boda</option>
+            <option value="xv">👗 XV Años</option>
+            <option value="cumpleaños">🎂 Cumpleaños</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>👰 Nombres del festejado(s) *</label>
+          <input
+            type="text"
+            [(ngModel)]="nuevaInvitacion.nombres"
+            name="nombres"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label>📅 Fecha y hora *</label>
+          <input
+            type="datetime-local"
+            [(ngModel)]="nuevaInvitacion.fecha"
+            name="fecha"
+            required
+          />
+        </div>
+
+        <div class="campo full-width">
+          <label>📍 Lugar *</label>
+          <input
+            type="text"
+            [(ngModel)]="nuevaInvitacion.lugar"
+            name="lugar"
+            required
+          />
+        </div>
+
+        <!-- PALETAS PREMIUM (6 opciones) -->
+        <div class="campo full-width">
+          <label>🎨 Paletas de colores premium</label>
+          <div class="paletas">
+            <!-- Verde Cemento + Oro -->
+            <div
+              class="paleta"
+              [class.selected]="paletaSeleccionada === 'premium'"
+              (click)="aplicarPaleta('premium')"
+            >
+              <span style="background: #7a8b7d"></span>
+              <span style="background: #b08a4a"></span>
+              <span>Verde Cemento</span>
+            </div>
+
+            <!-- Champagne + Dorado -->
+            <div
+              class="paleta"
+              [class.selected]="paletaSeleccionada === 'champagne'"
+              (click)="aplicarPaleta('champagne')"
+            >
+              <span style="background: #dcc7a1"></span>
+              <span style="background: #b8934e"></span>
+              <span>Champagne</span>
+            </div>
+
+            <!-- Rose Gold -->
+            <div
+              class="paleta"
+              [class.selected]="paletaSeleccionada === 'rosegold'"
+              (click)="aplicarPaleta('rosegold')"
+            >
+              <span style="background: #d8a7a7"></span>
+              <span style="background: #f3d9d9"></span>
+              <span>Rose Gold</span>
+            </div>
+
+            <!-- Lavanda Real -->
+            <div
+              class="paleta"
+              [class.selected]="paletaSeleccionada === 'lavender'"
+              (click)="aplicarPaleta('lavender')"
+            >
+              <span style="background: #8a78a6"></span>
+              <span style="background: #c8b6ff"></span>
+              <span>Lavanda Real</span>
+            </div>
+
+            <!-- Azul Royal -->
+            <div
+              class="paleta"
+              [class.selected]="paletaSeleccionada === 'royal'"
+              (click)="aplicarPaleta('royal')"
+            >
+              <span style="background: #3d5a80"></span>
+              <span style="background: #d4af37"></span>
+              <span>Azul Royal</span>
+            </div>
+
+            <!-- Black Luxury -->
+            <div
+              class="paleta"
+              [class.selected]="paletaSeleccionada === 'black'"
+              (click)="aplicarPaleta('black')"
+            >
+              <span style="background: #2b2b2b"></span>
+              <span style="background: #c9a227"></span>
+              <span>Black Luxury</span>
+            </div>
+          </div>
+          <p class="ayuda-paletas">
+            💡 Haz clic en una paleta o elige tus propios colores abajo
+          </p>
+        </div>
+
+        <div class="campo">
+          <label>🎨 Color principal</label>
+          <div class="color-input">
+            <input
+              type="color"
+              [(ngModel)]="nuevaInvitacion.primaryColor"
+              name="primaryColor"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.primaryColor"
+              placeholder="#7A8B7D"
+            />
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>🎨 Color secundario</label>
+          <div class="color-input">
+            <input
+              type="color"
+              [(ngModel)]="nuevaInvitacion.secondaryColor"
+              name="secondaryColor"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.secondaryColor"
+              placeholder="#B08A4A"
+            />
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>🎨 Color de acento</label>
+          <div class="color-input">
+            <input
+              type="color"
+              [(ngModel)]="nuevaInvitacion.accentColor"
+              name="accentColor"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.accentColor"
+              placeholder="#B08A4A"
+            />
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>📝 Color de texto</label>
+          <div class="color-input">
+            <input
+              type="color"
+              [(ngModel)]="nuevaInvitacion.textColor"
+              name="textColor"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.textColor"
+              placeholder="#3F4A42"
+            />
+          </div>
+        </div>
+
+        <div class="campo full-width">
+          <label>✍️ Fuente del texto</label>
+          <select [(ngModel)]="nuevaInvitacion.fontFamily" name="fontFamily">
+            <option value="'Playfair Display', serif">
+              Playfair Display (clásica)
+            </option>
+            <option value="'Great Vibes', cursive">
+              Great Vibes (romántica)
+            </option>
+            <option value="'Dancing Script', cursive">
+              Dancing Script (fluida)
+            </option>
+            <option value="'Poppins', sans-serif">Poppins (moderna)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: CEREMONIA ==================== -->
+    <div class="tab-content" *ngIf="tabActivo === 'ceremonia'">
+      <div class="form-grid">
+        <div class="campo full-width">
+          <label>💕 Frase principal</label>
+          <input
+            type="text"
+            [(ngModel)]="nuevaInvitacion.frasePrincipal"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Ej: ¡Nos casamos!"
+          />
+        </div>
+
+        <div class="campo full-width">
+          <label>📖 Mensaje principal</label>
+          <textarea
+            [(ngModel)]="nuevaInvitacion.mensajePrincipal"
+            [ngModelOptions]="{ standalone: true }"
+            rows="3"
+            placeholder="Describe tu evento..."
+          ></textarea>
+        </div>
+
+        <div class="campo full-width">
+          <label>📚 Historia (opcional)</label>
+          <textarea
+            [(ngModel)]="nuevaInvitacion.historia"
+            [ngModelOptions]="{ standalone: true }"
+            rows="3"
+            placeholder="Cuenta cómo se conocieron..."
+          ></textarea>
+        </div>
+
+        <div class="subseccion full-width">
+          <h4>⛪ Ceremonia</h4>
+          <div class="subseccion-grid">
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.ceremonia.lugar"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Lugar"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.ceremonia.direccion"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Dirección"
+            />
+            <input
+              type="time"
+              [(ngModel)]="nuevaInvitacion.ceremonia.hora"
+              [ngModelOptions]="{ standalone: true }"
+            />
+
+            <!-- 🆕 Campo para URL de Maps -->
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.ceremonia.mapaUrl"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="URL de Google Maps (opcional)"
+            />
+
+            <!-- 🆕 Campo para imagen del templo -->
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.ceremonia.imagenTemplo"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="URL de imagen del templo (opcional)"
+            />
+          </div>
+        </div>
+
+        <div class="subseccion full-width">
+          <h4>🎉 Recepción</h4>
+          <div class="subseccion-grid">
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.recepcion.lugar"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Lugar"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.recepcion.direccion"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Dirección"
+            />
+            <input
+              type="time"
+              [(ngModel)]="nuevaInvitacion.recepcion.hora"
+              [ngModelOptions]="{ standalone: true }"
+            />
+
+            <!-- URL de Maps -->
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.recepcion.mapaUrl"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="URL de Google Maps (opcional)"
+            />
+
+            <!-- Imagen -->
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.recepcion.imagen"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="URL de imagen (opcional)"
+            />
+
+            <!-- Descripción -->
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.recepcion.descripcion"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Descripción del lugar (opcional)"
+            />
+          </div>
+        </div>
+
+        <div class="subseccion full-width">
+          <h4>👗 Dress Code</h4>
+          <div class="subseccion-grid">
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.dressCode.descripcion"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Descripción"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.dressCode.sugerencia"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Sugerencia"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: EXTRAS ==================== -->
+    <div class="tab-content" *ngIf="tabActivo === 'extras'">
+      <!-- Acordeón: Padres -->
+      <div class="acordeon">
+        <div
+          class="acordeon-header"
+          (click)="acordeonAbierto = !acordeonAbierto"
+        >
+          <span>👪 Padres</span>
+          <span class="icono">{{ acordeonAbierto ? "▲" : "▼" }}</span>
+        </div>
+        <div class="acordeon-body" [class.abierto]="acordeonAbierto">
+          <div class="form-grid">
+            <!-- NOVIA -->
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.novia"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Nombre de la novia"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.fotoNovia"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="URL foto de la novia"
+            />
+
+            <!-- NOVIO -->
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.novio"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Nombre del novio"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.fotoNovio"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="URL foto del novio"
+            />
+
+            <!-- PADRES DE LA NOVIA -->
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.madreNovia"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Madre de la novia"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.fotoMadreNovia"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="URL foto de la madre"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.padreNovia"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Padre de la novia"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.fotoPadreNovia"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="URL foto del padre"
+            />
+
+            <!-- PADRES DEL NOVIO -->
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.madreNovio"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Madre del novio"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.fotoMadreNovio"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="URL foto de la madre"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.padreNovio"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Padre del novio"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padres.fotoPadreNovio"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="URL foto del padre"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Acordeón: Padrinos -->
+      <div class="acordeon">
+        <div
+          class="acordeon-header"
+          (click)="acordeonPadrinos = !acordeonPadrinos"
+        >
+          <span>👑 Padrinos</span>
+          <span class="icono">{{ acordeonPadrinos ? "▲" : "▼" }}</span>
+        </div>
+        <div class="acordeon-body" [class.abierto]="acordeonPadrinos">
+          <div
+            *ngFor="
+              let padrino of nuevaInvitacion.padrinos;
+              let i = index;
+              trackBy: trackByIndex
+            "
+            class="campo-dinamico"
+          >
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.padrinos[i]"
+              [name]="'padrino_' + i"
+              placeholder="Padrino {{ i + 1 }}"
+              (click)="$event.stopPropagation()"
             />
             <button
               type="button"
-              class="btn-eliminar-foto"
-              (click)="eliminarFoto(i)"
+              (click)="eliminarPadrino(i); $event.stopPropagation()"
             >
               ❌
             </button>
           </div>
+          <button
+            type="button"
+            class="btn-agregar"
+            (click)="agregarPadrino(); $event.stopPropagation()"
+          >
+            + Agregar padrino
+          </button>
         </div>
-        <button type="button" class="btn-agregar" (click)="agregarFoto()">
-          + Agregar foto
-        </button>
+      </div>
 
-        <div class="preview-fotos" *ngIf="nuevaInvitacion.photos.length > 0">
-          <p>Vista previa:</p>
-          <div class="preview-grid">
-            <img
-              *ngFor="let foto of nuevaInvitacion.photos; let i = index"
-              [src]="foto"
-              [alt]="'Foto ' + (i + 1)"
-              class="preview-img"
+      <!-- Acordeón: Regalos -->
+      <div class="acordeon">
+        <div
+          class="acordeon-header"
+          (click)="acordeonRegalos = !acordeonRegalos"
+        >
+          <span>🎁 Mesa de regalos</span>
+          <span class="icono">{{ acordeonRegalos ? "▲" : "▼" }}</span>
+        </div>
+        <div class="acordeon-body" [class.abierto]="acordeonRegalos">
+          <textarea
+            [(ngModel)]="nuevaInvitacion.regalos.texto"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Texto de agradecimiento"
+          ></textarea>
+          <div
+            *ngFor="let link of nuevaInvitacion.regalos.links; let i = index"
+            class="campo-dinamico"
+          >
+            <input
+              type="text"
+              [(ngModel)]="link.nombre"
+              [name]="'regalo_nombre_' + i"
+              placeholder="Nombre tienda"
+            />
+            <input
+              type="url"
+              [(ngModel)]="link.url"
+              [name]="'regalo_url_' + i"
+              placeholder="URL"
+            />
+            <button type="button" (click)="eliminarRegaloLink(i)">❌</button>
+          </div>
+          <button
+            type="button"
+            class="btn-agregar"
+            (click)="agregarRegaloLink()"
+          >
+            + Agregar tienda
+          </button>
+        </div>
+      </div>
+
+      <!-- Acordeón: Galería -->
+      <div class="acordeon">
+        <div
+          class="acordeon-header"
+          (click)="acordeonGaleria = !acordeonGaleria"
+        >
+          <span>📸 Galería de fotos</span>
+          <span class="icono">{{ acordeonGaleria ? "▲" : "▼" }}</span>
+        </div>
+        <div class="acordeon-body" [class.abierto]="acordeonGaleria">
+          <div
+            *ngFor="let foto of nuevaInvitacion.photos; let i = index"
+            class="campo-dinamico"
+          >
+            <input
+              type="url"
+              [(ngModel)]="nuevaInvitacion.photos[i]"
+              [name]="'foto_' + i"
+              placeholder="URL de la imagen"
+            />
+            <button type="button" (click)="eliminarFoto(i)">❌</button>
+          </div>
+          <button type="button" class="btn-agregar" (click)="agregarFoto()">
+            + Agregar foto
+          </button>
+          <div class="preview-fotos" *ngIf="nuevaInvitacion.photos.length > 0">
+            <div class="preview-grid">
+              <img
+                *ngFor="let foto of nuevaInvitacion.photos"
+                [src]="foto"
+                alt="Preview"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acordeón: Confirmación -->
+      <div class="acordeon">
+        <div
+          class="acordeon-header"
+          (click)="acordeonConfirmacion = !acordeonConfirmacion"
+        >
+          <span>✅ Confirmar asistencia</span>
+          <span class="icono">{{ acordeonConfirmacion ? "▲" : "▼" }}</span>
+        </div>
+        <div class="acordeon-body" [class.abierto]="acordeonConfirmacion">
+          <div class="form-grid">
+            <input
+              type="tel"
+              [(ngModel)]="nuevaInvitacion.confirmacion.telefono"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Teléfono"
+            />
+            <input
+              type="text"
+              [(ngModel)]="nuevaInvitacion.confirmacion.whatsapp"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="WhatsApp"
             />
           </div>
         </div>
       </div>
+
+      <!-- Acordeón: Consideraciones -->
+      <div class="acordeon">
+        <div
+          class="acordeon-header"
+          (click)="acordeonConsideraciones = !acordeonConsideraciones"
+        >
+          <span>📋 Consideraciones</span>
+          <span class="icono">{{ acordeonConsideraciones ? "▲" : "▼" }}</span>
+        </div>
+        <div class="acordeon-body" [class.abierto]="acordeonConsideraciones">
+          <textarea
+            [(ngModel)]="nuevaInvitacion.consideraciones"
+            [ngModelOptions]="{ standalone: true }"
+            rows="3"
+            placeholder="Niños, alergias, estacionamiento..."
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Acordeón: Hashtag -->
+      <div class="acordeon">
+        <div
+          class="acordeon-header"
+          (click)="acordeonHashtag = !acordeonHashtag"
+        >
+          <span>#️⃣ Hashtag</span>
+          <span class="icono">{{ acordeonHashtag ? "▲" : "▼" }}</span>
+        </div>
+        <div class="acordeon-body" [class.abierto]="acordeonHashtag">
+          <input
+            type="text"
+            [(ngModel)]="nuevaInvitacion.hashtag"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="#MiBodaFeliz"
+          />
+        </div>
+      </div>
     </div>
 
+    <!-- Botón guardar -->
     <div class="acciones">
       <button
         type="submit"
         class="btn-guardar"
-        [disabled]="!formInvitacion.form.valid"
+        [disabled]="!nuevaInvitacion.name || !nuevaInvitacion.fecha"
       >
         💾 Guardar invitación
       </button>

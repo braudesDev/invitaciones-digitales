@@ -1,27 +1,27 @@
 <div *ngIf="invitado" class="invitacion-valida-section">
   <div class="valida-card">
     <div class="valida-header">
-      <div class="valida-icon">🎟️</div>
+      <div class="valida-icon"></div>
       <h3>INVITACIÓN VÁLIDA PARA</h3>
     </div>
 
     <div class="valida-content">
       <div class="invitado-nombre">
-        <span class="label">✨ Estimado(a)</span>
+        <span class="label">Estimado(a)</span>
         <h2>{{ invitado }}</h2>
       </div>
 
       <div class="pases-info">
         <div class="pases-number">
           <span class="pases-count">{{ pases }}</span>
-          <span class="pases-label">PASES</span>
+          <span class="pases-label"> PASES</span>
         </div>
         <div class="pases-desc">Disponibles para ti y tus acompañantes</div>
       </div>
 
       <div class="mensaje-info" *ngIf="mensajePersonalizado">
         <div class="mensaje-bubble">
-          <span class="quote">💝</span>
+          <span class="quote"></span>
           <p>"{{ mensajePersonalizado }}"</p>
         </div>
       </div>

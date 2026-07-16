@@ -12,6 +12,7 @@ import {
   getDocs,
   doc,
   getDoc,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { Auth, authState, signOut } from '@angular/fire/auth';
 import { Router, RouterModule } from '@angular/router';
@@ -129,6 +130,46 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
     } else {
       console.log('⚠️ No hay usuario logueado');
     }
+  }
+
+  // Agrega este método después de cargarMisEventos()
+  async eliminarEvento(eventoSlug: string, eventoName: string) {
+    const confirmar = confirm(
+      `¿Estás seguro de que quieres eliminar la invitación "${eventoName}"?\n\nEsta acción eliminará TODOS los invitados asociados a este evento. No se puede deshacer.`,
+    );
+
+    if (!confirmar) return;
+
+    try {
+      // 1. Eliminar todos los invitados de este evento
+      const invitadosQuery = query(
+        collection(this.firestore, 'invitados'),
+        where('eventoSlug', '==', eventoSlug),
+      );
+      const invitadosSnap = await getDocs(invitadosQuery);
+
+      const deletePromises = invitadosSnap.docs.map((doc) =>
+        deleteDoc(doc.ref),
+      );
+      await Promise.all(deletePromises);
+
+      // 2. Eliminar el evento
+      const eventoRef = doc(this.firestore, `invitaciones/${eventoSlug}`);
+      await deleteDoc(eventoRef);
+
+      // 3. Recargar la lista de eventos
+      await this.cargarMisEventos();
+
+      alert(`✅ Invitación "${eventoName}" eliminada correctamente`);
+    } catch (error) {
+      console.error('Error al eliminar evento:', error);
+      alert('❌ Error al eliminar la invitación');
+    }
+  }
+
+  obtenerNombreEvento(): string {
+    const evento = this.misEventos.find((e) => e.slug === this.eventoSlug);
+    return evento ? evento.name : 'este evento';
   }
 
   cargarInvitados() {

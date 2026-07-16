@@ -8,7 +8,9 @@
   margin-bottom: 25px;
 }
 
-.estado-confirmado, .estado-rechazado, .estado-pendiente {
+.estado-confirmado,
+.estado-rechazado,
+.estado-pendiente {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -50,7 +52,8 @@
   margin-bottom: 20px;
 }
 
-.btn-confirmar, .btn-rechazar {
+.btn-confirmar,
+.btn-rechazar {
   padding: 12px 24px;
   border: none;
   border-radius: 40px;
@@ -69,11 +72,13 @@
   background: linear-gradient(135deg, #eb3349, #f45c43);
   color: white;
 }
-.btn-confirmar:disabled, .btn-rechazar:disabled {
+.btn-confirmar:disabled,
+.btn-rechazar:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
-.btn-confirmar:hover:not(:disabled), .btn-rechazar:hover:not(:disabled) {
+.btn-confirmar:hover:not(:disabled),
+.btn-rechazar:hover:not(:disabled) {
   transform: translateY(-2px);
 }
 

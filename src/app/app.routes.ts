@@ -8,6 +8,7 @@ import { FormularioInvitacionComponent } from './components/invitaciones/formula
 import { ValidacionComponent } from './components/validacion/validacion.component';
 import { AnfitrionGuard } from './guards/anfitrion.guard';
 import { RecuperarPasswordComponent } from './components/recuperar-password/recuperar-password.component';
+// import { MiBodaComponent } from './pages/mi-boda/mi-boda.component';
 
 export const routes: Routes = [
   // Página de inicio (landing page)
@@ -39,6 +40,10 @@ export const routes: Routes = [
     component: FormularioInvitacionComponent,
     canActivate: [AnfitrionGuard],
   },
+  // {
+  //   path: 'mi-boda/:slug',
+  //   component: MiBodaComponent,
+  // },
 
   // Redirección por defecto
   { path: '**', redirectTo: '/' },

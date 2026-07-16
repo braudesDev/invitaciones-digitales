@@ -1,0 +1,1048 @@
+/* ==========================================================================
+   ESTILOS LOCALES - BODA BRAULIO Y ÁNGELES
+   Paleta: Dorados + Verde Cemento
+   ========================================================================== */
+
+/* ==========================================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================================== */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f5ede4;
+}
+
+.invitacion-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fcf8f3;
+  min-height: 100vh;
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(92, 61, 46, 0.1);
+}
+
+/* ==========================================================================
+   HERO SECTION - Con overlay dorado suave
+   ========================================================================== */
+::ng-deep app-hero-section .hero-section {
+  min-height: 500px;
+  position: relative;
+}
+
+::ng-deep app-hero-section .hero-content {
+  padding: 80px 30px;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(92, 61, 46, 0.6),
+    rgba(201, 168, 124, 0.3)
+  );
+}
+
+::ng-deep app-hero-section .titulo-principal {
+  font-family: "Playfair Display", serif !important;
+  font-size: 3.5rem !important;
+  font-weight: 300 !important;
+  letter-spacing: 15px !important;
+  color: #ffffff !important;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
+  margin-bottom: 10px !important;
+}
+
+::ng-deep app-hero-section .nombres {
+  font-family: "Playfair Display", serif !important;
+  font-size: 2.8rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 8px !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+::ng-deep app-hero-section .fecha {
+  font-family: "Georgia", serif !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 4px !important;
+  color: #fcf8f3 !important;
+  margin-top: 15px !important;
+  opacity: 0.9 !important;
+  border-top: 1px solid rgba(201, 168, 124, 0.5) !important;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.5) !important;
+  padding: 8px 20px !important;
+  display: inline-block !important;
+}
+
+::ng-deep app-hero-section .lugar {
+  font-size: 1rem !important;
+  color: #f0e6d8 !important;
+  opacity: 0.8 !important;
+  margin-top: 10px !important;
+}
+
+/* ==========================================================================
+   NOS CASAMOS
+   ========================================================================== */
+::ng-deep app-nos-casamos-section .nos-casamos-section {
+  padding: 50px 30px !important;
+  text-align: center !important;
+  background: transparent !important;
+}
+
+::ng-deep app-nos-casamos-section .frase-principal {
+  font-family: "Playfair Display", serif !important;
+  font-size: 2.5rem !important;
+  font-weight: 300 !important;
+  letter-spacing: 8px !important;
+  color: #5c3d2e !important;
+  margin-bottom: 15px !important;
+}
+
+::ng-deep app-nos-casamos-section .frase-principal::after {
+  content: "" !important;
+  display: block !important;
+  width: 60px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, #c9a87c, #e8d5b7) !important;
+  margin: 15px auto 0 !important;
+  border-radius: 2px !important;
+}
+
+::ng-deep app-nos-casamos-section .mensaje-principal {
+  font-family: "Georgia", serif !important;
+  font-size: 1.1rem !important;
+  line-height: 1.8 !important;
+  color: #7a5a4a !important;
+  font-style: italic !important;
+}
+
+/* ==========================================================================
+   INVITACIÓN VÁLIDA
+   ========================================================================== */
+::ng-deep app-invitacion-valida-section .invitacion-valida-section {
+  text-align: center !important;
+  background: linear-gradient(135deg, #fcf8f3, #f5ede4) !important;
+  border: 2px dashed #c9a87c !important;
+  border-radius: 20px !important;
+  margin: 20px !important;
+  padding: 30px 25px !important;
+}
+
+::ng-deep app-invitacion-valida-section .invitado-nombre {
+  font-family: "Playfair Display", serif !important;
+  font-size: 1.8rem !important;
+  color: #5c3d2e !important;
+  font-weight: 600 !important;
+  margin: 10px 0 !important;
+}
+
+::ng-deep app-invitacion-valida-section .pases-badge {
+  background-color: #8a9a7a !important;
+  color: white !important;
+  padding: 4px 16px !important;
+  border-radius: 20px !important;
+  font-size: 0.85rem !important;
+  display: inline-block !important;
+}
+
+::ng-deep app-invitacion-valida-section .mensaje-personalizado {
+  font-style: italic !important;
+  color: #8b7355 !important;
+  margin-top: 15px !important;
+}
+
+/* ==========================================================================
+   CEREMONIA Y RECEPCIÓN - Minimalista con Dorado
+   ========================================================================== */
+
+/* 🔥 CEREMONIA */
+::ng-deep app-ceremonia-section .ceremonia-section {
+  background: transparent !important;
+  margin: 40px 20px !important;
+  padding: 0 !important;
+  text-align: center !important;
+  position: relative !important;
+}
+
+::ng-deep app-ceremonia-section .ceremonia-icono {
+  font-size: 2rem !important;
+  display: block !important;
+  margin-bottom: 6px !important;
+  opacity: 0.5 !important;
+}
+
+::ng-deep app-ceremonia-section h3 {
+  font-family: "Playfair Display", serif !important;
+  color: #c9a87c !important;
+  font-size: 1.3rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 6px !important;
+  margin-bottom: 18px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-ceremonia-section .ceremonia-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  align-items: center !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+::ng-deep app-ceremonia-section .info-line {
+  font-size: 1rem !important;
+  color: #5a4a3a !important;
+  margin: 0 !important;
+  padding: 4px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  background: transparent !important;
+}
+
+::ng-deep app-ceremonia-section .info-icon {
+  font-size: 1rem !important;
+  min-width: 20px !important;
+  opacity: 0.4 !important;
+}
+
+::ng-deep app-ceremonia-section .info-line:first-of-type {
+  font-family: "Playfair Display", serif !important;
+  font-size: 1.2rem !important;
+  color: #5c3d2e !important;
+  font-weight: 500 !important;
+  padding: 4px 0 !important;
+  margin-bottom: 2px !important;
+}
+
+::ng-deep app-ceremonia-section .info-line:nth-of-type(2) {
+  color: #8b7355 !important;
+  font-size: 0.95rem !important;
+}
+
+::ng-deep app-ceremonia-section .hora {
+  font-weight: 400 !important;
+  color: #a0806a !important;
+  letter-spacing: 1px !important;
+  font-size: 0.95rem !important;
+}
+
+::ng-deep app-ceremonia-section .btn-mapa {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-top: 14px !important;
+  padding: 0 !important;
+  color: #c9a87c !important;
+  text-decoration: none !important;
+  font-weight: 400 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 1px !important;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.3) !important;
+  padding-bottom: 2px !important;
+  transition: all 0.3s ease !important;
+}
+
+::ng-deep app-ceremonia-section .btn-mapa:hover {
+  color: #b8956a !important;
+  border-bottom-color: #b8956a !important;
+}
+
+::ng-deep app-ceremonia-section .btn-mapa::after {
+  content: "→" !important;
+  transition: transform 0.3s ease !important;
+}
+
+::ng-deep app-ceremonia-section .btn-mapa:hover::after {
+  transform: translateX(3px) !important;
+}
+
+::ng-deep app-ceremonia-section::after {
+  content: "✦" !important;
+  display: block !important;
+  text-align: center !important;
+  color: #c9a87c !important;
+  font-size: 0.7rem !important;
+  opacity: 0.25 !important;
+  margin-top: 30px !important;
+  letter-spacing: 20px !important;
+}
+
+/* 🔥 RECEPCIÓN */
+/* 🔥 RECEPCIÓN - FORZADO SIN CARD */
+::ng-deep app-recepcion-section .recepcion-section {
+  background: transparent !important;
+  margin: 40px 20px !important;
+  padding: 0 !important;
+  text-align: center !important;
+  position: relative !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+::ng-deep app-recepcion-section .section-icon {
+  font-size: 2rem !important;
+  display: block !important;
+  margin-bottom: 6px !important;
+  opacity: 0.5 !important;
+}
+
+::ng-deep app-recepcion-section h3 {
+  font-family: "Playfair Display", serif !important;
+  color: #c9a87c !important;
+  font-size: 1.3rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 6px !important;
+  margin-bottom: 18px !important;
+  text-transform: uppercase !important;
+}
+
+/* FORZAR: info-card SIN CARD */
+::ng-deep app-recepcion-section .info-card {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+
+/* FORZAR: info-item SIN CARD */
+::ng-deep app-recepcion-section .info-item {
+  background: transparent !important;
+  padding: 4px 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+::ng-deep app-recepcion-section .info-item:hover {
+  background: transparent !important;
+  transform: none !important;
+}
+
+::ng-deep app-recepcion-section .info-label {
+  display: none !important;
+}
+
+::ng-deep app-recepcion-section .info-value {
+  font-size: 1rem !important;
+  color: #5a4a3a !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* Lugar - primer elemento */
+::ng-deep app-recepcion-section .info-item:first-child .info-value {
+  font-family: "Playfair Display", serif !important;
+  font-size: 1.2rem !important;
+  color: #5c3d2e !important;
+  font-weight: 500 !important;
+}
+
+/* Dirección - segundo elemento */
+::ng-deep app-recepcion-section .info-item:nth-child(2) .info-value {
+  color: #8b7355 !important;
+  font-size: 0.95rem !important;
+}
+
+/* Hora - último elemento */
+::ng-deep app-recepcion-section .info-item:last-child .info-value {
+  font-weight: 400 !important;
+  color: #a0806a !important;
+  letter-spacing: 1px !important;
+  font-size: 0.95rem !important;
+}
+
+/* Quitar bullet points */
+::ng-deep app-recepcion-section .info-item::before {
+  content: "" !important;
+  display: none !important;
+}
+
+/* Botón mapa - SIN CARD */
+::ng-deep app-recepcion-section .btn-mapa {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-top: 14px !important;
+  padding: 0 !important;
+  color: #c9a87c !important;
+  text-decoration: none !important;
+  font-weight: 400 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 1px !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.3) !important;
+  padding-bottom: 2px !important;
+  transition: all 0.3s ease !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+::ng-deep app-recepcion-section .btn-mapa:hover {
+  background: transparent !important;
+  color: #b8956a !important;
+  border-bottom-color: #b8956a !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep app-recepcion-section .btn-mapa::after {
+  content: "→" !important;
+  transition: transform 0.3s ease !important;
+}
+
+::ng-deep app-recepcion-section .btn-mapa:hover::after {
+  transform: translateX(3px) !important;
+}
+
+/* Separador decorativo */
+::ng-deep app-recepcion-section::after {
+  content: "✦" !important;
+  display: block !important;
+  text-align: center !important;
+  color: #c9a87c !important;
+  font-size: 0.7rem !important;
+  opacity: 0.25 !important;
+  margin-top: 30px !important;
+  letter-spacing: 20px !important;
+}
+
+/* ==========================================================================
+   PADRES - Con verde cemento sutil
+   ========================================================================== */
+::ng-deep app-padres-section .padres-section {
+  text-align: center !important;
+  background: transparent !important;
+  margin: 30px 20px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep app-padres-section .padres-titulo {
+  font-family: "Playfair Display", serif !important;
+  font-size: 1rem !important;
+  color: #8b7355 !important;
+  font-weight: 300 !important;
+  letter-spacing: 3px !important;
+  margin-bottom: 12px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-padres-section .padres-nombres {
+  font-size: 1.05rem !important;
+  color: #5c3d2e !important;
+  line-height: 2 !important;
+}
+
+::ng-deep app-padres-section .padres-nombres strong {
+  color: #8a9a7a !important;
+  font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   PADRINOS Y DAMAS
+   ========================================================================== */
+::ng-deep app-padrinos-section .padrinos-section,
+::ng-deep app-damas-section .damas-section {
+  text-align: center !important;
+  background: transparent !important;
+  margin: 30px 20px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep app-padrinos-section .padrinos-titulo,
+::ng-deep app-damas-section .damas-titulo {
+  font-family: "Playfair Display", serif !important;
+  color: #c9a87c !important;
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 4px !important;
+  margin-bottom: 12px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-padrinos-section .padrinos-lista,
+::ng-deep app-damas-section .damas-lista {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  max-width: 400px !important;
+}
+
+::ng-deep app-padrinos-section .padrinos-lista li,
+::ng-deep app-damas-section .damas-lista li {
+  padding: 4px 0 !important;
+  color: #5a4a3a !important;
+  font-size: 1rem !important;
+}
+
+/* ==========================================================================
+   DRESS CODE
+   ========================================================================== */
+::ng-deep app-dresscode-section .dresscode-section {
+  text-align: center !important;
+  background: transparent !important;
+  margin: 30px 20px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep app-dresscode-section .dresscode-titulo {
+  font-family: "Playfair Display", serif !important;
+  color: #c9a87c !important;
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-dresscode-section .dresscode-descripcion {
+  color: #7a5a4a !important;
+  font-style: italic !important;
+  margin: 10px 0 !important;
+}
+
+::ng-deep app-dresscode-section .dresscode-sugerencias {
+  color: #8b7355 !important;
+  font-size: 0.9rem !important;
+}
+
+/* ==========================================================================
+   GALERÍA
+   ========================================================================== */
+::ng-deep app-galeria-section .galeria-section {
+  background: transparent !important;
+  margin: 30px 20px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+::ng-deep app-galeria-section .galeria-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+  margin-top: 15px !important;
+}
+
+::ng-deep app-galeria-section .galeria-grid img {
+  width: 100% !important;
+  height: 200px !important;
+  object-fit: cover !important;
+  border-radius: 12px !important;
+  border: 2px solid rgba(201, 168, 124, 0.15) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+::ng-deep app-galeria-section .galeria-grid img:hover {
+  transform: scale(1.03) !important;
+  border-color: #c9a87c !important;
+  box-shadow: 0 8px 25px rgba(201, 168, 124, 0.15) !important;
+}
+
+/* ==========================================================================
+   ITINERARIO
+   ========================================================================== */
+::ng-deep app-itinerario-section .itinerario-section {
+  background: transparent !important;
+  margin: 30px 20px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep app-itinerario-section .itinerario-titulo {
+  font-family: "Playfair Display", serif !important;
+  color: #c9a87c !important;
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 4px !important;
+  text-align: center !important;
+  margin-bottom: 16px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-itinerario-section .itinerario-item {
+  display: flex !important;
+  justify-content: space-between !important;
+  padding: 10px 0 !important;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.15) !important;
+}
+
+::ng-deep app-itinerario-section .itinerario-item:last-child {
+  border-bottom: none !important;
+}
+
+::ng-deep app-itinerario-section .itinerario-hora {
+  color: #c9a87c !important;
+  font-weight: 600 !important;
+  font-family: "Playfair Display", serif !important;
+}
+
+::ng-deep app-itinerario-section .itinerario-descripcion {
+  color: #5c3d2e !important;
+}
+
+/* ==========================================================================
+   HOSPEDAJE
+   ========================================================================== */
+::ng-deep app-hospedaje-section .hospedaje-section {
+  background: transparent !important;
+  margin: 30px 20px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+::ng-deep app-hospedaje-section .hospedaje-titulo {
+  font-family: "Playfair Display", serif !important;
+  color: #c9a87c !important;
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 4px !important;
+  margin-bottom: 16px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-hospedaje-section .hotel-card {
+  text-align: left !important;
+  padding: 12px 16px !important;
+  border-left: 3px solid #8a9a7a !important;
+  background: rgba(138, 154, 122, 0.06) !important;
+  border-radius: 8px !important;
+  margin-bottom: 10px !important;
+}
+
+::ng-deep app-hospedaje-section .hotel-nombre {
+  font-family: "Playfair Display", serif !important;
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+  color: #5c3d2e !important;
+}
+
+::ng-deep app-hospedaje-section .hotel-direccion,
+::ng-deep app-hospedaje-section .hotel-telefono {
+  color: #8b7355 !important;
+  font-size: 0.9rem !important;
+}
+
+/* ==========================================================================
+   HASHTAG
+   ========================================================================== */
+::ng-deep app-hashtag-section .hashtag-section {
+  background: transparent !important;
+  margin: 30px 20px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+::ng-deep app-hashtag-section .hashtag-titulo {
+  font-family: "Playfair Display", serif !important;
+  color: #c9a87c !important;
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-hashtag-section .hashtag-texto {
+  font-family: "Playfair Display", serif !important;
+  color: #8a9a7a !important;
+  font-size: 1.6rem !important;
+  letter-spacing: 2px !important;
+  background: rgba(201, 168, 124, 0.08) !important;
+  padding: 10px 25px !important;
+  border-radius: 50px !important;
+  display: inline-block !important;
+  margin-top: 10px !important;
+  border: 1px solid rgba(201, 168, 124, 0.15) !important;
+}
+
+::ng-deep app-hashtag-section .hashtag-mensaje {
+  color: #8b7355 !important;
+  font-style: italic !important;
+  margin-top: 10px !important;
+}
+
+/* ==========================================================================
+   CONTADOR - Con verde cemento y dorado
+   ========================================================================== */
+::ng-deep app-contador-section .contador-section {
+  background: transparent !important;
+  margin: 30px 20px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+::ng-deep app-contador-section .contador-titulo {
+  font-family: "Playfair Display", serif !important;
+  color: #8b7355 !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 6px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-contador-section .contador-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 12px !important;
+  margin-top: 16px !important;
+}
+
+::ng-deep app-contador-section .contador-item {
+  text-align: center !important;
+  background: rgba(201, 168, 124, 0.06) !important;
+  border-radius: 16px !important;
+  padding: 16px 8px !important;
+  border: 1px solid rgba(201, 168, 124, 0.08) !important;
+  transition: all 0.3s ease !important;
+}
+
+::ng-deep app-contador-section .contador-item:hover {
+  border-color: rgba(201, 168, 124, 0.2) !important;
+  background: rgba(201, 168, 124, 0.1) !important;
+}
+
+::ng-deep app-contador-section .contador-item .numero {
+  font-family: "Playfair Display", serif !important;
+  font-size: 2.8rem !important;
+  font-weight: 700 !important;
+  color: #c9a87c !important;
+  display: block !important;
+  line-height: 1 !important;
+}
+
+::ng-deep app-contador-section .contador-item .etiqueta {
+  font-size: 0.65rem !important;
+  color: #a0806a !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  margin-top: 4px !important;
+  display: block !important;
+}
+
+/* ==========================================================================
+   REGALOS
+   ========================================================================== */
+::ng-deep app-regalos-section .regalos-section {
+  background: transparent !important;
+  margin: 30px 20px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+::ng-deep app-regalos-section .regalos-titulo {
+  font-family: "Playfair Display", serif !important;
+  color: #c9a87c !important;
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-regalos-section .regalos-mensaje {
+  color: #7a5a4a !important;
+  font-style: italic !important;
+  margin: 10px 0 !important;
+}
+
+::ng-deep app-regalos-section .regalos-lista {
+  list-style: none !important;
+  padding: 0 !important;
+  text-align: center !important;
+}
+
+::ng-deep app-regalos-section .regalos-lista li {
+  padding: 6px 0 !important;
+  color: #5a4a3a !important;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.1) !important;
+}
+
+::ng-deep app-regalos-section .regalos-lista li:last-child {
+  border-bottom: none !important;
+}
+
+/* ==========================================================================
+   CONSIDERACIONES
+   ========================================================================== */
+::ng-deep app-consideraciones-section .consideraciones-section {
+  background: rgba(138, 154, 122, 0.06) !important;
+  border-radius: 20px !important;
+  margin: 20px !important;
+  padding: 25px 20px !important;
+  border: 1px solid rgba(138, 154, 122, 0.15) !important;
+  text-align: center !important;
+}
+
+::ng-deep app-consideraciones-section .consideraciones-titulo {
+  font-family: "Playfair Display", serif !important;
+  color: #8a9a7a !important;
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-consideraciones-section .consideraciones-lista {
+  list-style: none !important;
+  padding: 0 !important;
+  text-align: left !important;
+  max-width: 400px !important;
+  margin: 0 auto !important;
+}
+
+::ng-deep app-consideraciones-section .consideraciones-lista li {
+  padding: 6px 0 !important;
+  padding-left: 28px !important;
+  position: relative !important;
+  color: #5a4a3a !important;
+  font-size: 0.95rem !important;
+}
+
+::ng-deep app-consideraciones-section .consideraciones-lista li::before {
+  content: "✦" !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: #c9a87c !important;
+  font-size: 0.7rem !important;
+}
+
+/* ==========================================================================
+   CONFIRMACIÓN - Verde cemento + Dorado
+   ========================================================================== */
+::ng-deep app-confirmacion-section .confirmacion-section {
+  text-align: center !important;
+  background: transparent !important;
+  margin: 30px 20px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep app-confirmacion-section .confirmacion-titulo {
+  font-family: "Playfair Display", serif !important;
+  color: #c9a87c !important;
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-confirmacion-section .confirmacion-subtitulo {
+  color: #7a5a4a !important;
+  margin: 10px 0 !important;
+}
+
+::ng-deep app-confirmacion-section .btn-si {
+  background-color: #8a9a7a !important;
+  color: white !important;
+  border: none !important;
+  padding: 14px 40px !important;
+  border-radius: 50px !important;
+  font-family: "Playfair Display", serif !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 3px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease-in-out !important;
+  margin: 5px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-confirmacion-section .btn-si:hover {
+  background-color: #7a8a6a !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(138, 154, 122, 0.3) !important;
+}
+
+::ng-deep app-confirmacion-section .btn-no {
+  background-color: transparent !important;
+  color: #5c3d2e !important;
+  border: 1px solid #c9a87c !important;
+  padding: 14px 40px !important;
+  border-radius: 50px !important;
+  font-family: "Playfair Display", serif !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 3px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease-in-out !important;
+  margin: 5px !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep app-confirmacion-section .btn-no:hover {
+  background-color: rgba(201, 168, 124, 0.06) !important;
+  transform: translateY(-2px) !important;
+}
+
+::ng-deep app-confirmacion-section .btn-whatsapp {
+  background-color: #25d366 !important;
+  color: white !important;
+  border: none !important;
+  padding: 14px 35px !important;
+  border-radius: 50px !important;
+  font-family: "Playfair Display", serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 1px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease-in-out !important;
+  margin-top: 10px !important;
+}
+
+::ng-deep app-confirmacion-section .btn-whatsapp:hover {
+  transform: scale(1.03) !important;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3) !important;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+::ng-deep app-footer-section .footer-section {
+  background: linear-gradient(135deg, #5c3d2e, #4a3024) !important;
+  padding: 40px 20px !important;
+  text-align: center !important;
+  margin-top: 20px !important;
+}
+
+::ng-deep app-footer-section .footer-text {
+  font-family: "Playfair Display", serif !important;
+  color: #f5ede4 !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 4px !important;
+}
+
+::ng-deep app-footer-section .footer-text .fecha-footer {
+  color: #c9a87c !important;
+  opacity: 0.7 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 3px !important;
+  margin-top: 8px !important;
+  display: block !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 500px) {
+  ::ng-deep app-hero-section .titulo-principal {
+    font-size: 2.5rem !important;
+    letter-spacing: 8px !important;
+  }
+
+  ::ng-deep app-hero-section .nombres {
+    font-size: 2rem !important;
+    letter-spacing: 5px !important;
+  }
+
+  ::ng-deep app-contador-section .contador-item .numero {
+    font-size: 2rem !important;
+  }
+
+  ::ng-deep app-contador-section .contador-item {
+    padding: 12px 4px !important;
+  }
+
+  ::ng-deep app-galeria-section .galeria-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  ::ng-deep app-galeria-section .galeria-grid img {
+    height: 130px !important;
+  }
+
+  ::ng-deep app-confirmacion-section .btn-si,
+  ::ng-deep app-confirmacion-section .btn-no {
+    padding: 12px 30px !important;
+    font-size: 0.9rem !important;
+    display: block !important;
+    width: 80% !important;
+    margin: 8px auto !important;
+  }
+
+  ::ng-deep app-contador-section .contador-grid {
+    gap: 8px !important;
+  }
+
+  ::ng-deep app-ceremonia-section .ceremonia-section,
+  ::ng-deep app-recepcion-section .recepcion-section,
+  ::ng-deep app-padres-section .padres-section,
+  ::ng-deep app-padrinos-section .padrinos-section,
+  ::ng-deep app-damas-section .damas-section,
+  ::ng-deep app-dresscode-section .dresscode-section,
+  ::ng-deep app-galeria-section .galeria-section,
+  ::ng-deep app-itinerario-section .itinerario-section,
+  ::ng-deep app-hospedaje-section .hospedaje-section,
+  ::ng-deep app-hashtag-section .hashtag-section,
+  ::ng-deep app-contador-section .contador-section,
+  ::ng-deep app-regalos-section .regalos-section,
+  ::ng-deep app-consideraciones-section .consideraciones-section,
+  ::ng-deep app-confirmacion-section .confirmacion-section,
+  ::ng-deep app-invitacion-valida-section .invitacion-valida-section {
+    margin: 15px 12px !important;
+  }
+
+  ::ng-deep app-consideraciones-section .consideraciones-section {
+    padding: 20px 15px !important;
+  }
+
+  ::ng-deep app-hashtag-section .hashtag-texto {
+    font-size: 1.2rem !important;
+    padding: 8px 18px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  ::ng-deep app-hero-section .titulo-principal {
+    font-size: 4.5rem !important;
+  }
+
+  ::ng-deep app-hero-section .nombres {
+    font-size: 3.5rem !important;
+  }
+
+  ::ng-deep app-galeria-section .galeria-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  ::ng-deep app-contador-section .contador-item .numero {
+    font-size: 3.5rem !important;
+  }
+
+  ::ng-deep app-contador-section .contador-item {
+    padding: 20px 12px !important;
+  }
+}

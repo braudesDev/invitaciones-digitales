@@ -9,5 +9,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./ceremonia-section.component.css'],
 })
 export class CeremoniaSectionComponent {
-  @Input() data: any;
+  @Input() data: any; // Datos de la ceremonia
+  @Input() recepcionData: any; //  NUEVO: Datos de la recepción
+  @Input() fechaEvento: any; //
+
+  encodeURIComponent(text: string): string {
+    return encodeURIComponent(text);
+  }
 }

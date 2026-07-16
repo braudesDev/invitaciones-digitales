@@ -2,8 +2,10 @@
   *ngIf="data"
   class="invitacion-container"
   [ngStyle]="{
-    '--primary-color': data.primaryColor,
-    '--secondary-color': data.secondaryColor,
+    '--primary': data.primaryColor,
+    '--secondary': data.secondaryColor,
+    '--accent': data.accentColor,
+    '--text': data.textColor,
     'font-family': data.fontFamily,
   }"
 >
@@ -18,13 +20,16 @@
     [colorTexto]="data.colorTexto ?? '#ffffff'"
   ></app-hero-section>
 
-  <!-- Nos Casamos -->
+  <!-- Nos Casamos (Frase principal) -->
   <app-nos-casamos-section
     *ngIf="data.frasePrincipal || data.mensajePrincipal"
     [frase]="data.frasePrincipal || ''"
     [mensaje]="data.mensajePrincipal || ''"
     [fontFamily]="data.fontFamily ?? 'Playfair Display, serif'"
-    [colorTexto]="data.secondaryColor ?? '#333333'"
+    [primaryColor]="data.primaryColor ?? '#7A8B7D'"
+    [secondaryColor]="data.secondaryColor ?? '#CBB89D'"
+    [accentColor]="data.accentColor ?? '#B08A4A'"
+    [textColor]="data.textColor ?? '#3F4A42'"
   ></app-nos-casamos-section>
 
   <!-- 🎟️ INVITACIÓN VÁLIDA (nombre, pases, mensaje, QR) -->

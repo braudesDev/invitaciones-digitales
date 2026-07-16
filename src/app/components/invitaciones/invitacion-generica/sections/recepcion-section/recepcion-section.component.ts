@@ -10,4 +10,9 @@ import { CommonModule } from '@angular/common';
 })
 export class RecepcionSectionComponent {
   @Input() data: any;
+  @Input() fechaEvento: any;
+
+  encodeURIComponent(text: string): string {
+    return encodeURIComponent(text);
+  }
 }

@@ -1,9 +1,24 @@
-<div *ngIf="data && data.length > 0" class="padrinos-section">
-  <div class="section-icon">👑</div>
-  <h3>Nuestros Padrinos</h3>
-  <div class="padrinos-grid">
-    <div class="padrino-card" *ngFor="let padrino of data">
-      <span class="padrino-name">{{ padrino }}</span>
+<div *ngIf="data && data.length > 0" class="padrinos-container">
+  <div class="padrinos-header">
+    <span class="padrinos-icono">👑</span>
+    <h2 class="padrinos-titulo">Nuestros Padrinos</h2>
+    <div class="padrinos-divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">✦</span>
+      <span class="divider-line"></span>
     </div>
+  </div>
+
+  <!-- Swiper con efecto creative -->
+  <div class="padrinos-swiper swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" *ngFor="let padrino of data">
+        <div class="padrino-card">
+          <div class="padrino-avatar">👑</div>
+          <span class="padrino-nombre">{{ padrino }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
   </div>
 </div>
