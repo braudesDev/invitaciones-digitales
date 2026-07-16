@@ -1,9 +1,0 @@
-<div *ngIf="data && data.length > 0" class="padrinos-section">
-  <div class="section-icon">👑</div>
-  <h3>Nuestros Padrinos</h3>
-  <div class="padrinos-grid">
-    <div class="padrino-card" *ngFor="let padrino of data">
-      <span class="padrino-name">{{ padrino }}</span>
-    </div>
-  </div>
-</div>
