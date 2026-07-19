@@ -8,11 +8,19 @@ import {
   ref,
   uploadBytes,
   getDownloadURL,
-} from '@angular/fire/storage'; //
+} from '@angular/fire/storage';
 import { ActivatedRoute } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+
+// 👇 IMPORTAR EL MODELO DE PADRINOS
+import {
+  PadrinoAsignado,
+  ROLES_PADrinos,
+  TipoRolPadrino,
+  getRolesPorEvento,
+} from '../../../models/padrino.model';
 
 export interface InvitacionCompleta {
   id?: string;
@@ -58,12 +66,13 @@ export interface InvitacionCompleta {
     novia?: string;
     fotoNovia?: string;
     fotoNovio?: string;
-    fotoMadreNovia?: string; // 👈 Nueva
-    fotoPadreNovia?: string; // 👈 Nueva
-    fotoMadreNovio?: string; // 👈 Nueva
-    fotoPadreNovio?: string; // 👈 Nueva
+    fotoMadreNovia?: string;
+    fotoPadreNovia?: string;
+    fotoMadreNovio?: string;
+    fotoPadreNovio?: string;
   };
-  padrinos: string[];
+  // 👇 CAMBIAR: padrinos ahora es PadrinoAsignado[]
+  padrinos: PadrinoAsignado[];
   regalos: { texto: string; links: { nombre: string; url: string }[] };
   confirmacion: { telefono: string; whatsapp: string; link: string };
   hashtag: string;
@@ -147,9 +156,9 @@ export class FormularioInvitacionComponent implements OnInit {
     fecha: new Date().toISOString().substring(0, 16),
     lugar: '',
     heroImage: '',
-    primaryColor: '#7A8B7D', // 👈 CAMBIADO (era #aef9b3)
-    secondaryColor: '#CBB89D', // 👈 CAMBIADO (era #000000)
-    accentColor: '#B08A4A', // 👈 AGREGADO
+    primaryColor: '#7A8B7D',
+    secondaryColor: '#CBB89D',
+    accentColor: '#B08A4A',
     textColor: '#3F4A42',
     fontFamily: "'Playfair Display', serif",
     frasePrincipal: '',
@@ -164,7 +173,14 @@ export class FormularioInvitacionComponent implements OnInit {
       mapaUrl: '',
       imagenTemplo: '',
     },
-    recepcion: { lugar: '', direccion: '', hora: '' },
+    recepcion: {
+      lugar: '',
+      direccion: '',
+      hora: '',
+      mapaUrl: '',
+      imagen: '',
+      descripcion: '',
+    },
     dressCode: { descripcion: '', sugerencia: '' },
     padres: {
       padreNovia: '',
@@ -180,7 +196,7 @@ export class FormularioInvitacionComponent implements OnInit {
       fotoMadreNovio: '',
       fotoPadreNovio: '',
     },
-    padrinos: [],
+    padrinos: [], // 👈 Ahora es PadrinoAsignado[]
     regalos: { texto: '', links: [] },
     confirmacion: { telefono: '', whatsapp: '', link: '' },
     hashtag: '',
@@ -213,18 +229,34 @@ export class FormularioInvitacionComponent implements OnInit {
       const snap = await getDoc(ref);
       if (snap.exists()) {
         const data = snap.data() as Partial<InvitacionCompleta>;
+
+        // 👇 CONVERTIR PADRINOS VIEJOS (string[]) A NUEVO FORMATO
+        if (
+          data.padrinos &&
+          Array.isArray(data.padrinos) &&
+          typeof data.padrinos[0] === 'string'
+        ) {
+          const padrinosViejos = data.padrinos as any as string[];
+          data.padrinos = padrinosViejos.map((nombre) => ({
+            nombre: nombre,
+            rol: 'personalizado',
+            observaciones: '',
+          }));
+        }
+
         this.nuevaInvitacion = {
           ...this.nuevaInvitacion,
           ...data,
-          photos: data.photos || [], // 👈 FORZAR ARRAY VACÍO
+          photos: data.photos || [],
+          padrinos: data.padrinos || [],
         };
 
-        // Detectar paleta actual
         this.detectarPaletaPorColores();
       }
       this.cargando = false;
     }
   }
+
   async subirImagen(event: any) {
     const file = event.target.files[0];
     if (!file) return;
@@ -246,7 +278,6 @@ export class FormularioInvitacionComponent implements OnInit {
       formData.append('file', file);
       formData.append('upload_preset', 'invitaciones-app');
 
-      // 👇 TU CLOUD NAME
       const cloudName = 'drsyb53ae';
 
       const response = await this.http
@@ -270,13 +301,66 @@ export class FormularioInvitacionComponent implements OnInit {
     }
   }
 
+  // ============================================
+  // 👇 MÉTODOS PARA PADRINOS (NUEVOS)
+  // ============================================
+
+  getRolesDisponibles(): string[] {
+    return getRolesPorEvento(this.nuevaInvitacion.tipo);
+  }
+
+  getRolLabel(rolId: string): string {
+    return ROLES_PADrinos[rolId as TipoRolPadrino]?.nombre || rolId;
+  }
+
+  getRolIcon(rolId: string): string {
+    return ROLES_PADrinos[rolId as TipoRolPadrino]?.icon || '⭐';
+  }
+
+  getRolDescripcion(rolId: string): string {
+    return ROLES_PADrinos[rolId as TipoRolPadrino]?.descripcion || '';
+  }
+
+  getPadrinosAgrupados(): { rolId: string; rol: string; nombres: string[] }[] {
+    const grupos: { [key: string]: { nombres: string[] } } = {};
+
+    this.nuevaInvitacion.padrinos.forEach((p) => {
+      if (p.nombre && p.nombre.trim()) {
+        if (!grupos[p.rol]) {
+          grupos[p.rol] = { nombres: [] };
+        }
+        grupos[p.rol].nombres.push(p.nombre);
+      }
+    });
+
+    return Object.entries(grupos).map(([rolId, data]) => ({
+      rolId: rolId,
+      rol: this.getRolLabel(rolId),
+      nombres: data.nombres,
+    }));
+  }
+
   agregarPadrino() {
-    this.nuevaInvitacion.padrinos.push('');
+    const rolesDisponibles = this.getRolesDisponibles();
+    this.nuevaInvitacion.padrinos.push({
+      nombre: '',
+      rol: rolesDisponibles.length > 0 ? rolesDisponibles[0] : 'personalizado',
+      observaciones: '',
+    });
   }
 
   eliminarPadrino(index: number) {
     this.nuevaInvitacion.padrinos.splice(index, 1);
   }
+
+  onRolChange(index: number) {
+    // Opcional: Actualizar algo cuando cambia el rol
+    console.log('Rol cambiado para padrino', index);
+  }
+
+  // ============================================
+  // MÉTODOS EXISTENTES
+  // ============================================
 
   agregarRegaloLink() {
     this.nuevaInvitacion.regalos.links.push({ nombre: '', url: '' });
@@ -286,7 +370,6 @@ export class FormularioInvitacionComponent implements OnInit {
     this.nuevaInvitacion.regalos.links.splice(index, 1);
   }
 
-  // Agregar foto a la galería
   agregarFoto() {
     if (!this.nuevaInvitacion.photos) {
       this.nuevaInvitacion.photos = [];
@@ -294,7 +377,6 @@ export class FormularioInvitacionComponent implements OnInit {
     this.nuevaInvitacion.photos.push('');
   }
 
-  // Eliminar foto de la galería
   eliminarFoto(index: number) {
     this.nuevaInvitacion.photos?.splice(index, 1);
   }
@@ -305,7 +387,6 @@ export class FormularioInvitacionComponent implements OnInit {
       return;
     }
 
-    // 👉 OBTENER USUARIO ACTUAL
     const user = this.auth.currentUser;
     if (!user) {
       Swal.fire(
@@ -316,15 +397,20 @@ export class FormularioInvitacionComponent implements OnInit {
       return;
     }
 
+    // 👇 LIMPIAR PADRINOS VACÍOS
+    const padrinosFiltrados = this.nuevaInvitacion.padrinos.filter(
+      (p) => p.nombre && p.nombre.trim() !== '',
+    );
+
     this.nuevaInvitacion.slug = this.nuevaInvitacion.name
       .toLowerCase()
       .trim()
       .replace(/\s+/g, '-')
       .replace(/[^\w\-]+/g, '');
 
-    // 👉 AGREGAR anfitrionId AL OBJETO A GUARDAR
     const invitacionParaGuardar = {
       ...this.nuevaInvitacion,
+      padrinos: padrinosFiltrados,
       anfitrionId: user.uid,
     };
 
@@ -346,24 +432,45 @@ export class FormularioInvitacionComponent implements OnInit {
         fecha: new Date().toISOString().substring(0, 16),
         lugar: '',
         heroImage: '',
-        primaryColor: '#7A8B7D', // 👈 CAMBIADO (era #aef9b3)
-        secondaryColor: '#CBB89D', // 👈 CAMBIADO (era #000000)
-        accentColor: '#B08A4A', // 👈 AGREGADO
+        primaryColor: '#7A8B7D',
+        secondaryColor: '#CBB89D',
+        accentColor: '#B08A4A',
         textColor: '#3F4A42',
         fontFamily: "'Playfair Display', serif",
         frasePrincipal: '',
         mensajePrincipal: '',
         historia: '',
         photos: [],
-        anfitrionId: '', // 👈 AGREGAR TAMBIÉN AQUÍ
-        ceremonia: { lugar: '', direccion: '', hora: '' },
-        recepcion: { lugar: '', direccion: '', hora: '' },
+        anfitrionId: '',
+        ceremonia: {
+          lugar: '',
+          direccion: '',
+          hora: '',
+          mapaUrl: '',
+          imagenTemplo: '',
+        },
+        recepcion: {
+          lugar: '',
+          direccion: '',
+          hora: '',
+          mapaUrl: '',
+          imagen: '',
+          descripcion: '',
+        },
         dressCode: { descripcion: '', sugerencia: '' },
         padres: {
           padreNovia: '',
           madreNovia: '',
           padreNovio: '',
           madreNovio: '',
+          novio: '',
+          novia: '',
+          fotoNovia: '',
+          fotoNovio: '',
+          fotoMadreNovia: '',
+          fotoPadreNovia: '',
+          fotoMadreNovio: '',
+          fotoPadreNovio: '',
         },
         padrinos: [],
         regalos: { texto: '', links: [] },

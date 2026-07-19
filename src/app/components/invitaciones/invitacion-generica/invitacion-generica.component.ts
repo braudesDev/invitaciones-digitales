@@ -21,6 +21,7 @@ import { ConsideracionesSectionComponent } from './sections/consideraciones-sect
 import { ConfirmacionSectionComponent } from './sections/confirmacion-section/confirmacion-section.component';
 import { FooterSectionComponent } from './sections/footer-section/footer-section.component';
 import { GaleriaSectionComponent } from './sections/galeria-section/galeria-section.component';
+import { PadrinoAsignado } from '../../../models/padrino.model';
 
 @Component({
   selector: 'app-invitacion-generica',
@@ -75,5 +76,60 @@ export class InvitacionGenericaComponent implements OnInit {
       month: 'long',
       year: 'numeric',
     });
+  }
+
+  // 👇 AGREGAR ESTE GETTER
+  get padrinosFormateados(): PadrinoAsignado[] {
+    console.log('🔍 EJECUTANDO GETTER padrinosFormateados');
+    console.log('🔍 data:', this.data);
+    console.log('🔍 data.padrinos:', this.data?.padrinos);
+    console.log('🔍 tipo de data.padrinos:', typeof this.data?.padrinos);
+    console.log('🔍 es array?', Array.isArray(this.data?.padrinos));
+    console.log('🔍 longitud:', this.data?.padrinos?.length);
+
+    if (!this.data?.padrinos || this.data.padrinos.length === 0) {
+      console.log('⚠️ No hay padrinos');
+      return [];
+    }
+
+    const primerElemento = this.data.padrinos[0];
+    console.log('🔍 Primer elemento:', primerElemento);
+    console.log('🔍 Tipo del primer elemento:', typeof primerElemento);
+    console.log('🔍 ¿Es string?', typeof primerElemento === 'string');
+    console.log(
+      '🔍 ¿Es objeto con nombre?',
+      typeof primerElemento === 'object' &&
+        primerElemento !== null &&
+        'nombre' in primerElemento,
+    );
+
+    // Si es string, convertir a objeto PadrinoAsignado
+    if (typeof primerElemento === 'string') {
+      console.log('🔄 Convirtiendo strings a objetos');
+      const resultado = (this.data.padrinos as string[]).map(
+        (nombre: string) => ({
+          nombre: nombre,
+          rol: 'personalizado',
+          observaciones: '',
+        }),
+      );
+      console.log('✅ Padrinos convertidos:', resultado);
+      return resultado;
+    }
+
+    // Si ya es objeto con 'nombre', devolverlo
+    if (
+      typeof primerElemento === 'object' &&
+      primerElemento !== null &&
+      'nombre' in primerElemento
+    ) {
+      console.log('✅ Ya son objetos PadrinoAsignado');
+      const resultado = this.data.padrinos as unknown as PadrinoAsignado[];
+      console.log('📊 Padrinos:', resultado);
+      return resultado;
+    }
+
+    console.log('⚠️ Formato desconocido');
+    return [];
   }
 }

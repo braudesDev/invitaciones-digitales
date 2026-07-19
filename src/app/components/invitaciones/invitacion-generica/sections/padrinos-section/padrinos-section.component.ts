@@ -1,7 +1,19 @@
-import { Component, Input, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  OnDestroy,
+  ElementRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Swiper from 'swiper';
-import { Pagination, EffectCreative } from 'swiper/modules';
+import { Pagination, EffectCreative, Autoplay } from 'swiper/modules';
+import {
+  PadrinoAsignado,
+  ROLES_PADrinos,
+  TipoRolPadrino,
+} from '../../../../../models/padrino.model';
 
 @Component({
   selector: 'app-padrinos-section',
@@ -9,15 +21,73 @@ import { Pagination, EffectCreative } from 'swiper/modules';
   imports: [CommonModule],
   templateUrl: './padrinos-section.component.html',
   styleUrls: ['./padrinos-section.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PadrinosSectionComponent implements AfterViewInit, OnDestroy {
-  @Input() data: string[] = [];
+  // 👇 CAMBIAR DE string[] a PadrinoAsignado[]
+  @Input() data: PadrinoAsignado[] = [];
+  @Input() titulo: string = 'Nuestros Padrinos';
 
   private swiperInstance: any;
 
+  constructor(private el: ElementRef) {}
+
+  // 👇 GETTER: Agrupar padrinos por rol
+  get padrinosAgrupados(): { rol: string; nombres: string[]; icon: string }[] {
+    if (!this.data || this.data.length === 0) {
+      return [];
+    }
+
+    const grupos = this.data.reduce(
+      (acc, padrino) => {
+        if (!padrino || !padrino.nombre) {
+          return acc;
+        }
+
+        const rolId = padrino.rol || 'personalizado';
+        const rolInfo = ROLES_PADrinos[rolId as TipoRolPadrino];
+
+        if (!acc[rolId]) {
+          acc[rolId] = {
+            nombres: [],
+            icon: rolInfo?.icon || '⭐',
+            nombreRol: rolInfo?.nombre || rolId,
+          };
+        }
+        acc[rolId].nombres.push(padrino.nombre);
+        return acc;
+      },
+      {} as {
+        [key: string]: { nombres: string[]; icon: string; nombreRol: string };
+      },
+    );
+
+    return Object.entries(grupos).map(([rolId, data]) => ({
+      rol: data.nombreRol,
+      nombres: data.nombres,
+      icon: data.icon,
+    }));
+  }
+
+  // 👇 GETTER: Verificar si hay padrinos
+  get tienePadrinos(): boolean {
+    return this.data && this.data.length > 0;
+  }
+
+  // padrinos-section.component.ts
+
   ngAfterViewInit(): void {
-    if (this.data && this.data.length > 0) {
+    console.log('📊 Padrinos recibidos en componente:', this.data);
+    console.log('📊 Tipo de data:', typeof this.data);
+    console.log('📊 Es array?', Array.isArray(this.data));
+    console.log('📊 Longitud:', this.data?.length);
+    console.log('📊 Primer elemento:', this.data?.[0]);
+
+    if (this.tienePadrinos) {
+      console.log('✅ Hay padrinos, inicializando Swiper...');
       setTimeout(() => this.inicializarSwiper(), 100);
+    } else {
+      console.log('⚠️ No hay padrinos en el componente');
     }
   }
 
@@ -28,9 +98,7 @@ export class PadrinosSectionComponent implements AfterViewInit, OnDestroy {
   }
 
   inicializarSwiper(): void {
-    Swiper.use([Pagination, EffectCreative]);
-
-    const totalPadrinos = this.data.length;
+    Swiper.use([Pagination, EffectCreative, Autoplay]);
 
     const efectoSeleccionado: number = 1;
 
@@ -101,10 +169,13 @@ export class PadrinosSectionComponent implements AfterViewInit, OnDestroy {
         };
     }
 
+    const progressCircle = document.querySelector('.autoplay-progress svg');
+    const progressContent = document.querySelector('.autoplay-progress span');
+
     this.swiperInstance = new Swiper('.padrinos-swiper', {
-      slidesPerView: 1, //
+      slidesPerView: 1,
       spaceBetween: 20,
-      loop: false,
+      loop: true,
       grabCursor: true,
       effect: 'creative',
       creativeEffect: creativeEffect,
@@ -119,17 +190,35 @@ export class PadrinosSectionComponent implements AfterViewInit, OnDestroy {
           return '<span class="' + className + '">' + (index + 1) + '</span>';
         },
       },
+      on: {
+        autoplayTimeLeft(s: any, time: number, progress: number) {
+          // ✅ Asegurar que progress esté entre 0 y 1
+          const normalizedProgress = Math.max(0, Math.min(1, progress));
+
+          if (progressCircle) {
+            (progressCircle as HTMLElement).style.setProperty(
+              '--progress',
+              String(1 - normalizedProgress),
+            );
+          }
+          if (progressContent) {
+            // ✅ Asegurar que el tiempo no sea negativo
+            const seconds = Math.ceil(Math.max(0, time / 1000));
+            progressContent.textContent = `${seconds}s`;
+          }
+        },
+      },
       breakpoints: {
         480: {
           slidesPerView: 1,
           spaceBetween: 20,
         },
         768: {
-          slidesPerView: 1, // 👈 En tablet también 1 para mantener el efecto
+          slidesPerView: 1,
           spaceBetween: 20,
         },
         1024: {
-          slidesPerView: 1, // 👈 En escritorio también 1 para mantener el efecto
+          slidesPerView: 1,
           spaceBetween: 30,
         },
       },

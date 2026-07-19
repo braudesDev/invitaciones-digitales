@@ -56,8 +56,9 @@
     [data]="data.padres"
   ></app-padres-section>
   <app-padrinos-section
+    [data]="padrinosFormateados"
     *ngIf="data.padrinos"
-    [data]="data.padrinos"
+    [titulo]="'Nuestros Padrinos'"
   ></app-padrinos-section>
   <app-damas-section *ngIf="data.damas" [data]="data.damas"></app-damas-section>
   <app-dresscode-section

@@ -1,7 +1,9 @@
-<div *ngIf="data && data.length > 0" class="padrinos-container">
+<!-- padrinos-section.component.html -->
+
+<div *ngIf="tienePadrinos" class="padrinos-container">
   <div class="padrinos-header">
     <span class="padrinos-icono">👑</span>
-    <h2 class="padrinos-titulo">Nuestros Padrinos</h2>
+    <h2 class="padrinos-titulo">{{ titulo }}</h2>
     <div class="padrinos-divider">
       <span class="divider-line"></span>
       <span class="divider-icon">✦</span>
@@ -12,13 +14,38 @@
   <!-- Swiper con efecto creative -->
   <div class="padrinos-swiper swiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" *ngFor="let padrino of data">
+      <!-- 👇 CADA SLIDE = UN ROL CON SUS PADRINOS -->
+      <div class="swiper-slide" *ngFor="let grupo of padrinosAgrupados">
         <div class="padrino-card">
-          <div class="padrino-avatar">👑</div>
-          <span class="padrino-nombre">{{ padrino }}</span>
+          <div class="padrino-rol-icon">{{ grupo.icon }}</div>
+          <h3 class="padrino-rol">{{ grupo.rol }}</h3>
+          <div class="padrino-nombres">
+            <span *ngFor="let nombre of grupo.nombres; let last = last">
+              {{ nombre }}<span *ngIf="!last">, </span>
+            </span>
+          </div>
         </div>
       </div>
     </div>
     <div class="swiper-pagination"></div>
+    <div class="autoplay-progress">
+      <svg viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="20"></circle>
+      </svg>
+      <span></span>
+    </div>
   </div>
+</div>
+
+<div *ngIf="!tienePadrinos" class="padrinos-container">
+  <div class="padrinos-header">
+    <span class="padrinos-icono">👑</span>
+    <h2 class="padrinos-titulo">{{ titulo }}</h2>
+    <div class="padrinos-divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">✦</span>
+      <span class="divider-line"></span>
+    </div>
+  </div>
+  <p class="sin-padrinos">Aún no hay padrinos asignados</p>
 </div>

@@ -531,47 +531,110 @@
           <span class="icono">{{ acordeonPadrinos ? "▲" : "▼" }}</span>
         </div>
         <div class="acordeon-body" [class.abierto]="acordeonPadrinos">
+          <!-- 📋 Vista previa agrupada -->
+          <div
+            *ngIf="nuevaInvitacion.padrinos.length > 0"
+            class="padrinos-preview"
+          >
+            <div
+              *ngFor="let grupo of getPadrinosAgrupados()"
+              class="grupo-preview"
+            >
+              <strong>{{ grupo.rol }}:</strong>
+              <span>{{ grupo.nombres.join(", ") }}</span>
+              <br />
+              <small class="grupo-descripcion">{{
+                getRolDescripcion(grupo.rolId)
+              }}</small>
+            </div>
+          </div>
+
+          <!-- Formulario de padrinos -->
           <div
             *ngFor="
               let padrino of nuevaInvitacion.padrinos;
               let i = index;
               trackBy: trackByIndex
             "
-            class="campo-dinamico"
+            class="padrino-item"
           >
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padrinos[i]"
-              [name]="'padrino_' + i"
-              placeholder="Padrino {{ i + 1 }}"
-              (click)="$event.stopPropagation()"
-            />
-            <button
-              type="button"
-              (click)="eliminarPadrino(i); $event.stopPropagation()"
-            >
-              ❌
-            </button>
+            <div class="padrino-card">
+              <div class="padrino-header">
+                <span class="padrino-numero">#{{ i + 1 }}</span>
+                <button
+                  type="button"
+                  class="btn-eliminar-padrino"
+                  (click)="eliminarPadrino(i); $event.stopPropagation()"
+                >
+                  ❌
+                </button>
+              </div>
+
+              <div class="padrino-fields">
+                <!-- Nombre -->
+                <div class="field-group">
+                  <label>Nombre(s)</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="padrino.nombre"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Ej: Rocío y Pedro"
+                    (click)="$event.stopPropagation()"
+                    class="form-control"
+                    required
+                  />
+                </div>
+
+                <!-- Rol -->
+                <div class="field-group">
+                  <label>Rol</label>
+                  <select
+                    [(ngModel)]="padrino.rol"
+                    [ngModelOptions]="{ standalone: true }"
+                    (change)="onRolChange(i)"
+                    (click)="$event.stopPropagation()"
+                    class="form-control"
+                  >
+                    <option
+                      *ngFor="let rol of getRolesDisponibles()"
+                      [value]="rol"
+                    >
+                      {{ getRolIcon(rol) }} {{ getRolLabel(rol) }}
+                    </option>
+                  </select>
+                  <small class="help-text" *ngIf="padrino.rol">
+                    {{ getRolDescripcion(padrino.rol) }}
+                  </small>
+                </div>
+
+                <!-- Observaciones -->
+                <div class="field-group full-width">
+                  <label>Observaciones (opcional)</label>
+                  <textarea
+                    [(ngModel)]="padrino.observaciones"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Notas adicionales..."
+                    (click)="$event.stopPropagation()"
+                    class="form-control"
+                    rows="2"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
           </div>
+
           <button
             type="button"
             class="btn-agregar"
             (click)="agregarPadrino(); $event.stopPropagation()"
           >
-            + Agregar padrino
+            ➕ Agregar padrino
           </button>
         </div>
       </div>
 
       <!-- Acordeón: Regalos -->
       <div class="acordeon">
-        <div
-          class="acordeon-header"
-          (click)="acordeonRegalos = !acordeonRegalos"
-        >
-          <span>🎁 Mesa de regalos</span>
-          <span class="icono">{{ acordeonRegalos ? "▲" : "▼" }}</span>
-        </div>
         <div class="acordeon-body" [class.abierto]="acordeonRegalos">
           <textarea
             [(ngModel)]="nuevaInvitacion.regalos.texto"
@@ -585,13 +648,13 @@
             <input
               type="text"
               [(ngModel)]="link.nombre"
-              [name]="'regalo_nombre_' + i"
+              [ngModelOptions]="{ standalone: true }"
               placeholder="Nombre tienda"
             />
             <input
               type="url"
               [(ngModel)]="link.url"
-              [name]="'regalo_url_' + i"
+              [ngModelOptions]="{ standalone: true }"
               placeholder="URL"
             />
             <button type="button" (click)="eliminarRegaloLink(i)">❌</button>
@@ -608,13 +671,6 @@
 
       <!-- Acordeón: Galería -->
       <div class="acordeon">
-        <div
-          class="acordeon-header"
-          (click)="acordeonGaleria = !acordeonGaleria"
-        >
-          <span>📸 Galería de fotos</span>
-          <span class="icono">{{ acordeonGaleria ? "▲" : "▼" }}</span>
-        </div>
         <div class="acordeon-body" [class.abierto]="acordeonGaleria">
           <div
             *ngFor="let foto of nuevaInvitacion.photos; let i = index"
@@ -623,7 +679,7 @@
             <input
               type="url"
               [(ngModel)]="nuevaInvitacion.photos[i]"
-              [name]="'foto_' + i"
+              [ngModelOptions]="{ standalone: true }"
               placeholder="URL de la imagen"
             />
             <button type="button" (click)="eliminarFoto(i)">❌</button>
@@ -631,15 +687,6 @@
           <button type="button" class="btn-agregar" (click)="agregarFoto()">
             + Agregar foto
           </button>
-          <div class="preview-fotos" *ngIf="nuevaInvitacion.photos.length > 0">
-            <div class="preview-grid">
-              <img
-                *ngFor="let foto of nuevaInvitacion.photos"
-                [src]="foto"
-                alt="Preview"
-              />
-            </div>
-          </div>
         </div>
       </div>
 
