@@ -31,7 +31,10 @@
             "scripts": [
               "node_modules/aos/dist/aos.js",
               "node_modules/swiper/swiper-bundle.min.js"
-
+            ],
+            "allowedCommonJsDependencies": [
+              "sweetalert2",
+              "aos"
             ]
           },
           "configurations": {
@@ -39,7 +42,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "3mb",
                   "maximumError": "5MB"
                 },
                 {

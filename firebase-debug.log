@@ -1,0 +1,116 @@
+[debug] [2026-07-19T06:29:19.705Z] ----------------------------------------------------------------------
+[debug] [2026-07-19T06:29:19.707Z] Command:       /home/braudesdev/.nvm/versions/node/v20.19.1/bin/node /home/braudesdev/.nvm/versions/node/v20.19.1/bin/firebase deploy
+[debug] [2026-07-19T06:29:19.708Z] CLI Version:   15.23.0
+[debug] [2026-07-19T06:29:19.708Z] Platform:      linux
+[debug] [2026-07-19T06:29:19.708Z] Node Version:  v20.19.1
+[debug] [2026-07-19T06:29:19.708Z] Detected Agent: unknown
+[debug] [2026-07-19T06:29:19.708Z] Time:          Sun Jul 19 2026 00:29:19 GMT-0600 (hora estándar central)
+[debug] [2026-07-19T06:29:19.708Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-07-19T06:29:21.087Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-07-19T06:29:21.087Z] > authorizing via signed-in user (braudesdev@gmail.com)
+[debug] [2026-07-19T06:29:21.087Z] [iam] checking project invitaciones-cdbfe for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-07-19T06:29:21.089Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:21.090Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:21.092Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/invitaciones-cdbfe:testIamPermissions [none]
+[debug] [2026-07-19T06:29:21.093Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/invitaciones-cdbfe:testIamPermissions  x-goog-user-project=invitaciones-cdbfe
+[debug] [2026-07-19T06:29:21.094Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invitaciones-cdbfe:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-19T06:29:21.474Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/invitaciones-cdbfe:testIamPermissions 200
+[debug] [2026-07-19T06:29:21.475Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invitaciones-cdbfe:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-19T06:29:21.477Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:21.477Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:21.477Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/invitaciones-cdbfe [none]
+[debug] [2026-07-19T06:29:31.761Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/invitaciones-cdbfe 200
+[debug] [2026-07-19T06:29:31.761Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/invitaciones-cdbfe {"projectId":"invitaciones-cdbfe","projectNumber":"29855805932","displayName":"invitaciones","name":"projects/invitaciones-cdbfe","resources":{"hostingSite":"invitaciones-cdbfe"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_142ecf6a-6f98-4b74-8e31-21ce90fa4056"}
+[info] 
+[info] === Deploying to 'invitaciones-cdbfe'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-07-19T06:29:31.764Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:31.764Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:31.765Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/invitaciones-cdbfe/sites/invitaciones-cdbfe [none]
+[debug] [2026-07-19T06:29:32.454Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/invitaciones-cdbfe/sites/invitaciones-cdbfe 200
+[debug] [2026-07-19T06:29:32.454Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/invitaciones-cdbfe/sites/invitaciones-cdbfe {"name":"projects/invitaciones-cdbfe/sites/invitaciones-cdbfe","defaultUrl":"https://invitaciones-cdbfe.web.app","type":"DEFAULT_SITE"}
+[debug] [2026-07-19T06:29:32.457Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:32.458Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:32.459Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/versions [none]
+[debug] [2026-07-19T06:29:32.459Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2026-07-19T06:29:33.452Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/versions 200
+[debug] [2026-07-19T06:29:33.452Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/versions {"name":"projects/29855805932/sites/invitaciones-cdbfe/versions/5da58c6c051097ec","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[invitaciones-cdbfe]: beginning deploy... 
+[info] i  hosting[invitaciones-cdbfe]: found 6 files in dist/invitaciones-app/browser 
+[debug] [2026-07-19T06:29:37.609Z] [hosting] uploading with 200 concurrency
+[debug] [2026-07-19T06:29:37.710Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:37.711Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:37.713Z] [hosting] hash cache [ZGlzdC9pbnZpdGFjaW9uZXMtYXBwL2Jyb3dzZXI] stored for 6 files
+[debug] [2026-07-19T06:29:37.713Z] [hosting][hash queue][FINAL] {"max":96,"min":8,"avg":25.333333333333332,"active":0,"complete":6,"success":6,"errored":0,"retried":0,"total":6,"elapsed":101}
+[debug] [2026-07-19T06:29:37.714Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/29855805932/sites/invitaciones-cdbfe/versions/5da58c6c051097ec:populateFiles [none]
+[debug] [2026-07-19T06:29:37.715Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/29855805932/sites/invitaciones-cdbfe/versions/5da58c6c051097ec:populateFiles {"files":{"/polyfills-5CFQRCPP.js":"e90181a2b04f12c05d2cf77aefa46053332eec5744365f3d73feee04a0285a16","/styles-ZYFBFMJ3.css":"9793ed4f20ccddf96c908adb2027e5380b2ac709d0b6504d9883b033ef7fdd19","/index.html":"d853f04a0d312e5dbaa5d935ac0d4ea13034ff0c7447d81f8771b01e7f59290b","/favicon.ico":"2add0cc793219edd4c7e298d6081d94db083b1d7daa7610f3dd95aaf8a6ea62e","/scripts-O7YZ5KVC.js":"a9018cc3dbbfd35942fe9956c4f1ec99049e042c3130e40830921358670de58f","/main-A7R6ZFPE.js":"30bb8f5653187e3dc33dfa70797d59c4362252d2a8ea7248dd30f8add53c6c71"}}
+[debug] [2026-07-19T06:29:38.455Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/29855805932/sites/invitaciones-cdbfe/versions/5da58c6c051097ec:populateFiles 200
+[debug] [2026-07-19T06:29:38.455Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/29855805932/sites/invitaciones-cdbfe/versions/5da58c6c051097ec:populateFiles {"uploadRequiredHashes":["30bb8f5653187e3dc33dfa70797d59c4362252d2a8ea7248dd30f8add53c6c71","d853f04a0d312e5dbaa5d935ac0d4ea13034ff0c7447d81f8771b01e7f59290b"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/invitaciones-cdbfe/versions/5da58c6c051097ec/files"}
+[debug] [2026-07-19T06:29:38.457Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:38.457Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:38.458Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:38.459Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:38.459Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/invitaciones-cdbfe/versions/5da58c6c051097ec/files/30bb8f5653187e3dc33dfa70797d59c4362252d2a8ea7248dd30f8add53c6c71 [none]
+[debug] [2026-07-19T06:29:38.459Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/invitaciones-cdbfe/versions/5da58c6c051097ec/files/30bb8f5653187e3dc33dfa70797d59c4362252d2a8ea7248dd30f8add53c6c71 [stream]
+[debug] [2026-07-19T06:29:38.461Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/invitaciones-cdbfe/versions/5da58c6c051097ec/files/d853f04a0d312e5dbaa5d935ac0d4ea13034ff0c7447d81f8771b01e7f59290b [none]
+[debug] [2026-07-19T06:29:38.461Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/invitaciones-cdbfe/versions/5da58c6c051097ec/files/d853f04a0d312e5dbaa5d935ac0d4ea13034ff0c7447d81f8771b01e7f59290b [stream]
+[debug] [2026-07-19T06:29:38.464Z] [hosting][populate queue][FINAL] {"max":749,"min":749,"avg":749,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":754}
+[debug] [2026-07-19T06:29:38.464Z] [hosting] uploads queued: 2
+[debug] [2026-07-19T06:29:39.056Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/invitaciones-cdbfe/versions/5da58c6c051097ec/files/d853f04a0d312e5dbaa5d935ac0d4ea13034ff0c7447d81f8771b01e7f59290b 200
+[debug] [2026-07-19T06:29:39.057Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/invitaciones-cdbfe/versions/5da58c6c051097ec/files/d853f04a0d312e5dbaa5d935ac0d4ea13034ff0c7447d81f8771b01e7f59290b [stream]
+[debug] [2026-07-19T06:29:39.614Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/invitaciones-cdbfe/versions/5da58c6c051097ec/files/30bb8f5653187e3dc33dfa70797d59c4362252d2a8ea7248dd30f8add53c6c71 200
+[debug] [2026-07-19T06:29:39.614Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/invitaciones-cdbfe/versions/5da58c6c051097ec/files/30bb8f5653187e3dc33dfa70797d59c4362252d2a8ea7248dd30f8add53c6c71 [stream]
+[debug] [2026-07-19T06:29:39.614Z] [hosting][upload queue][FINAL] {"max":1158,"min":599,"avg":878.5,"active":0,"complete":2,"success":2,"errored":0,"retried":0,"total":2,"elapsed":1158}
+[info] ✔  hosting[invitaciones-cdbfe]: file upload complete 
+[debug] [2026-07-19T06:29:39.616Z] [hosting] deploy completed after 2021ms
+[debug] [2026-07-19T06:29:39.616Z] [
+  {
+    "config": {
+      "public": "dist/invitaciones-app/browser",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "invitaciones-cdbfe"
+    },
+    "version": "projects/29855805932/sites/invitaciones-cdbfe/versions/5da58c6c051097ec"
+  }
+]
+[info] i  hosting[invitaciones-cdbfe]: finalizing version... 
+[debug] [2026-07-19T06:29:39.618Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:39.618Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:39.623Z] >>> [apiv2][query] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/versions/5da58c6c051097ec updateMask=status%2Cconfig
+[debug] [2026-07-19T06:29:39.627Z] >>> [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/versions/5da58c6c051097ec {"status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]}}
+[debug] [2026-07-19T06:29:40.274Z] <<< [apiv2][status] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/versions/5da58c6c051097ec 200
+[debug] [2026-07-19T06:29:40.274Z] <<< [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/versions/5da58c6c051097ec {"name":"projects/29855805932/sites/invitaciones-cdbfe/versions/5da58c6c051097ec","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2026-07-19T06:29:32.676652Z","createUser":{"email":"braudesdev@gmail.com"},"finalizeTime":"2026-07-19T06:29:40.162439Z","finalizeUser":{"email":"braudesdev@gmail.com"}}
+[debug] [2026-07-19T06:29:40.274Z] [hosting] finalized version for invitaciones-cdbfe:[object Object]
+[info] ✔  hosting[invitaciones-cdbfe]: version finalized 
+[info] i  hosting[invitaciones-cdbfe]: releasing new version... 
+[debug] [2026-07-19T06:29:40.275Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:40.275Z] Checked if tokens are valid: true, expires at: 1784445952009
+[debug] [2026-07-19T06:29:40.275Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/channels/live/releases versionName=projects%2F29855805932%2Fsites%2Finvitaciones-cdbfe%2Fversions%2F5da58c6c051097ec
+[debug] [2026-07-19T06:29:40.275Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/channels/live/releases {}
+[debug] [2026-07-19T06:29:40.846Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/channels/live/releases 200
+[debug] [2026-07-19T06:29:40.847Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/invitaciones-cdbfe/channels/live/releases {"name":"projects/29855805932/sites/invitaciones-cdbfe/channels/live/releases/1784442580051000","version":{"name":"projects/29855805932/sites/invitaciones-cdbfe/versions/5da58c6c051097ec","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2026-07-19T06:29:32.676652Z","createUser":{"email":"braudesdev@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIAuM2b5k_Xex7EYcdpMTvDntv6tVMKvEEo8RiBR8AsLLcyZA=mo"},"finalizeTime":"2026-07-19T06:29:40.162439Z","finalizeUser":{"email":"braudesdev@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIAuM2b5k_Xex7EYcdpMTvDntv6tVMKvEEo8RiBR8AsLLcyZA=mo"}},"type":"DEPLOY","releaseTime":"2026-07-19T06:29:40.051Z","releaseUser":{"email":"braudesdev@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIAuM2b5k_Xex7EYcdpMTvDntv6tVMKvEEo8RiBR8AsLLcyZA=mo"}}
+[debug] [2026-07-19T06:29:40.847Z] [hosting] release: {"name":"projects/29855805932/sites/invitaciones-cdbfe/channels/live/releases/1784442580051000","version":{"name":"projects/29855805932/sites/invitaciones-cdbfe/versions/5da58c6c051097ec","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2026-07-19T06:29:32.676652Z","createUser":{"email":"braudesdev@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIAuM2b5k_Xex7EYcdpMTvDntv6tVMKvEEo8RiBR8AsLLcyZA=mo"},"finalizeTime":"2026-07-19T06:29:40.162439Z","finalizeUser":{"email":"braudesdev@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIAuM2b5k_Xex7EYcdpMTvDntv6tVMKvEEo8RiBR8AsLLcyZA=mo"}},"type":"DEPLOY","releaseTime":"2026-07-19T06:29:40.051Z","releaseUser":{"email":"braudesdev@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIAuM2b5k_Xex7EYcdpMTvDntv6tVMKvEEo8RiBR8AsLLcyZA=mo"}}
+[info] ✔  hosting[invitaciones-cdbfe]: release complete 
+[info] 
+[info] ✔  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/invitaciones-cdbfe/overview
+[info] Hosting URL: https://invitaciones-cdbfe.web.app
+[debug] [2026-07-19T06:29:50.854Z] Error: Timed out.
+    at Timeout._onTimeout (/home/braudesdev/.nvm/versions/node/v20.19.1/lib/node_modules/firebase-tools/lib/utils.js:296:49)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+[error] 
+[error] Error: An unexpected error has occurred.
