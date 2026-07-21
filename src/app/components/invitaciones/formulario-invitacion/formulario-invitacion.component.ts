@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { ImageUploadComponent } from '../../../components/image-upload/image-upload';
 
 // 👇 IMPORTAR EL MODELO DE PADRINOS
 import {
@@ -89,7 +90,7 @@ interface Paleta {
 @Component({
   selector: 'app-formulario-invitacion',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ImageUploadComponent],
   templateUrl: './formulario-invitacion.component.html',
   styleUrls: ['./formulario-invitacion.component.css'],
 })
@@ -345,7 +346,7 @@ export class FormularioInvitacionComponent implements OnInit {
     this.nuevaInvitacion.padrinos.push({
       nombre: '',
       rol: rolesDisponibles.length > 0 ? rolesDisponibles[0] : 'personalizado',
-      observaciones: '',
+      // observaciones: '',
     });
   }
 

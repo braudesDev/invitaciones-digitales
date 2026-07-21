@@ -438,85 +438,131 @@
         </div>
         <div class="acordeon-body" [class.abierto]="acordeonAbierto">
           <div class="form-grid">
+            <!-- ============================================ -->
             <!-- NOVIA -->
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.novia"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Nombre de la novia"
-            />
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.fotoNovia"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="URL foto de la novia"
-            />
+            <!-- ============================================ -->
+            <div class="campo">
+              <label>Nombre de la Novia</label>
+              <input
+                type="text"
+                [(ngModel)]="nuevaInvitacion.padres.novia"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Nombre de la novia"
+              />
+            </div>
 
+            <div class="campo">
+              <app-image-upload
+                label="📸 Foto de la Novia"
+                [imageUrl]="nuevaInvitacion.padres.fotoNovia || ''"
+                (imageChange)="nuevaInvitacion.padres.fotoNovia = $event"
+                placeholder="URL de la foto (opcional)"
+              ></app-image-upload>
+            </div>
+
+            <!-- ============================================ -->
             <!-- NOVIO -->
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.novio"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Nombre del novio"
-            />
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.fotoNovio"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="URL foto del novio"
-            />
+            <!-- ============================================ -->
+            <div class="campo">
+              <label>Nombre del Novio</label>
+              <input
+                type="text"
+                [(ngModel)]="nuevaInvitacion.padres.novio"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Nombre del novio"
+              />
+            </div>
 
+            <div class="campo">
+              <app-image-upload
+                label="📸 Foto del Novio"
+                [imageUrl]="nuevaInvitacion.padres.fotoNovio || ''"
+                (imageChange)="nuevaInvitacion.padres.fotoNovio = $event"
+                placeholder="URL de la foto (opcional)"
+              ></app-image-upload>
+            </div>
+
+            <!-- ============================================ -->
             <!-- PADRES DE LA NOVIA -->
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.madreNovia"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Madre de la novia"
-            />
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.fotoMadreNovia"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="URL foto de la madre"
-            />
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.padreNovia"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Padre de la novia"
-            />
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.fotoPadreNovia"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="URL foto del padre"
-            />
+            <!-- ============================================ -->
+            <div class="campo">
+              <label>Madre de la Novia</label>
+              <input
+                type="text"
+                [(ngModel)]="nuevaInvitacion.padres.madreNovia"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Madre de la novia"
+              />
+            </div>
 
+            <div class="campo">
+              <app-image-upload
+                label="📸 Foto de la Madre"
+                [imageUrl]="nuevaInvitacion.padres.fotoMadreNovia || ''"
+                (imageChange)="nuevaInvitacion.padres.fotoMadreNovia = $event"
+                placeholder="URL de la foto (opcional)"
+              ></app-image-upload>
+            </div>
+
+            <div class="campo">
+              <label>Padre de la Novia</label>
+              <input
+                type="text"
+                [(ngModel)]="nuevaInvitacion.padres.padreNovia"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Padre de la novia"
+              />
+            </div>
+
+            <div class="campo">
+              <app-image-upload
+                label="📸 Foto del Padre"
+                [imageUrl]="nuevaInvitacion.padres.fotoPadreNovia || ''"
+                (imageChange)="nuevaInvitacion.padres.fotoPadreNovia = $event"
+                placeholder="URL de la foto (opcional)"
+              ></app-image-upload>
+            </div>
+
+            <!-- ============================================ -->
             <!-- PADRES DEL NOVIO -->
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.madreNovio"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Madre del novio"
-            />
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.fotoMadreNovio"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="URL foto de la madre"
-            />
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.padreNovio"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Padre del novio"
-            />
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.padres.fotoPadreNovio"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="URL foto del padre"
-            />
+            <!-- ============================================ -->
+            <div class="campo">
+              <label>Madre del Novio</label>
+              <input
+                type="text"
+                [(ngModel)]="nuevaInvitacion.padres.madreNovio"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Madre del novio"
+              />
+            </div>
+
+            <div class="campo">
+              <app-image-upload
+                label="📸 Foto de la Madre"
+                [imageUrl]="nuevaInvitacion.padres.fotoMadreNovio || ''"
+                (imageChange)="nuevaInvitacion.padres.fotoMadreNovio = $event"
+                placeholder="URL de la foto (opcional)"
+              ></app-image-upload>
+            </div>
+
+            <div class="campo">
+              <label>Padre del Novio</label>
+              <input
+                type="text"
+                [(ngModel)]="nuevaInvitacion.padres.padreNovio"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Padre del novio"
+              />
+            </div>
+
+            <div class="campo">
+              <app-image-upload
+                label="📸 Foto del Padre"
+                [imageUrl]="nuevaInvitacion.padres.fotoPadreNovio || ''"
+                (imageChange)="nuevaInvitacion.padres.fotoPadreNovio = $event"
+                placeholder="URL de la foto (opcional)"
+              ></app-image-upload>
+            </div>
           </div>
         </div>
       </div>
@@ -588,27 +634,35 @@
                 <!-- Rol -->
                 <div class="field-group">
                   <label>Rol</label>
-                  <select
-                    [(ngModel)]="padrino.rol"
-                    [ngModelOptions]="{ standalone: true }"
-                    (change)="onRolChange(i)"
-                    (click)="$event.stopPropagation()"
-                    class="form-control"
-                  >
-                    <option
-                      *ngFor="let rol of getRolesDisponibles()"
-                      [value]="rol"
+                  <div class="rol-select-container">
+                    <img
+                      *ngIf="padrino.rol && getRolIcon(padrino.rol)"
+                      [src]="getRolIcon(padrino.rol)"
+                      alt="icono"
+                      class="rol-icon-select"
+                    />
+                    <select
+                      [(ngModel)]="padrino.rol"
+                      [ngModelOptions]="{ standalone: true }"
+                      (change)="onRolChange(i)"
+                      (click)="$event.stopPropagation()"
+                      class="form-control"
                     >
-                      {{ getRolIcon(rol) }} {{ getRolLabel(rol) }}
-                    </option>
-                  </select>
+                      <option
+                        *ngFor="let rol of getRolesDisponibles()"
+                        [value]="rol"
+                      >
+                        {{ getRolLabel(rol) }}
+                      </option>
+                    </select>
+                  </div>
                   <small class="help-text" *ngIf="padrino.rol">
                     {{ getRolDescripcion(padrino.rol) }}
                   </small>
                 </div>
 
                 <!-- Observaciones -->
-                <div class="field-group full-width">
+                <!-- <div class="field-group full-width">
                   <label>Observaciones (opcional)</label>
                   <textarea
                     [(ngModel)]="padrino.observaciones"
@@ -618,7 +672,7 @@
                     class="form-control"
                     rows="2"
                   ></textarea>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

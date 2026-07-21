@@ -336,42 +336,80 @@
    ============================================ */
 
 .acordeon {
-  background: white;
+  background: #ffffff;
   border-radius: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #eef0f5;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
   overflow: hidden;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.acordeon:hover {
+  border-color: #dce1f3;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.08);
 }
 
 .acordeon-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
+  padding: 18px 24px;
   cursor: pointer;
-  font-weight: 500;
-  background: white;
-  transition: background 0.2s;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #2d3748;
+  background: #ffffff;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  user-select: none;
 }
 
 .acordeon-header:hover {
-  background: #f5f5f5;
+  background: #f8fafc;
+  color: #667eea;
 }
 
 .acordeon-header .icono {
   font-size: 12px;
   color: #667eea;
+  background: #f0f3ff;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.acordeon-header:hover .icono {
+  background: #667eea;
+  color: #ffffff;
 }
 
 .acordeon-body {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
-  padding: 0 16px;
+  transition:
+    max-height 0.4s cubic-bezier(0, 1, 0, 1),
+    opacity 0.3s ease;
+  padding: 0 24px;
+  opacity: 0;
 }
 
 .acordeon-body.abierto {
-  max-height: 1000px;
-  padding: 0 16px 16px 16px;
+  max-height: 2500px; /* Suficiente para acomodar varios padrinos */
+  padding: 8px 24px 24px 24px;
+  opacity: 1;
+  transition:
+    max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s ease;
 }
 
 /* ============================================
@@ -542,5 +580,328 @@
   .paleta span:first-child + span {
     width: 35px;
     height: 35px;
+  }
+}
+/* ============================================
+   👪 SECCIÓN PADRES (Sin tocar HTML)
+   ============================================ */
+
+/* Animación del acordeón para acomodar todos los inputs */
+.acordeon-body.abierto {
+  max-height: 2000px !important;
+}
+
+/* Reorganizamos el form-grid dentro de Padres */
+.acordeon-body .form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding-top: 10px;
+}
+
+/* Estilo base uniforme para todos los inputs */
+.acordeon-body .form-grid input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.acordeon-body .form-grid input[type="text"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+/* Placeholder un poco más estilizado */
+.acordeon-body .form-grid input[type="text"]::placeholder {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* --------------------------------------------
+   SEPARADORES Y AGRUPACIÓN VISUAL (Mágia CSS)
+   -------------------------------------------- */
+
+/* Separador 1: NOVIA (Inputs 1 y 2) */
+.acordeon-body .form-grid input:nth-child(1) {
+  margin-top: 10px;
+}
+
+/* Separador 2: NOVIO (Input 3) */
+.acordeon-body .form-grid input:nth-child(3) {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 2px dashed #e2e8f0;
+}
+
+/* Separador 3: PADRES DE LA NOVIA (Input 5) */
+.acordeon-body .form-grid input:nth-child(5) {
+  margin-top: 24px;
+  position: relative;
+}
+
+.acordeon-body .form-grid input:nth-child(5)::before {
+  content: "👰 Padres de la Novia";
+  display: block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #667eea;
+  margin-bottom: 8px;
+}
+
+/* Separador 4: PADRES DEL NOVIO (Input 9) */
+.acordeon-body .form-grid input:nth-child(9) {
+  margin-top: 24px;
+  position: relative;
+}
+
+/* --------------------------------------------
+   RESPONSIVE (Acomodar Nombre y Foto juntos)
+   -------------------------------------------- */
+
+@media (min-width: 640px) {
+  .acordeon-body .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  /* Ajustamos márgenes superiores en escritorio para que no se desfase el grid */
+  .acordeon-body .form-grid input:nth-child(3) {
+    margin-top: 0;
+    border-top: none;
+  }
+
+  .acordeon-body .form-grid input:nth-child(5),
+  .acordeon-body .form-grid input:nth-child(6),
+  .acordeon-body .form-grid input:nth-child(7),
+  .acordeon-body .form-grid input:nth-child(8) {
+    background-color: #fdfbf7; /* Tono cálido para la novia */
+  }
+
+  .acordeon-body .form-grid input:nth-child(9),
+  .acordeon-body .form-grid input:nth-child(10),
+  .acordeon-body .form-grid input:nth-child(11),
+  .acordeon-body .form-grid input:nth-child(12) {
+    background-color: #f8fafc; /* Tono fresco para el novio */
+  }
+}
+
+/* ============================================
+   PADRINOS - ESTILOS PARA EL FORMULARIO
+   ============================================ */
+
+/* Vista previa de grupos */
+.padrinos-preview {
+  background: linear-gradient(135deg, #fdfbf7 0%, #f7f3eb 100%);
+  border: 1px solid #ebdccb;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.grupo-preview {
+  margin-bottom: 12px;
+  color: #4a3e3d;
+  font-size: 0.95rem;
+}
+
+.grupo-preview:last-child {
+  margin-bottom: 0;
+}
+
+.grupo-preview strong {
+  color: #a37233;
+}
+
+.grupo-descripcion {
+  display: block;
+  color: #8c786c;
+  font-size: 0.82rem;
+  margin-top: 2px;
+}
+
+/* Tarjetas individuales de padrino */
+.padrino-item {
+  margin-bottom: 20px;
+}
+
+.padrino-card {
+  background: #fcfcfd;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.padrino-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+}
+
+.padrino-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px border-dash #e2e8f0;
+}
+
+.padrino-numero {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #667eea;
+  background: #eef2ff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.btn-eliminar-padrino {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #ef4444;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-eliminar-padrino:hover {
+  background: #fee2e2;
+  color: #dc2626;
+  transform: scale(1.05);
+}
+
+/* Campos dentro de la tarjeta del padrino */
+.padrino-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-group label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.field-group select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%20667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 36px;
+}
+
+.help-text {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+
+/* Botón de agregar padrino */
+.btn-agregar {
+  width: 100%;
+  background: #f8fafc;
+  color: #475569;
+  border: 2px dashed #cbd5e1;
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 12px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-agregar:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #1e293b;
+}
+
+/* Estilos para el select con imagen */
+.rol-select-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.rol-icon-select {
+  position: absolute;
+  left: 10px;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  z-index: 1;
+  pointer-events: none; /* Para que no interfiera con el click */
+}
+
+.rol-select-container select {
+  padding-left: 42px; /* Espacio para la imagen */
+}
+
+/* ============================================
+   RESPONSIVE PARA PADRINOS
+   ============================================ */
+
+@media (min-width: 640px) {
+  .padrino-fields {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .field-group.full-width {
+    grid-column: span 2;
+  }
+
+  .btn-agregar {
+    width: auto;
+    margin-left: auto;
+    padding: 10px 24px;
   }
 }

@@ -4,10 +4,7 @@
 
 .padrinos-container {
   padding: 5rem 2rem;
-  background: var(
-    --secondary,
-    #f5ede4
-  ); /* ✅ Cambiado: secondary (sin -color) */
+  background: var(--secondary, #f5ede4);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -42,7 +39,7 @@
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.6rem, 4vw, 2.6rem);
   font-weight: 400;
-  color: var(--primary, #5c3d2e); /* ✅ Cambiado: primary (sin -color) */
+  color: var(--primary, #5c3d2e);
   margin: 0 0 0.8rem;
   letter-spacing: 2px;
 }
@@ -63,12 +60,12 @@
     90deg,
     transparent,
     var(--accent, #c9a87c),
-    /* ✅ Cambiado: accent (sin -color) */ transparent
+    transparent
   );
 }
 
 .divider-icon {
-  color: var(--accent, #c9a87c); /* ✅ Cambiado: accent (sin -color) */
+  color: var(--accent, #c9a87c);
   font-size: 0.8rem;
   opacity: 0.7;
 }
@@ -97,51 +94,74 @@
 }
 
 /* ============================================
-   TARJETA DE PADRINO
+   TARJETA DE PADRINO - ACTUALIZADA CON DESCRIPCIÓN
    ============================================ */
 
 .padrino-card {
   background: #ffffff;
-  border-radius: 16px;
-  padding: 1.2rem 1rem;
-  min-width: 120px;
-  max-width: 180px;
+  border-radius: 20px;
+  padding: 1.8rem 1.5rem;
+  min-width: 200px;
+  max-width: 320px;
   text-align: center;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
-  border: 1px solid var(--accent, #c9a87c); /* ✅ Cambiado: accent (sin -color) */
+  border: 1px solid var(--accent, #c9a87c);
   flex: 1 1 auto;
   width: 100%;
   margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .padrino-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary, #5c3d2e); /* ✅ Cambiado: primary (sin -color) */
+  transform: translateY(-6px);
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary, #5c3d2e);
 }
 
 .padrino-rol-icon {
-  font-size: 2.8rem;
+  font-size: 3rem;
   display: block;
   margin-bottom: 0.5rem;
 }
 
 .padrino-rol {
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  color: var(--primary, #5c3d2e); /* ✅ Cambiado: primary (sin -color) */
-  margin: 0 0 0.5rem 0;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.3rem 0;
   letter-spacing: 0.5px;
+}
+
+/* 👇 ESTILO PARA LA DESCRIPCIÓN */
+.padrino-description {
+  font-family: "Georgia", serif;
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  line-height: 1.6;
+  margin: 0.5rem 0.3rem 1rem;
+  font-style: italic;
+  padding: 0.5rem 0.8rem;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent, #c9a87c);
+  text-align: left;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
 }
 
 .padrino-nombres {
   font-family: "Cormorant Garamond", serif;
   font-size: 1.1rem;
-  font-weight: 400;
-  color: var(--text, #666); /* ✅ Cambiado: text (sin -color) */
+  font-weight: 500;
+  color: var(--primary, #5c3d2e);
   line-height: 1.6;
+  margin-top: 0.3rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 /* ============================================
@@ -167,20 +187,20 @@
   line-height: 28px;
   font-size: 0.8rem;
   font-weight: 500;
-  color: var(--primary, #5c3d2e); /* ✅ Cambiado: primary (sin -color) */
+  color: var(--primary, #5c3d2e);
   opacity: 0.5;
   border-radius: 50%;
   transition: all 0.3s ease;
   cursor: pointer;
-  border: 1px solid var(--accent, #c9a87c); /* ✅ Cambiado: accent (sin -color) */
+  border: 1px solid var(--accent, #c9a87c);
 }
 
 .swiper-pagination-bullet-active {
   color: #fff;
-  background: var(--accent, #c9a87c); /* ✅ Cambiado: accent (sin -color) */
+  background: var(--accent, #c9a87c);
   opacity: 1;
   transform: scale(1.1);
-  border-color: var(--accent, #c9a87c); /* ✅ Cambiado: accent (sin -color) */
+  border-color: var(--accent, #c9a87c);
 }
 
 .swiper-pagination-bullet:hover {
@@ -203,7 +223,7 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  color: var(--primary, #c9a87c); /* ✅ Cambiado: primary (sin -color) */
+  color: var(--primary, #c9a87c);
 }
 
 .autoplay-progress svg {
@@ -215,7 +235,7 @@
   width: 100%;
   height: 100%;
   stroke-width: 4px;
-  stroke: var(--accent, #c9a87c); /* ✅ Cambiado: accent (sin -color) */
+  stroke: var(--accent, #c9a87c);
   fill: none;
   stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
   stroke-dasharray: 125.6;
@@ -224,7 +244,7 @@
 
 .autoplay-progress span {
   font-size: 12px;
-  color: var(--text, #3f4a42); /* ✅ Cambiado: text (sin -color) */
+  color: var(--text, #3f4a42);
   font-weight: 600;
   position: relative;
   z-index: 11;
@@ -248,9 +268,9 @@
   }
 
   .padrino-card {
-    padding: 1rem 0.8rem;
-    min-width: 100px;
-    max-width: 150px;
+    padding: 1.2rem 1rem;
+    min-width: 160px;
+    max-width: 260px;
   }
 
   .padrinos-titulo {
@@ -258,15 +278,21 @@
   }
 
   .padrino-rol {
-    font-size: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .padrino-description {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+    min-height: 40px;
   }
 
   .padrino-nombres {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .padrino-rol-icon {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
 
   .swiper-pagination-bullet {
@@ -287,9 +313,9 @@
   }
 
   .padrino-card {
-    padding: 0.8rem 0.6rem;
-    min-width: 80px;
-    max-width: 130px;
+    padding: 1rem 0.8rem;
+    min-width: 140px;
+    max-width: 220px;
   }
 
   .padrinos-icono {
@@ -301,15 +327,23 @@
   }
 
   .padrino-rol {
-    font-size: 0.9rem;
+    font-size: 1rem;
+  }
+
+  .padrino-description {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+    min-height: 35px;
+    margin: 0.3rem 0.2rem 0.6rem;
   }
 
   .padrino-nombres {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    padding-top: 0.6rem;
   }
 
   .padrino-rol-icon {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
   }
 
   .padrinos-divider {

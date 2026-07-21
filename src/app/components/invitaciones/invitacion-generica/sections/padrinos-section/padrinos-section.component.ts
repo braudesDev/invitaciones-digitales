@@ -33,7 +33,12 @@ export class PadrinosSectionComponent implements AfterViewInit, OnDestroy {
   constructor(private el: ElementRef) {}
 
   // 👇 GETTER: Agrupar padrinos por rol
-  get padrinosAgrupados(): { rol: string; nombres: string[]; icon: string }[] {
+  get padrinosAgrupados(): {
+    rol: string;
+    nombres: string[];
+    icon: string;
+    description: string;
+  }[] {
     if (!this.data || this.data.length === 0) {
       return [];
     }
@@ -52,13 +57,19 @@ export class PadrinosSectionComponent implements AfterViewInit, OnDestroy {
             nombres: [],
             icon: rolInfo?.icon || '⭐',
             nombreRol: rolInfo?.nombre || rolId,
+            descripcion: rolInfo?.descripcion || 'Rol personalizado',
           };
         }
         acc[rolId].nombres.push(padrino.nombre);
         return acc;
       },
       {} as {
-        [key: string]: { nombres: string[]; icon: string; nombreRol: string };
+        [key: string]: {
+          nombres: string[];
+          icon: string;
+          nombreRol: string;
+          descripcion: string;
+        };
       },
     );
 
@@ -66,6 +77,7 @@ export class PadrinosSectionComponent implements AfterViewInit, OnDestroy {
       rol: data.nombreRol,
       nombres: data.nombres,
       icon: data.icon,
+      description: data.descripcion,
     }));
   }
 

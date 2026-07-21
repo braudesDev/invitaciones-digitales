@@ -3,7 +3,7 @@
 export interface PadrinoAsignado {
   nombre: string;
   rol: string;
-  observaciones?: string; // Solo observaciones, sin teléfono ni email
+  // observaciones?: string;
 }
 
 export type TipoRolPadrino =
@@ -35,7 +35,7 @@ export interface RolPadrinoInfo {
 export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   velacion: {
     nombre: 'Padrino de Velación',
-    icon: '💒',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784653829/image-MFZivdlX880yHITKHWBXYkIpUROYvb_e4wpbh.png',
     descripcion:
       'Acompañan a la pareja durante toda la ceremonia, simbolizando su apoyo y guía espiritual en este nuevo camino.',
     sugeridoPara: ['boda'],
@@ -43,7 +43,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   arras: {
     nombre: 'Padrino de Arras',
-    icon: '🪙',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784653709/image-367r2STELMzjNowNJZFAFwrdeVWaI1_a5dhmg.png',
     descripcion:
       'Entregan las 13 monedas durante la ceremonia, representando la prosperidad y el compromiso económico de la pareja.',
     sugeridoPara: ['boda'],
@@ -51,7 +51,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   anillos: {
     nombre: 'Padrino de Anillos',
-    icon: '💍',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784654172/image-W68FVT8R1haHu0Vqbhq95CyitIQkWx_t7giko.png',
     descripcion:
       'Portan y entregan los anillos de boda, símbolo del amor eterno y la unión inquebrantable.',
     sugeridoPara: ['boda'],
@@ -59,7 +59,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   lazo: {
     nombre: 'Padrino de Lazo',
-    icon: '🎀',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784654295/image-2LGSUHqlra3bndszj3hWB6J9xlsVU6_eft1ez.png',
     descripcion:
       'Colocan el lazo alrededor de los novios durante la ceremonia, representando la unión indisoluble.',
     sugeridoPara: ['boda'],
@@ -67,7 +67,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   biblia: {
     nombre: 'Padrino de Biblia',
-    icon: '📖',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784654344/image-qkPaiXIyeUdKAPiPgXu1KR3MGRsmb1_dfvhvd.png',
     descripcion:
       'Portan la biblia durante la ceremonia, simbolizando la fe y los valores que guiarán a la pareja.',
     sugeridoPara: ['boda', 'comunion'],
@@ -75,7 +75,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   testigo: {
     nombre: 'Testigo de Boda',
-    icon: '✍️',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784654577/image-dae1lHATNY8hkh3GxeAnScrtd34Ii5_e5tgea.png',
     descripcion:
       'Firman el acta de matrimonio como testigos oficiales de la unión.',
     sugeridoPara: ['boda'],
@@ -83,7 +83,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   vela: {
     nombre: 'Padrino de Vela',
-    icon: '🕯️',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784654703/image-vENIYcW9dddBsdd8GIl2eMzf6u9CYr_fzkaxp.png',
     descripcion:
       'Portan una vela durante el ritual de XV años, iluminando el camino de la quinceañera.',
     sugeridoPara: ['xv'],
@@ -91,7 +91,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   copas: {
     nombre: 'Padrino de Copas',
-    icon: '🥂',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784654855/image-Wq0idg04XjpfyctnWBD3U0ChLODvmO_gkiukf.png',
     descripcion:
       'Entregan las copas en el brindis, simbolizando la alegría y celebración de la vida.',
     sugeridoPara: ['xv'],
@@ -99,7 +99,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   anillo: {
     nombre: 'Padrino de Anillo',
-    icon: '💍',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784654172/image-W68FVT8R1haHu0Vqbhq95CyitIQkWx_t7giko.png',
     descripcion:
       'Portan el anillo que la quinceañera usará como símbolo de su paso a la vida adulta.',
     sugeridoPara: ['xv'],
@@ -107,7 +107,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   zapatos: {
     nombre: 'Padrino de Zapatos',
-    icon: '👠',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784654963/image-BJiV51Net40IYXkXUYMVVvV1qrol78_npz8sa.png',
     descripcion:
       'Entregan los zapatos a la quinceañera para que pueda bailar su vals con elegancia.',
     sugeridoPara: ['xv'],
@@ -115,7 +115,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   pulsera: {
     nombre: 'Padrino de Pulsera',
-    icon: '📿',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784655036/image-A1NDqn6z8DAp1XoQ0t5aTxR9lNZbpF_qd9km9.png',
     descripcion:
       'Colocan la pulsera a la quinceañera como símbolo de protección y buena fortuna.',
     sugeridoPara: ['xv'],
@@ -123,7 +123,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   misa: {
     nombre: 'Padrino de Misa',
-    icon: '⛪',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784655103/image-8J371flGy7HB7q2MNCiUQARQUA2UOU_mvghgd.png',
     descripcion:
       'Acompañan a la quinceañera en la misa de acción de gracias por su vida.',
     sugeridoPara: ['xv'],
@@ -131,7 +131,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   bautizo: {
     nombre: 'Padrino de Bautizo',
-    icon: '🫧',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784655188/image-FtXFQpTRHwc2gu4MPf51VcQrAEizy7_nr00e2.png',
     descripcion:
       'Acompañan al niño en el sacramento del bautizo, comprometiéndose a guiarlo en la fe.',
     sugeridoPara: ['bautizo'],
@@ -139,7 +139,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   vestido: {
     nombre: 'Padrino de Vestido',
-    icon: '👗',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784655262/image-YQn5FpNL17Scjgl6MSCTuXJU5IZX3V_vy9m6n.png',
     descripcion:
       'Regalan el vestido del bautizo, símbolo de pureza y nuevo comienzo en la vida cristiana.',
     sugeridoPara: ['bautizo'],
@@ -147,7 +147,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   comunion: {
     nombre: 'Padrino de Comunión',
-    icon: '✝️',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784655103/image-8J371flGy7HB7q2MNCiUQARQUA2UOU_mvghgd.png',
     descripcion:
       'Acompañan al niño en su primera comunión, apoyándolo en este paso importante de su fe.',
     sugeridoPara: ['comunion'],
@@ -155,7 +155,7 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
   },
   personalizado: {
     nombre: 'Rol Personalizado',
-    icon: '⭐',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784655493/image-K6ajnEunSyn0dpLf3ZXfW4cvI1dCO3_ums5ts.png',
     descripcion:
       'Define tu propio rol y significado para este padrino especial.',
     sugeridoPara: ['boda', 'xv', 'bautizo', 'comunion', 'cumpleaños'],
