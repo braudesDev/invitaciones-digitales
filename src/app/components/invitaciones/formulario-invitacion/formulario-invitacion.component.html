@@ -309,14 +309,146 @@
           ></textarea>
         </div>
 
-        <div class="campo full-width">
-          <label>📚 Historia (opcional)</label>
-          <textarea
-            [(ngModel)]="nuevaInvitacion.historia"
-            [ngModelOptions]="{ standalone: true }"
-            rows="3"
-            placeholder="Cuenta cómo se conocieron..."
-          ></textarea>
+        <!-- Acordeón: Historia -->
+        <div class="acordeon full-width">
+          <div
+            class="acordeon-header"
+            (click)="acordeonHistoria = !acordeonHistoria"
+          >
+            <span>📖 Historia</span>
+            <span class="icono">{{ acordeonHistoria ? "▲" : "▼" }}</span>
+          </div>
+          <div class="acordeon-body" [class.abierto]="acordeonHistoria">
+            <!-- Mostrar sección -->
+            <div class="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  [(ngModel)]="historiaMostrarSeccion"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                Mostrar sección en la invitación
+              </label>
+            </div>
+
+            <!-- Estilo de la sección -->
+            <div class="campo">
+              <label>🎨 Estilo de la sección</label>
+              <div class="estilos-historia-grid">
+                <div
+                  *ngFor="let estilo of estilosHistoria"
+                  class="estilo-historia-option"
+                  [class.selected]="
+                    nuevaInvitacion.historia?.estilo === estilo.valor
+                  "
+                  (click)="seleccionarEstiloHistoria(estilo.valor)"
+                >
+                  <span class="estilo-historia-icon">{{ estilo.icon }}</span>
+                  <span class="estilo-historia-nombre">{{
+                    estilo.nombre
+                  }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Título -->
+            <div class="subcampo">
+              <label>Título de la sección</label>
+              <div class="input-with-counter">
+                <input
+                  type="text"
+                  [(ngModel)]="historiaTitulo"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Nuestra Historia"
+                  maxlength="30"
+                />
+                <span class="contador">{{ historiaTitulo.length }}/30</span>
+              </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="subcampo">
+              <label>Descripción (opcional)</label>
+              <div class="input-with-counter">
+                <textarea
+                  [(ngModel)]="historiaDescripcion"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Cada momento nos trajo hasta aquí"
+                  rows="2"
+                  maxlength="60"
+                ></textarea>
+                <span class="contador"
+                  >{{ historiaDescripcion.length }}/60</span
+                >
+              </div>
+            </div>
+
+            <!-- Momentos -->
+            <div class="campo">
+              <label>📅 Momentos</label>
+              <p class="ayuda-momentos">
+                💡 Agrega los momentos más importantes de su historia
+              </p>
+
+              <div
+                *ngFor="let momento of historiaMomentos; let i = index"
+                class="momento-item"
+              >
+                <div class="momento-card">
+                  <div class="momento-header">
+                    <span class="momento-numero">#{{ i + 1 }}</span>
+                    <button
+                      type="button"
+                      class="btn-eliminar-momento"
+                      (click)="eliminarMomento(i)"
+                    >
+                      ❌
+                    </button>
+                  </div>
+
+                  <div class="momento-fields">
+                    <div class="field-group">
+                      <label>Fecha</label>
+                      <input
+                        type="date"
+                        [(ngModel)]="momento.fecha"
+                        [ngModelOptions]="{ standalone: true }"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <div class="field-group full-width">
+                      <label>Descripción</label>
+                      <textarea
+                        [(ngModel)]="momento.descripcion"
+                        [ngModelOptions]="{ standalone: true }"
+                        placeholder="Describe este momento especial..."
+                        class="form-control"
+                        rows="2"
+                      ></textarea>
+                    </div>
+
+                    <div class="field-group full-width">
+                      <app-image-upload
+                        label="📸 Imagen (opcional)"
+                        [imageUrl]="momento.imagen || ''"
+                        (imageChange)="momento.imagen = $event"
+                        placeholder="URL de la imagen (opcional)"
+                      ></app-image-upload>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="btn-agregar-momento"
+                (click)="agregarMomento()"
+              >
+                ➕ Agregar momento
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="subseccion full-width">
@@ -404,24 +536,6 @@
             />
           </div>
         </div>
-
-        <div class="subseccion full-width">
-          <h4>👗 Dress Code</h4>
-          <div class="subseccion-grid">
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.dressCode.descripcion"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Descripción"
-            />
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.dressCode.sugerencia"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Sugerencia"
-            />
-          </div>
-        </div>
       </div>
     </div>
 
@@ -452,18 +566,6 @@
             </div>
 
             <div class="campo">
-              <app-image-upload
-                label="📸 Foto de la Novia"
-                [imageUrl]="nuevaInvitacion.padres.fotoNovia || ''"
-                (imageChange)="nuevaInvitacion.padres.fotoNovia = $event"
-                placeholder="URL de la foto (opcional)"
-              ></app-image-upload>
-            </div>
-
-            <!-- ============================================ -->
-            <!-- NOVIO -->
-            <!-- ============================================ -->
-            <div class="campo">
               <label>Nombre del Novio</label>
               <input
                 type="text"
@@ -471,15 +573,6 @@
                 [ngModelOptions]="{ standalone: true }"
                 placeholder="Nombre del novio"
               />
-            </div>
-
-            <div class="campo">
-              <app-image-upload
-                label="📸 Foto del Novio"
-                [imageUrl]="nuevaInvitacion.padres.fotoNovio || ''"
-                (imageChange)="nuevaInvitacion.padres.fotoNovio = $event"
-                placeholder="URL de la foto (opcional)"
-              ></app-image-upload>
             </div>
 
             <!-- ============================================ -->
@@ -496,15 +589,6 @@
             </div>
 
             <div class="campo">
-              <app-image-upload
-                label="📸 Foto de la Madre"
-                [imageUrl]="nuevaInvitacion.padres.fotoMadreNovia || ''"
-                (imageChange)="nuevaInvitacion.padres.fotoMadreNovia = $event"
-                placeholder="URL de la foto (opcional)"
-              ></app-image-upload>
-            </div>
-
-            <div class="campo">
               <label>Padre de la Novia</label>
               <input
                 type="text"
@@ -512,15 +596,6 @@
                 [ngModelOptions]="{ standalone: true }"
                 placeholder="Padre de la novia"
               />
-            </div>
-
-            <div class="campo">
-              <app-image-upload
-                label="📸 Foto del Padre"
-                [imageUrl]="nuevaInvitacion.padres.fotoPadreNovia || ''"
-                (imageChange)="nuevaInvitacion.padres.fotoPadreNovia = $event"
-                placeholder="URL de la foto (opcional)"
-              ></app-image-upload>
             </div>
 
             <!-- ============================================ -->
@@ -537,15 +612,6 @@
             </div>
 
             <div class="campo">
-              <app-image-upload
-                label="📸 Foto de la Madre"
-                [imageUrl]="nuevaInvitacion.padres.fotoMadreNovio || ''"
-                (imageChange)="nuevaInvitacion.padres.fotoMadreNovio = $event"
-                placeholder="URL de la foto (opcional)"
-              ></app-image-upload>
-            </div>
-
-            <div class="campo">
               <label>Padre del Novio</label>
               <input
                 type="text"
@@ -553,15 +619,6 @@
                 [ngModelOptions]="{ standalone: true }"
                 placeholder="Padre del novio"
               />
-            </div>
-
-            <div class="campo">
-              <app-image-upload
-                label="📸 Foto del Padre"
-                [imageUrl]="nuevaInvitacion.padres.fotoPadreNovio || ''"
-                (imageChange)="nuevaInvitacion.padres.fotoPadreNovio = $event"
-                placeholder="URL de la foto (opcional)"
-              ></app-image-upload>
             </div>
           </div>
         </div>
@@ -660,19 +717,6 @@
                     {{ getRolDescripcion(padrino.rol) }}
                   </small>
                 </div>
-
-                <!-- Observaciones -->
-                <!-- <div class="field-group full-width">
-                  <label>Observaciones (opcional)</label>
-                  <textarea
-                    [(ngModel)]="padrino.observaciones"
-                    [ngModelOptions]="{ standalone: true }"
-                    placeholder="Notas adicionales..."
-                    (click)="$event.stopPropagation()"
-                    class="form-control"
-                    rows="2"
-                  ></textarea>
-                </div> -->
               </div>
             </div>
           </div>
@@ -686,7 +730,232 @@
           </button>
         </div>
       </div>
+      <!-- Acordeón: Código de Vestimenta -->
+      <div class="acordeon">
+        <div
+          class="acordeon-header"
+          (click)="acordeonDressCode = !acordeonDressCode"
+        >
+          <span>👗 Código de Vestimenta</span>
+          <span class="icono">{{ acordeonDressCode ? "▲" : "▼" }}</span>
+        </div>
+        <div class="acordeon-body" [class.abierto]="acordeonDressCode">
+          <!-- 1. SELECCIONA EL ESTILO -->
+          <div class="campo">
+            <label>🎯 1. SELECCIONA EL ESTILO</label>
+            <div class="estilos-grid">
+              <div
+                *ngFor="let estilo of estilosDisponibles"
+                class="estilo-option"
+                [class.selected]="
+                  nuevaInvitacion.dressCode.estilo === estilo.valor
+                "
+                (click)="nuevaInvitacion.dressCode.estilo = estilo.valor"
+              >
+                <!-- ✅ IMAGEN en lugar de emoji -->
+                <div class="estilo-icon-wrapper">
+                  <img
+                    [src]="estilo.icon"
+                    [alt]="estilo.nombre"
+                    class="estilo-icon-img"
+                    loading="lazy"
+                  />
+                </div>
+                <span class="estilo-nombre">{{ estilo.nombre }}</span>
+                <span
+                  class="estilo-descripcion"
+                  *ngIf="nuevaInvitacion.dressCode.estilo === estilo.valor"
+                >
+                  {{ estilo.descripcion }}
+                </span>
+              </div>
+            </div>
+          </div>
 
+          <!-- 2. COLORES SUGERIDOS -->
+          <div class="campo">
+            <label>🎨 2. COLORES SUGERIDOS</label>
+            <p class="ayuda-colores">
+              💡 Selecciona hasta 4 colores para sugerir a tus invitados
+            </p>
+
+            <div class="colores-grid">
+              <div
+                *ngFor="let color of coloresDisponibles"
+                class="color-option"
+                [class.selected]="isColorSelected(color)"
+                [style.background]="color"
+                (click)="toggleColor(color)"
+                [title]="color"
+              >
+                <span *ngIf="isColorSelected(color)" class="color-check"
+                  >✓</span
+                >
+              </div>
+            </div>
+
+            <!-- ✅ CON ?. PARA COLORS (PUEDE SER UNDEFINED) -->
+            <div
+              class="colores-seleccionados"
+              *ngIf="nuevaInvitacion.dressCode.colores.length > 0"
+            >
+              <span class="colores-label-seleccionados"
+                >✅ Colores sugeridos:</span
+              >
+              <span
+                *ngFor="let color of nuevaInvitacion.dressCode.colores"
+                class="color-chip"
+              >
+                <span
+                  class="color-chip-muestra"
+                  [style.background]="color"
+                ></span>
+                {{ color }}
+                <button type="button" (click)="removeColor(color)">✕</button>
+              </span>
+            </div>
+          </div>
+
+          <!-- 3. COLORES RESERVADOS -->
+          <div class="campo">
+            <label>🚫 3. COLORES RESERVADOS (opcional)</label>
+            <p class="ayuda-colores">
+              💡 Selecciona los colores que NO deben usar los invitados
+            </p>
+
+            <div class="colores-grid">
+              <div
+                *ngFor="let color of coloresDisponibles"
+                class="color-option color-reservado-option"
+                [class.selected]="isColorReservado(color)"
+                [style.background]="color"
+                (click)="toggleColorReservado(color)"
+                [title]="color"
+              >
+                <span
+                  *ngIf="isColorReservado(color)"
+                  class="color-check color-check-reservado"
+                  >✕</span
+                >
+              </div>
+            </div>
+
+            <!-- ✅ CON ?. PARA COLORES RESERVADOS (PUEDE SER UNDEFINED) -->
+            <div
+              class="colores-seleccionados"
+              *ngIf="nuevaInvitacion.dressCode.coloresReservados.length > 0"
+            >
+              <span class="colores-label-seleccionados"
+                >🚫 Colores reservados:</span
+              >
+              <span
+                *ngFor="
+                  let color of nuevaInvitacion.dressCode.coloresReservados
+                "
+                class="color-chip color-chip-reservado"
+              >
+                <span
+                  class="color-chip-muestra"
+                  [style.background]="color"
+                ></span>
+                {{ color }}
+                <button type="button" (click)="removeColorReservado(color)">
+                  ✕
+                </button>
+              </span>
+            </div>
+          </div>
+
+          <!-- 4. PERSONALIZA TU MENSAJE -->
+          <div class="campo">
+            <label>✏️ 4. PERSONALIZA TU MENSAJE</label>
+
+            <!-- Título (SIEMPRE ES STRING) ✅ SIN ?. -->
+            <div class="subcampo">
+              <label>Título de la sección</label>
+              <div class="input-with-counter">
+                <input
+                  type="text"
+                  [(ngModel)]="nuevaInvitacion.dressCode.titulo"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Código de Vestimenta"
+                  maxlength="30"
+                />
+                <span class="contador"
+                  >{{ nuevaInvitacion.dressCode.titulo.length || 0 }}/30</span
+                >
+              </div>
+            </div>
+
+            <!-- Descripción (SIEMPRE ES STRING) ✅ SIN ?. -->
+            <div class="subcampo">
+              <label>Descripción (opcional)</label>
+              <div class="input-with-counter">
+                <textarea
+                  [(ngModel)]="nuevaInvitacion.dressCode.descripcion"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Te sugerimos estos tonos para que te sientas cómodo y disfrutes con nosotros."
+                  rows="2"
+                  maxlength="120"
+                ></textarea>
+                <span class="contador"
+                  >{{
+                    nuevaInvitacion.dressCode.descripcion.length || 0
+                  }}/120</span
+                >
+              </div>
+            </div>
+
+            <!-- Sugerencia (SIEMPRE ES STRING) ✅ SIN ?. -->
+            <div class="subcampo">
+              <label>Texto de sugerencia</label>
+              <div class="input-with-counter">
+                <input
+                  type="text"
+                  [(ngModel)]="nuevaInvitacion.dressCode.sugerencia"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Te sugerimos estos tonos"
+                  maxlength="40"
+                />
+                <span class="contador"
+                  >{{
+                    nuevaInvitacion.dressCode.sugerencia.length || 0
+                  }}/40</span
+                >
+              </div>
+            </div>
+
+            <!-- Nota adicional (SIEMPRE ES STRING) ✅ SIN ?. -->
+            <div class="subcampo">
+              <label>Nota adicional (opcional)</label>
+              <div class="input-with-counter">
+                <textarea
+                  [(ngModel)]="nuevaInvitacion.dressCode.notaAdicional"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Los padrinos vestirán de blanco, por favor evita este color."
+                  rows="2"
+                  maxlength="150"
+                ></textarea>
+                <span class="contador"
+                  >{{
+                    nuevaInvitacion.dressCode.notaAdicional.length || 0
+                  }}/150</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Tip para el anfitrión -->
+          <div class="dresscode-tip">
+            <span class="tip-icon">💡</span>
+            <span class="tip-text">
+              Sé claro pero flexible con tu código de vestimenta. Tus invitados
+              apreciarán la guía para elegir el atuendo perfecto para tu
+              celebración.
+            </span>
+          </div>
+        </div>
+      </div>
       <!-- Acordeón: Regalos -->
       <div class="acordeon">
         <div class="acordeon-body" [class.abierto]="acordeonRegalos">

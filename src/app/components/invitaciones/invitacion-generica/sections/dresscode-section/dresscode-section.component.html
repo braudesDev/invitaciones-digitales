@@ -1,12 +1,77 @@
-<div
-  *ngIf="data && (data.descripcion || data.sugerencia)"
-  class="dresscode-section"
->
-  <div class="dresscode-icon">👗</div>
-  <h3>Código de Vestimenta</h3>
-  <p class="descripcion" *ngIf="data.descripcion">{{ data.descripcion }}</p>
-  <div class="sugerencia" *ngIf="data.sugerencia">
-    <span class="sugerencia-label">✨ Sugerencia</span>
-    <p>{{ data.sugerencia }}</p>
+<!-- dresscode-section.component.html -->
+
+<div *ngIf="data" class="dresscode-section">
+  <div class="dresscode-header">
+    <h2 class="dresscode-titulo">
+      {{ data.titulo || "Código de Vestimenta" }}
+    </h2>
+    <div class="dresscode-divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">✦</span>
+      <span class="divider-line"></span>
+    </div>
+  </div>
+
+  <!-- Estilo seleccionado -->
+  <div class="dresscode-estilo" *ngIf="data.estilo">
+    <span class="estilo-tag">Estilo</span>
+
+    <!-- ✅ Imagen con wrapper -->
+    <div class="estilo-imagen-wrapper">
+      <img
+        [src]="getEstiloIcon(data.estilo)"
+        [alt]="getEstiloNombre(data.estilo)"
+        class="estilo-imagen"
+        loading="lazy"
+      />
+    </div>
+
+    <span class="estilo-nombre">{{ getEstiloNombre(data.estilo) }}</span>
+  </div>
+
+  <!-- Descripción -->
+  <p class="dresscode-descripcion" *ngIf="data.descripcion">
+    {{ data.descripcion }}
+  </p>
+
+  <!-- ============================================ -->
+  <!-- COLORES SUGERIDOS -->
+  <!-- ============================================ -->
+  <div class="dresscode-colores" *ngIf="tieneColores">
+    <p class="colores-label">✅ Colores sugeridos</p>
+    <p class="colores-sub-label">Te sugerimos estos tonos para tu atuendo</p>
+    <div class="colores-paleta">
+      <span
+        *ngFor="let color of data.colores"
+        class="color-muestra"
+        [style.background]="color"
+        [title]="color"
+      ></span>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- COLORES RESERVADOS -->
+  <!-- ============================================ -->
+  <div class="dresscode-colores-reservados" *ngIf="tieneColoresReservados">
+    <p class="colores-label">🚫 Colores reservados</p>
+    <div class="colores-paleta">
+      <span
+        *ngFor="let color of data.coloresReservados"
+        class="color-muestra color-reservado"
+        [style.background]="color"
+        [title]="color"
+      >
+        <!-- <span class="color-reservado-icon">✕</span> -->
+      </span>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- NOTA ADICIONAL -->
+  <!-- ============================================ -->
+  <div class="dresscode-tip" *ngIf="tieneNotaAdicional">
+    <span class="tip-icon">💡</span>
+    <span class="tip-text">{{ data.notaAdicional }}</span>
   </div>
 </div>

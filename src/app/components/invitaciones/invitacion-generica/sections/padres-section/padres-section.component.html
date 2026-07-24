@@ -1,6 +1,5 @@
 <div *ngIf="data" class="padres-container">
   <div class="padres-header">
-    <span class="padres-icono">👪</span>
     <h2 class="padres-titulo">Con la bendición de nuestros padres</h2>
     <div class="padres-divider">
       <span class="divider-line"></span>
@@ -12,35 +11,11 @@
   <div class="padres-grid">
     <!-- NOVIA -->
     <div class="padres-card" *ngIf="data.madreNovia || data.padreNovia">
-      <!-- Foto de la Novia (grande) -->
-      <div class="avatar-container avatar-grande">
-        <img
-          *ngIf="data.fotoNovia; else noviaPlaceholder"
-          [src]="data.fotoNovia"
-          alt="{{ data.novia || 'Novia' }}"
-          class="avatar-circular"
-        />
-        <ng-template #noviaPlaceholder>
-          <div class="avatar-placeholder">👰</div>
-        </ng-template>
-      </div>
-
-      <h3 class="card-titulo">{{ data.novia || "La Novia" }}</h3>
+      <h3 class="card-titulo">Padres de {{ data.novia || "la Novia" }}</h3>
 
       <div class="padres-lista">
         <!-- Madre de la novia -->
         <div *ngIf="data.madreNovia" class="padre-item">
-          <div class="avatar-container avatar-pequeno">
-            <img
-              *ngIf="data.fotoMadreNovia; else madreNoviaPlaceholder"
-              [src]="data.fotoMadreNovia"
-              alt="Madre de la novia"
-              class="avatar-circular"
-            />
-            <ng-template #madreNoviaPlaceholder>
-              <div class="avatar-placeholder">👩</div>
-            </ng-template>
-          </div>
           <div class="padre-info">
             <span class="padre-rol">Madre</span>
             <span class="padre-nombre">{{ data.madreNovia }}</span>
@@ -49,17 +24,6 @@
 
         <!-- Padre de la novia -->
         <div *ngIf="data.padreNovia" class="padre-item">
-          <div class="avatar-container avatar-pequeno">
-            <img
-              *ngIf="data.fotoPadreNovia; else padreNoviaPlaceholder"
-              [src]="data.fotoPadreNovia"
-              alt="Padre de la novia"
-              class="avatar-circular"
-            />
-            <ng-template #padreNoviaPlaceholder>
-              <div class="avatar-placeholder">👨</div>
-            </ng-template>
-          </div>
           <div class="padre-info">
             <span class="padre-rol">Padre</span>
             <span class="padre-nombre">{{ data.padreNovia }}</span>
@@ -70,35 +34,11 @@
 
     <!-- NOVIO -->
     <div class="padres-card" *ngIf="data.madreNovio || data.padreNovio">
-      <!-- Foto del Novio (grande) -->
-      <div class="avatar-container avatar-grande">
-        <img
-          *ngIf="data.fotoNovio; else novioPlaceholder"
-          [src]="data.fotoNovio"
-          alt="{{ data.novio || 'Novio' }}"
-          class="avatar-circular"
-        />
-        <ng-template #novioPlaceholder>
-          <div class="avatar-placeholder">🤵</div>
-        </ng-template>
-      </div>
-
-      <h3 class="card-titulo">{{ data.novio || "El Novio" }}</h3>
+      <h3 class="card-titulo">Padres de {{ data.novio || "el Novio" }}</h3>
 
       <div class="padres-lista">
         <!-- Madre del novio -->
         <div *ngIf="data.madreNovio" class="padre-item">
-          <div class="avatar-container avatar-pequeno">
-            <img
-              *ngIf="data.fotoMadreNovio; else madreNovioPlaceholder"
-              [src]="data.fotoMadreNovio"
-              alt="Madre del novio"
-              class="avatar-circular"
-            />
-            <ng-template #madreNovioPlaceholder>
-              <div class="avatar-placeholder">👩</div>
-            </ng-template>
-          </div>
           <div class="padre-info">
             <span class="padre-rol">Madre</span>
             <span class="padre-nombre">{{ data.madreNovio }}</span>
@@ -107,17 +47,6 @@
 
         <!-- Padre del novio -->
         <div *ngIf="data.padreNovio" class="padre-item">
-          <div class="avatar-container avatar-pequeno">
-            <img
-              *ngIf="data.fotoPadreNovio; else padreNovioPlaceholder"
-              [src]="data.fotoPadreNovio"
-              alt="Padre del novio"
-              class="avatar-circular"
-            />
-            <ng-template #padreNovioPlaceholder>
-              <div class="avatar-placeholder">👨</div>
-            </ng-template>
-          </div>
           <div class="padre-info">
             <span class="padre-rol">Padre</span>
             <span class="padre-nombre">{{ data.padreNovio }}</span>

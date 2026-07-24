@@ -37,21 +37,20 @@ export const ROLES_PADrinos: Record<TipoRolPadrino, RolPadrinoInfo> = {
     nombre: 'Padrino de Velación',
     icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784653829/image-MFZivdlX880yHITKHWBXYkIpUROYvb_e4wpbh.png',
     descripcion:
-      'Acompañan a la pareja durante toda la ceremonia, simbolizando su apoyo y guía espiritual en este nuevo camino.',
+      'Representan el apoyo y la bendición espiritual de los novios.',
     sugeridoPara: ['boda'],
     tipo: 'pareja',
   },
   arras: {
     nombre: 'Padrino de Arras',
     icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784653709/image-367r2STELMzjNowNJZFAFwrdeVWaI1_a5dhmg.png',
-    descripcion:
-      'Entregan las 13 monedas durante la ceremonia, representando la prosperidad y el compromiso económico de la pareja.',
+    descripcion: 'Representan la prosperidad y el compromiso de la pareja.',
     sugeridoPara: ['boda'],
     tipo: 'pareja',
   },
   anillos: {
     nombre: 'Padrino de Anillos',
-    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784654172/image-W68FVT8R1haHu0Vqbhq95CyitIQkWx_t7giko.png',
+    icon: 'https://res.cloudinary.com/drsyb53ae/image/upload/v1784682574/image-vcJLC5bmytdiyJ9kYwdL1M430epiFc_yscgra.png',
     descripcion:
       'Portan y entregan los anillos de boda, símbolo del amor eterno y la unión inquebrantable.',
     sugeridoPara: ['boda'],

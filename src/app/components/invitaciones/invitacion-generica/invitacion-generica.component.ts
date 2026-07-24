@@ -22,6 +22,8 @@ import { ConfirmacionSectionComponent } from './sections/confirmacion-section/co
 import { FooterSectionComponent } from './sections/footer-section/footer-section.component';
 import { GaleriaSectionComponent } from './sections/galeria-section/galeria-section.component';
 import { PadrinoAsignado } from '../../../models/padrino.model';
+import { DressCode } from '../../../models/dress-code.model';
+import { Historia } from '../../../models/historia.model';
 
 @Component({
   selector: 'app-invitacion-generica',
@@ -131,5 +133,39 @@ export class InvitacionGenericaComponent implements OnInit {
 
     console.log('⚠️ Formato desconocido');
     return [];
+  }
+
+  // invitacion-generica.component.ts
+
+  get dressCodeFormateado(): DressCode {
+    console.log('🎯 Ejecutando dressCodeFormateado');
+    console.log('📦 data.dressCode:', this.data?.dressCode);
+
+    const dc = this.data?.dressCode || {};
+    const resultado = {
+      estilo: dc.estilo || '',
+      colores: dc.colores || [],
+      coloresReservados: dc.coloresReservados || [],
+      titulo: dc.titulo || 'Código de Vestimenta',
+      descripcion: dc.descripcion || '',
+      sugerencia: dc.sugerencia || '',
+      notaAdicional: dc.notaAdicional || '',
+    };
+
+    console.log('✅ dressCodeFormateado:', resultado);
+    return resultado;
+  }
+
+  // invitacion-generica.component.ts
+
+  get historiaFormateada(): Historia {
+    const h = this.data?.historia || {};
+    return {
+      mostrarSeccion: (h as any).mostrarSeccion ?? true,
+      estilo: (h as any).estilo || 'timeline',
+      titulo: (h as any).titulo || 'Nuestra Historia',
+      descripcion: (h as any).descripcion || '',
+      momentos: (h as any).momentos || [],
+    };
   }
 }

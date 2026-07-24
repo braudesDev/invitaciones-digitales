@@ -1,1 +1,95 @@
-<p>historia-section works!</p>
+<!-- historia-section.component.html -->
+
+<div *ngIf="data && data.mostrarSeccion" class="historia-section">
+  <div class="historia-header">
+    <span class="historia-icono">📖</span>
+    <h2 class="historia-titulo">{{ data.titulo || "Nuestra Historia" }}</h2>
+    <div class="historia-divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">✦</span>
+      <span class="divider-line"></span>
+    </div>
+  </div>
+
+  <p class="historia-descripcion" *ngIf="data.descripcion">
+    {{ data.descripcion }}
+  </p>
+
+  <!-- ============================================ -->
+  <!-- ESTILO: LÍNEA DE TIEMPO -->
+  <!-- ============================================ -->
+  <div *ngIf="data.estilo === 'timeline'" class="historia-timeline">
+    <div
+      *ngFor="let momento of data.momentos; let i = index"
+      class="timeline-item"
+    >
+      <div class="timeline-marker">
+        <span class="timeline-number">{{ i + 1 }}</span>
+      </div>
+      <div class="timeline-content">
+        <span class="timeline-fecha">{{
+          momento.fecha | date: "dd MMM yyyy"
+        }}</span>
+        <p class="timeline-descripcion">{{ momento.descripcion }}</p>
+        <img
+          *ngIf="momento.imagen"
+          [src]="momento.imagen"
+          alt="Momento"
+          class="timeline-imagen"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ESTILO: TARJETAS -->
+  <!-- ============================================ -->
+  <div *ngIf="data.estilo === 'tarjetas'" class="historia-tarjetas">
+    <div *ngFor="let momento of data.momentos" class="tarjeta-momento">
+      <div class="tarjeta-contenido">
+        <span class="tarjeta-fecha">{{
+          momento.fecha | date: "dd MMM yyyy"
+        }}</span>
+        <p class="tarjeta-descripcion">{{ momento.descripcion }}</p>
+        <img
+          *ngIf="momento.imagen"
+          [src]="momento.imagen"
+          alt="Momento"
+          class="tarjeta-imagen"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ESTILO: ÁLBUM -->
+  <!-- ============================================ -->
+  <div *ngIf="data.estilo === 'album'" class="historia-album">
+    <div *ngFor="let momento of data.momentos" class="album-item">
+      <img *ngIf="momento.imagen" [src]="momento.imagen" alt="Momento" />
+      <div class="album-overlay">
+        <span class="album-fecha">{{
+          momento.fecha | date: "dd MMM yyyy"
+        }}</span>
+        <p class="album-descripcion">{{ momento.descripcion }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ESTILO: MINIMALISTA -->
+  <!-- ============================================ -->
+  <div *ngIf="data.estilo === 'minimalista'" class="historia-minimalista">
+    <div *ngFor="let momento of data.momentos" class="minimalista-item">
+      <span class="minimalista-fecha">{{
+        momento.fecha | date: "dd MMM yyyy"
+      }}</span>
+      <p class="minimalista-descripcion">{{ momento.descripcion }}</p>
+    </div>
+  </div>
+
+  <!-- Si no hay momentos, mostrar mensaje -->
+  <p *ngIf="!data.momentos || data.momentos.length === 0" class="sin-momentos">
+    Agrega los momentos más importantes de su historia ✨
+  </p>
+</div>

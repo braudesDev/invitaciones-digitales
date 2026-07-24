@@ -1,18 +1,23 @@
+// historia-section.component.ts
+
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+export interface Historia {
+  mostrarSeccion: boolean;
+  estilo: 'timeline' | 'tarjetas' | 'album' | 'minimalista';
+  titulo: string;
+  descripcion: string;
+  momentos: { fecha: string; descripcion: string; imagen?: string }[];
+}
 
 @Component({
   selector: 'app-historia-section',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div *ngIf="data" class="section">
-      <h3>📖 Nuestra Historia</h3>
-      <p>{{ data }}</p>
-    </div>
-  `,
-  styles: [`.section { margin: 20px; padding: 15px; border-radius: 8px; background: #f5f5f5; text-align: center; }`]
+  templateUrl: './historia-section.component.html',
+  styleUrls: ['./historia-section.component.css'],
 })
 export class HistoriaSectionComponent {
-  @Input() data: any;
+  @Input() data!: Historia;
 }

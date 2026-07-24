@@ -34,7 +34,6 @@ export interface Invitacion {
   mensajePrincipal?: string;
   fraseDeInvValida?: string;
   mensajePersonalizado?: string;
-  historia?: string;
 
   // DISEÑO / HERO
   heroImage?: string;
@@ -88,9 +87,22 @@ export interface Invitacion {
   };
 
   dressCode?: {
+    estilo?: string;
+    colores?: string[];
+    coloresReservados?: string[];
+    titulo?: string;
     descripcion?: string;
     sugerencia?: string;
-    imagen?: string;
+    notaAdicional?: string;
+    imagen?: string; // Si aún lo usas
+  };
+
+  historia?: {
+    mostrarSeccion: boolean;
+    estilo: 'timeline' | 'tarjetas' | 'album' | 'minimalista';
+    titulo: string;
+    descripcion: string;
+    momentos: { fecha: string; descripcion: string; imagen?: string }[];
   };
 
   hospedaje?: {

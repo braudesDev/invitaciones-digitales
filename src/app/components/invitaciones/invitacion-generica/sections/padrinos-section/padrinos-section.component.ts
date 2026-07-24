@@ -192,7 +192,7 @@ export class PadrinosSectionComponent implements AfterViewInit, OnDestroy {
       effect: 'creative',
       creativeEffect: creativeEffect,
       autoplay: {
-        delay: 4000,
+        delay: 5000,
         disableOnInteraction: false,
       },
       pagination: {

@@ -59,6 +59,9 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  width: 100%; /* 👈 AGREGAR */
+  max-width: 100%; /* 👈 AGREGAR */
+  box-sizing: border-box;
 }
 
 .campo label {
@@ -107,7 +110,7 @@
 }
 
 /* ============================================
-   🖼️ SUBIDA DE IMÁGENES (NUEVO)
+   🖼️ SUBIDA DE IMÁGENES
    ============================================ */
 
 .upload-area {
@@ -345,6 +348,9 @@
   transition:
     border-color 0.3s ease,
     box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .acordeon:hover {
@@ -366,6 +372,8 @@
     background-color 0.2s ease,
     color 0.2s ease;
   user-select: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .acordeon-header:hover {
@@ -386,6 +394,7 @@
   transition:
     transform 0.2s ease,
     background-color 0.2s ease;
+  flex-shrink: 0;
 }
 
 .acordeon-header:hover .icono {
@@ -401,17 +410,18 @@
     opacity 0.3s ease;
   padding: 0 24px;
   opacity: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .acordeon-body.abierto {
-  max-height: 2500px; /* Suficiente para acomodar varios padrinos */
+  max-height: 2500px;
   padding: 8px 24px 24px 24px;
   opacity: 1;
   transition:
     max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.4s ease;
 }
-
 /* ============================================
    CAMPOS DINÁMICOS
    ============================================ */
@@ -505,67 +515,54 @@
 }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE GENERAL
    ============================================ */
 
-/* ===== TABLET (640px y más) ===== */
 @media (min-width: 640px) {
   .formulario-container {
     padding: 30px 24px;
   }
-
   .form-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .full-width {
     grid-column: span 2;
   }
-
   .subseccion-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-
   .tabs button {
     padding: 14px;
     font-size: 16px;
   }
-
   .btn-guardar {
     width: auto;
     padding: 14px 40px;
   }
-
   .title {
     font-size: 1.8rem;
   }
-
   .upload-area {
     gap: 20px;
   }
 }
 
-/* ===== ESCRITORIO (1024px y más) ===== */
 @media (min-width: 1024px) {
   .formulario-container {
     padding: 40px 32px;
   }
-
   .form-grid {
     gap: 24px;
   }
-
   .campo input,
   .campo select,
   .campo textarea {
     padding: 14px;
   }
-
   .tabs {
     gap: 16px;
     padding: 12px;
   }
-
   .acordeon-header {
     padding: 20px;
   }
@@ -575,23 +572,21 @@
   .paletas {
     justify-content: center;
   }
-
   .paleta span:first-child,
   .paleta span:first-child + span {
     width: 35px;
     height: 35px;
   }
 }
+
 /* ============================================
-   👪 SECCIÓN PADRES (Sin tocar HTML)
+   👪 SECCIÓN PADRES
    ============================================ */
 
-/* Animación del acordeón para acomodar todos los inputs */
 .acordeon-body.abierto {
   max-height: 2000px !important;
 }
 
-/* Reorganizamos el form-grid dentro de Padres */
 .acordeon-body .form-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -599,7 +594,6 @@
   padding-top: 10px;
 }
 
-/* Estilo base uniforme para todos los inputs */
 .acordeon-body .form-grid input[type="text"] {
   width: 100%;
   padding: 12px 14px;
@@ -618,29 +612,21 @@
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
-/* Placeholder un poco más estilizado */
 .acordeon-body .form-grid input[type="text"]::placeholder {
   color: #94a3b8;
   font-size: 0.9rem;
 }
 
-/* --------------------------------------------
-   SEPARADORES Y AGRUPACIÓN VISUAL (Mágia CSS)
-   -------------------------------------------- */
-
-/* Separador 1: NOVIA (Inputs 1 y 2) */
 .acordeon-body .form-grid input:nth-child(1) {
   margin-top: 10px;
 }
 
-/* Separador 2: NOVIO (Input 3) */
 .acordeon-body .form-grid input:nth-child(3) {
   margin-top: 20px;
   padding-top: 12px;
   border-top: 2px dashed #e2e8f0;
 }
 
-/* Separador 3: PADRES DE LA NOVIA (Input 5) */
 .acordeon-body .form-grid input:nth-child(5) {
   margin-top: 24px;
   position: relative;
@@ -655,40 +641,31 @@
   margin-bottom: 8px;
 }
 
-/* Separador 4: PADRES DEL NOVIO (Input 9) */
 .acordeon-body .form-grid input:nth-child(9) {
   margin-top: 24px;
   position: relative;
 }
-
-/* --------------------------------------------
-   RESPONSIVE (Acomodar Nombre y Foto juntos)
-   -------------------------------------------- */
 
 @media (min-width: 640px) {
   .acordeon-body .form-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
-
-  /* Ajustamos márgenes superiores en escritorio para que no se desfase el grid */
   .acordeon-body .form-grid input:nth-child(3) {
     margin-top: 0;
     border-top: none;
   }
-
   .acordeon-body .form-grid input:nth-child(5),
   .acordeon-body .form-grid input:nth-child(6),
   .acordeon-body .form-grid input:nth-child(7),
   .acordeon-body .form-grid input:nth-child(8) {
-    background-color: #fdfbf7; /* Tono cálido para la novia */
+    background-color: #fdfbf7;
   }
-
   .acordeon-body .form-grid input:nth-child(9),
   .acordeon-body .form-grid input:nth-child(10),
   .acordeon-body .form-grid input:nth-child(11),
   .acordeon-body .form-grid input:nth-child(12) {
-    background-color: #f8fafc; /* Tono fresco para el novio */
+    background-color: #f8fafc;
   }
 }
 
@@ -696,7 +673,6 @@
    PADRINOS - ESTILOS PARA EL FORMULARIO
    ============================================ */
 
-/* Vista previa de grupos */
 .padrinos-preview {
   background: linear-gradient(135deg, #fdfbf7 0%, #f7f3eb 100%);
   border: 1px solid #ebdccb;
@@ -726,7 +702,6 @@
   margin-top: 2px;
 }
 
-/* Tarjetas individuales de padrino */
 .padrino-item {
   margin-bottom: 20px;
 }
@@ -787,7 +762,6 @@
   transform: scale(1.05);
 }
 
-/* Campos dentro de la tarjeta del padrino */
 .padrino-fields {
   display: grid;
   grid-template-columns: 1fr;
@@ -840,7 +814,6 @@
   line-height: 1.3;
 }
 
-/* Botón de agregar padrino */
 .btn-agregar {
   width: 100%;
   background: #f8fafc;
@@ -865,7 +838,6 @@
   color: #1e293b;
 }
 
-/* Estilos para el select con imagen */
 .rol-select-container {
   position: relative;
   display: flex;
@@ -879,29 +851,564 @@
   height: 24px;
   object-fit: contain;
   z-index: 1;
-  pointer-events: none; /* Para que no interfiera con el click */
+  pointer-events: none;
 }
 
 .rol-select-container select {
-  padding-left: 42px; /* Espacio para la imagen */
+  padding-left: 42px;
 }
-
-/* ============================================
-   RESPONSIVE PARA PADRINOS
-   ============================================ */
 
 @media (min-width: 640px) {
   .padrino-fields {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .field-group.full-width {
     grid-column: span 2;
   }
-
   .btn-agregar {
     width: auto;
     margin-left: auto;
     padding: 10px 24px;
+  }
+}
+
+/* ============================================
+   DRESS CODE - ESTILOS
+   ============================================ */
+
+.dresscode-form {
+  padding: 0.5rem 0;
+}
+
+.estilo-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.estilo-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.estilo-option:hover .estilo-icon-img {
+  transform: scale(1.1);
+}
+
+.estilo-option.selected .estilo-icon-img {
+  transform: scale(1.15);
+}
+
+@media (max-width: 480px) {
+  .estilo-icon-wrapper {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.estilos-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.estilo-option {
+  background: #f8f6f3;
+  border: 2px solid #e8e0d8;
+  border-radius: 12px;
+  padding: 14px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.estilo-option:hover {
+  background: #f0ebe5;
+  transform: translateY(-2px);
+  border-color: #d4c8b8;
+}
+
+.estilo-option.selected {
+  border-color: #c9a87c;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.25);
+  transform: translateY(-2px);
+}
+
+.estilo-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #c9a87c;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.estilo-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.estilo-nombre {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+.estilo-descripcion {
+  display: block;
+  font-size: 0.65rem;
+  color: #888;
+  margin-top: 6px;
+  font-style: italic;
+  line-height: 1.3;
+  background: #faf8f6;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.ayuda-colores {
+  font-size: 0.8rem;
+  color: #888;
+  margin: 4px 0 8px;
+}
+
+.colores-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 0 12px;
+}
+
+.color-option {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid #e8e0d8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.color-option:hover {
+  transform: scale(1.15);
+  border-color: #ccc;
+}
+
+.color-option.selected {
+  border-color: #2b2b2b;
+  transform: scale(1.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.color-check {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+.colores-seleccionados {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 4px;
+  padding: 8px 0;
+}
+
+.color-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5f2ed;
+  padding: 4px 10px 4px 4px;
+  border-radius: 20px;
+  border: 1px solid #e0d8d0;
+  font-size: 0.75rem;
+  color: #444;
+  transition: all 0.2s ease;
+}
+
+.color-chip:hover {
+  background: #ede8e0;
+}
+
+.color-chip-muestra {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.color-chip button {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 0.7rem;
+  padding: 0 2px;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.color-chip button:hover {
+  color: #e74c3c;
+}
+
+.subcampo {
+  margin-bottom: 14px;
+}
+
+.subcampo label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 4px;
+  letter-spacing: 0;
+}
+
+.input-with-counter {
+  position: relative;
+}
+
+.input-with-counter input,
+.input-with-counter textarea {
+  width: 100%;
+  padding: 10px 60px 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  background: #faf9f8;
+  font-family: inherit;
+}
+
+.input-with-counter input:focus,
+.input-with-counter textarea:focus {
+  border-color: #c9a87c;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
+  background: #ffffff;
+}
+
+.input-with-counter textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.contador {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-size: 0.7rem;
+  color: #bbb;
+  pointer-events: none;
+  font-weight: 500;
+}
+
+.dresscode-tip {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: #f8f5f0;
+  border-radius: 12px;
+  border-left: 4px solid #c9a87c;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.tip-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tip-text {
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .estilos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .color-option {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .estilos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  .estilo-option {
+    padding: 10px 6px;
+  }
+  .estilo-icon {
+    font-size: 1.6rem;
+  }
+  .estilo-nombre {
+    font-size: 0.7rem;
+  }
+  .color-option {
+    width: 30px;
+    height: 30px;
+    border-width: 2px;
+  }
+  .color-check {
+    font-size: 1rem;
+  }
+  .color-chip {
+    font-size: 0.65rem;
+    padding: 3px 8px 3px 3px;
+  }
+  .color-chip-muestra {
+    width: 18px;
+    height: 18px;
+  }
+  .dresscode-tip {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .tip-text {
+    font-size: 0.75rem;
+  }
+}
+
+/* ============================================
+   HISTORIA - ESTILOS PARA EL FORMULARIO
+   ============================================ */
+
+.historia-form {
+  padding: 0.5rem 0;
+}
+
+.ayuda-historia {
+  color: #888;
+  font-size: 0.85rem;
+  margin: 4px 0 16px;
+  font-style: italic;
+}
+
+.estilos-historia-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 10px 0 16px;
+}
+
+.estilo-historia-option {
+  background: #f8f5f0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.estilo-historia-option:hover {
+  background: #f0ebe5;
+  transform: translateY(-2px);
+}
+
+.estilo-historia-option.selected {
+  border-color: #c9a87c;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.25);
+  transform: translateY(-2px);
+}
+
+.estilo-historia-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #c9a87c;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.estilo-historia-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.estilo-historia-nombre {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+.ayuda-momentos {
+  color: #888;
+  font-size: 0.8rem;
+  margin: 4px 0 12px;
+}
+
+.momento-item {
+  margin-bottom: 16px;
+}
+
+.momento-card {
+  background: #faf8f6;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #e8e0d8;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.momento-card:hover {
+  border-color: #c9a87c;
+  box-shadow: 0 2px 8px rgba(201, 168, 124, 0.12);
+}
+
+.momento-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0ebe5;
+}
+
+.momento-numero {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #c9a87c;
+  background: #f0ebe5;
+  padding: 2px 12px;
+  border-radius: 12px;
+}
+
+.btn-eliminar-momento {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.btn-eliminar-momento:hover {
+  background: #fde8e8;
+  transform: scale(1.1);
+}
+
+.momento-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.momento-fields .full-width {
+  grid-column: 1 / -1;
+}
+
+.btn-agregar-momento {
+  background: #f0ebe5;
+  border: 2px dashed #c9a87c;
+  color: #5c3d2e;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btn-agregar-momento:hover {
+  background: #e8dfd6;
+  border-color: #b8946a;
+  transform: translateY(-1px);
+}
+
+.btn-agregar-momento:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+  .estilos-historia-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .momento-fields {
+    grid-template-columns: 1fr;
+  }
+  .momento-card {
+    padding: 12px;
+  }
+  .estilo-historia-option {
+    padding: 10px 6px;
+  }
+  .estilo-historia-icon {
+    font-size: 1.6rem;
+  }
+  .estilo-historia-nombre {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .estilos-historia-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  .estilo-historia-option {
+    padding: 8px 4px;
+  }
+  .estilo-historia-icon {
+    font-size: 1.4rem;
+  }
+  .input-with-counter input,
+  .input-with-counter textarea {
+    padding: 8px 50px 8px 10px;
+    font-size: 0.85rem;
+  }
+  .contador {
+    font-size: 0.65rem;
+    bottom: 8px;
+    right: 8px;
   }
 }

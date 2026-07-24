@@ -14,14 +14,20 @@ import { Auth } from '@angular/fire/auth';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ImageUploadComponent } from '../../../components/image-upload/image-upload';
-
-// 👇 IMPORTAR EL MODELO DE PADRINOS
 import {
   PadrinoAsignado,
   ROLES_PADrinos,
   TipoRolPadrino,
   getRolesPorEvento,
 } from '../../../models/padrino.model';
+import {
+  ESTILOS_DISPONIBLES,
+  COLORES_DISPONIBLES,
+  DressCode,
+  getEstiloNombre,
+  getEstiloIcon,
+  getEstiloDescripcion,
+} from '../../../models/dress-code.model';
 
 export interface InvitacionCompleta {
   id?: string;
@@ -39,7 +45,13 @@ export interface InvitacionCompleta {
   fontFamily: string;
   frasePrincipal?: string;
   mensajePrincipal?: string;
-  historia?: string;
+  historia?: {
+    mostrarSeccion: boolean;
+    estilo: 'timeline' | 'tarjetas' | 'album' | 'minimalista';
+    titulo: string;
+    descripcion: string;
+    momentos: { fecha: string; descripcion: string; imagen?: string }[];
+  };
   photos: string[];
   anfitrionId?: string;
   ceremonia: {
@@ -57,7 +69,15 @@ export interface InvitacionCompleta {
     imagen?: string;
     descripcion?: string;
   };
-  dressCode: { descripcion: string; sugerencia: string };
+  dressCode: {
+    estilo: string; // Nuevo campo para el estilo del dress code
+    colores: string[]; // Array de colores sugeridos
+    coloresReservados: string[]; // Array de colores reservados
+    titulo: string; // Título personalizado
+    descripcion: string;
+    sugerencia: string;
+    notaAdicional: string;
+  };
   padres: {
     padreNovia: string;
     madreNovia: string;
@@ -65,12 +85,6 @@ export interface InvitacionCompleta {
     madreNovio: string;
     novio?: string;
     novia?: string;
-    fotoNovia?: string;
-    fotoNovio?: string;
-    fotoMadreNovia?: string;
-    fotoPadreNovia?: string;
-    fotoMadreNovio?: string;
-    fotoPadreNovio?: string;
   };
   // 👇 CAMBIAR: padrinos ahora es PadrinoAsignado[]
   padrinos: PadrinoAsignado[];
@@ -164,7 +178,13 @@ export class FormularioInvitacionComponent implements OnInit {
     fontFamily: "'Playfair Display', serif",
     frasePrincipal: '',
     mensajePrincipal: '',
-    historia: '',
+    historia: {
+      mostrarSeccion: true,
+      estilo: 'timeline',
+      titulo: 'Nuestra Historia',
+      descripcion: '',
+      momentos: [],
+    },
     photos: [],
     anfitrionId: '',
     ceremonia: {
@@ -182,7 +202,15 @@ export class FormularioInvitacionComponent implements OnInit {
       imagen: '',
       descripcion: '',
     },
-    dressCode: { descripcion: '', sugerencia: '' },
+    dressCode: {
+      estilo: '',
+      colores: [],
+      coloresReservados: [],
+      titulo: '',
+      descripcion: '',
+      sugerencia: '',
+      notaAdicional: '',
+    },
     padres: {
       padreNovia: '',
       madreNovia: '',
@@ -190,14 +218,8 @@ export class FormularioInvitacionComponent implements OnInit {
       madreNovio: '',
       novio: '',
       novia: '',
-      fotoNovia: '',
-      fotoNovio: '',
-      fotoMadreNovia: '',
-      fotoPadreNovia: '',
-      fotoMadreNovio: '',
-      fotoPadreNovio: '',
     },
-    padrinos: [], // 👈 Ahora es PadrinoAsignado[]
+    padrinos: [], //
     regalos: { texto: '', links: [] },
     confirmacion: { telefono: '', whatsapp: '', link: '' },
     hashtag: '',
@@ -212,7 +234,9 @@ export class FormularioInvitacionComponent implements OnInit {
   acordeonConfirmacion = false;
   acordeonConsideraciones = false;
   acordeonHashtag = false;
+  acordeonDressCode = false;
   imagenSubiendo = false;
+  acordeonHistoria = false;
 
   constructor(
     private firestore: Firestore,
@@ -243,6 +267,39 @@ export class FormularioInvitacionComponent implements OnInit {
             rol: 'personalizado',
             observaciones: '',
           }));
+        }
+        //PROCESAR DRESS CODE PARA ASEGURAR QUE TODOS LOS CAMPOS ESTÉN PRESENTES
+        if (data.dressCode) {
+          if (!data.dressCode.colores) data.dressCode.colores = [];
+          if (!data.dressCode.coloresReservados)
+            data.dressCode.coloresReservados = [];
+          if (!data.dressCode.titulo) data.dressCode.titulo = '';
+          if (!data.dressCode.descripcion) data.dressCode.descripcion = '';
+          if (!data.dressCode.sugerencia) data.dressCode.sugerencia = '';
+          if (!data.dressCode.notaAdicional) data.dressCode.notaAdicional = '';
+        }
+
+        //PROCESAR HISTORIA PARA ASEGURAR QUE TODOS LOS CAMPOS ESTÉN PRESENTES
+        if (data.historia) {
+          // Si es string, convertirlo a objeto
+          if (typeof data.historia === 'string') {
+            data.historia = {
+              mostrarSeccion: true,
+              estilo: 'timeline',
+              titulo: 'Nuestra Historia',
+              descripcion: data.historia || '',
+              momentos: [],
+            };
+          } else {
+            // Si es objeto, asegurar que tenga todas las propiedades
+            if (!data.historia.momentos) data.historia.momentos = [];
+            if (!data.historia.titulo)
+              data.historia.titulo = 'Nuestra Historia';
+            if (!data.historia.estilo) data.historia.estilo = 'timeline';
+            if (data.historia.mostrarSeccion === undefined)
+              data.historia.mostrarSeccion = true;
+            if (!data.historia.descripcion) data.historia.descripcion = '';
+          }
         }
 
         this.nuevaInvitacion = {
@@ -440,7 +497,13 @@ export class FormularioInvitacionComponent implements OnInit {
         fontFamily: "'Playfair Display', serif",
         frasePrincipal: '',
         mensajePrincipal: '',
-        historia: '',
+        historia: {
+          mostrarSeccion: true,
+          estilo: 'timeline',
+          titulo: 'Nuestra Historia',
+          descripcion: '',
+          momentos: [],
+        },
         photos: [],
         anfitrionId: '',
         ceremonia: {
@@ -458,7 +521,15 @@ export class FormularioInvitacionComponent implements OnInit {
           imagen: '',
           descripcion: '',
         },
-        dressCode: { descripcion: '', sugerencia: '' },
+        dressCode: {
+          estilo: '',
+          colores: [],
+          coloresReservados: [],
+          titulo: '',
+          descripcion: '',
+          sugerencia: '',
+          notaAdicional: '',
+        },
         padres: {
           padreNovia: '',
           madreNovia: '',
@@ -466,12 +537,6 @@ export class FormularioInvitacionComponent implements OnInit {
           madreNovio: '',
           novio: '',
           novia: '',
-          fotoNovia: '',
-          fotoNovio: '',
-          fotoMadreNovia: '',
-          fotoPadreNovia: '',
-          fotoMadreNovio: '',
-          fotoPadreNovio: '',
         },
         padrinos: [],
         regalos: { texto: '', links: [] },
@@ -503,5 +568,217 @@ export class FormularioInvitacionComponent implements OnInit {
 
   trackByIndex(index: number, item: any): number {
     return index;
+  }
+
+  // 👇 Definir estilos y colores (usando los imports del modelo)
+  estilosDisponibles = ESTILOS_DISPONIBLES;
+  coloresDisponibles = COLORES_DISPONIBLES;
+
+  // 👇 Métodos helper para el Dress Code
+  getEstiloNombre = getEstiloNombre;
+  getEstiloIcon = getEstiloIcon;
+  getEstiloDescripcion = getEstiloDescripcion;
+
+  // 👇 Verificar si un color está seleccionado
+  isColorSelected(color: string): boolean {
+    return this.nuevaInvitacion.dressCode.colores?.includes(color) || false;
+  }
+
+  // 👇 Alternar selección de color
+  toggleColor(color: string): void {
+    if (!this.nuevaInvitacion.dressCode.colores) {
+      this.nuevaInvitacion.dressCode.colores = [];
+    }
+
+    const index = this.nuevaInvitacion.dressCode.colores.indexOf(color);
+    if (index > -1) {
+      this.nuevaInvitacion.dressCode.colores.splice(index, 1);
+    } else {
+      if (this.nuevaInvitacion.dressCode.colores.length < 4) {
+        this.nuevaInvitacion.dressCode.colores.push(color);
+      } else {
+        Swal.fire(
+          'Máximo 4 colores',
+          'Puedes seleccionar hasta 4 colores sugeridos',
+          'warning',
+        );
+      }
+    }
+  }
+
+  // 👇 Eliminar color de la selección
+  removeColor(color: string): void {
+    const index = this.nuevaInvitacion.dressCode.colores.indexOf(color);
+    if (index > -1) {
+      this.nuevaInvitacion.dressCode.colores.splice(index, 1);
+    }
+  }
+
+  // 👇 Método para contar caracteres (usar en el template)
+  getContador(texto: string | undefined, max: number): string {
+    const length = texto?.length || 0;
+    return `${length}/${max}`;
+  }
+
+  isColorReservado(color: string): boolean {
+    return (
+      this.nuevaInvitacion.dressCode.coloresReservados?.includes(color) || false
+    );
+  }
+
+  // Alternar selección de color reservado
+  toggleColorReservado(color: string): void {
+    if (!this.nuevaInvitacion.dressCode.coloresReservados) {
+      this.nuevaInvitacion.dressCode.coloresReservados = [];
+    }
+
+    const index =
+      this.nuevaInvitacion.dressCode.coloresReservados.indexOf(color);
+    if (index > -1) {
+      this.nuevaInvitacion.dressCode.coloresReservados.splice(index, 1);
+    } else {
+      if (this.nuevaInvitacion.dressCode.coloresReservados.length < 4) {
+        this.nuevaInvitacion.dressCode.coloresReservados.push(color);
+      } else {
+        Swal.fire(
+          'Máximo 4 colores',
+          'Puedes seleccionar hasta 4 colores reservados',
+          'warning',
+        );
+      }
+    }
+  }
+
+  // Eliminar color reservado
+  removeColorReservado(color: string): void {
+    const index =
+      this.nuevaInvitacion.dressCode.coloresReservados.indexOf(color);
+    if (index > -1) {
+      this.nuevaInvitacion.dressCode.coloresReservados.splice(index, 1);
+    }
+  }
+
+  estilosHistoria = [
+    { valor: 'timeline', nombre: 'Línea de tiempo', icon: '📅' },
+    { valor: 'tarjetas', nombre: 'Tarjetas', icon: '🃏' },
+    { valor: 'album', nombre: 'Álbum', icon: '📸' },
+    { valor: 'minimalista', nombre: 'Minimalista', icon: '✨' },
+  ];
+
+  // 👇 Métodos para momentos
+  agregarMomento() {
+    if (!this.nuevaInvitacion.historia) {
+      this.nuevaInvitacion.historia = {
+        mostrarSeccion: true,
+        estilo: 'timeline',
+        titulo: 'Nuestra Historia',
+        descripcion: '',
+        momentos: [],
+      };
+    }
+    this.nuevaInvitacion.historia.momentos.push({
+      fecha: '',
+      descripcion: '',
+      imagen: '',
+    });
+  }
+
+  toggleMostrarHistoria() {
+    if (!this.nuevaInvitacion.historia) {
+      this.nuevaInvitacion.historia = {
+        mostrarSeccion: true,
+        estilo: 'timeline',
+        titulo: 'Nuestra Historia',
+        descripcion: '',
+        momentos: [],
+      };
+    }
+    this.nuevaInvitacion.historia.mostrarSeccion =
+      !this.nuevaInvitacion.historia.mostrarSeccion;
+  }
+
+  seleccionarEstiloHistoria(estilo: string) {
+    if (!this.nuevaInvitacion.historia) {
+      this.nuevaInvitacion.historia = {
+        mostrarSeccion: true,
+        estilo: 'timeline',
+        titulo: 'Nuestra Historia',
+        descripcion: '',
+        momentos: [],
+      };
+    }
+    // ✅ Forzar el tipo con as
+    this.nuevaInvitacion.historia.estilo = estilo as
+      | 'timeline'
+      | 'tarjetas'
+      | 'album'
+      | 'minimalista';
+  }
+
+  get historiaMomentos(): any[] {
+    return this.nuevaInvitacion.historia?.momentos || [];
+  }
+
+  // 👇 Getter para el título
+  get historiaTitulo(): string {
+    return this.nuevaInvitacion.historia?.titulo || '';
+  }
+
+  // 👇 Setter para el título
+  set historiaTitulo(value: string) {
+    if (!this.nuevaInvitacion.historia) {
+      this.nuevaInvitacion.historia = {
+        mostrarSeccion: true,
+        estilo: 'timeline',
+        titulo: 'Nuestra Historia',
+        descripcion: '',
+        momentos: [],
+      };
+    }
+    this.nuevaInvitacion.historia.titulo = value;
+  }
+
+  // 👇 Getter para descripción
+  get historiaDescripcion(): string {
+    return this.nuevaInvitacion.historia?.descripcion || '';
+  }
+
+  // 👇 Setter para descripción
+  set historiaDescripcion(value: string) {
+    if (!this.nuevaInvitacion.historia) {
+      this.nuevaInvitacion.historia = {
+        mostrarSeccion: true,
+        estilo: 'timeline',
+        titulo: 'Nuestra Historia',
+        descripcion: '',
+        momentos: [],
+      };
+    }
+    this.nuevaInvitacion.historia.descripcion = value;
+  }
+
+  // 👇 Getter/Setter para mostrarSeccion
+  get historiaMostrarSeccion(): boolean {
+    return this.nuevaInvitacion.historia?.mostrarSeccion ?? true;
+  }
+
+  set historiaMostrarSeccion(value: boolean) {
+    if (!this.nuevaInvitacion.historia) {
+      this.nuevaInvitacion.historia = {
+        mostrarSeccion: true,
+        estilo: 'timeline',
+        titulo: 'Nuestra Historia',
+        descripcion: '',
+        momentos: [],
+      };
+    }
+    this.nuevaInvitacion.historia.mostrarSeccion = value;
+  }
+
+  // ✅ Versión mejorada (más segura)
+  eliminarMomento(index: number) {
+    if (this.nuevaInvitacion.historia?.momentos) {
+      this.nuevaInvitacion.historia.momentos.splice(index, 1);
+    }
   }
 }

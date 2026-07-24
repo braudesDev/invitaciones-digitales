@@ -1,60 +1,333 @@
+/* src/app/components/invitaciones/invitacion-generica/sections/dresscode-section/dresscode-section.component.css */
+
+/* ============================================
+   DRESS CODE - VISTA PÚBLICA (ESTILOS ELEGANTES)
+   ============================================ */
+
 .dresscode-section {
-  margin: 30px auto;
-  padding: 30px 25px;
-  max-width: 600px;
-  background: white;
-  border-radius: 24px;
+  padding: 1rem 2rem;
+  background: var(--secondary, #f5ede4);
   text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.dresscode-section:hover {
+.dresscode-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23c9a87c' fill-opacity='0.06' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.dresscode-header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2.5rem;
+}
+
+.estilo-imagen-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.estilo-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.dresscode-estilo:hover .estilo-imagen {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .estilo-imagen-wrapper {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .estilo-imagen-wrapper {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.dresscode-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 400;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.8rem;
+  letter-spacing: 2px;
+}
+
+.dresscode-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.dresscode-divider .divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent, #c9a87c),
+    transparent
+  );
+}
+
+.dresscode-divider .divider-icon {
+  color: var(--accent, #c9a87c);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* ============================================
+   ESTILO SELECCIONADO
+   ============================================ */
+
+.dresscode-estilo {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  padding: 0.8rem 1.8rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.dresscode-estilo:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
-.dresscode-icon {
-  font-size: 48px;
-  margin-bottom: 15px;
-}
-
-.dresscode-section h3 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: #2c3e50;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-}
-
-.descripcion {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-.sugerencia {
-  background: linear-gradient(135deg, #f5f7fa 0%, #f0f2f5 100%);
-  padding: 15px 20px;
-  border-radius: 16px;
-  margin-top: 15px;
-}
-
-.sugerencia-label {
-  display: inline-block;
-  font-size: 0.85rem;
+.estilo-tag {
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 600;
-  color: #7e57c2;
-  margin-bottom: 8px;
+  letter-spacing: 1.5px;
+  color: var(--text, #888);
+  font-weight: 500;
 }
 
-.sugerencia p {
-  margin: 0;
-  color: #444;
-  font-size: 0.95rem;
+.estilo-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.estilo-nombre {
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================
+   DESCRIPCIÓN
+   ============================================ */
+
+.dresscode-descripcion {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: var(--text, #666);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  font-style: italic;
+  font-family: "Georgia", serif;
+}
+
+/* ============================================
+   COLORES SUGERIDOS
+   ============================================ */
+
+.dresscode-colores {
+  position: relative;
+  z-index: 1;
+  margin: 1.5rem 0 2rem;
+}
+
+.colores-label {
+  font-weight: 500;
+  color: var(--primary, #5c3d2e);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.colores-paleta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.color-muestra {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  cursor: default;
+}
+
+.color-muestra:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   TIP
+   ============================================ */
+
+.dresscode-tip {
+  position: relative;
+  z-index: 1;
+  margin-top: 2.5rem;
+  padding: 1rem 1.8rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  border-left: 4px solid var(--accent, #c9a87c);
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.tip-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tip-text {
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  line-height: 1.6;
+  font-family: "Georgia", serif;
+}
+
+/* dresscode-section.component.css - Agregar al final */
+
+/* Colores reservados */
+.dresscode-colores-reservados {
+  position: relative;
+  z-index: 1;
+  margin: 1.5rem 0 2rem;
+}
+
+.colores-sub-label {
+  font-size: 0.85rem;
+  color: var(--text, #888);
+  margin-bottom: 0.8rem;
+  font-style: italic;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .dresscode-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .dresscode-estilo {
+    padding: 0.6rem 1.2rem;
+    gap: 8px;
+  }
+
+  .estilo-nombre {
+    font-size: 0.95rem;
+  }
+
+  .color-muestra {
+    width: 40px;
+    height: 40px;
+  }
+
+  .dresscode-tip {
+    padding: 0.8rem 1.2rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dresscode-section {
+    padding: 2rem 0.8rem;
+  }
+
+  .dresscode-titulo {
+    font-size: 1.4rem;
+  }
+
+  .dresscode-estilo {
+    padding: 0.5rem 1rem;
+    gap: 6px;
+  }
+
+  .estilo-icon {
+    font-size: 1.2rem;
+  }
+
+  .estilo-nombre {
+    font-size: 0.85rem;
+  }
+
+  .color-muestra {
+    width: 34px;
+    height: 34px;
+    gap: 8px;
+  }
+
+  .dresscode-descripcion {
+    font-size: 0.9rem;
+  }
+
+  .dresscode-tip {
+    padding: 0.6rem 1rem;
+  }
+
+  .tip-text {
+    font-size: 0.75rem;
+  }
 }

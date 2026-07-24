@@ -1,8 +1,14 @@
+/* ============================================
+   NOS CASAMOS - SECCIÓN
+   ============================================ */
+
 .nos-casamos-section {
   background: var(--secondary);
   padding: 4rem 2rem;
   text-align: center;
   margin: 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .nos-casamos-section .section-icon {
@@ -27,10 +33,38 @@
   font-family: var(--font-body, "Georgia", serif);
 }
 
-.decorative-line {
-  width: 80px;
-  height: 3px;
-  background: var(--accent);
-  margin: 1rem auto;
-  border-radius: 999px;
+/* ============================================
+   DIVISOR - CORREGIDO
+   ============================================ */
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%; /* 👈 Agregar: ocupa todo el ancho disponible */
+  max-width: 200px; /* 👈 Mantener: máximo 200px */
+  margin: 1.5rem auto; /* 👈 Agregar: espacio arriba y abajo */
+  padding: 0 20px; /* 👈 Agregar: espacio lateral */
+}
+
+.divider-line {
+  flex: 1; /* 👈 Ocupa el espacio disponible */
+  height: 1px; /* 👈 Aumentar a 2px para mejor visibilidad */
+  min-width: 30px; /* 👈 Agregar: ancho mínimo para que siempre se vea */
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent, #c9a87c) 30%,
+    var(--accent, #c9a87c) 70%,
+    transparent
+  );
+  border-radius: 2px; /* 👈 Agregar: bordes redondeados */
+}
+
+.divider-icon {
+  color: var(--accent, #c9a87c);
+  font-size: 0.9rem; /* 👈 Aumentar un poco */
+  opacity: 0.8; /* 👈 Aumentar opacidad */
+  flex-shrink: 0; /* 👈 Evitar que se encoja */
 }

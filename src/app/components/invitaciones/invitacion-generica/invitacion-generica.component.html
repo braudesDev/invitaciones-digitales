@@ -63,11 +63,11 @@
   <app-damas-section *ngIf="data.damas" [data]="data.damas"></app-damas-section>
   <app-dresscode-section
     *ngIf="data.dressCode"
-    [data]="data.dressCode"
+    [data]="dressCodeFormateado"
   ></app-dresscode-section>
   <app-historia-section
-    *ngIf="data.historia"
-    [data]="data.historia"
+    *ngIf="data.historia && data.historia.mostrarSeccion"
+    [data]="historiaFormateada"
   ></app-historia-section>
   <app-galeria-section
     *ngIf="data.photos && data.photos.length > 0"

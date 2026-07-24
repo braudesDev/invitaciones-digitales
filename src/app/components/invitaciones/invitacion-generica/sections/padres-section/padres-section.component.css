@@ -1,26 +1,19 @@
 /* ============================================
-   PADRES - Sección emotiva con fotos verticales
+   PADRES - REDISEÑO CON PALETA ORIGINAL
    ============================================ */
 
+/* 1. Ocultar avatares y el emoji superior 👪 */
+.avatar-container,
+.padres-icono {
+  display: none !important;
+}
+
 .padres-container {
-  padding: 3rem 1.5rem;
+  padding: 3.5rem 1.5rem;
   background: var(--secondary, #f5ede4);
   text-align: center;
   position: relative;
   overflow: hidden;
-}
-
-.padres-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23c9a87c' fill-opacity='0.08' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
-  background-repeat: repeat;
-  pointer-events: none;
-  z-index: 0;
 }
 
 .padres-header {
@@ -29,22 +22,49 @@
   margin-bottom: 2.5rem;
 }
 
-.padres-icono {
-  font-size: 2.8rem;
-  display: block;
-  margin-bottom: 0.5rem;
-  opacity: 0.7;
-}
-
 .padres-titulo {
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
   margin: 0 0 0.8rem;
   letter-spacing: 2px;
 }
 
+/* 2. Tarjetas con tus variables de color */
+.padres-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  padding: 2.2rem 1.8rem;
+  width: 300px;
+  max-width: 100%;
+  text-align: center;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border: 1px solid var(--accent, #c9a87c);
+}
+
+.padres-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* Titulo de la tarjeta con color de acento (#c9a87c) */
+.card-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent, #c9a87c);
+  margin: 0 0 1.2rem 0;
+  letter-spacing: 1.5px;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.3);
+  padding-bottom: 0.6rem;
+}
+
+/*Divison de titulo y cards*/
 .padres-divider {
   display: flex;
   align-items: center;
@@ -71,159 +91,91 @@
   opacity: 0.7;
 }
 
-/* Grid de tarjetas */
-.padres-grid {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-}
-
-/* Tarjeta individual */
-.padres-card {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(4px);
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-  padding: 2rem 1.8rem;
-  width: 280px;
-  max-width: 100%;
-  text-align: center;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  border: 1px solid var(--accent, #c9a87c);
-}
-
-.padres-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
-}
-
-/* ============================================
-   AVATARES
-   ============================================ */
-
-.avatar-container {
-  overflow: hidden;
-  border: 4px solid var(--accent, #c9a87c);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  flex-shrink: 0;
-  background: var(--secondary, #f5ede4);
-  transition: transform 0.3s ease;
-  margin: 0 auto;
-}
-
-.avatar-grande {
-  border-radius: 25%;
-  width: 80px;
-  height: 80px;
-}
-
-.avatar-pequeno {
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  border-width: 4px;
-}
-
-.avatar-circular {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.avatar-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.2rem;
-  background: var(--secondary, #f5ede4);
-  color: var(--accent, #c9a87c);
-}
-
-.avatar-pequeno .avatar-placeholder {
-  font-size: 1.5rem;
-}
-
-.padres-card:hover .avatar-container {
-  transform: scale(1.05);
-}
-
-/* ============================================
-   TÍTULO DE LA TARJETA
-   ============================================ */
-
-.card-titulo {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: var(--primary, #5c3d2e);
-  margin: 0.8rem 0 1.2rem;
-  letter-spacing: 1px;
-}
-
-/* ============================================
-   LISTA DE PADRES (vertical)
-   ============================================ */
-
+/* 3. Lista de nombres y roles sin bordes toscos */
 .padres-lista {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.2rem;
 }
 
 .padre-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-}
-
-.padre-item:last-child {
-  border-bottom: none;
+  gap: 4px;
+  padding: 0;
+  border-bottom: none; /* Eliminamos la línea divisoria por cada padre */
 }
 
 .padre-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 3px;
 }
 
 .padre-rol {
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text, #5a4a3a);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
+  opacity: 0.8;
 }
 
 .padre-nombre {
-  font-weight: 500;
-  color: var(--primary, #5c3d2e);
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  font-size: 1.2rem;
+  line-height: 1.2;
 }
 
 /* ============================================
-   Responsive
+   GRID CENTRADO Y EN FILA (UNO AL LADO DEL OTRO)
    ============================================ */
 
-@media (max-width: 768px) {
-  .padres-container {
-    padding: 2rem 1rem;
-  }
+.padres-grid {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row; /* Fuerza que se pongan una al lado de la otra */
+  justify-content: center; /* Centra horizontalmente las dos tarjetas */
+  align-items: stretch; /* Hace que ambas tarjetas tengan la misma altura */
+  gap: 2rem; /* Espacio elegante entre la tarjeta de Novia y Novio */
+  max-width: 900px; /* Contiene el ancho máximo para que no se separen demasiado */
+  margin: 0 auto; /* Centra todo el bloque en la pantalla */
+}
 
+.padres-card {
+  flex: 1; /* Hace que ambas tarjetas midan exactamente lo mismo */
+  min-width: 260px; /* Evita que se encojan demasiado */
+  max-width: 340px; /* Ancho ideal para que no se vean gigantes */
+
+  /* Manteniendo los estilos limpios anteriores */
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  padding: 2.2rem 1.8rem;
+  text-align: center;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border: 1px solid var(--accent, #c9a87c);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente el contenido dentro de la tarjeta */
+}
+
+/* ============================================
+   RESPONSIVE (Solo se apilan en celulares pequeños)
+   ============================================ */
+
+@media (max-width: 640px) {
   .padres-grid {
-    flex-direction: column;
+    flex-direction: column; /* En celulares se colocan una arriba de la otra */
     align-items: center;
     gap: 1.5rem;
   }
@@ -231,80 +183,16 @@
   .padres-card {
     width: 100%;
     max-width: 320px;
-    padding: 1.5rem;
-  }
-
-  .avatar-grande {
-    width: 70px;
-    height: 70px;
-  }
-
-  .avatar-pequeno {
-    width: 45px;
-    height: 45px;
-  }
-
-  .padres-titulo {
-    font-size: 1.6rem;
-  }
-
-  .card-titulo {
-    font-size: 1.2rem;
-  }
-
-  .padre-nombre {
-    font-size: 0.95rem;
   }
 }
 
+/* Responsive */
 @media (max-width: 480px) {
-  .padres-container {
-    padding: 1.5rem 0.8rem;
-  }
-
   .padres-card {
-    padding: 1.2rem;
-  }
-
-  .avatar-grande {
-    width: 60px;
-    height: 60px;
-  }
-
-  .avatar-pequeno {
-    width: 40px;
-    height: 40px;
-  }
-
-  .avatar-placeholder {
-    font-size: 1.8rem;
-  }
-
-  .avatar-pequeno .avatar-placeholder {
-    font-size: 1.2rem;
-  }
-
-  .padres-titulo {
-    font-size: 1.3rem;
-  }
-
-  .padres-icono {
-    font-size: 2.2rem;
-  }
-
-  .card-titulo {
-    font-size: 1.1rem;
+    padding: 1.5rem 1.2rem;
   }
 
   .padre-nombre {
-    font-size: 0.85rem;
-  }
-
-  .padre-rol {
-    font-size: 0.65rem;
-  }
-
-  .padres-divider {
-    max-width: 150px;
+    font-size: 1.05rem;
   }
 }
