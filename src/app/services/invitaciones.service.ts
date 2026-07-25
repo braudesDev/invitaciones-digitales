@@ -106,12 +106,20 @@ export interface Invitacion {
   };
 
   hospedaje?: {
-    hoteles?: {
-      nombre: string;
-      direccion: string;
-      telefono?: string;
-      link?: string;
+    mostrarSeccion: boolean;
+    estilo: 'tarjetas' | 'timeline' | 'catalogo' | 'iconos' | 'mosaico';
+    titulo: string;
+    descripcion: string;
+    alojamientos: {
+      titulo: string;
+      ubicacion: string;
+      enlace: string;
+      imagen?: string;
+      capacidad?: string;
+      distancia?: string;
     }[];
+    textoBoton: string;
+    textoAdicional: string;
   };
 
   hashtag?: string;

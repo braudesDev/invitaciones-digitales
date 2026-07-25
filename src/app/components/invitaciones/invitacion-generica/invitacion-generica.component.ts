@@ -24,6 +24,7 @@ import { GaleriaSectionComponent } from './sections/galeria-section/galeria-sect
 import { PadrinoAsignado } from '../../../models/padrino.model';
 import { DressCode } from '../../../models/dress-code.model';
 import { Historia } from '../../../models/historia.model';
+import { Hospedaje } from '../../../models/hospedaje.model';
 
 @Component({
   selector: 'app-invitacion-generica',
@@ -49,6 +50,7 @@ import { Historia } from '../../../models/historia.model';
     ConfirmacionSectionComponent,
     FooterSectionComponent,
     GaleriaSectionComponent,
+    HospedajeSectionComponent,
   ],
   templateUrl: './invitacion-generica.component.html',
   styleUrls: ['./invitacion-generica.component.css'],
@@ -166,6 +168,21 @@ export class InvitacionGenericaComponent implements OnInit {
       titulo: (h as any).titulo || 'Nuestra Historia',
       descripcion: (h as any).descripcion || '',
       momentos: (h as any).momentos || [],
+    };
+  }
+
+  // invitacion-generica.component.ts
+
+  get hospedajeFormateado(): Hospedaje {
+    const h = this.data?.hospedaje || {};
+    return {
+      mostrarSeccion: (h as any).mostrarSeccion ?? true,
+      estilo: (h as any).estilo || 'tarjetas',
+      titulo: (h as any).titulo || 'Hospedaje Airbnb',
+      descripcion: (h as any).descripcion || '',
+      alojamientos: (h as any).alojamientos || [],
+      textoBoton: (h as any).textoBoton || 'Ver en Airbnb',
+      textoAdicional: (h as any).textoAdicional || '',
     };
   }
 }

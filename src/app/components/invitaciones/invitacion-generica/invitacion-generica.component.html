@@ -69,6 +69,10 @@
     *ngIf="data.historia && data.historia.mostrarSeccion"
     [data]="historiaFormateada"
   ></app-historia-section>
+  <app-hospedaje-section
+    *ngIf="data.hospedaje"
+    [data]="hospedajeFormateado"
+  ></app-hospedaje-section>
   <app-galeria-section
     *ngIf="data.photos && data.photos.length > 0"
     [fotos]="data.photos"
@@ -77,10 +81,6 @@
     *ngIf="data.itinerario"
     [data]="data.itinerario"
   ></app-itinerario-section>
-  <app-hospedaje-section
-    *ngIf="data.hospedaje"
-    [data]="data.hospedaje"
-  ></app-hospedaje-section>
   <app-hashtag-section
     *ngIf="data.hashtag"
     [data]="data.hashtag"

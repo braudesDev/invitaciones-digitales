@@ -1412,3 +1412,338 @@
     right: 8px;
   }
 }
+
+/* ============================================
+   HOSPEDAJE - ESTILOS PARA EL FORMULARIO
+   ============================================ */
+
+/* ============================================
+   ESTILOS DE LA SECCIÓN - SELECTOR VISUAL
+   ============================================ */
+
+.estilos-hospedaje-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin: 10px 0 16px;
+}
+
+.estilo-hospedaje-option {
+  background: #f8f5f0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.estilo-hospedaje-option:hover {
+  background: #f0ebe5;
+  transform: translateY(-2px);
+}
+
+.estilo-hospedaje-option.selected {
+  border-color: #c9a87c;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.25);
+  transform: translateY(-2px);
+}
+
+.estilo-hospedaje-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #c9a87c;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.estilo-hospedaje-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.estilo-hospedaje-nombre {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+/* ============================================
+   ALOJAMIENTOS - TARJETAS
+   ============================================ */
+
+.alojamiento-item {
+  margin-bottom: 16px;
+}
+
+.alojamiento-card {
+  background: #faf8f6;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #e8e0d8;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.alojamiento-card:hover {
+  border-color: #c9a87c;
+  box-shadow: 0 2px 8px rgba(201, 168, 124, 0.12);
+}
+
+.alojamiento-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0ebe5;
+}
+
+.alojamiento-numero {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #c9a87c;
+  background: #f0ebe5;
+  padding: 2px 12px;
+  border-radius: 12px;
+}
+
+.btn-eliminar-alojamiento {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.btn-eliminar-alojamiento:hover {
+  background: #fde8e8;
+  transform: scale(1.1);
+}
+
+.alojamiento-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.alojamiento-fields .full-width {
+  grid-column: 1 / -1;
+}
+
+/* ============================================
+   BOTÓN AGREGAR ALOJAMIENTO
+   ============================================ */
+
+.btn-agregar-alojamiento {
+  background: #f0ebe5;
+  border: 2px dashed #c9a87c;
+  color: #5c3d2e;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btn-agregar-alojamiento:hover {
+  background: #e8dfd6;
+  border-color: #b8946a;
+  transform: translateY(-1px);
+}
+
+.btn-agregar-alojamiento:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   TIP - NOTA INFORMATIVA
+   ============================================ */
+
+.hospedaje-tip {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: #f8f5f0;
+  border-radius: 12px;
+  border-left: 4px solid #c9a87c;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.hospedaje-tip .tip-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.hospedaje-tip .tip-text {
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* ============================================
+   INPUT CON CONTADOR (reutilizado)
+   ============================================ */
+
+.input-with-counter {
+  position: relative;
+}
+
+.input-with-counter input,
+.input-with-counter textarea {
+  width: 100%;
+  padding: 10px 60px 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  background: #faf9f8;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.input-with-counter input:focus,
+.input-with-counter textarea:focus {
+  border-color: #c9a87c;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
+  background: #ffffff;
+}
+
+.input-with-counter textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.contador {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-size: 0.7rem;
+  color: #bbb;
+  pointer-events: none;
+  font-weight: 500;
+}
+
+.subcampo {
+  margin-bottom: 14px;
+}
+
+.subcampo label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 4px;
+  display: block;
+  letter-spacing: 0;
+}
+
+/* ============================================
+   CHECKBOX PERSONALIZADO
+   ============================================ */
+
+.campo label input[type="checkbox"] {
+  margin-right: 8px;
+  accent-color: #c9a87c;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.campo label {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #444;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* ============================================
+   RESPONSIVE - HOSPEDAJE
+   ============================================ */
+
+@media (max-width: 600px) {
+  .estilos-hospedaje-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .alojamiento-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .alojamiento-card {
+    padding: 12px;
+  }
+
+  .estilo-hospedaje-option {
+    padding: 10px 6px;
+  }
+
+  .estilo-hospedaje-icon {
+    font-size: 1.6rem;
+  }
+
+  .estilo-hospedaje-nombre {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .estilos-hospedaje-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .estilo-hospedaje-option {
+    padding: 8px 4px;
+  }
+
+  .estilo-hospedaje-icon {
+    font-size: 1.4rem;
+  }
+
+  .input-with-counter input,
+  .input-with-counter textarea {
+    padding: 8px 50px 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .contador {
+    font-size: 0.65rem;
+    bottom: 8px;
+    right: 8px;
+  }
+
+  .hospedaje-tip {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .hospedaje-tip .tip-text {
+    font-size: 0.75rem;
+  }
+}
