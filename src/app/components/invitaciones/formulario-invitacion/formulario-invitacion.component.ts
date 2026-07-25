@@ -92,6 +92,23 @@ export interface InvitacionCompleta {
   confirmacion: { telefono: string; whatsapp: string; link: string };
   hashtag: string;
   consideraciones: string;
+  //Hospedaje (opcional)
+  hospedaje?: {
+    mostrarSeccion: boolean;
+    estilo: 'tarjetas' | 'timeline' | 'catalogo' | 'iconos' | 'mosaico';
+    titulo: string;
+    descripcion: string;
+    alojamientos: {
+      titulo: string;
+      ubicacion: string;
+      enlace: string;
+      imagen?: string;
+      capacidad?: string;
+      distancia?: string;
+    }[];
+    textoBoton: string;
+    textoAdicional: string;
+  };
 }
 
 interface Paleta {
@@ -162,6 +179,15 @@ export class FormularioInvitacionComponent implements OnInit {
   invitacionId: string | null = null;
   cargando = false;
   tabActivo: 'basico' | 'ceremonia' | 'extras' = 'basico';
+
+  // 👇 Estilos para hospedaje
+  estilosHospedaje = [
+    { valor: 'tarjetas', nombre: 'Tarjetas', icon: '🃏' },
+    { valor: 'timeline', nombre: 'Timeline', icon: '📅' },
+    { valor: 'catalogo', nombre: 'Catálogo', icon: '📖' },
+    { valor: 'iconos', nombre: 'Íconos', icon: '🎯' },
+    { valor: 'mosaico', nombre: 'Mosaico', icon: '🧩' },
+  ];
 
   nuevaInvitacion: InvitacionCompleta = {
     name: '',
@@ -237,6 +263,7 @@ export class FormularioInvitacionComponent implements OnInit {
   acordeonDressCode = false;
   imagenSubiendo = false;
   acordeonHistoria = false;
+  acordeonHospedaje = false;
 
   constructor(
     private firestore: Firestore,
@@ -780,5 +807,149 @@ export class FormularioInvitacionComponent implements OnInit {
     if (this.nuevaInvitacion.historia?.momentos) {
       this.nuevaInvitacion.historia.momentos.splice(index, 1);
     }
+  }
+
+  //Getters para hospedaje
+  get hospedajeTitulo(): string {
+    return this.nuevaInvitacion.hospedaje?.titulo || '';
+  }
+
+  set hospedajeTitulo(value: string) {
+    if (!this.nuevaInvitacion.hospedaje) {
+      this.nuevaInvitacion.hospedaje = {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Hospedaje Airbnb',
+        descripcion: '',
+        alojamientos: [],
+        textoBoton: 'Ver en Airbnb',
+        textoAdicional: '',
+      };
+    }
+    this.nuevaInvitacion.hospedaje.titulo = value;
+  }
+
+  get hospedajeDescripcion(): string {
+    return this.nuevaInvitacion.hospedaje?.descripcion || '';
+  }
+
+  set hospedajeDescripcion(value: string) {
+    if (!this.nuevaInvitacion.hospedaje) {
+      this.nuevaInvitacion.hospedaje = {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Hospedaje Airbnb',
+        descripcion: '',
+        alojamientos: [],
+        textoBoton: 'Ver en Airbnb',
+        textoAdicional: '',
+      };
+    }
+    this.nuevaInvitacion.hospedaje.descripcion = value;
+  }
+
+  get hospedajeMostrarSeccion(): boolean {
+    return this.nuevaInvitacion.hospedaje?.mostrarSeccion ?? false;
+  }
+
+  set hospedajeMostrarSeccion(value: boolean) {
+    if (!this.nuevaInvitacion.hospedaje) {
+      this.nuevaInvitacion.hospedaje = {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Hospedaje Airbnb',
+        descripcion: '',
+        alojamientos: [],
+        textoBoton: 'Ver en Airbnb',
+        textoAdicional: '',
+      };
+    }
+    this.nuevaInvitacion.hospedaje.mostrarSeccion = value;
+  }
+
+  get hospedajeTextoBoton(): string {
+    return this.nuevaInvitacion.hospedaje?.textoBoton || 'Ver en Airbnb';
+  }
+
+  set hospedajeTextoBoton(value: string) {
+    if (!this.nuevaInvitacion.hospedaje) {
+      this.nuevaInvitacion.hospedaje = {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Hospedaje Airbnb',
+        descripcion: '',
+        alojamientos: [],
+        textoBoton: 'Ver en Airbnb',
+        textoAdicional: '',
+      };
+    }
+    this.nuevaInvitacion.hospedaje.textoBoton = value;
+  }
+
+  get hospedajeTextoAdicional(): string {
+    return this.nuevaInvitacion.hospedaje?.textoAdicional || '';
+  }
+
+  set hospedajeTextoAdicional(value: string) {
+    if (!this.nuevaInvitacion.hospedaje) {
+      this.nuevaInvitacion.hospedaje = {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Hospedaje Airbnb',
+        descripcion: '',
+        alojamientos: [],
+        textoBoton: 'Ver en Airbnb',
+        textoAdicional: '',
+      };
+    }
+    this.nuevaInvitacion.hospedaje.textoAdicional = value;
+  }
+
+  get hospedajeAlojamientos(): any[] {
+    return this.nuevaInvitacion.hospedaje?.alojamientos || [];
+  }
+
+  // 👇 Métodos para alojamientos
+  agregarAlojamiento() {
+    if (!this.nuevaInvitacion.hospedaje) {
+      this.nuevaInvitacion.hospedaje = {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Hospedaje Airbnb',
+        descripcion: '',
+        alojamientos: [],
+        textoBoton: 'Ver en Airbnb',
+        textoAdicional: '',
+      };
+    }
+    this.nuevaInvitacion.hospedaje.alojamientos.push({
+      titulo: '',
+      ubicacion: '',
+      enlace: '',
+      imagen: '',
+      capacidad: '',
+      distancia: '',
+    });
+  }
+
+  eliminarAlojamiento(index: number) {
+    if (this.nuevaInvitacion.hospedaje?.alojamientos) {
+      this.nuevaInvitacion.hospedaje.alojamientos.splice(index, 1);
+    }
+  }
+
+  seleccionarEstiloHospedaje(estilo: string) {
+    if (!this.nuevaInvitacion.hospedaje) {
+      this.nuevaInvitacion.hospedaje = {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Hospedaje Airbnb',
+        descripcion: '',
+        alojamientos: [],
+        textoBoton: 'Ver en Airbnb',
+        textoAdicional: '',
+      };
+    }
+    this.nuevaInvitacion.hospedaje.estilo = estilo as any;
   }
 }

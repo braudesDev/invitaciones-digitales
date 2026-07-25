@@ -1,1 +1,212 @@
-<p>hospedaje-section works!</p>
+<!-- src/app/components/invitaciones/invitacion-generica/sections/hospedaje-section/hospedaje-section.component.html -->
+
+<div *ngIf="data && data.mostrarSeccion" class="hospedaje-section">
+  <div class="hospedaje-header">
+    <span class="hospedaje-icono">🏠</span>
+    <h2 class="hospedaje-titulo">{{ data.titulo || "Hospedaje Airbnb" }}</h2>
+    <div class="hospedaje-divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">✦</span>
+      <span class="divider-line"></span>
+    </div>
+  </div>
+
+  <p class="hospedaje-descripcion" *ngIf="data.descripcion">
+    {{ data.descripcion }}
+  </p>
+
+  <!-- ============================================ -->
+  <!-- ESTILO: TARJETAS -->
+  <!-- ============================================ -->
+  <div *ngIf="data.estilo === 'tarjetas'" class="hospedaje-tarjetas">
+    <div
+      *ngFor="let alojamiento of data.alojamientos"
+      class="hospedaje-tarjeta"
+    >
+      <img
+        *ngIf="alojamiento.imagen"
+        [src]="alojamiento.imagen"
+        alt="Alojamiento"
+        class="tarjeta-imagen"
+      />
+      <div class="tarjeta-contenido">
+        <h3 class="tarjeta-titulo">{{ alojamiento.titulo }}</h3>
+        <p class="tarjeta-ubicacion">📍 {{ alojamiento.ubicacion }}</p>
+        <p class="tarjeta-distancia" *ngIf="alojamiento.distancia">
+          🕐 {{ alojamiento.distancia }}
+        </p>
+        <p class="tarjeta-capacidad" *ngIf="alojamiento.capacidad">
+          👥 {{ alojamiento.capacidad }}
+        </p>
+        <a
+          [href]="alojamiento.enlace"
+          target="_blank"
+          class="btn-hospedaje"
+          rel="noopener noreferrer"
+        >
+          {{ data.textoBoton || "Ver en Airbnb" }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ESTILO: TIMELINE -->
+  <!-- ============================================ -->
+  <div *ngIf="data.estilo === 'timeline'" class="hospedaje-timeline">
+    <div
+      *ngFor="let alojamiento of data.alojamientos; let i = index"
+      class="timeline-item"
+    >
+      <div class="timeline-marker">
+        <span class="timeline-number">{{ i + 1 }}</span>
+      </div>
+
+      <div class="timeline-content">
+        <!-- Imagen a la izquierda del contenido -->
+        <div class="timeline-imagen-wrapper" *ngIf="alojamiento.imagen">
+          <img
+            [src]="alojamiento.imagen"
+            [alt]="alojamiento.titulo"
+            class="timeline-imagen"
+          />
+        </div>
+
+        <div class="timeline-info">
+          <h3 class="timeline-titulo">{{ alojamiento.titulo }}</h3>
+          <p class="timeline-ubicacion">📍 {{ alojamiento.ubicacion }}</p>
+          <p class="timeline-distancia" *ngIf="alojamiento.distancia">
+            🕐 {{ alojamiento.distancia }}
+          </p>
+          <p class="timeline-capacidad" *ngIf="alojamiento.capacidad">
+            👥 {{ alojamiento.capacidad }}
+          </p>
+          <a
+            [href]="alojamiento.enlace"
+            target="_blank"
+            class="btn-hospedaje"
+            rel="noopener noreferrer"
+          >
+            {{ data.textoBoton || "Ver en Airbnb" }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ESTILO: CATÁLOGO -->
+  <!-- ============================================ -->
+  <div *ngIf="data.estilo === 'catalogo'" class="hospedaje-catalogo">
+    <div *ngFor="let alojamiento of data.alojamientos" class="catalogo-item">
+      <div class="catalogo-imagen-wrapper">
+        <img
+          *ngIf="alojamiento.imagen"
+          [src]="alojamiento.imagen"
+          alt="Alojamiento"
+          class="catalogo-imagen"
+        />
+      </div>
+      <div class="catalogo-info">
+        <h3 class="catalogo-titulo">{{ alojamiento.titulo }}</h3>
+        <p class="catalogo-ubicacion">📍 {{ alojamiento.ubicacion }}</p>
+        <p class="catalogo-distancia" *ngIf="alojamiento.distancia">
+          🕐 {{ alojamiento.distancia }}
+        </p>
+        <p class="catalogo-capacidad" *ngIf="alojamiento.capacidad">
+          👥 {{ alojamiento.capacidad }}
+        </p>
+        <a
+          [href]="alojamiento.enlace"
+          target="_blank"
+          class="btn-hospedaje"
+          rel="noopener noreferrer"
+        >
+          {{ data.textoBoton || "Ver en Airbnb" }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ESTILO: ÍCONOS -->
+  <!-- ============================================ -->
+  <div *ngIf="data.estilo === 'iconos'" class="hospedaje-iconos">
+    <div *ngFor="let alojamiento of data.alojamientos" class="icono-item">
+      <!-- Imagen redonda -->
+      <div class="icono-imagen-wrapper">
+        <img
+          *ngIf="alojamiento.imagen"
+          [src]="alojamiento.imagen"
+          [alt]="alojamiento.titulo"
+          class="icono-imagen"
+        />
+        <div *ngIf="!alojamiento.imagen" class="icono-imagen-placeholder">
+          🏠
+        </div>
+      </div>
+
+      <h4 class="icono-titulo">{{ alojamiento.titulo }}</h4>
+      <p class="icono-ubicacion">{{ alojamiento.ubicacion }}</p>
+
+      <!-- Detalles adicionales -->
+      <div
+        class="icono-detalles"
+        *ngIf="alojamiento.distancia || alojamiento.capacidad"
+      >
+        <span class="icono-detalle" *ngIf="alojamiento.distancia"
+          >🕐 {{ alojamiento.distancia }}</span
+        >
+        <span class="icono-detalle" *ngIf="alojamiento.capacidad"
+          >👥 {{ alojamiento.capacidad }}</span
+        >
+      </div>
+
+      <a
+        [href]="alojamiento.enlace"
+        target="_blank"
+        class="btn-hospedaje"
+        rel="noopener noreferrer"
+      >
+        <span>{{ data.textoBoton || "Ver en Airbnb" }}</span>
+        <span class="btn-icono">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ESTILO: MOSAICO -->
+  <!-- ============================================ -->
+  <div *ngIf="data.estilo === 'mosaico'" class="hospedaje-mosaico">
+    <div
+      *ngFor="let alojamiento of data.alojamientos; let i = index"
+      class="mosaico-item"
+      [class.mosaico-grande]="i === 0"
+      [class.mosaico-medio]="i === 1 || i === 2"
+    >
+      <img
+        *ngIf="alojamiento.imagen"
+        [src]="alojamiento.imagen"
+        alt="Alojamiento"
+        class="mosaico-imagen"
+      />
+      <div class="mosaico-overlay">
+        <h3 class="mosaico-titulo">{{ alojamiento.titulo }}</h3>
+        <p class="mosaico-ubicacion">{{ alojamiento.ubicacion }}</p>
+        <a
+          [href]="alojamiento.enlace"
+          target="_blank"
+          class="btn-mosaico"
+          rel="noopener noreferrer"
+        >
+          {{ data.textoBoton || "Ver en Airbnb" }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Texto adicional -->
+  <p class="hospedaje-texto-adicional" *ngIf="data.textoAdicional">
+    {{ data.textoAdicional }}
+  </p>
+</div>

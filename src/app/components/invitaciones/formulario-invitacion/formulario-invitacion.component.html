@@ -956,6 +956,235 @@
           </div>
         </div>
       </div>
+
+      <!-- Acordeón: Hospedaje -->
+      <div class="acordeon">
+        <div
+          class="acordeon-header"
+          (click)="acordeonHospedaje = !acordeonHospedaje"
+        >
+          <span>🏠 Hospedaje</span>
+          <span class="icono">{{ acordeonHospedaje ? "▲" : "▼" }}</span>
+        </div>
+        <div class="acordeon-body" [class.abierto]="acordeonHospedaje">
+          <!-- Mostrar sección -->
+          <div class="campo">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="hospedajeMostrarSeccion"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              Mostrar sección en la invitación
+            </label>
+          </div>
+
+          <!-- ESTILO DE LA SECCIÓN -->
+          <div class="campo">
+            <label>🎨 ESTILO DE LA SECCIÓN</label>
+            <div class="estilos-hospedaje-grid">
+              <div
+                *ngFor="let estilo of estilosHospedaje"
+                class="estilo-hospedaje-option"
+                [class.selected]="
+                  nuevaInvitacion.hospedaje?.estilo === estilo.valor
+                "
+                (click)="seleccionarEstiloHospedaje(estilo.valor)"
+              >
+                <span class="estilo-hospedaje-icon">{{ estilo.icon }}</span>
+                <span class="estilo-hospedaje-nombre">{{ estilo.nombre }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- OPCIONES DE AIRBNB -->
+          <div class="campo">
+            <label>🏠 OPCIONES DE AIRBNB</label>
+
+            <!-- Título -->
+            <div class="subcampo">
+              <label>Título de la sección</label>
+              <div class="input-with-counter">
+                <input
+                  type="text"
+                  [(ngModel)]="hospedajeTitulo"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Hospedaje Airbnb"
+                  maxlength="30"
+                />
+                <span class="contador">{{ hospedajeTitulo.length }}/30</span>
+              </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="subcampo">
+              <label>Descripción</label>
+              <div class="input-with-counter">
+                <textarea
+                  [(ngModel)]="hospedajeDescripcion"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Hemos seleccionado opciones de hospedaje cerca del lugar del evento para tu comodidad."
+                  rows="2"
+                  maxlength="120"
+                ></textarea>
+                <span class="contador"
+                  >{{ hospedajeDescripcion.length }}/120</span
+                >
+              </div>
+            </div>
+
+            <!-- Alojamientos -->
+            <div class="subcampo">
+              <label>Agregar alojamiento de Airbnb</label>
+
+              <div
+                *ngFor="let alojamiento of hospedajeAlojamientos; let i = index"
+                class="alojamiento-item"
+              >
+                <div class="alojamiento-card">
+                  <div class="alojamiento-header">
+                    <span class="alojamiento-numero">#{{ i + 1 }}</span>
+                    <button
+                      type="button"
+                      class="btn-eliminar-alojamiento"
+                      (click)="eliminarAlojamiento(i)"
+                    >
+                      ❌
+                    </button>
+                  </div>
+
+                  <div class="alojamiento-fields">
+                    <!-- Título del alojamiento -->
+                    <div class="field-group full-width">
+                      <label>Título del alojamiento</label>
+                      <input
+                        type="text"
+                        [(ngModel)]="alojamiento.titulo"
+                        [ngModelOptions]="{ standalone: true }"
+                        placeholder="Ej: Departamento con vista al mar"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <!-- Ubicación -->
+                    <div class="field-group">
+                      <label>Ubicación</label>
+                      <input
+                        type="text"
+                        [(ngModel)]="alojamiento.ubicacion"
+                        [ngModelOptions]="{ standalone: true }"
+                        placeholder="Ej: Cancún, Quintana Roo"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <!-- Distancia -->
+                    <div class="field-group">
+                      <label>Distancia (opcional)</label>
+                      <input
+                        type="text"
+                        [(ngModel)]="alojamiento.distancia"
+                        [ngModelOptions]="{ standalone: true }"
+                        placeholder="Ej: A 10 min del lugar del evento"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <!-- Capacidad -->
+                    <div class="field-group">
+                      <label>Capacidad (opcional)</label>
+                      <input
+                        type="text"
+                        [(ngModel)]="alojamiento.capacidad"
+                        [ngModelOptions]="{ standalone: true }"
+                        placeholder="Ej: 4 personas"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <!-- Enlace de Airbnb -->
+                    <div class="field-group full-width">
+                      <label>Enlace de Airbnb</label>
+                      <input
+                        type="url"
+                        [(ngModel)]="alojamiento.enlace"
+                        [ngModelOptions]="{ standalone: true }"
+                        placeholder="https://airbnb.com/h/departamento"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <!-- Imagen -->
+                    <div class="field-group full-width">
+                      <app-image-upload
+                        label="📸 Imagen (opcional)"
+                        [imageUrl]="alojamiento.imagen || ''"
+                        (imageChange)="alojamiento.imagen = $event"
+                        placeholder="URL de la imagen (opcional)"
+                      ></app-image-upload>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="btn-agregar-alojamiento"
+                (click)="agregarAlojamiento()"
+              >
+                + Agregar otro alojamiento
+              </button>
+            </div>
+          </div>
+
+          <!-- PERSONALIZA TU MENSAJE -->
+          <div class="campo">
+            <label>✏️ PERSONALIZA TU MENSAJE</label>
+
+            <div class="subcampo">
+              <label>Texto del botón</label>
+              <div class="input-with-counter">
+                <input
+                  type="text"
+                  [(ngModel)]="hospedajeTextoBoton"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Ver en Airbnb"
+                  maxlength="20"
+                />
+                <span class="contador"
+                  >{{ hospedajeTextoBoton.length }}/20</span
+                >
+              </div>
+            </div>
+
+            <div class="subcampo">
+              <label>Texto adicional (opcional)</label>
+              <div class="input-with-counter">
+                <textarea
+                  [(ngModel)]="hospedajeTextoAdicional"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Precios especiales para nuestros invitados."
+                  rows="2"
+                  maxlength="80"
+                ></textarea>
+                <span class="contador"
+                  >{{ hospedajeTextoAdicional.length }}/80</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- TIP -->
+          <div class="hospedaje-tip">
+            <span class="tip-icon">💡</span>
+            <span class="tip-text">
+              Comparte alojamientos recomendados para que tus invitados tengan
+              una estancia cómoda y cercana al evento.
+            </span>
+          </div>
+        </div>
+      </div>
+
       <!-- Acordeón: Regalos -->
       <div class="acordeon">
         <div class="acordeon-body" [class.abierto]="acordeonRegalos">

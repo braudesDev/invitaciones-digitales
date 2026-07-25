@@ -1,0 +1,1694 @@
+/* hospedaje-section.component.css */
+
+/* ============================================
+   HOSPEDAJE - VISTA PÚBLICA
+   ============================================ */
+
+.hospedaje-section {
+  padding: 4rem 2rem;
+  background: var(--secondary, #f5ede4);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hospedaje-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23c9a87c' fill-opacity='0.06' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.hospedaje-header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2rem;
+}
+
+.hospedaje-icono {
+  font-size: 2.8rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
+}
+
+.hospedaje-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 400;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.8rem;
+  letter-spacing: 2px;
+}
+
+.hospedaje-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.hospedaje-divider .divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent, #c9a87c),
+    transparent
+  );
+}
+
+.hospedaje-divider .divider-icon {
+  color: var(--accent, #c9a87c);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.hospedaje-descripcion {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: var(--text, #666);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  font-style: italic;
+  font-family: "Georgia", serif;
+}
+
+/* ============================================
+   ESTILO: TARJETAS - VERSIÓN MODERNA
+   ============================================ */
+
+.hospedaje-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 0 10px 0;
+}
+
+/* ============================================
+   TARJETA INDIVIDUAL
+   ============================================ */
+
+.hospedaje-tarjeta {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(201, 168, 124, 0.2);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.hospedaje-tarjeta:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent, #c9a87c);
+}
+
+/* ============================================
+   BADGE DE DESTACADO (opcional)
+   ============================================ */
+
+.hospedaje-tarjeta .tarjeta-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 2;
+  box-shadow: 0 2px 12px rgba(201, 168, 124, 0.3);
+}
+
+/* ============================================
+   IMAGEN DE LA TARJETA
+   ============================================ */
+
+.tarjeta-imagen {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  flex-shrink: 0;
+}
+
+.hospedaje-tarjeta:hover .tarjeta-imagen {
+  transform: scale(1.03);
+}
+
+/* Placeholder si no hay imagen */
+.tarjeta-imagen-placeholder {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(
+    135deg,
+    var(--secondary, #f5ede4),
+    var(--accent, #c9a87c)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   CONTENIDO DE LA TARJETA
+   ============================================ */
+
+.tarjeta-contenido {
+  padding: 1.2rem 1.2rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tarjeta-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.3rem;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+}
+
+.tarjeta-ubicacion {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  margin: 0.2rem 0;
+}
+
+.tarjeta-distancia {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  margin: 0.15rem 0;
+}
+
+.tarjeta-capacidad {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  margin: 0.15rem 0 0.6rem;
+}
+
+/* ============================================
+   BOTÓN EN TARJETA
+   ============================================ */
+
+.tarjeta-contenido .btn-hospedaje {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 0.8rem;
+  padding: 0.6rem 1.6rem;
+  background: var(--accent, #c9a87c);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  align-self: flex-start;
+}
+
+/* Efecto de brillo en hover */
+.tarjeta-contenido .btn-hospedaje::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.tarjeta-contenido .btn-hospedaje:hover::before {
+  left: 100%;
+}
+
+.tarjeta-contenido .btn-hospedaje:hover {
+  background: var(--primary, #5c3d2e);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 24px rgba(201, 168, 124, 0.35);
+  border-color: var(--primary, #5c3d2e);
+}
+
+.tarjeta-contenido .btn-hospedaje:active {
+  transform: scale(0.97);
+}
+
+/* Icono del botón (flecha) */
+.tarjeta-contenido .btn-hospedaje .btn-icono {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.tarjeta-contenido .btn-hospedaje:hover .btn-icono {
+  transform: translateX(4px);
+}
+
+/* ============================================
+   TARJETAS - RESPONSIVE MEJORADO
+   ============================================ */
+
+@media (max-width: 768px) {
+  .hospedaje-tarjetas {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    max-width: 500px;
+    padding: 0 8px;
+  }
+
+  .tarjeta-imagen {
+    height: 150px;
+  }
+
+  .tarjeta-imagen-placeholder {
+    height: 150px;
+    font-size: 2.2rem;
+  }
+
+  .tarjeta-titulo {
+    font-size: 1rem;
+  }
+
+  .tarjeta-contenido {
+    padding: 0.8rem 0.8rem 1rem;
+  }
+
+  .tarjeta-ubicacion,
+  .tarjeta-distancia,
+  .tarjeta-capacidad {
+    font-size: 0.8rem;
+  }
+
+  .tarjeta-contenido .btn-hospedaje {
+    padding: 0.4rem 1.2rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hospedaje-tarjetas {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 100%;
+    padding: 0 4px;
+  }
+
+  .tarjeta-imagen {
+    height: 120px;
+  }
+
+  .tarjeta-imagen-placeholder {
+    height: 120px;
+    font-size: 1.8rem;
+  }
+
+  .tarjeta-titulo {
+    font-size: 0.85rem;
+  }
+
+  .tarjeta-ubicacion,
+  .tarjeta-distancia,
+  .tarjeta-capacidad {
+    font-size: 0.7rem;
+  }
+
+  .tarjeta-contenido {
+    padding: 0.5rem 0.5rem 0.8rem;
+  }
+
+  .tarjeta-contenido .btn-hospedaje {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.65rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
+/* ============================================
+   ESTILO: TIMELINE - CON IMAGEN A LA IZQUIERDA
+   ============================================ */
+
+.hospedaje-timeline {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 20px 0 20px 40px;
+  position: relative;
+}
+
+/* Línea vertical con degradado */
+.hospedaje-timeline::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background: var(--accent, #c9a87c);
+  border-radius: 4px;
+}
+
+/* ============================================
+   ITEM DE TIMELINE
+   ============================================ */
+
+.timeline-item {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 2.5rem;
+  text-align: left;
+  position: relative;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   MARCADOR CON EFECTO
+   ============================================ */
+
+.timeline-marker {
+  width: 36px;
+  height: 36px;
+  background: var(--accent, #c9a87c);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: white;
+  font-weight: 700;
+  font-size: 0.75rem;
+  margin-top: 2px;
+  position: relative;
+  z-index: 2;
+  box-shadow:
+    0 0 0 4px var(--secondary, #f5ede4),
+    0 4px 16px rgba(201, 168, 124, 0.35);
+  transition: all 0.3s ease;
+}
+
+.timeline-marker::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--accent, #c9a87c);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 0 4px var(--secondary, #f5ede4),
+    0 6px 28px rgba(201, 168, 124, 0.45);
+}
+
+.timeline-item:hover .timeline-marker::after {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+/* ============================================
+   CONTENIDO DE LA TARJETA - CON IMAGEN
+   ============================================ */
+
+.timeline-content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  padding: 0.8rem 1.2rem 1.2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* Flecha que apunta al marcador */
+.timeline-content::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 16px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid rgba(255, 255, 255, 0.92);
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-content {
+  transform: translateX(6px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent, #c9a87c);
+}
+
+/* ============================================
+   IMAGEN EN LA TIMELINE
+   ============================================ */
+
+.timeline-imagen-wrapper {
+  flex: 0 0 120px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-imagen-wrapper {
+  transform: scale(1.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.timeline-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder si no hay imagen */
+.timeline-imagen-wrapper.sin-imagen {
+  background: linear-gradient(
+    135deg,
+    var(--secondary, #f5ede4),
+    var(--accent, #c9a87c)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  opacity: 0.5;
+}
+
+/* ============================================
+   INFO DE LA TIMELINE
+   ============================================ */
+
+.timeline-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.timeline-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.4rem;
+  letter-spacing: 0.5px;
+}
+
+.timeline-ubicacion,
+.timeline-distancia,
+.timeline-capacidad {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  margin: 0.2rem 0;
+}
+
+.timeline-ubicacion {
+  margin-top: 0.3rem;
+}
+
+/* ============================================
+   BOTÓN MEJORADO
+   ============================================ */
+
+.timeline-info .btn-hospedaje {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 0.8rem;
+  padding: 0.5rem 1.6rem;
+  background: var(--accent, #c9a87c);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de brillo en hover */
+.timeline-info .btn-hospedaje::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.timeline-info .btn-hospedaje:hover::before {
+  left: 100%;
+}
+
+.timeline-info .btn-hospedaje:hover {
+  background: var(--primary, #5c3d2e);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 24px rgba(201, 168, 124, 0.35);
+  border-color: var(--primary, #5c3d2e);
+}
+
+.timeline-info .btn-hospedaje:active {
+  transform: scale(0.97);
+}
+
+/* Icono del botón (flecha) */
+.timeline-info .btn-hospedaje .btn-icono {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.timeline-info .btn-hospedaje:hover .btn-icono {
+  transform: translateX(4px);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .hospedaje-timeline {
+    padding: 16px 0 16px 30px;
+  }
+
+  .hospedaje-timeline::before {
+    left: 12px;
+  }
+
+  .timeline-marker {
+    width: 30px;
+    height: 30px;
+    font-size: 0.65rem;
+    margin-top: 4px;
+  }
+
+  .timeline-content {
+    padding: 0.8rem 1rem 1rem;
+    border-radius: 12px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .timeline-content::before {
+    left: -8px;
+    top: 14px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid rgba(255, 255, 255, 0.92);
+  }
+
+  .timeline-imagen-wrapper {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 160px;
+  }
+
+  .timeline-titulo {
+    font-size: 1.1rem;
+  }
+
+  .timeline-item {
+    gap: 16px;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-info .btn-hospedaje {
+    padding: 0.5rem 1.4rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hospedaje-timeline {
+    padding: 12px 0 12px 20px;
+  }
+
+  .hospedaje-timeline::before {
+    left: 8px;
+  }
+
+  .timeline-marker {
+    width: 24px;
+    height: 24px;
+    font-size: 0.55rem;
+  }
+
+  .timeline-content {
+    padding: 0.6rem 0.8rem 0.8rem;
+    border-radius: 10px;
+  }
+
+  .timeline-content::before {
+    display: none;
+  }
+
+  .timeline-imagen-wrapper {
+    height: 140px;
+  }
+
+  .timeline-titulo {
+    font-size: 0.95rem;
+  }
+
+  .timeline-ubicacion,
+  .timeline-distancia,
+  .timeline-capacidad {
+    font-size: 0.75rem;
+  }
+
+  .timeline-item {
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .timeline-info .btn-hospedaje {
+    padding: 0.4rem 1.2rem;
+    font-size: 0.75rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   ESTILO: CATÁLOGO - VERSIÓN MODERNA
+   ============================================ */
+
+.hospedaje-catalogo {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 0 10px 0;
+}
+
+/* ============================================
+   ITEM DEL CATÁLOGO
+   ============================================ */
+
+.catalogo-item {
+  display: flex;
+  gap: 0;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(201, 168, 124, 0.2);
+  text-align: left;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.catalogo-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent, #c9a87c);
+}
+
+/* ============================================
+   IMAGEN DEL CATÁLOGO
+   ============================================ */
+
+.catalogo-imagen-wrapper {
+  flex: 0 0 220px;
+  height: 180px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.catalogo-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.catalogo-item:hover .catalogo-imagen {
+  transform: scale(1.05);
+}
+
+/* Placeholder si no hay imagen */
+.catalogo-imagen-wrapper.sin-imagen {
+  background: linear-gradient(
+    135deg,
+    var(--secondary, #f5ede4),
+    var(--accent, #c9a87c)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  opacity: 0.4;
+}
+
+/* ============================================
+   BADGE DE DESTACADO (opcional)
+   ============================================ */
+
+.catalogo-item .catalogo-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 2;
+  box-shadow: 0 2px 12px rgba(201, 168, 124, 0.3);
+}
+
+/* ============================================
+   INFO DEL CATÁLOGO
+   ============================================ */
+
+.catalogo-info {
+  padding: 1.2rem 1.5rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.catalogo-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.3rem;
+  letter-spacing: 0.5px;
+}
+
+.catalogo-ubicacion {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  margin: 0.2rem 0;
+}
+
+.catalogo-distancia {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  margin: 0.15rem 0;
+}
+
+.catalogo-capacidad {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  margin: 0.15rem 0 0.6rem;
+}
+
+/* ============================================
+   BOTÓN EN CATÁLOGO
+   ============================================ */
+
+.catalogo-info .btn-hospedaje {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 0.6rem;
+  padding: 0.5rem 1.6rem;
+  background: var(--accent, #c9a87c);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  align-self: flex-start;
+}
+
+/* Efecto de brillo en hover */
+.catalogo-info .btn-hospedaje::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.catalogo-info .btn-hospedaje:hover::before {
+  left: 100%;
+}
+
+.catalogo-info .btn-hospedaje:hover {
+  background: var(--primary, #5c3d2e);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 24px rgba(201, 168, 124, 0.35);
+  border-color: var(--primary, #5c3d2e);
+}
+
+.catalogo-info .btn-hospedaje:active {
+  transform: scale(0.97);
+}
+
+/* Icono del botón (flecha) */
+.catalogo-info .btn-hospedaje .btn-icono {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.catalogo-info .btn-hospedaje:hover .btn-icono {
+  transform: translateX(4px);
+}
+
+/* ============================================
+   CATÁLOGO - RESPONSIVE MEJORADO
+   ============================================ */
+
+@media (max-width: 768px) {
+  .hospedaje-catalogo {
+    max-width: 500px;
+    gap: 16px;
+    padding: 0 8px;
+  }
+
+  .catalogo-item {
+    flex-direction: column;
+    border-radius: 14px;
+  }
+
+  .catalogo-imagen-wrapper {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 160px;
+  }
+
+  .catalogo-imagen-wrapper.sin-imagen {
+    height: 160px;
+    font-size: 2.5rem;
+  }
+
+  .catalogo-info {
+    padding: 0.8rem 1rem 1rem;
+  }
+
+  .catalogo-titulo {
+    font-size: 1rem;
+  }
+
+  .catalogo-ubicacion,
+  .catalogo-distancia,
+  .catalogo-capacidad {
+    font-size: 0.8rem;
+  }
+
+  .catalogo-info .btn-hospedaje {
+    padding: 0.4rem 1.2rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hospedaje-catalogo {
+    max-width: 100%;
+    gap: 12px;
+    padding: 0 4px;
+  }
+
+  .catalogo-item {
+    border-radius: 12px;
+  }
+
+  .catalogo-imagen-wrapper {
+    height: 140px;
+  }
+
+  .catalogo-imagen-wrapper.sin-imagen {
+    height: 140px;
+    font-size: 2rem;
+  }
+
+  .catalogo-info {
+    padding: 0.6rem 0.8rem 0.8rem;
+  }
+
+  .catalogo-titulo {
+    font-size: 0.9rem;
+  }
+
+  .catalogo-ubicacion,
+  .catalogo-distancia,
+  .catalogo-capacidad {
+    font-size: 0.7rem;
+  }
+
+  .catalogo-info .btn-hospedaje {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.65rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
+/* ============================================
+   ESTILO: ÍCONOS - CON IMÁGENES REDONDAS
+   ============================================ */
+
+.hospedaje-iconos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 0 10px 0;
+}
+
+/* ============================================
+   ITEM DE ÍCONOS
+   ============================================ */
+
+.icono-item {
+  background: #ffffff;
+  padding: 1.8rem 1.2rem 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid rgba(201, 168, 124, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.icono-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent, #c9a87c);
+}
+
+/* ============================================
+   IMAGEN REDONDA (AVATAR)
+   ============================================ */
+
+.icono-imagen-wrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-bottom: 0.6rem;
+  border: 3px solid var(--accent, #c9a87c);
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.2);
+  transition: all 0.3s ease;
+  background: var(--secondary, #f5ede4);
+}
+
+.icono-item:hover .icono-imagen-wrapper {
+  transform: scale(1.1);
+  border-color: var(--primary, #5c3d2e);
+  box-shadow: 0 6px 24px rgba(201, 168, 124, 0.35);
+}
+
+.icono-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder si no hay imagen */
+.icono-imagen-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--accent, #c9a87c);
+  background: var(--secondary, #f5ede4);
+}
+
+/* ============================================
+   BADGE DE DESTACADO (opcional)
+   ============================================ */
+
+.icono-item .icono-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  padding: 2px 12px;
+  border-radius: 20px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 12px rgba(201, 168, 124, 0.3);
+}
+
+/* ============================================
+   TÍTULO
+   ============================================ */
+
+.icono-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  margin: 0.3rem 0 0.2rem;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+}
+
+/* ============================================
+   UBICACIÓN
+   ============================================ */
+
+.icono-ubicacion {
+  font-size: 0.8rem;
+  color: var(--text, #666);
+  margin: 0.2rem 0 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* ============================================
+   DETALLES ADICIONALES
+   ============================================ */
+
+.icono-detalles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin: 0.2rem 0 0.6rem;
+}
+
+.icono-detalle {
+  font-size: 0.7rem;
+  color: var(--text, #888);
+  background: var(--secondary, #f5ede4);
+  padding: 2px 10px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ============================================
+   BOTÓN
+   ============================================ */
+
+.icono-item .btn-hospedaje {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 0.6rem;
+  padding: 0.5rem 1.4rem;
+  background: var(--accent, #c9a87c);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 160px;
+}
+
+/* Efecto de brillo en hover */
+.icono-item .btn-hospedaje::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.icono-item .btn-hospedaje:hover::before {
+  left: 100%;
+}
+
+.icono-item .btn-hospedaje:hover {
+  background: var(--primary, #5c3d2e);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 24px rgba(201, 168, 124, 0.35);
+  border-color: var(--primary, #5c3d2e);
+}
+
+.icono-item .btn-hospedaje:active {
+  transform: scale(0.97);
+}
+
+.icono-item .btn-hospedaje .btn-icono {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.icono-item .btn-hospedaje:hover .btn-icono {
+  transform: translateX(4px);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .hospedaje-iconos {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    max-width: 600px;
+  }
+
+  .icono-item {
+    padding: 1.2rem 0.8rem 1.2rem;
+  }
+
+  .icono-imagen-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .icono-titulo {
+    font-size: 0.95rem;
+  }
+
+  .icono-item .btn-hospedaje {
+    padding: 0.4rem 1rem;
+    font-size: 0.7rem;
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hospedaje-iconos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 380px;
+  }
+
+  .icono-item {
+    padding: 1rem 0.6rem 1rem;
+    border-radius: 12px;
+  }
+
+  .icono-imagen-wrapper {
+    width: 50px;
+    height: 50px;
+    border-width: 2px;
+  }
+
+  .icono-imagen-placeholder {
+    font-size: 1.5rem;
+  }
+
+  .icono-titulo {
+    font-size: 0.85rem;
+  }
+
+  .icono-ubicacion {
+    font-size: 0.7rem;
+  }
+
+  .icono-detalle {
+    font-size: 0.6rem;
+    padding: 1px 8px;
+  }
+
+  .icono-item .btn-hospedaje {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.65rem;
+    max-width: 120px;
+  }
+}
+
+/* ============================================
+   ESTILO: MOSAICO - VERSIÓN MODERNA
+   ============================================ */
+
+.hospedaje-mosaico {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 0 0 10px 0;
+}
+
+/* ============================================
+   ITEMS DEL MOSAICO
+   ============================================ */
+
+.mosaico-item {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  background: var(--secondary, #f5ede4);
+}
+
+.mosaico-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Item grande (2x2) */
+.mosaico-grande {
+  grid-column: span 2;
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+/* Item mediano (1x1) */
+.mosaico-medio {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+/* ============================================
+   IMAGEN
+   ============================================ */
+
+.mosaico-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.mosaico-item:hover .mosaico-imagen {
+  transform: scale(1.08);
+}
+
+/* Placeholder si no hay imagen */
+.mosaico-imagen-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--secondary, #f5ede4),
+    var(--accent, #c9a87c)
+  );
+  opacity: 0.4;
+  color: var(--primary, #5c3d2e);
+}
+
+/* ============================================
+   OVERLAY (fondo al hacer hover)
+   ============================================ */
+
+.mosaico-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.2rem 1.2rem 1.5rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    transparent 100%
+  );
+  color: white;
+  text-align: left;
+  transition: all 0.4s ease;
+}
+
+.mosaico-item:hover .mosaico-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.4) 60%,
+    transparent 100%
+  );
+}
+
+/* ============================================
+   OVERLAY - MEJOR LEGIBILIDAD
+   ============================================ */
+
+.mosaico-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.2rem 1.2rem 1.5rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  color: #ffffff;
+  text-align: left;
+  transition: all 0.4s ease;
+}
+
+.mosaico-item:hover .mosaico-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.6) 60%,
+    rgba(0, 0, 0, 0.15) 100%
+  );
+}
+
+.mosaico-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 0.2rem;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mosaico-ubicacion {
+  font-size: 0.8rem;
+  opacity: 0.85;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.mosaico-ubicacion::before {
+  content: "📍";
+  font-size: 0.7rem;
+}
+
+.btn-mosaico {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.35rem 1.2rem;
+  background: var(--accent, #c9a87c);
+  color: #ffffff;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease 0.1s;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.mosaico-item:hover .btn-mosaico {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-mosaico:hover {
+  background: #ffffff;
+  color: var(--primary, #5c3d2e);
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   BOTÓN EN MOSAICO
+   ============================================ */
+
+.btn-mosaico {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.35rem 1.2rem;
+  background: var(--accent, #c9a87c);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease 0.1s;
+}
+
+.mosaico-item:hover .btn-mosaico {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-mosaico:hover {
+  background: #ffffff;
+  color: var(--primary, #5c3d2e);
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-mosaico .btn-icono {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.btn-mosaico:hover .btn-icono {
+  transform: translateX(4px);
+}
+
+/* ============================================
+   ANIMACIONES DE ENTRADA
+   ============================================ */
+
+.mosaico-item:hover .mosaico-titulo {
+  transform: translateY(-2px);
+}
+
+.mosaico-item:hover .mosaico-ubicacion {
+  transform: translateY(-2px);
+  opacity: 1;
+}
+
+/* ============================================
+   BADGE (opcional)
+   ============================================ */
+
+.mosaico-item .mosaico-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .hospedaje-mosaico {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    max-width: 600px;
+  }
+
+  .mosaico-grande {
+    grid-column: span 2;
+    grid-row: span 1;
+    aspect-ratio: 1/1;
+  }
+
+  .mosaico-imagen-placeholder {
+    font-size: 2.5rem;
+  }
+
+  .mosaico-overlay {
+    padding: 0.8rem 1rem 1.2rem;
+  }
+
+  .mosaico-titulo {
+    font-size: 1rem;
+  }
+
+  .btn-mosaico {
+    padding: 0.25rem 1rem;
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hospedaje-mosaico {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    max-width: 380px;
+  }
+
+  .mosaico-grande {
+    grid-column: span 1;
+    aspect-ratio: 1/1;
+  }
+
+  .mosaico-medio {
+    grid-column: span 1;
+  }
+
+  .mosaico-imagen-placeholder {
+    font-size: 2.5rem;
+  }
+
+  .mosaico-overlay {
+    padding: 0.6rem 0.8rem 1rem;
+  }
+
+  .mosaico-titulo {
+    font-size: 0.95rem;
+  }
+
+  .mosaico-ubicacion {
+    font-size: 0.7rem;
+  }
+
+  .btn-mosaico {
+    padding: 0.2rem 0.8rem;
+    font-size: 0.6rem;
+  }
+
+  .mosaico-item .mosaico-badge {
+    top: 8px;
+    right: 8px;
+    font-size: 0.5rem;
+    padding: 2px 10px;
+  }
+}
