@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
 
 @Component({
   selector: 'app-regalos-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './regalos-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./regalos-section.component.css']
 })
 export class RegalosSectionComponent {

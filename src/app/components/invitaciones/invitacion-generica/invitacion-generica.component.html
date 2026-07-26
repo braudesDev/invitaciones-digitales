@@ -1,108 +1,107 @@
-<div
-  *ngIf="data"
-  class="invitacion-container"
-  [ngStyle]="{
-    '--primary': data.primaryColor,
-    '--secondary': data.secondaryColor,
-    '--accent': data.accentColor,
-    '--text': data.textColor,
-    'font-family': data.fontFamily,
-  }"
->
-  <!-- Hero Section -->
-  <app-hero-section
-    *ngIf="data.heroImage"
-    [nombres]="data.nombres || ''"
-    [fecha]="fechaFormateada"
-    [lugar]="data.lugar || ''"
-    [heroImage]="data.heroImage"
-    [fuente]="data.fuente ?? 'Playfair Display, serif'"
-    [colorTexto]="data.colorTexto ?? '#ffffff'"
-  ></app-hero-section>
-
-  <!-- Nos Casamos (Frase principal) -->
-  <app-nos-casamos-section
-    *ngIf="data.frasePrincipal || data.mensajePrincipal"
-    [frase]="data.frasePrincipal || ''"
-    [mensaje]="data.mensajePrincipal || ''"
-    [fontFamily]="data.fontFamily ?? 'Playfair Display, serif'"
-    [primaryColor]="data.primaryColor ?? '#7A8B7D'"
-    [secondaryColor]="data.secondaryColor ?? '#CBB89D'"
-    [accentColor]="data.accentColor ?? '#B08A4A'"
-    [textColor]="data.textColor ?? '#3F4A42'"
-  ></app-nos-casamos-section>
-
-  <!-- 🎟️ INVITACIÓN VÁLIDA (nombre, pases, mensaje, QR) -->
-  <app-invitacion-valida-section
-    *ngIf="data"
-    [invitado]="data.invitado ?? 'Invitado especial'"
-    [pases]="data.pases ?? 1"
-    [mensajePersonalizado]="data.mensajePersonalizado"
-    [eventoData]="data"
+@if (data) {
+  <div
+    class="invitacion-container"
+    [ngStyle]="{
+      '--primary': data.primaryColor,
+      '--secondary': data.secondaryColor,
+      '--accent': data.accentColor,
+      '--text': data.textColor,
+      'font-family': data.fontFamily,
+    }"
   >
-  </app-invitacion-valida-section>
+    <!-- Hero Section -->
+    @if (data.heroImage) {
+      <app-hero-section
+        [nombres]="data.nombres || ''"
+        [fecha]="fechaFormateada"
+        [lugar]="data.lugar || ''"
+        [heroImage]="data.heroImage"
+        [fuente]="data.fuente ?? 'Playfair Display, serif'"
+        [colorTexto]="data.colorTexto ?? '#ffffff'"
+      ></app-hero-section>
+    }
+    <!-- Nos Casamos (Frase principal) -->
+    @if (data.frasePrincipal || data.mensajePrincipal) {
+      <app-nos-casamos-section
+        [frase]="data.frasePrincipal || ''"
+        [mensaje]="data.mensajePrincipal || ''"
+        [fontFamily]="data.fontFamily ?? 'Playfair Display, serif'"
+        [primaryColor]="data.primaryColor ?? '#7A8B7D'"
+        [secondaryColor]="data.secondaryColor ?? '#CBB89D'"
+        [accentColor]="data.accentColor ?? '#B08A4A'"
+        [textColor]="data.textColor ?? '#3F4A42'"
+      ></app-nos-casamos-section>
+    }
+    <!-- 🎟️ INVITACIÓN VÁLIDA (nombre, pases, mensaje, QR) -->
+    @if (data) {
+      <app-invitacion-valida-section
+        [invitado]="data.invitado ?? 'Invitado especial'"
+        [pases]="data.pases ?? 1"
+        [mensajePersonalizado]="data.mensajePersonalizado"
+        [eventoData]="data"
+      >
+      </app-invitacion-valida-section>
+    }
+    <!-- Secciones del evento -->
+    @if (data.ceremonia) {
+      <app-ceremonia-section [data]="data.ceremonia"></app-ceremonia-section>
+    }
+    @if (data.recepcion) {
+      <app-recepcion-section [data]="data.recepcion"></app-recepcion-section>
+    }
+    @if (data.padres) {
+      <app-padres-section [data]="data.padres"></app-padres-section>
+    }
+    @if (data.padrinos) {
+      <app-padrinos-section
+        [data]="padrinosFormateados"
+        [titulo]="'Nuestros Padrinos'"
+      ></app-padrinos-section>
+    }
+    @if (data.damas) {
+      <app-damas-section [data]="data.damas"></app-damas-section>
+    }
+    @if (data.dressCode) {
+      <app-dresscode-section
+        [data]="dressCodeFormateado"
+      ></app-dresscode-section>
+    }
+    @if (data.historia && data.historia.mostrarSeccion) {
+      <app-historia-section [data]="historiaFormateada"></app-historia-section>
+    }
+    @if (data.hospedaje) {
+      <app-hospedaje-section
+        [data]="hospedajeFormateado"
+      ></app-hospedaje-section>
+    }
+    @if (data.galeria) {
+      <app-galeria-section [data]="galeriaFormateada"></app-galeria-section>
+    }
+    @if (data.itinerario) {
+      <app-itinerario-section [data]="data.itinerario"></app-itinerario-section>
+    }
+    @if (data.hashtag) {
+      <app-hashtag-section [data]="data.hashtag"></app-hashtag-section>
+    }
+    @if (data.contador) {
+      <app-contador-section [data]="data.contador"></app-contador-section>
+    }
+    @if (data.regalos) {
+      <app-regalos-section [data]="data.regalos"></app-regalos-section>
+    }
+    @if (data.consideraciones) {
+      <app-consideraciones-section
+        [data]="data.consideraciones"
+      ></app-consideraciones-section>
+    }
+    <!-- ✅ CONFIRMACIÓN DE ASISTENCIA (botones, estado, contacto) -->
+    @if (data) {
+      <app-confirmacion-section [eventoData]="data"> </app-confirmacion-section>
+    }
+    <app-footer-section></app-footer-section>
+  </div>
+}
 
-  <!-- Secciones del evento -->
-  <app-ceremonia-section
-    *ngIf="data.ceremonia"
-    [data]="data.ceremonia"
-  ></app-ceremonia-section>
-  <app-recepcion-section
-    *ngIf="data.recepcion"
-    [data]="data.recepcion"
-  ></app-recepcion-section>
-  <app-padres-section
-    *ngIf="data.padres"
-    [data]="data.padres"
-  ></app-padres-section>
-  <app-padrinos-section
-    [data]="padrinosFormateados"
-    *ngIf="data.padrinos"
-    [titulo]="'Nuestros Padrinos'"
-  ></app-padrinos-section>
-  <app-damas-section *ngIf="data.damas" [data]="data.damas"></app-damas-section>
-  <app-dresscode-section
-    *ngIf="data.dressCode"
-    [data]="dressCodeFormateado"
-  ></app-dresscode-section>
-  <app-historia-section
-    *ngIf="data.historia && data.historia.mostrarSeccion"
-    [data]="historiaFormateada"
-  ></app-historia-section>
-  <app-hospedaje-section
-    *ngIf="data.hospedaje"
-    [data]="hospedajeFormateado"
-  ></app-hospedaje-section>
-  <app-galeria-section
-    *ngIf="data.photos && data.photos.length > 0"
-    [fotos]="data.photos"
-  ></app-galeria-section>
-  <app-itinerario-section
-    *ngIf="data.itinerario"
-    [data]="data.itinerario"
-  ></app-itinerario-section>
-  <app-hashtag-section
-    *ngIf="data.hashtag"
-    [data]="data.hashtag"
-  ></app-hashtag-section>
-  <app-contador-section
-    *ngIf="data.contador"
-    [data]="data.contador"
-  ></app-contador-section>
-  <app-regalos-section
-    *ngIf="data.regalos"
-    [data]="data.regalos"
-  ></app-regalos-section>
-  <app-consideraciones-section
-    *ngIf="data.consideraciones"
-    [data]="data.consideraciones"
-  ></app-consideraciones-section>
-
-  <!-- ✅ CONFIRMACIÓN DE ASISTENCIA (botones, estado, contacto) -->
-  <app-confirmacion-section *ngIf="data" [eventoData]="data">
-  </app-confirmacion-section>
-
-  <app-footer-section></app-footer-section>
-</div>
-
-<div *ngIf="!data">Cargando invitación...</div>
+@if (!data) {
+  <div>Cargando invitación...</div>
+}

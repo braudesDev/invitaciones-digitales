@@ -1,69 +1,78 @@
-<div *ngIf="cargando" class="cargando-msg">⏳ Cargando tu invitación...</div>
+@if (cargando) {
+  <div class="cargando-msg">⏳ Cargando tu invitación...</div>
+}
 
-<div *ngIf="!cargando" class="confirmacion-section">
-  <!-- Estado actual -->
-  <div class="estado-card" *ngIf="estadoActual === 'confirmado'">
-    <div class="estado-confirmado">
-      <span>✅</span>
-      <div>
-        <strong>¡Asistencia confirmada!</strong>
-        <p>Te esperamos con mucha alegría 🎉</p>
+@if (!cargando) {
+  <div class="confirmacion-section">
+    <!-- Estado actual -->
+    @if (estadoActual === 'confirmado') {
+      <div class="estado-card">
+        <div class="estado-confirmado">
+          <span>✅</span>
+          <div>
+            <strong>¡Asistencia confirmada!</strong>
+            <p>Te esperamos con mucha alegría 🎉</p>
+          </div>
+        </div>
       </div>
+    }
+    @if (estadoActual === 'rechazado') {
+      <div class="estado-card">
+        <div class="estado-rechazado">
+          <span>💔</span>
+          <div>
+            <strong>No podrás asistir</strong>
+            <p>Gracias por avisar, en otra ocasión será</p>
+          </div>
+        </div>
+      </div>
+    }
+    @if (estadoActual === 'pendiente') {
+      <div class="estado-card">
+        <div class="estado-pendiente">
+          <span>⏳</span>
+          <div>
+            <strong>Pendiente de confirmar</strong>
+            <p>Por favor confirma tu asistencia</p>
+          </div>
+        </div>
+      </div>
+    }
+    <!-- Botones de confirmación - solo visibles si está pendiente -->
+    @if (estadoActual === 'pendiente') {
+      <div class="botones-accion">
+        <button
+          class="btn-confirmar"
+          (click)="confirmarAsistencia()"
+          [disabled]="confirmando"
+          >
+          ✅ Confirmar asistencia
+        </button>
+        <button
+          class="btn-rechazar"
+          (click)="rechazarAsistencia()"
+          [disabled]="confirmando"
+          >
+          💔 No podré asistir
+        </button>
+      </div>
+    }
+    <!-- Mensaje cuando ya respondió -->
+    @if (estadoActual === 'confirmado') {
+      <div class="respuesta-final">
+        ✅ Ya confirmaste tu asistencia. ¡Te esperamos! 🎉
+      </div>
+    }
+    @if (estadoActual === 'rechazado') {
+      <div class="respuesta-final">
+        💔 Has rechazado la invitación. Gracias por avisar.
+      </div>
+    }
+    <!-- Guardar en calendario -->
+    <div class="calendario-accion">
+      <button class="btn-calendario" (click)="guardarEnCalendario()">
+        <span>📅</span> Guardar evento en mi calendario
+      </button>
     </div>
   </div>
-
-  <div class="estado-card" *ngIf="estadoActual === 'rechazado'">
-    <div class="estado-rechazado">
-      <span>💔</span>
-      <div>
-        <strong>No podrás asistir</strong>
-        <p>Gracias por avisar, en otra ocasión será</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="estado-card" *ngIf="estadoActual === 'pendiente'">
-    <div class="estado-pendiente">
-      <span>⏳</span>
-      <div>
-        <strong>Pendiente de confirmar</strong>
-        <p>Por favor confirma tu asistencia</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Botones de confirmación - solo visibles si está pendiente -->
-  <div class="botones-accion" *ngIf="estadoActual === 'pendiente'">
-    <button
-      class="btn-confirmar"
-      (click)="confirmarAsistencia()"
-      [disabled]="confirmando"
-    >
-      ✅ Confirmar asistencia
-    </button>
-
-    <button
-      class="btn-rechazar"
-      (click)="rechazarAsistencia()"
-      [disabled]="confirmando"
-    >
-      💔 No podré asistir
-    </button>
-  </div>
-
-  <!-- Mensaje cuando ya respondió -->
-  <div *ngIf="estadoActual === 'confirmado'" class="respuesta-final">
-    ✅ Ya confirmaste tu asistencia. ¡Te esperamos! 🎉
-  </div>
-
-  <div *ngIf="estadoActual === 'rechazado'" class="respuesta-final">
-    💔 Has rechazado la invitación. Gracias por avisar.
-  </div>
-
-  <!-- Guardar en calendario -->
-  <div class="calendario-accion">
-    <button class="btn-calendario" (click)="guardarEnCalendario()">
-      <span>📅</span> Guardar evento en mi calendario
-    </button>
-  </div>
-</div>
+}

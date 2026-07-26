@@ -1,41 +1,50 @@
-<div
-  *ngIf="data && (data.lugar || data.direccion || data.hora)"
-  class="recepcion-container"
->
-  <div class="contenedor-tarjetas">
-    <!-- Tarjeta de Recepción -->
-    <div class="tarjeta">
-      <img
-        *ngIf="data.imagen; else imgPlaceholder"
-        [src]="data.imagen"
-        alt="Recepción"
-        class="imagen-tarjeta"
-      />
-      <ng-template #imgPlaceholder>
-        <div class="imagen-placeholder"></div>
-      </ng-template>
-
-      <h2 class="titulo-tarjeta">Recepción</h2>
-
-      <p class="descripcion-tarjeta" *ngIf="data.descripcion">
-        {{ data.descripcion }}
-      </p>
-
-      <address class="direccion-tarjeta" *ngIf="data.lugar || data.direccion">
-        <strong>📍 Ubicación:</strong> {{ data.lugar
-        }}<br *ngIf="data.lugar && data.direccion" />
-        {{ data.direccion }}
-      </address>
-
-      <p class="horario-tarjeta" *ngIf="fechaEvento || data.hora">
-        <strong>⏰ Horario:</strong>
-        <span *ngIf="fechaEvento">{{
-          fechaEvento | date: "EEEE d 'de' MMMM 'de' yyyy"
-        }}</span>
-        <span *ngIf="fechaEvento && data.hora">, </span>
-        <span *ngIf="data.hora">{{ data.hora }}</span>
-      </p>
-
+@if (data && (data.lugar || data.direccion || data.hora)) {
+  <div
+    class="recepcion-container"
+    >
+    <div class="contenedor-tarjetas">
+      <!-- Tarjeta de Recepción -->
+      <div class="tarjeta">
+        @if (data.imagen) {
+          <img
+            [src]="data.imagen"
+            alt="Recepción"
+            class="imagen-tarjeta"
+            />
+        } @else {
+          <div class="imagen-placeholder"></div>
+        }
+        <h2 class="titulo-tarjeta">Recepción</h2>
+        @if (data.descripcion) {
+          <p class="descripcion-tarjeta">
+            {{ data.descripcion }}
+          </p>
+        }
+        @if (data.lugar || data.direccion) {
+          <address class="direccion-tarjeta">
+            <strong>📍 Ubicación:</strong> {{ data.lugar
+            }}@if (data.lugar && data.direccion) {
+            <br />
+          }
+          {{ data.direccion }}
+        </address>
+      }
+      @if (fechaEvento || data.hora) {
+        <p class="horario-tarjeta">
+          <strong>⏰ Horario:</strong>
+          @if (fechaEvento) {
+            <span>{{
+              fechaEvento | date: "EEEE d 'de' MMMM 'de' yyyy"
+            }}</span>
+          }
+          @if (fechaEvento && data.hora) {
+            <span>, </span>
+          }
+          @if (data.hora) {
+            <span>{{ data.hora }}</span>
+          }
+        </p>
+      }
       <a
         [href]="
           data.mapaUrl ||
@@ -44,9 +53,10 @@
         "
         target="_blank"
         class="boton-mapa"
-      >
+        >
         🗺️ Cómo llegar
       </a>
     </div>
   </div>
 </div>
+}

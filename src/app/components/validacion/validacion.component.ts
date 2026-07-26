@@ -1,5 +1,5 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
@@ -7,8 +7,9 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 @Component({
   selector: 'app-validacion',
   standalone: true,
-  imports: [CommonModule, FormsModule, ZXingScannerModule],
+  imports: [FormsModule, ZXingScannerModule],
   templateUrl: './validacion.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./validacion.component.css']
 })
 export class ValidacionComponent implements AfterViewInit {

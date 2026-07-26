@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
 import { InvitadosService } from '../../../../../services/invitados.service';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -7,8 +7,9 @@ import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-confirmacion-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './confirmacion-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./confirmacion-section.component.css'],
 })
 export class ConfirmacionSectionComponent implements OnInit {

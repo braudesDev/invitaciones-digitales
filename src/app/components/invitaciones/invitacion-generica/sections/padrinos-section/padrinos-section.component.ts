@@ -6,7 +6,7 @@ import {
   ElementRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import Swiper from 'swiper';
 import { Pagination, EffectCreative, Autoplay } from 'swiper/modules';
 import {
@@ -18,7 +18,7 @@ import {
 @Component({
   selector: 'app-padrinos-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './padrinos-section.component.html',
   styleUrls: ['./padrinos-section.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

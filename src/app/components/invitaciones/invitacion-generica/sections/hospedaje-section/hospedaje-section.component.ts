@@ -1,12 +1,13 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
 import { Hospedaje } from '../../../../../models/hospedaje.model';
 
 @Component({
   selector: 'app-hospedaje-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './hospedaje-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./hospedaje-section.component.css'],
 })
 export class HospedajeSectionComponent {

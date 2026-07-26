@@ -1,7 +1,7 @@
 // src/app/components/invitaciones/invitacion-generica/sections/dresscode-section/dresscode-section.component.ts
 
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
 import {
   DressCode,
   getEstiloNombre,
@@ -12,8 +12,9 @@ import {
 @Component({
   selector: 'app-dresscode-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './dresscode-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./dresscode-section.component.css'],
 })
 export class DresscodeSectionComponent {

@@ -415,12 +415,38 @@
 }
 
 .acordeon-body.abierto {
-  max-height: 2500px;
+  max-height: 60vh; /* 👈 60% de la altura de la pantalla */
+  overflow-y: auto; /* 👈 Scroll vertical */
   padding: 8px 24px 24px 24px;
   opacity: 1;
   transition:
     max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.4s ease;
+}
+
+/* Scrollbar personalizada */
+.acordeon-body.abierto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.acordeon-body.abierto::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 3px;
+}
+
+.acordeon-body.abierto::-webkit-scrollbar-thumb {
+  background: var(--accent, #c9a87c);
+  border-radius: 3px;
+}
+
+.acordeon-body.abierto::-webkit-scrollbar-thumb:hover {
+  background: var(--primary, #5c3d2e);
+}
+
+/* Para Firefox */
+.acordeon-body.abierto {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent, #c9a87c) #f0f0f0;
 }
 /* ============================================
    CAMPOS DINÁMICOS
@@ -1745,5 +1771,445 @@
 
   .hospedaje-tip .tip-text {
     font-size: 0.75rem;
+  }
+}
+
+/* ============================================
+   GALERÍA - ESTILOS PARA EL FORMULARIO
+   ============================================ */
+
+/* ============================================
+   ESTILOS DE LA SECCIÓN - SELECTOR VISUAL
+   ============================================ */
+
+.estilos-galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin: 10px 0 16px;
+}
+
+.estilo-galeria-option {
+  background: #f8f5f0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.estilo-galeria-option:hover {
+  background: #f0ebe5;
+  transform: translateY(-2px);
+}
+
+.estilo-galeria-option.selected {
+  border-color: #c9a87c;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.25);
+  transform: translateY(-2px);
+}
+
+.estilo-galeria-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #c9a87c;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.estilo-galeria-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.estilo-galeria-nombre {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+/* ============================================
+   EFECTOS DE TRANSICIÓN - SELECTOR VISUAL
+   ============================================ */
+
+.efectos-galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 10px 0 16px;
+}
+
+.efecto-galeria-option {
+  background: #f8f5f0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.efecto-galeria-option:hover {
+  background: #f0ebe5;
+  transform: translateY(-2px);
+}
+
+.efecto-galeria-option.selected {
+  border-color: #c9a87c;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.25);
+  transform: translateY(-2px);
+}
+
+.efecto-galeria-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #c9a87c;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.efecto-galeria-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.efecto-galeria-nombre {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+/* ============================================
+   VELOCIDAD - SLIDER
+   ============================================ */
+
+.velocidad-control {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+  margin-bottom: 8px;
+}
+
+.velocidad-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: #ddd;
+  outline: none;
+  transition: background 0.2s ease;
+}
+
+.velocidad-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #c9a87c;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.velocidad-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: #b8946a;
+}
+
+.velocidad-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #c9a87c;
+  cursor: pointer;
+  border: none;
+}
+
+.velocidad-valor {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  min-width: 55px;
+  text-align: center;
+  background: #f0ebe5;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ============================================
+   CONTROLES - CHECKBOXES
+   ============================================ */
+
+.controles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin: 8px 0 16px;
+}
+
+.controles-grid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #444;
+  cursor: pointer;
+  padding: 8px 12px;
+  background: #f8f5f0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.controles-grid label:hover {
+  background: #f0ebe5;
+}
+
+.controles-grid label input[type="checkbox"] {
+  accent-color: #c9a87c;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   FOTOS - TARJETAS
+   ============================================ */
+
+.ayuda-fotos {
+  color: #888;
+  font-size: 0.8rem;
+  margin: 4px 0 12px;
+}
+
+.foto-item {
+  margin-bottom: 16px;
+}
+
+.foto-card {
+  background: #faf8f6;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #e8e0d8;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.foto-card:hover {
+  border-color: #c9a87c;
+  box-shadow: 0 2px 8px rgba(201, 168, 124, 0.12);
+}
+
+.foto-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0ebe5;
+}
+
+.foto-numero {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #c9a87c;
+  background: #f0ebe5;
+  padding: 2px 12px;
+  border-radius: 12px;
+}
+
+.foto-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-destacar-foto {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  opacity: 0.4;
+}
+
+.btn-destacar-foto.destacada {
+  opacity: 1;
+  background: #fff3cd;
+}
+
+.btn-eliminar-foto {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-eliminar-foto:hover {
+  background: #fde8e8;
+  transform: scale(1.1);
+}
+
+.foto-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.foto-fields .full-width {
+  grid-column: 1 / -1;
+}
+
+.btn-agregar-foto {
+  background: #f0ebe5;
+  border: 2px dashed #c9a87c;
+  color: #5c3d2e;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btn-agregar-foto:hover {
+  background: #e8dfd6;
+  border-color: #b8946a;
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   TIP
+   ============================================ */
+
+.galeria-tip {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: #f8f5f0;
+  border-radius: 12px;
+  border-left: 4px solid #c9a87c;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.galeria-tip .tip-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.galeria-tip .tip-text {
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .estilos-galeria-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .efectos-galeria-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .controles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .foto-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .foto-card {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .estilos-galeria-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .estilo-galeria-option {
+    padding: 10px 6px;
+  }
+
+  .estilo-galeria-icon {
+    font-size: 1.6rem;
+  }
+
+  .estilo-galeria-nombre {
+    font-size: 0.7rem;
+  }
+
+  .efectos-galeria-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .efecto-galeria-option {
+    padding: 10px 6px;
+  }
+
+  .efecto-galeria-icon {
+    font-size: 1.6rem;
+  }
+
+  .efecto-galeria-nombre {
+    font-size: 0.7rem;
+  }
+
+  .velocidad-control {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .velocidad-valor {
+    align-self: center;
+    min-width: 45px;
   }
 }

@@ -1,6 +1,6 @@
 // historia-section.component.ts
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export interface Historia {
@@ -16,6 +16,7 @@ export interface Historia {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './historia-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./historia-section.component.css'],
 })
 export class HistoriaSectionComponent {

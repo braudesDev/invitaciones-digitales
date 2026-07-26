@@ -4,14 +4,16 @@ import {
   HostBinding,
   OnChanges,
   SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-nos-casamos-section',
-  imports: [CommonModule],
+  imports: [],
   standalone: true,
   templateUrl: './nos-casamos-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./nos-casamos-section.component.css'],
 })
 export class NosCasamosSectionComponent implements OnChanges {

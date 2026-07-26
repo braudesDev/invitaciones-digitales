@@ -1,16 +1,17 @@
 // src/app/components/image-upload/image-upload.component.ts
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-image-upload',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './image-upload.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./image-upload.css'],
 })
 export class ImageUploadComponent {

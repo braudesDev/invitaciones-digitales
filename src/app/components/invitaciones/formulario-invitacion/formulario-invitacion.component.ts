@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import Swal from 'sweetalert2';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import {
@@ -109,6 +109,24 @@ export interface InvitacionCompleta {
     textoBoton: string;
     textoAdicional: string;
   };
+
+  galeria?: {
+    mostrarSeccion: boolean;
+    titulo: string;
+    descripcion: string;
+    fotos: {
+      url: string;
+      titulo?: string;
+      descripcion?: string;
+      destacada?: boolean;
+    }[];
+    estilo: 'grid' | 'masonry' | 'carousel' | 'album' | 'slideshow';
+    efecto: 'slide' | 'fade' | 'zoom' | 'flip';
+    velocidad: number;
+    mostrarControles: boolean;
+    mostrarCompartir: boolean;
+    mostrarPaginacion: boolean;
+  };
 }
 
 interface Paleta {
@@ -121,8 +139,9 @@ interface Paleta {
 @Component({
   selector: 'app-formulario-invitacion',
   standalone: true,
-  imports: [CommonModule, FormsModule, ImageUploadComponent],
+  imports: [FormsModule, ImageUploadComponent],
   templateUrl: './formulario-invitacion.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./formulario-invitacion.component.css'],
 })
 export class FormularioInvitacionComponent implements OnInit {
@@ -951,5 +970,253 @@ export class FormularioInvitacionComponent implements OnInit {
       };
     }
     this.nuevaInvitacion.hospedaje.estilo = estilo as any;
+  }
+
+  estilosGaleria = [
+    { valor: 'grid', nombre: 'Grid', icon: '📐' },
+    { valor: 'masonry', nombre: 'Masonry', icon: '🧱' },
+    { valor: 'carousel', nombre: 'Carrusel', icon: '🎠' },
+    { valor: 'album', nombre: 'Álbum', icon: '📖' },
+    { valor: 'slideshow', nombre: 'Presentación', icon: '🎬' },
+  ];
+
+  // 👇 Efectos para galería
+  efectosGaleria = [
+    { valor: 'slide', nombre: 'Deslizar', icon: '➡️' },
+    { valor: 'fade', nombre: 'Desvanecer', icon: '🌫️' },
+    { valor: 'zoom', nombre: 'Zoom', icon: '🔍' },
+    { valor: 'flip', nombre: 'Voltear', icon: '🔄' },
+  ];
+
+  // 👇 Getters y Setters para Galería
+  get galeriaTitulo(): string {
+    return this.nuevaInvitacion.galeria?.titulo || '';
+  }
+
+  set galeriaTitulo(value: string) {
+    if (!this.nuevaInvitacion.galeria) {
+      this.nuevaInvitacion.galeria = {
+        mostrarSeccion: true,
+        titulo: 'Nuestros Momentos',
+        descripcion: '',
+        fotos: [],
+        estilo: 'grid',
+        efecto: 'slide',
+        velocidad: 1000,
+        mostrarControles: true,
+        mostrarCompartir: true,
+        mostrarPaginacion: true,
+      };
+    }
+    this.nuevaInvitacion.galeria.titulo = value;
+  }
+
+  get galeriaDescripcion(): string {
+    return this.nuevaInvitacion.galeria?.descripcion || '';
+  }
+
+  set galeriaDescripcion(value: string) {
+    if (!this.nuevaInvitacion.galeria) {
+      this.nuevaInvitacion.galeria = {
+        mostrarSeccion: true,
+        titulo: 'Nuestros Momentos',
+        descripcion: '',
+        fotos: [],
+        estilo: 'grid',
+        efecto: 'slide',
+        velocidad: 1000,
+        mostrarControles: true,
+        mostrarCompartir: true,
+        mostrarPaginacion: true,
+      };
+    }
+    this.nuevaInvitacion.galeria.descripcion = value;
+  }
+
+  get galeriaMostrarSeccion(): boolean {
+    return this.nuevaInvitacion.galeria?.mostrarSeccion ?? false;
+  }
+
+  set galeriaMostrarSeccion(value: boolean) {
+    if (!this.nuevaInvitacion.galeria) {
+      this.nuevaInvitacion.galeria = {
+        mostrarSeccion: true,
+        titulo: 'Nuestros Momentos',
+        descripcion: '',
+        fotos: [],
+        estilo: 'grid',
+        efecto: 'slide',
+        velocidad: 1000,
+        mostrarControles: true,
+        mostrarCompartir: true,
+        mostrarPaginacion: true,
+      };
+    }
+    this.nuevaInvitacion.galeria.mostrarSeccion = value;
+  }
+
+  get galeriaVelocidad(): number {
+    return this.nuevaInvitacion.galeria?.velocidad || 1000;
+  }
+
+  set galeriaVelocidad(value: number) {
+    if (!this.nuevaInvitacion.galeria) {
+      this.nuevaInvitacion.galeria = {
+        mostrarSeccion: true,
+        titulo: 'Nuestros Momentos',
+        descripcion: '',
+        fotos: [],
+        estilo: 'grid',
+        efecto: 'slide',
+        velocidad: 1000,
+        mostrarControles: true,
+        mostrarCompartir: true,
+        mostrarPaginacion: true,
+      };
+    }
+    this.nuevaInvitacion.galeria.velocidad = value;
+  }
+
+  get galeriaMostrarControles(): boolean {
+    return this.nuevaInvitacion.galeria?.mostrarControles ?? true;
+  }
+
+  set galeriaMostrarControles(value: boolean) {
+    if (!this.nuevaInvitacion.galeria) {
+      this.nuevaInvitacion.galeria = {
+        mostrarSeccion: true,
+        titulo: 'Nuestros Momentos',
+        descripcion: '',
+        fotos: [],
+        estilo: 'grid',
+        efecto: 'slide',
+        velocidad: 1000,
+        mostrarControles: true,
+        mostrarCompartir: true,
+        mostrarPaginacion: true,
+      };
+    }
+    this.nuevaInvitacion.galeria.mostrarControles = value;
+  }
+
+  get galeriaMostrarCompartir(): boolean {
+    return this.nuevaInvitacion.galeria?.mostrarCompartir ?? true;
+  }
+
+  set galeriaMostrarCompartir(value: boolean) {
+    if (!this.nuevaInvitacion.galeria) {
+      this.nuevaInvitacion.galeria = {
+        mostrarSeccion: true,
+        titulo: 'Nuestros Momentos',
+        descripcion: '',
+        fotos: [],
+        estilo: 'grid',
+        efecto: 'slide',
+        velocidad: 1000,
+        mostrarControles: true,
+        mostrarCompartir: true,
+        mostrarPaginacion: true,
+      };
+    }
+    this.nuevaInvitacion.galeria.mostrarCompartir = value;
+  }
+
+  get galeriaMostrarPaginacion(): boolean {
+    return this.nuevaInvitacion.galeria?.mostrarPaginacion ?? true;
+  }
+
+  set galeriaMostrarPaginacion(value: boolean) {
+    if (!this.nuevaInvitacion.galeria) {
+      this.nuevaInvitacion.galeria = {
+        mostrarSeccion: true,
+        titulo: 'Nuestros Momentos',
+        descripcion: '',
+        fotos: [],
+        estilo: 'grid',
+        efecto: 'slide',
+        velocidad: 1000,
+        mostrarControles: true,
+        mostrarCompartir: true,
+        mostrarPaginacion: true,
+      };
+    }
+    this.nuevaInvitacion.galeria.mostrarPaginacion = value;
+  }
+
+  get galeriaFotos(): any[] {
+    return this.nuevaInvitacion.galeria?.fotos || [];
+  }
+
+  // 👇 Métodos para fotos
+  agregarFotoGaleria() {
+    if (!this.nuevaInvitacion.galeria) {
+      this.nuevaInvitacion.galeria = {
+        mostrarSeccion: true,
+        titulo: 'Nuestros Momentos',
+        descripcion: '',
+        fotos: [],
+        estilo: 'grid',
+        efecto: 'slide',
+        velocidad: 1000,
+        mostrarControles: true,
+        mostrarCompartir: true,
+        mostrarPaginacion: true,
+      };
+    }
+    this.nuevaInvitacion.galeria.fotos.push({
+      url: '',
+      titulo: '',
+      descripcion: '',
+      destacada: false,
+    });
+  }
+
+  eliminarFotoGaleria(index: number) {
+    if (this.nuevaInvitacion.galeria?.fotos) {
+      this.nuevaInvitacion.galeria.fotos.splice(index, 1);
+    }
+  }
+
+  toggleFotoDestacada(index: number) {
+    if (this.nuevaInvitacion.galeria?.fotos) {
+      const foto = this.nuevaInvitacion.galeria.fotos[index];
+      foto.destacada = !foto.destacada;
+    }
+  }
+
+  seleccionarEstiloGaleria(estilo: string) {
+    if (!this.nuevaInvitacion.galeria) {
+      this.nuevaInvitacion.galeria = {
+        mostrarSeccion: true,
+        titulo: 'Nuestros Momentos',
+        descripcion: '',
+        fotos: [],
+        estilo: 'grid',
+        efecto: 'slide',
+        velocidad: 1000,
+        mostrarControles: true,
+        mostrarCompartir: true,
+        mostrarPaginacion: true,
+      };
+    }
+    this.nuevaInvitacion.galeria.estilo = estilo as any;
+  }
+
+  seleccionarEfectoGaleria(efecto: string) {
+    if (!this.nuevaInvitacion.galeria) {
+      this.nuevaInvitacion.galeria = {
+        mostrarSeccion: true,
+        titulo: 'Nuestros Momentos',
+        descripcion: '',
+        fotos: [],
+        estilo: 'grid',
+        efecto: 'slide',
+        velocidad: 1000,
+        mostrarControles: true,
+        mostrarCompartir: true,
+        mostrarPaginacion: true,
+      };
+    }
+    this.nuevaInvitacion.galeria.efecto = efecto as any;
   }
 }

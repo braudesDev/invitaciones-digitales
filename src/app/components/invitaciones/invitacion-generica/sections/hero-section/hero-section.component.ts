@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-hero-section',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './hero-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./hero-section.component.css'],
 })
 export class HeroSectionComponent implements OnChanges {

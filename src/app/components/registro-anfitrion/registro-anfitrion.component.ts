@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
@@ -8,8 +8,9 @@ import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-registro-anfitrion',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [FormsModule, RouterModule],
   templateUrl: './registro-anfitrion.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./registro-anfitrion.component.css'],
 })
 export class RegistroAnfitrionComponent {

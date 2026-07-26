@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
@@ -23,6 +23,7 @@ import { InvitacionGenericaComponent } from './invitacion-generica/invitacion-ge
   standalone: true,
   imports: [CommonModule, InvitacionGenericaComponent],
   templateUrl: './invitaciones.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./invitaciones.component.css'],
 })
 export class InvitacionesComponent implements OnInit {
