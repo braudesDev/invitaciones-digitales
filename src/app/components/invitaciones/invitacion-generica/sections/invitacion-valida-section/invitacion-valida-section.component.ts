@@ -1,13 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
 import { InvitadosService } from '../../../../../services/invitados.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-invitacion-valida-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './invitacion-valida-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./invitacion-valida-section.component.css'],
 })
 export class InvitacionValidaSectionComponent implements OnInit {

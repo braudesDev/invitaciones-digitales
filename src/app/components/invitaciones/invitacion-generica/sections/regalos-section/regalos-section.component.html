@@ -1,13 +1,21 @@
-<div *ngIf="data" class="regalos-section">
-  <div class="section-icon">🎁</div>
-  <h3>Mesa de Regalos</h3>
-  <div class="regalos-content">
-    <p class="regalos-texto" *ngIf="data.texto">{{ data.texto }}</p>
-    <div class="regalos-links" *ngIf="data.links && data.links.length > 0">
-      <a *ngFor="let link of data.links" [href]="link.url" target="_blank" rel="noopener noreferrer" class="regalo-link">
-        <span class="link-icon">🎀</span>
-        {{ link.nombre }}
-      </a>
+@if (data) {
+  <div class="regalos-section">
+    <div class="section-icon">🎁</div>
+    <h3>Mesa de Regalos</h3>
+    <div class="regalos-content">
+      @if (data.texto) {
+        <p class="regalos-texto">{{ data.texto }}</p>
+      }
+      @if (data.links && data.links.length > 0) {
+        <div class="regalos-links">
+          @for (link of data.links; track link) {
+            <a [href]="link.url" target="_blank" rel="noopener noreferrer" class="regalo-link">
+              <span class="link-icon">🎀</span>
+              {{ link.nombre }}
+            </a>
+          }
+        </div>
+      }
     </div>
   </div>
-</div>
+}

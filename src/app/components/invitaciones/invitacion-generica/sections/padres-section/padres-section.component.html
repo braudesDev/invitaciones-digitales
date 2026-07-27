@@ -1,58 +1,66 @@
-<div *ngIf="data" class="padres-container">
-  <div class="padres-header">
-    <h2 class="padres-titulo">Con la bendición de nuestros padres</h2>
-    <div class="padres-divider">
-      <span class="divider-line"></span>
-      <span class="divider-icon">✦</span>
-      <span class="divider-line"></span>
-    </div>
-  </div>
-
-  <div class="padres-grid">
-    <!-- NOVIA -->
-    <div class="padres-card" *ngIf="data.madreNovia || data.padreNovia">
-      <h3 class="card-titulo">Padres de {{ data.novia || "la Novia" }}</h3>
-
-      <div class="padres-lista">
-        <!-- Madre de la novia -->
-        <div *ngIf="data.madreNovia" class="padre-item">
-          <div class="padre-info">
-            <span class="padre-rol">Madre</span>
-            <span class="padre-nombre">{{ data.madreNovia }}</span>
-          </div>
-        </div>
-
-        <!-- Padre de la novia -->
-        <div *ngIf="data.padreNovia" class="padre-item">
-          <div class="padre-info">
-            <span class="padre-rol">Padre</span>
-            <span class="padre-nombre">{{ data.padreNovia }}</span>
-          </div>
-        </div>
+@if (data) {
+  <div class="padres-container">
+    <div class="padres-header">
+      <h2 class="padres-titulo">Con la bendición de nuestros padres</h2>
+      <div class="padres-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✦</span>
+        <span class="divider-line"></span>
       </div>
     </div>
-
-    <!-- NOVIO -->
-    <div class="padres-card" *ngIf="data.madreNovio || data.padreNovio">
-      <h3 class="card-titulo">Padres de {{ data.novio || "el Novio" }}</h3>
-
-      <div class="padres-lista">
-        <!-- Madre del novio -->
-        <div *ngIf="data.madreNovio" class="padre-item">
-          <div class="padre-info">
-            <span class="padre-rol">Madre</span>
-            <span class="padre-nombre">{{ data.madreNovio }}</span>
+    <div class="padres-grid">
+      <!-- NOVIA -->
+      @if (data.madreNovia || data.padreNovia) {
+        <div class="padres-card">
+          <h3 class="card-titulo">Padres de {{ data.novia || "la Novia" }}</h3>
+          <div class="padres-lista">
+            <!-- Madre de la novia -->
+            @if (data.madreNovia) {
+              <div class="padre-item">
+                <div class="padre-info">
+                  <span class="padre-rol">Madre</span>
+                  <span class="padre-nombre">{{ data.madreNovia }}</span>
+                </div>
+              </div>
+            }
+            <!-- Padre de la novia -->
+            @if (data.padreNovia) {
+              <div class="padre-item">
+                <div class="padre-info">
+                  <span class="padre-rol">Padre</span>
+                  <span class="padre-nombre">{{ data.padreNovia }}</span>
+                </div>
+              </div>
+            }
           </div>
         </div>
-
-        <!-- Padre del novio -->
-        <div *ngIf="data.padreNovio" class="padre-item">
-          <div class="padre-info">
-            <span class="padre-rol">Padre</span>
-            <span class="padre-nombre">{{ data.padreNovio }}</span>
+      }
+      <!-- NOVIO -->
+      @if (data.madreNovio || data.padreNovio) {
+        <div class="padres-card">
+          <h3 class="card-titulo">Padres de {{ data.novio || "el Novio" }}</h3>
+          <div class="padres-lista">
+            <!-- Madre del novio -->
+            @if (data.madreNovio) {
+              <div class="padre-item">
+                <div class="padre-info">
+                  <span class="padre-rol">Madre</span>
+                  <span class="padre-nombre">{{ data.madreNovio }}</span>
+                </div>
+              </div>
+            }
+            <!-- Padre del novio -->
+            @if (data.padreNovio) {
+              <div class="padre-item">
+                <div class="padre-info">
+                  <span class="padre-rol">Padre</span>
+                  <span class="padre-nombre">{{ data.padreNovio }}</span>
+                </div>
+              </div>
+            }
           </div>
         </div>
-      </div>
+      }
     </div>
   </div>
-</div>
+}

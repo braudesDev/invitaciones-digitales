@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -7,8 +7,9 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-recuperar-password',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [FormsModule, RouterModule],
   templateUrl: './recuperar-password.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./recuperar-password.component.css'],
 })
 export class RecuperarPasswordComponent {

@@ -1,16 +1,19 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
 
 @Component({
   selector: 'app-contador-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
-    <div *ngIf="data" class="section">
-      <h3>⏰ Contador</h3>
-      <p>Faltan {{ diasFaltantes }} días</p>
-    </div>
-  `,
+    @if (data) {
+      <div class="section">
+        <h3>⏰ Contador</h3>
+        <p>Faltan {{ diasFaltantes }} días</p>
+      </div>
+    }
+    `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [`.section { margin: 20px; padding: 15px; border-radius: 8px; background: #f5f5f5; text-align: center; font-size: 1.2em; }`]
 })
 export class ContadorSectionComponent {

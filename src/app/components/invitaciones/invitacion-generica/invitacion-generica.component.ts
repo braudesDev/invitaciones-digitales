@@ -1,4 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Invitacion } from '../../../services/invitaciones.service';
 import { HeroSectionComponent } from './sections/hero-section/hero-section.component';
@@ -25,6 +30,7 @@ import { PadrinoAsignado } from '../../../models/padrino.model';
 import { DressCode } from '../../../models/dress-code.model';
 import { Historia } from '../../../models/historia.model';
 import { Hospedaje } from '../../../models/hospedaje.model';
+import { Galeria } from '../../../models/galeria.model';
 
 @Component({
   selector: 'app-invitacion-generica',
@@ -42,7 +48,6 @@ import { Hospedaje } from '../../../models/hospedaje.model';
     DresscodeSectionComponent,
     HistoriaSectionComponent,
     ItinerarioSectionComponent,
-    HospedajeSectionComponent,
     HashtagSectionComponent,
     ContadorSectionComponent,
     RegalosSectionComponent,
@@ -53,11 +58,11 @@ import { Hospedaje } from '../../../models/hospedaje.model';
     HospedajeSectionComponent,
   ],
   templateUrl: './invitacion-generica.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./invitacion-generica.component.css'],
 })
 export class InvitacionGenericaComponent implements OnInit {
   @Input() data!: Invitacion;
-
   constructor() {}
 
   ngOnInit() {
@@ -183,6 +188,23 @@ export class InvitacionGenericaComponent implements OnInit {
       alojamientos: (h as any).alojamientos || [],
       textoBoton: (h as any).textoBoton || 'Ver en Airbnb',
       textoAdicional: (h as any).textoAdicional || '',
+    };
+  }
+
+  get galeriaFormateada(): Galeria {
+    const g = this.data?.galeria || {};
+    return {
+      mostrarSeccion: (g as any).mostrarSeccion ?? true,
+      titulo: (g as any).titulo || 'Nuestros Momentos',
+      subtitulo: (g as any).subtitulo || '', // 👈 AGREGAR
+      descripcion: (g as any).descripcion || '',
+      fotos: (g as any).fotos || [],
+      estilo: (g as any).estilo || 'grid',
+      efecto: (g as any).efecto || 'slide',
+      velocidad: (g as any).velocidad || 1000,
+      mostrarControles: (g as any).mostrarControles ?? true,
+      mostrarCompartir: (g as any).mostrarCompartir ?? true,
+      mostrarPaginacion: (g as any).mostrarPaginacion ?? true,
     };
   }
 }

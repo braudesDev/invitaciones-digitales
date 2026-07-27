@@ -1,140 +1,360 @@
-import { Component, Input } from '@angular/core';
+// src/app/components/invitaciones/invitacion-generica/sections/galeria-section/galeria-section.component.ts
+
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Galeria } from '../../../../../models/galeria.model';
 
 @Component({
   selector: 'app-galeria-section',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div *ngIf="fotos && fotos.length > 0" class="galeria-section">
-      <div class="section-header">
-        <div class="section-icon">📸</div>
-        <h3>Galería de Recuerdos</h3>
-      </div>
-      <div class="galeria-grid">
-        <div class="galeria-item" *ngFor="let foto of fotos; let i = index">
-          <img [src]="foto" [alt]="'Foto ' + (i+1)" loading="lazy" (click)="abrirModal(i)">
-        </div>
-      </div>
-      
-      <!-- Modal para ver foto grande -->
-      <div class="modal" [class.active]="modalAbierto" (click)="cerrarModal()">
-        <div class="modal-content" (click)="$event.stopPropagation()">
-          <span class="modal-close" (click)="cerrarModal()">&times;</span>
-          <img [src]="fotoActual" alt="Foto grande">
-          <button class="modal-prev" (click)="anterior()">❮</button>
-          <button class="modal-next" (click)="siguiente()">❯</button>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .galeria-section {
-      margin: 40px auto;
-      padding: 30px 20px;
-      max-width: 900px;
-      background: white;
-      border-radius: 32px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-    }
-    .section-header { text-align: center; margin-bottom: 30px; }
-    .section-icon { font-size: 48px; margin-bottom: 10px; }
-    .galeria-section h3 { font-size: 1.8rem; color: #2c3e50; font-family: 'Playfair Display', serif; margin: 0; }
-    .galeria-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
-    }
-    .galeria-item {
-      cursor: pointer;
-      overflow: hidden;
-      border-radius: 16px;
-      aspect-ratio: 1;
-    }
-    .galeria-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-    .galeria-item img:hover { transform: scale(1.05); }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal.active { display: flex; }
-    .modal-content {
-      position: relative;
-      max-width: 90%;
-      max-height: 90%;
-    }
-    .modal-content img {
-      width: 100%;
-      height: auto;
-      max-height: 80vh;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-    .modal-close {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      color: white;
-      font-size: 35px;
-      cursor: pointer;
-    }
-    .modal-prev, .modal-next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.3);
-      border: none;
-      color: white;
-      font-size: 24px;
-      padding: 10px 15px;
-      cursor: pointer;
-      border-radius: 50%;
-    }
-    .modal-prev { left: -50px; }
-    .modal-next { right: -50px; }
-    @media (max-width: 768px) {
-      .galeria-grid { grid-template-columns: repeat(2, 1fr); }
-      .modal-prev { left: 10px; }
-      .modal-next { right: 10px; }
-    }
-  `]
+  templateUrl: './galeria-section.component.html',
+  styleUrls: ['./galeria-section.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
-export class GaleriaSectionComponent {
-  @Input() fotos: string[] = [];
+export class GaleriaSectionComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
+  @Input() data!: Galeria;
+  @ViewChild('galeriaContainer') galeriaContainer!: ElementRef;
+
   modalAbierto = false;
   fotoActual = '';
   indiceActual = 0;
+  public autoplayInterval: any = null;
+  private isTransitioning = false;
+
+  // ============================================
+  // GETTERS
+  // ============================================
+
+  get fotos(): string[] {
+    return this.data?.fotos?.map((f) => f.url) || [];
+  }
+
+  get estiloGrid(): string {
+    const estilos: Record<string, string> = {
+      grid: 'galeria-grid',
+      masonry: 'galeria-masonry',
+      carousel: 'galeria-carousel',
+      album: 'galeria-album',
+      slideshow: 'galeria-slideshow',
+    };
+    return estilos[this.data?.estilo || 'grid'] || 'galeria-grid';
+  }
+
+  get efectoClase(): string {
+    return this.data?.efecto || 'slide';
+  }
+
+  get velocidadMs(): string {
+    return (this.data?.velocidad || 300) + 'ms';
+  }
+
+  get velocidadAutoplay(): number {
+    return this.data?.velocidad || 3000;
+  }
+
+  get autoplayActivo(): boolean {
+    const estilo = this.data?.estilo || 'grid';
+    return (
+      (estilo === 'carousel' || estilo === 'slideshow') &&
+      this.data?.mostrarControles !== false
+    );
+  }
+
+  get controlesDestacados(): boolean {
+    const estilo = this.data?.estilo || 'grid';
+    return estilo === 'carousel' || estilo === 'slideshow';
+  }
+
+  get totalFotos(): number {
+    return this.fotos.length;
+  }
+
+  // ============================================
+  // CICLO DE VIDA
+  // ============================================
+
+  ngOnInit() {
+    if (this.autoplayActivo) {
+      setTimeout(() => this.iniciarAutoplay(), 1000);
+    }
+  }
+
+  ngAfterViewInit() {
+    const container = this.galeriaContainer?.nativeElement;
+    if (
+      container &&
+      (this.data?.estilo === 'carousel' || this.data?.estilo === 'slideshow')
+    ) {
+      container.addEventListener('scroll', this.onScroll.bind(this));
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.autoplayInterval) {
+      clearInterval(this.autoplayInterval);
+      this.autoplayInterval = null;
+    }
+    const container = this.galeriaContainer?.nativeElement;
+    if (container) {
+      container.removeEventListener('scroll', this.onScroll.bind(this));
+    }
+  }
+
+  // ============================================
+  // AUTOPLAY CON LOOP INFINITO (CORREGIDO)
+  // ============================================
+
+  iniciarAutoplay() {
+    if (this.autoplayInterval) {
+      clearInterval(this.autoplayInterval);
+    }
+    if (!this.autoplayActivo || this.totalFotos === 0) return;
+
+    this.autoplayInterval = setInterval(() => {
+      if (!this.isTransitioning) {
+        this.slideSiguienteConLoop();
+      }
+    }, this.velocidadAutoplay);
+  }
+
+  slideSiguienteConLoop() {
+    const container = this.galeriaContainer?.nativeElement;
+    const total = this.totalFotos;
+
+    if (total === 0) return;
+
+    // Calcular el siguiente índice
+    const siguienteIndice = (this.indiceActual + 1) % total;
+    const esLoop = siguienteIndice === 0;
+
+    // Actualizar el índice y la foto primero
+    this.indiceActual = siguienteIndice;
+    this.fotoActual = this.fotos[siguienteIndice];
+
+    // Para carrusel y slideshow, hacer scroll
+    if (
+      container &&
+      (this.data?.estilo === 'carousel' || this.data?.estilo === 'slideshow')
+    ) {
+      this.isTransitioning = true;
+
+      const itemWidth =
+        container.querySelector('.galeria-item')?.clientWidth || 300;
+      const gap = 16;
+      const targetScroll = siguienteIndice * (itemWidth + gap);
+
+      // Si es loop (volver al principio), scroll al inicio
+      if (esLoop) {
+        container.scrollTo({
+          left: 0,
+          behavior: 'smooth',
+        });
+      } else {
+        container.scrollTo({
+          left: targetScroll,
+          behavior: 'smooth',
+        });
+      }
+
+      // Desbloquear después de la transición
+      setTimeout(() => {
+        this.isTransitioning = false;
+      }, 400);
+    }
+  }
+
+  toggleAutoplay() {
+    if (this.autoplayInterval) {
+      clearInterval(this.autoplayInterval);
+      this.autoplayInterval = null;
+    } else {
+      this.iniciarAutoplay();
+    }
+  }
+
+  // ============================================
+  // NAVEGACIÓN (CORREGIDA)
+  // ============================================
+
+  onScroll(event: Event) {
+    const container = event.target as HTMLElement;
+    const scrollLeft = container.scrollLeft;
+    const itemWidth =
+      container.querySelector('.galeria-item')?.clientWidth || 0;
+    const gap = 16;
+    const index = Math.round(scrollLeft / (itemWidth + gap));
+
+    if (index !== this.indiceActual && index < this.totalFotos && index >= 0) {
+      this.indiceActual = index;
+      this.fotoActual = this.fotos[index];
+    }
+  }
+
+  slideAnterior() {
+    const container = this.galeriaContainer?.nativeElement;
+    const total = this.totalFotos;
+
+    if (total === 0) return;
+
+    // Calcular el índice anterior
+    const anteriorIndice = (this.indiceActual - 1 + total) % total;
+
+    // Actualizar el índice y la foto
+    this.indiceActual = anteriorIndice;
+    this.fotoActual = this.fotos[anteriorIndice];
+
+    // Para carrusel y slideshow, hacer scroll
+    if (
+      container &&
+      (this.data?.estilo === 'carousel' || this.data?.estilo === 'slideshow')
+    ) {
+      this.isTransitioning = true;
+
+      const itemWidth =
+        container.querySelector('.galeria-item')?.clientWidth || 300;
+      const gap = 16;
+      const targetScroll = anteriorIndice * (itemWidth + gap);
+
+      container.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth',
+      });
+
+      setTimeout(() => {
+        this.isTransitioning = false;
+      }, 400);
+    }
+  }
+
+  slideSiguiente() {
+    const container = this.galeriaContainer?.nativeElement;
+    const total = this.totalFotos;
+
+    if (total === 0) return;
+
+    // Calcular el siguiente índice
+    const siguienteIndice = (this.indiceActual + 1) % total;
+
+    // Actualizar el índice y la foto
+    this.indiceActual = siguienteIndice;
+    this.fotoActual = this.fotos[siguienteIndice];
+
+    // Para carrusel y slideshow, hacer scroll
+    if (
+      container &&
+      (this.data?.estilo === 'carousel' || this.data?.estilo === 'slideshow')
+    ) {
+      this.isTransitioning = true;
+
+      const itemWidth =
+        container.querySelector('.galeria-item')?.clientWidth || 300;
+      const gap = 16;
+      const targetScroll = siguienteIndice * (itemWidth + gap);
+
+      container.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth',
+      });
+
+      setTimeout(() => {
+        this.isTransitioning = false;
+      }, 400);
+    }
+  }
+
+  irASlide(index: number) {
+    if (index === this.indiceActual || index < 0 || index >= this.totalFotos)
+      return;
+
+    // Actualizar el índice y la foto
+    this.indiceActual = index;
+    this.fotoActual = this.fotos[index];
+
+    const container = this.galeriaContainer?.nativeElement;
+    if (
+      container &&
+      (this.data?.estilo === 'carousel' || this.data?.estilo === 'slideshow')
+    ) {
+      this.isTransitioning = true;
+
+      const itemWidth =
+        container.querySelector('.galeria-item')?.clientWidth || 300;
+      const gap = 16;
+      container.scrollTo({
+        left: index * (itemWidth + gap),
+        behavior: 'smooth',
+      });
+
+      setTimeout(() => {
+        this.isTransitioning = false;
+      }, 400);
+    }
+  }
+
+  // ============================================
+  // COMPARTIR
+  // ============================================
+
+  compartirGaleria() {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: this.data.titulo || 'Nuestros Momentos',
+          text: this.data.descripcion || 'Mira estos momentos especiales',
+          url: window.location.href,
+        })
+        .catch(() => {});
+    } else {
+      navigator.clipboard
+        .writeText(window.location.href)
+        .then(() => {
+          alert('📋 ¡Enlace copiado al portapapeles!');
+        })
+        .catch(() => {});
+    }
+  }
+
+  // ============================================
+  // MODAL
+  // ============================================
 
   abrirModal(index: number) {
     this.indiceActual = index;
     this.fotoActual = this.fotos[index];
     this.modalAbierto = true;
+    if (this.autoplayInterval) {
+      clearInterval(this.autoplayInterval);
+      this.autoplayInterval = null;
+    }
   }
 
   cerrarModal() {
     this.modalAbierto = false;
+    if (this.autoplayActivo && !this.autoplayInterval) {
+      this.iniciarAutoplay();
+    }
   }
 
   anterior() {
-    this.indiceActual = (this.indiceActual - 1 + this.fotos.length) % this.fotos.length;
+    this.indiceActual =
+      (this.indiceActual - 1 + this.totalFotos) % this.totalFotos;
     this.fotoActual = this.fotos[this.indiceActual];
   }
 
   siguiente() {
-    this.indiceActual = (this.indiceActual + 1) % this.fotos.length;
+    this.indiceActual = (this.indiceActual + 1) % this.totalFotos;
     this.fotoActual = this.fotos[this.indiceActual];
   }
 }

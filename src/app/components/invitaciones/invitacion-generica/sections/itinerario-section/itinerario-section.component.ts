@@ -1,20 +1,27 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
 
 @Component({
   selector: 'app-itinerario-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
-    <div *ngIf="data" class="section">
-      <h3>📅 Itinerario</h3>
-      <p *ngIf="data.titulo"><strong>{{ data.titulo }}</strong></p>
-      <div *ngFor="let item of data.items" class="itinerario-item">
-        <span class="hora">{{ item.hora }}</span>
-        <span class="actividad">{{ item.actividad }}</span>
+    @if (data) {
+      <div class="section">
+        <h3>📅 Itinerario</h3>
+        @if (data.titulo) {
+          <p><strong>{{ data.titulo }}</strong></p>
+        }
+        @for (item of data.items; track item) {
+          <div class="itinerario-item">
+            <span class="hora">{{ item.hora }}</span>
+            <span class="actividad">{{ item.actividad }}</span>
+          </div>
+        }
       </div>
-    </div>
-  `,
+    }
+    `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [`
     .section { margin: 20px; padding: 15px; border-radius: 8px; background: #f5f5f5; text-align: center; }
     .itinerario-item { margin: 10px 0; }

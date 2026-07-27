@@ -1,61 +1,66 @@
-<div *ngIf="invitado" class="invitacion-valida-section">
-  <div class="valida-card">
-    <div class="valida-header">
-      <div class="valida-icon"></div>
-      <h3>INVITACIÓN VÁLIDA PARA</h3>
-    </div>
-
-    <div class="valida-content">
-      <div class="invitado-nombre">
-        <span class="label">Estimado(a)</span>
-        <h2>{{ invitado }}</h2>
+@if (invitado) {
+  <div class="invitacion-valida-section">
+    <div class="valida-card">
+      <div class="valida-header">
+        <div class="valida-icon"></div>
+        <h3>INVITACIÓN VÁLIDA PARA</h3>
       </div>
-
-      <div class="pases-info">
-        <div class="pases-number">
-          <span class="pases-count">{{ pases }}</span>
-          <span class="pases-label"> PASES</span>
+      <div class="valida-content">
+        <div class="invitado-nombre">
+          <span class="label">Estimado(a)</span>
+          <h2>{{ invitado }}</h2>
         </div>
-        <div class="pases-desc">Disponibles para ti y tus acompañantes</div>
-      </div>
-
-      <div class="mensaje-info" *ngIf="mensajePersonalizado">
-        <div class="mensaje-bubble">
-          <span class="quote"></span>
-          <p>"{{ mensajePersonalizado }}"</p>
+        <div class="pases-info">
+          <div class="pases-number">
+            <span class="pases-count">{{ pases }}</span>
+            <span class="pases-label"> PASES</span>
+          </div>
+          <div class="pases-desc">Disponibles para ti y tus acompañantes</div>
         </div>
-      </div>
-
-      <!-- Código QR -->
-      <div class="qr-container">
-        <div class="qr-card">
-          <div class="qr-header">📱 CÓDIGO QR DE ACCESO</div>
-          <img [src]="qrCodeUrl" alt="QR" class="qr-code" />
-          <div class="qr-footer">
-            <p>Presenta este código en la entrada</p>
-            <button class="btn-descargar-qr" (click)="descargarQR()">
-              ⬇️ Descargar QR
-            </button>
+        @if (mensajePersonalizado) {
+          <div class="mensaje-info">
+            <div class="mensaje-bubble">
+              <span class="quote"></span>
+              <p>"{{ mensajePersonalizado }}"</p>
+            </div>
+          </div>
+        }
+        <!-- Código QR -->
+        <div class="qr-container">
+          <div class="qr-card">
+            <div class="qr-header">📱 CÓDIGO QR DE ACCESO</div>
+            <img [src]="qrCodeUrl" alt="QR" class="qr-code" />
+            <div class="qr-footer">
+              <p>Presenta este código en la entrada</p>
+              <button class="btn-descargar-qr" (click)="descargarQR()">
+                ⬇️ Descargar QR
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- Indicación del estado -->
-      <div class="estado-acceso" *ngIf="estadoActual === 'confirmado'">
-        <div class="acceso-confirmado">
-          ✅ Acceso confirmado - Presenta tu QR en la entrada
-        </div>
-      </div>
-      <div class="estado-acceso" *ngIf="estadoActual === 'pendiente'">
-        <div class="acceso-pendiente">
-          ⏳ Confirma tu asistencia para generar tu pase de acceso
-        </div>
-      </div>
-      <div class="estado-acceso" *ngIf="estadoActual === 'rechazado'">
-        <div class="acceso-rechazado">
-          💔 No podrás asistir - Si cambias de opinión, confirma tu asistencia
-        </div>
+        <!-- Indicación del estado -->
+        @if (estadoActual === 'confirmado') {
+          <div class="estado-acceso">
+            <div class="acceso-confirmado">
+              ✅ Acceso confirmado - Presenta tu QR en la entrada
+            </div>
+          </div>
+        }
+        @if (estadoActual === 'pendiente') {
+          <div class="estado-acceso">
+            <div class="acceso-pendiente">
+              ⏳ Confirma tu asistencia para generar tu pase de acceso
+            </div>
+          </div>
+        }
+        @if (estadoActual === 'rechazado') {
+          <div class="estado-acceso">
+            <div class="acceso-rechazado">
+              💔 No podrás asistir - Si cambias de opinión, confirma tu asistencia
+            </div>
+          </div>
+        }
       </div>
     </div>
   </div>
-</div>
+}

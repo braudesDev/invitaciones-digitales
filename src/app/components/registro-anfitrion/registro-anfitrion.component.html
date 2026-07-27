@@ -15,7 +15,7 @@
           [ngModelOptions]="{ standalone: true }"
           name="email"
           required
-        />
+          />
       </div>
 
       <div class="form-group">
@@ -26,7 +26,7 @@
           [ngModelOptions]="{ standalone: true }"
           name="password"
           required
-        />
+          />
       </div>
 
       <div class="form-group">
@@ -37,16 +37,20 @@
           [ngModelOptions]="{ standalone: true }"
           name="confirmPassword"
           required
-        />
+          />
       </div>
 
       <button type="submit" [disabled]="loading" class="btn-registro">
         {{ loading ? "⏳ Registrando..." : "✨ Registrarse como Anfitrión" }}
       </button>
 
-      <div class="error" *ngIf="error">❌ {{ error }}</div>
+      @if (error) {
+        <div class="error">❌ {{ error }}</div>
+      }
 
-      <div class="success" *ngIf="success">✅ {{ success }}</div>
+      @if (success) {
+        <div class="success">✅ {{ success }}</div>
+      }
     </form>
 
     <div class="login-link">

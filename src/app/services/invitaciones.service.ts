@@ -122,6 +122,24 @@ export interface Invitacion {
     textoAdicional: string;
   };
 
+  galeria?: {
+    mostrarSeccion: boolean;
+    estilo: 'grid' | 'masonry' | 'carousel' | 'album' | 'slideshow';
+    titulo: string;
+    descripcion: string;
+    fotos: {
+      url: string;
+      titulo?: string;
+      descripcion?: string;
+      destacada?: boolean;
+    }[];
+    efecto: 'slide' | 'fade' | 'zoom' | 'flip';
+    velocidad: number;
+    mostrarControles: boolean;
+    mostrarCompartir: boolean;
+    mostrarPaginacion: boolean;
+  };
+
   hashtag?: string;
 
   contador?: {
