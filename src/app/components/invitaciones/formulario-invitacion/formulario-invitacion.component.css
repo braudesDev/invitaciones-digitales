@@ -1,172 +1,212 @@
-/* ============================================
+/* ================================================================
    FORMULARIO - ESTILOS COMPLETOS
-   ============================================ */
+   ================================================================
+   Este archivo contiene todos los estilos para el formulario de
+   creación/edición de invitaciones. Incluye:
+   - Layout principal y responsive
+   - Tabs de navegación
+   - Campos de formulario
+   - Paletas de colores
+   - Acordeones
+   - Secciones: Padres, Padrinos, Dress Code, Hospedaje, Galería
+   ================================================================ */
 
-/* ===== MOBILE FIRST (base para móviles) ===== */
+/* ================================================================
+   1. MOBILE FIRST (base para móviles)
+   ================================================================
+   Todos los estilos están pensados primero para móviles y luego
+   se adaptan a pantallas más grandes con media queries.
+   ================================================================ */
+
+/* --- 1.1 Contenedor principal del formulario --- */
 .formulario-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 16px;
-  background: #f8f9fa;
-  min-height: 100vh;
+  max-width: 1200px; /* Ancho máximo para pantallas grandes */
+  margin: 0 auto; /* Centrado horizontal */
+  padding: 20px 16px; /* Espaciado interno */
+  background: #f8f9fa; /* Fondo gris claro */
+  min-height: 100vh; /* Altura mínima = toda la pantalla */
 }
 
+/* --- 1.2 Título principal --- */
 .title {
-  text-align: center;
-  color: #333;
-  margin-bottom: 24px;
-  font-size: 1.5rem;
+  text-align: center; /* Centrado */
+  color: #333; /* Color gris oscuro */
+  margin-bottom: 24px; /* Separación inferior */
+  font-size: 1.5rem; /* Tamaño base para móvil */
 }
 
-/* TABS */
+/* ================================================================
+   2. TABS DE NAVEGACIÓN
+   ================================================================
+   Los tabs permiten cambiar entre las 3 secciones del formulario:
+   Básico, Ceremonia y Extras.
+   ================================================================ */
+
 .tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
-  background: white;
-  padding: 8px;
-  border-radius: 60px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex; /* Distribución horizontal */
+  gap: 8px; /* Espacio entre tabs */
+  margin-bottom: 24px; /* Separación inferior */
+  background: white; /* Fondo blanco */
+  padding: 8px; /* Espaciado interno */
+  border-radius: 60px; /* Bordes redondeados (pill) */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra sutil */
 }
 
+/* --- 2.1 Cada botón de tab --- */
 .tabs button {
-  flex: 1;
-  padding: 12px 8px;
-  background: transparent;
-  border: none;
-  border-radius: 40px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
-  color: #666;
+  flex: 1; /* Ocupa el espacio disponible */
+  padding: 12px 8px; /* Espaciado interno */
+  background: transparent; /* Fondo transparente por defecto */
+  border: none; /* Sin borde */
+  border-radius: 40px; /* Bordes redondeados */
+  font-size: 14px; /* Tamaño de texto */
+  font-weight: 500; /* Peso medio */
+  cursor: pointer; /* Cursor de mano */
+  transition: all 0.3s; /* Transición suave */
+  color: #666; /* Color gris */
 }
 
+/* --- 2.2 Tab activo (seleccionado) --- */
 .tabs button.active {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  background: linear-gradient(135deg, #667eea, #764ba2); /* Degradado morado */
+  color: white; /* Texto blanco */
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3); /* Sombra con color del gradiente */
 }
 
-/* Formulario grid */
+/* ================================================================
+   3. FORMULARIO - GRID Y CAMPOS
+   ================================================================ */
+
+/* --- 3.1 Grid del formulario (1 columna en móvil) --- */
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: 1fr; /* Una sola columna en móvil */
+  gap: 16px; /* Espacio entre campos */
 }
 
+/* --- 3.2 Cada campo del formulario --- */
 .campo {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%; /* 👈 AGREGAR */
-  max-width: 100%; /* 👈 AGREGAR */
-  box-sizing: border-box;
+  flex-direction: column; /* Etiqueta arriba, input abajo */
+  gap: 6px; /* Espacio entre etiqueta e input */
+  width: 100%; /* Ancho completo */
+  max-width: 100%; /* Evita desbordes */
+  box-sizing: border-box; /* Incluye padding en el ancho */
 }
 
+/* --- 3.3 Etiquetas de los campos --- */
 .campo label {
-  font-weight: 500;
-  color: #333;
-  font-size: 14px;
+  font-weight: 500; /* Peso medio */
+  color: #333; /* Color oscuro */
+  font-size: 14px; /* Tamaño de texto */
 }
 
+/* --- 3.4 Inputs, selects y textareas --- */
 .campo input,
 .campo select,
 .campo textarea {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  font-size: 15px;
-  transition: all 0.2s;
+  padding: 12px; /* Espaciado interno */
+  border: 1px solid #ddd; /* Borde gris claro */
+  border-radius: 12px; /* Bordes redondeados */
+  font-size: 15px; /* Tamaño de texto */
+  transition: all 0.2s; /* Transición suave para focus */
 }
 
+/* --- 3.5 Estado focus de los inputs --- */
 .campo input:focus,
 .campo select:focus,
 .campo textarea:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  outline: none; /* Quita el outline por defecto */
+  border-color: #667eea; /* Borde morado */
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); /* Sombra de focus */
 }
 
+/* --- 3.6 Selector de color (input + texto) --- */
 .color-input {
   display: flex;
-  gap: 12px;
-  align-items: center;
+  gap: 12px; /* Espacio entre el selector y el texto */
+  align-items: center; /* Centrado vertical */
 }
 
+/* --- 3.7 Selector de color nativo (el circulito) --- */
 .color-input input[type="color"] {
-  width: 60px;
-  height: 50px;
-  padding: 4px;
-  cursor: pointer;
+  width: 60px; /* Ancho fijo */
+  height: 50px; /* Alto fijo */
+  padding: 4px; /* Espaciado interno */
+  cursor: pointer; /* Cursor de mano */
 }
 
+/* --- 3.8 Campo de texto para el código hexadecimal --- */
 .color-input input[type="text"] {
-  flex: 1;
+  flex: 1; /* Ocupa el espacio restante */
 }
 
+/* --- 3.9 Campos que ocupan todo el ancho --- */
 .full-width {
-  grid-column: span 1;
+  grid-column: span 1; /* En móvil ocupa 1 columna (la única) */
 }
 
-/* ============================================
-   🖼️ SUBIDA DE IMÁGENES
-   ============================================ */
+/* ================================================================
+   4. SUBIDA DE IMÁGENES
+   ================================================================ */
 
+/* --- 4.1 Área de subida (botón + info) --- */
 .upload-area {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 15px; /* Espacio entre elementos */
   margin-bottom: 10px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Permite saltos de línea en móvil */
 }
 
+/* --- 4.2 Botón de subida --- */
 .btn-upload {
   display: inline-block;
-  background: #c9a87c;
+  background: #c9a87c; /* Color dorado/beige */
   color: white;
   padding: 10px 24px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
-  position: relative;
+  position: relative; /* Para posicionar el input file */
   overflow: hidden;
   font-size: 0.95rem;
   border: none;
 }
 
+/* --- 4.3 Hover del botón de subida --- */
 .btn-upload:hover {
-  background: #b8956a;
-  transform: translateY(-2px);
+  background: #b8956a; /* Oscurece al pasar el mouse */
+  transform: translateY(-2px); /* Levanta ligeramente */
   box-shadow: 0 4px 12px rgba(201, 168, 124, 0.3);
 }
 
+/* --- 4.4 Estado de carga (mientras sube la imagen) --- */
 .btn-upload.cargando {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none !important;
+  opacity: 0.6; /* Semi-transparente */
+  cursor: not-allowed; /* Cursor de no permitido */
+  transform: none !important; /* Evita cualquier transformación */
 }
 
+/* --- 4.5 Input file oculto dentro del botón --- */
 .btn-upload input[type="file"] {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
+  opacity: 0; /* Invisible pero clickeable */
   cursor: pointer;
 }
 
-.btn-upload.cargando input[type="file"] {
-  cursor: not-allowed;
-}
-
+/* --- 4.6 Información de formato --- */
 .upload-info {
-  color: #8b7355;
+  color: #8b7355; /* Color café claro */
   font-size: 0.85rem;
 }
 
+/* --- 4.7 Input para pegar URL --- */
 .url-input {
   display: flex;
   align-items: center;
@@ -183,12 +223,14 @@
   transition: border-color 0.3s ease;
 }
 
+/* --- 4.8 Focus del input URL --- */
 .url-input input:focus {
   border-color: #c9a87c;
   outline: none;
   box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
 }
 
+/* --- 4.9 Botón para limpiar la URL --- */
 .btn-limpiar-url {
   background: none;
   border: none;
@@ -200,25 +242,27 @@
 }
 
 .btn-limpiar-url:hover {
-  color: #e74c3c;
+  color: #e74c3c; /* Rojo al hacer hover */
 }
 
+/* --- 4.10 Vista previa de la imagen --- */
 .preview-img {
   margin-top: 15px;
   position: relative;
   border-radius: 12px;
-  overflow: hidden;
+  overflow: hidden; /* Oculta lo que sobresale */
   border: 2px solid rgba(201, 168, 124, 0.2);
-  max-width: 400px;
+  max-width: 400px; /* Ancho máximo */
 }
 
 .preview-img img {
   width: 100%;
   max-height: 300px;
-  object-fit: cover;
+  object-fit: cover; /* Ajusta la imagen sin deformar */
   display: block;
 }
 
+/* --- 4.11 Botón para cambiar imagen (flotante) --- */
 .btn-cambiar-img {
   position: absolute;
   bottom: 15px;
@@ -238,17 +282,18 @@
   transform: scale(1.05);
 }
 
-/* ============================================
-   PALETAS
-   ============================================ */
+/* ================================================================
+   5. PALETAS DE COLORES PREMIUM
+   ================================================================ */
 
 .paletas {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-wrap: wrap; /* Permite saltos de línea */
+  gap: 1rem; /* Espacio entre paletas */
   margin: 1rem 0;
 }
 
+/* --- 5.1 Cada paleta (tarjeta clickeable) --- */
 .paleta {
   background: white;
   padding: 1rem;
@@ -256,22 +301,25 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  border: 2px solid transparent;
+  border: 2px solid transparent; /* Borde invisible por defecto */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
 
+/* --- 5.2 Hover de la paleta --- */
 .paleta:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px); /* Levanta la tarjeta */
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
 }
 
+/* --- 5.3 Click (efecto de presión) --- */
 .paleta:active {
-  transform: scale(0.98);
+  transform: scale(0.98); /* Se encoge ligeramente */
 }
 
+/* --- 5.4 Los círculos de color de la paleta --- */
 .paleta span:first-child,
 .paleta span:first-child + span {
   width: 45px;
@@ -282,22 +330,26 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* --- 5.5 El segundo círculo se superpone al primero --- */
 .paleta span:first-child + span {
-  margin-left: -15px;
+  margin-left: -15px; /* Superposición */
 }
 
+/* --- 5.6 El nombre de la paleta --- */
 .paleta span:last-child {
   font-size: 12px;
   color: #555;
   font-weight: 500;
 }
 
+/* --- 5.7 Paleta seleccionada --- */
 .paleta.selected {
   transform: translateY(-4px);
-  border: 2px solid #b08a4a;
+  border: 2px solid #b08a4a; /* Borde dorado */
   box-shadow: 0 15px 35px rgba(176, 138, 74, 0.25);
 }
 
+/* --- 5.8 Texto de ayuda --- */
 .ayuda-paletas {
   font-size: 12px;
   color: #888;
@@ -305,9 +357,9 @@
   text-align: center;
 }
 
-/* ============================================
-   SUBSECCIONES
-   ============================================ */
+/* ================================================================
+   6. SUBSECCIONES (Ceremonia, Recepción)
+   ================================================================ */
 
 .subseccion {
   background: white;
@@ -322,9 +374,10 @@
   font-size: 1rem;
 }
 
+/* --- 6.1 Grid interno de la subsección --- */
 .subseccion-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr; /* 1 columna en móvil */
   gap: 12px;
 }
 
@@ -334,17 +387,21 @@
   border-radius: 10px;
 }
 
-/* ============================================
-   ACORDEÓN
-   ============================================ */
+/* ================================================================
+   7. ACORDEÓN
+   ================================================================
+   Los acordeones son secciones plegables que se abren/cierran
+   al hacer clic en su header.
+   ================================================================ */
 
+/* --- 7.1 Contenedor del acordeón --- */
 .acordeon {
   background: #ffffff;
   border-radius: 16px;
   margin-bottom: 20px;
   border: 1px solid #eef0f5;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-  overflow: hidden;
+  overflow: hidden; /* Esconde el contenido cuando está cerrado */
   transition:
     border-color 0.3s ease,
     box-shadow 0.3s ease;
@@ -353,11 +410,13 @@
   box-sizing: border-box;
 }
 
+/* --- 7.2 Hover del acordeón --- */
 .acordeon:hover {
   border-color: #dce1f3;
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.08);
 }
 
+/* --- 7.3 Header del acordeón (parte clickeable) --- */
 .acordeon-header {
   display: flex;
   justify-content: space-between;
@@ -371,16 +430,18 @@
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
-  user-select: none;
+  user-select: none; /* Evita selección de texto */
   width: 100%;
   box-sizing: border-box;
 }
 
+/* --- 7.4 Hover del header --- */
 .acordeon-header:hover {
   background: #f8fafc;
-  color: #667eea;
+  color: #667eea; /* Cambia a morado */
 }
 
+/* --- 7.5 Icono de apertura/cierre (▲/▼) --- */
 .acordeon-header .icono {
   font-size: 12px;
   color: #667eea;
@@ -394,39 +455,42 @@
   transition:
     transform 0.2s ease,
     background-color 0.2s ease;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Evita que se encoja */
 }
 
+/* --- 7.6 Hover del icono --- */
 .acordeon-header:hover .icono {
   background: #667eea;
   color: #ffffff;
 }
 
+/* --- 7.7 Cuerpo del acordeón (cerrado por defecto) --- */
 .acordeon-body {
-  max-height: 0;
+  max-height: 0; /* Altura 0 = cerrado */
   overflow: hidden;
   transition:
     max-height 0.4s cubic-bezier(0, 1, 0, 1),
     opacity 0.3s ease;
-  padding: 0 24px;
-  opacity: 0;
+  padding: 0 24px; /* Padding solo lateral cuando está cerrado */
+  opacity: 0; /* Invisible cuando está cerrado */
   width: 100%;
   box-sizing: border-box;
 }
 
+/* --- 7.8 Cuerpo del acordeón (abierto) --- */
 .acordeon-body.abierto {
-  max-height: 60vh; /* 👈 60% de la altura de la pantalla */
-  overflow-y: auto; /* 👈 Scroll vertical */
-  padding: 8px 24px 24px 24px;
-  opacity: 1;
+  max-height: 60vh; /* Altura máxima = 60% de la pantalla */
+  overflow-y: auto; /* Scroll si el contenido excede la altura */
+  padding: 8px 24px 24px 24px; /* Padding completo */
+  opacity: 1; /* Visible */
   transition:
     max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.4s ease;
 }
 
-/* Scrollbar personalizada */
+/* --- 7.9 Scrollbar personalizada (WebKit: Chrome, Safari, Edge) --- */
 .acordeon-body.abierto::-webkit-scrollbar {
-  width: 6px;
+  width: 6px; /* Ancho de la scrollbar */
 }
 
 .acordeon-body.abierto::-webkit-scrollbar-track {
@@ -435,7 +499,7 @@
 }
 
 .acordeon-body.abierto::-webkit-scrollbar-thumb {
-  background: var(--accent, #c9a87c);
+  background: var(--accent, #c9a87c); /* Usa la variable o color por defecto */
   border-radius: 3px;
 }
 
@@ -443,14 +507,17 @@
   background: var(--primary, #5c3d2e);
 }
 
-/* Para Firefox */
+/* --- 7.10 Scrollbar para Firefox --- */
 .acordeon-body.abierto {
   scrollbar-width: thin;
   scrollbar-color: var(--accent, #c9a87c) #f0f0f0;
 }
-/* ============================================
-   CAMPOS DINÁMICOS
-   ============================================ */
+
+/* ================================================================
+   8. CAMPOS DINÁMICOS
+   ================================================================
+   Para listas que se pueden agregar/eliminar (ej: regalos, links)
+   ================================================================ */
 
 .campo-dinamico {
   display: flex;
@@ -466,6 +533,7 @@
   border-radius: 10px;
 }
 
+/* --- 8.1 Botón eliminar (rojo) --- */
 .campo-dinamico button {
   background: #ff4444;
   color: white;
@@ -475,6 +543,7 @@
   cursor: pointer;
 }
 
+/* --- 8.2 Botón agregar (verde) --- */
 .btn-agregar {
   background: #4caf50;
   color: white;
@@ -486,9 +555,9 @@
   margin-top: 8px;
 }
 
-/* ============================================
-   PREVIEW GALERÍA
-   ============================================ */
+/* ================================================================
+   9. PREVIEW DE GALERÍA (Miniaturas)
+   ================================================================ */
 
 .preview-fotos {
   margin-top: 16px;
@@ -508,9 +577,9 @@
   border-radius: 8px;
 }
 
-/* ============================================
-   BOTÓN GUARDAR
-   ============================================ */
+/* ================================================================
+   10. BOTÓN GUARDAR
+   ================================================================ */
 
 .acciones {
   margin-top: 24px;
@@ -527,76 +596,97 @@
   border-radius: 40px;
   cursor: pointer;
   transition: all 0.2s;
-  width: 100%;
+  width: 100%; /* Ancho completo en móvil */
 }
 
+/* --- 10.1 Hover del botón guardar (cuando está habilitado) --- */
 .btn-guardar:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
+/* --- 10.2 Botón deshabilitado --- */
 .btn-guardar:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* ============================================
-   RESPONSIVE GENERAL
-   ============================================ */
+/* ================================================================
+   11. RESPONSIVE GENERAL
+   ================================================================ */
 
+/* --- 11.1 Tablet (640px en adelante) --- */
 @media (min-width: 640px) {
   .formulario-container {
     padding: 30px 24px;
   }
+
+  /* Grid de 2 columnas */
   .form-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  /* Campos que ocupan las 2 columnas */
   .full-width {
     grid-column: span 2;
   }
+
+  /* Grid de subsección: 3 columnas */
   .subseccion-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  /* Tabs más grandes */
   .tabs button {
     padding: 14px;
     font-size: 16px;
   }
+
+  /* Botón guardar: ancho automático (no ocupa todo) */
   .btn-guardar {
     width: auto;
     padding: 14px 40px;
   }
+
   .title {
     font-size: 1.8rem;
   }
+
   .upload-area {
     gap: 20px;
   }
 }
 
+/* --- 11.2 Desktop (1024px en adelante) --- */
 @media (min-width: 1024px) {
   .formulario-container {
     padding: 40px 32px;
   }
+
   .form-grid {
     gap: 24px;
   }
+
   .campo input,
   .campo select,
   .campo textarea {
     padding: 14px;
   }
+
   .tabs {
     gap: 16px;
     padding: 12px;
   }
+
   .acordeon-header {
     padding: 20px;
   }
 }
 
+/* --- 11.3 Ajustes para móvil (hasta 768px) --- */
 @media (max-width: 768px) {
   .paletas {
-    justify-content: center;
+    justify-content: center; /* Centra las paletas */
   }
   .paleta span:first-child,
   .paleta span:first-child + span {
@@ -605,14 +695,16 @@
   }
 }
 
-/* ============================================
-   👪 SECCIÓN PADRES
-   ============================================ */
+/* ================================================================
+   12. SECCIÓN PADRES
+   ================================================================ */
 
+/* --- 12.1 Forzar altura máxima grande (para ver todo el contenido) --- */
 .acordeon-body.abierto {
   max-height: 2000px !important;
 }
 
+/* --- 12.2 Grid dentro del acordeón de padres --- */
 .acordeon-body .form-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -620,6 +712,7 @@
   padding-top: 10px;
 }
 
+/* --- 12.3 Inputs dentro de padres --- */
 .acordeon-body .form-grid input[type="text"] {
   width: 100%;
   padding: 12px 14px;
@@ -632,61 +725,52 @@
   box-sizing: border-box;
 }
 
+/* --- 12.4 Focus de inputs de padres --- */
 .acordeon-body .form-grid input[type="text"]:focus {
   outline: none;
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
+/* --- 12.5 Placeholder de padres --- */
 .acordeon-body .form-grid input[type="text"]::placeholder {
   color: #94a3b8;
   font-size: 0.9rem;
 }
 
+/* --- 12.6 Primer input: margen superior --- */
 .acordeon-body .form-grid input:nth-child(1) {
   margin-top: 10px;
 }
 
+/* --- 12.7 Tercer input: línea divisoria (separación visual) --- */
 .acordeon-body .form-grid input:nth-child(3) {
   margin-top: 20px;
   padding-top: 12px;
   border-top: 2px dashed #e2e8f0;
 }
 
-.acordeon-body .form-grid input:nth-child(5) {
-  margin-top: 24px;
-  position: relative;
-}
-
-.acordeon-body .form-grid input:nth-child(5)::before {
-  content: "👰 Padres de la Novia";
-  display: block;
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: #667eea;
-  margin-bottom: 8px;
-}
-
-.acordeon-body .form-grid input:nth-child(9) {
-  margin-top: 24px;
-  position: relative;
-}
-
+/* --- 12.8 Estilos para pantallas de tablet en adelante --- */
 @media (min-width: 640px) {
   .acordeon-body .form-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
+
+  /* Quita la línea divisoria en tablet (ya no es necesaria) */
   .acordeon-body .form-grid input:nth-child(3) {
     margin-top: 0;
     border-top: none;
   }
+
+  /* Fondo sutil para los campos de los padres */
   .acordeon-body .form-grid input:nth-child(5),
   .acordeon-body .form-grid input:nth-child(6),
   .acordeon-body .form-grid input:nth-child(7),
   .acordeon-body .form-grid input:nth-child(8) {
     background-color: #fdfbf7;
   }
+
   .acordeon-body .form-grid input:nth-child(9),
   .acordeon-body .form-grid input:nth-child(10),
   .acordeon-body .form-grid input:nth-child(11),
@@ -695,10 +779,11 @@
   }
 }
 
-/* ============================================
-   PADRINOS - ESTILOS PARA EL FORMULARIO
-   ============================================ */
+/* ================================================================
+   13. SECCIÓN PADRINOS
+   ================================================================ */
 
+/* --- 13.1 Vista previa de padrinos agrupados por rol --- */
 .padrinos-preview {
   background: linear-gradient(135deg, #fdfbf7 0%, #f7f3eb 100%);
   border: 1px solid #ebdccb;
@@ -707,6 +792,7 @@
   margin-bottom: 24px;
 }
 
+/* --- 13.2 Cada grupo de padrinos --- */
 .grupo-preview {
   margin-bottom: 12px;
   color: #4a3e3d;
@@ -718,9 +804,10 @@
 }
 
 .grupo-preview strong {
-  color: #a37233;
+  color: #a37233; /* Color dorado para el rol */
 }
 
+/* --- 13.3 Descripción del rol --- */
 .grupo-descripcion {
   display: block;
   color: #8c786c;
@@ -728,6 +815,7 @@
   margin-top: 2px;
 }
 
+/* --- 13.4 Tarjeta de cada padrino --- */
 .padrino-item {
   margin-bottom: 20px;
 }
@@ -749,6 +837,7 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
 }
 
+/* --- 13.5 Header de la tarjeta (número + eliminar) --- */
 .padrino-header {
   display: flex;
   justify-content: space-between;
@@ -758,6 +847,7 @@
   border-bottom: 1px border-dash #e2e8f0;
 }
 
+/* --- 13.6 Número del padrino (badge) --- */
 .padrino-numero {
   font-weight: 700;
   font-size: 0.85rem;
@@ -768,6 +858,7 @@
   letter-spacing: 0.5px;
 }
 
+/* --- 13.7 Botón eliminar padrino --- */
 .btn-eliminar-padrino {
   background: #fef2f2;
   border: 1px solid #fecaca;
@@ -788,12 +879,14 @@
   transform: scale(1.05);
 }
 
+/* --- 13.8 Grid de campos del padrino --- */
 .padrino-fields {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
 }
 
+/* --- 13.9 Grupo de campo (label + input) --- */
 .field-group {
   display: flex;
   flex-direction: column;
@@ -806,6 +899,7 @@
   color: #475569;
 }
 
+/* --- 13.10 Estilo base para inputs --- */
 .form-control {
   width: 100%;
   padding: 10px 14px;
@@ -824,8 +918,9 @@
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
+/* --- 13.11 Select de roles con icono --- */
 .field-group select.form-control {
-  appearance: none;
+  appearance: none; /* Quita el estilo nativo */
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%20667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 12px center;
@@ -833,6 +928,7 @@
   padding-right: 36px;
 }
 
+/* --- 13.12 Texto de ayuda --- */
 .help-text {
   font-size: 0.8rem;
   color: #64748b;
@@ -840,36 +936,14 @@
   line-height: 1.3;
 }
 
-.btn-agregar {
-  width: 100%;
-  background: #f8fafc;
-  color: #475569;
-  border: 2px dashed #cbd5e1;
-  padding: 12px 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-top: 12px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn-agregar:hover {
-  background: #f1f5f9;
-  border-color: #94a3b8;
-  color: #1e293b;
-}
-
+/* --- 13.13 Contenedor del select con icono --- */
 .rol-select-container {
   position: relative;
   display: flex;
   align-items: center;
 }
 
+/* --- 13.14 Icono del rol (dentro del select) --- */
 .rol-icon-select {
   position: absolute;
   left: 10px;
@@ -877,13 +951,14 @@
   height: 24px;
   object-fit: contain;
   z-index: 1;
-  pointer-events: none;
+  pointer-events: none; /* Permite hacer clic a través del icono */
 }
 
 .rol-select-container select {
-  padding-left: 42px;
+  padding-left: 42px; /* Espacio para el icono */
 }
 
+/* --- 13.15 Responsive de padrinos --- */
 @media (min-width: 640px) {
   .padrino-fields {
     grid-template-columns: repeat(2, 1fr);
@@ -898,14 +973,16 @@
   }
 }
 
-/* ============================================
-   DRESS CODE - ESTILOS
-   ============================================ */
+/* ================================================================
+   14. SECCIÓN DRESS CODE (Código de Vestimenta)
+   ================================================================ */
 
+/* --- 14.1 Contenedor del formulario de dress code --- */
 .dresscode-form {
   padding: 0.5rem 0;
 }
 
+/* --- 14.2 Wrapper del icono de estilo --- */
 .estilo-icon-wrapper {
   width: 50px;
   height: 50px;
@@ -915,6 +992,7 @@
   justify-content: center;
 }
 
+/* --- 14.3 Imagen del icono de estilo --- */
 .estilo-icon-img {
   width: 100%;
   height: 100%;
@@ -924,13 +1002,14 @@
 }
 
 .estilo-option:hover .estilo-icon-img {
-  transform: scale(1.1);
+  transform: scale(1.1); /* Zoom al hacer hover */
 }
 
 .estilo-option.selected .estilo-icon-img {
-  transform: scale(1.15);
+  transform: scale(1.15); /* Zoom más pronunciado cuando está seleccionado */
 }
 
+/* --- 14.4 Responsive de iconos de estilo --- */
 @media (max-width: 480px) {
   .estilo-icon-wrapper {
     width: 36px;
@@ -938,6 +1017,7 @@
   }
 }
 
+/* --- 14.5 Grid de estilos (6 columnas) --- */
 .estilos-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -945,6 +1025,7 @@
   margin: 12px 0 16px;
 }
 
+/* --- 14.6 Cada opción de estilo --- */
 .estilo-option {
   background: #f8f6f3;
   border: 2px solid #e8e0d8;
@@ -962,6 +1043,7 @@
   border-color: #d4c8b8;
 }
 
+/* --- 14.7 Estilo seleccionado --- */
 .estilo-option.selected {
   border-color: #c9a87c;
   background: #ffffff;
@@ -969,6 +1051,7 @@
   transform: translateY(-2px);
 }
 
+/* --- 14.8 Checkmark de selección --- */
 .estilo-option.selected::after {
   content: "✓";
   position: absolute;
@@ -986,12 +1069,14 @@
   font-weight: bold;
 }
 
+/* --- 14.9 Icono de estilo (por si se usa emoji en lugar de imagen) --- */
 .estilo-icon {
   font-size: 2rem;
   display: block;
   margin-bottom: 4px;
 }
 
+/* --- 14.10 Nombre del estilo --- */
 .estilo-nombre {
   font-size: 0.75rem;
   font-weight: 500;
@@ -999,6 +1084,7 @@
   display: block;
 }
 
+/* --- 14.11 Descripción del estilo (se muestra cuando está seleccionado) --- */
 .estilo-descripcion {
   display: block;
   font-size: 0.65rem;
@@ -1011,12 +1097,14 @@
   border-radius: 6px;
 }
 
+/* --- 14.12 Texto de ayuda para colores --- */
 .ayuda-colores {
   font-size: 0.8rem;
   color: #888;
   margin: 4px 0 8px;
 }
 
+/* --- 14.13 Grid de colores (círculos) --- */
 .colores-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1024,6 +1112,7 @@
   padding: 8px 0 12px;
 }
 
+/* --- 14.14 Cada círculo de color --- */
 .color-option {
   width: 40px;
   height: 40px;
@@ -1042,12 +1131,14 @@
   border-color: #ccc;
 }
 
+/* --- 14.15 Color seleccionado --- */
 .color-option.selected {
   border-color: #2b2b2b;
   transform: scale(1.15);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* --- 14.16 Checkmark dentro del color --- */
 .color-check {
   color: white;
   font-size: 1.4rem;
@@ -1055,6 +1146,7 @@
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
 }
 
+/* --- 14.17 Colores seleccionados (chips) --- */
 .colores-seleccionados {
   display: flex;
   flex-wrap: wrap;
@@ -1063,6 +1155,7 @@
   padding: 8px 0;
 }
 
+/* --- 14.18 Chip de color --- */
 .color-chip {
   display: flex;
   align-items: center;
@@ -1080,6 +1173,7 @@
   background: #ede8e0;
 }
 
+/* --- 14.19 Muestra del color en el chip --- */
 .color-chip-muestra {
   width: 22px;
   height: 22px;
@@ -1088,6 +1182,7 @@
   flex-shrink: 0;
 }
 
+/* --- 14.20 Botón eliminar en chip --- */
 .color-chip button {
   background: none;
   border: none;
@@ -1103,6 +1198,7 @@
   color: #e74c3c;
 }
 
+/* --- 14.21 Subcampo (agrupador de inputs) --- */
 .subcampo {
   margin-bottom: 14px;
 }
@@ -1115,6 +1211,7 @@
   letter-spacing: 0;
 }
 
+/* --- 14.22 Input con contador de caracteres --- */
 .input-with-counter {
   position: relative;
 }
@@ -1140,20 +1237,22 @@
 }
 
 .input-with-counter textarea {
-  resize: vertical;
+  resize: vertical; /* Permite redimensionar verticalmente */
   min-height: 60px;
 }
 
+/* --- 14.23 Contador de caracteres --- */
 .contador {
   position: absolute;
   right: 12px;
   bottom: 10px;
   font-size: 0.7rem;
   color: #bbb;
-  pointer-events: none;
+  pointer-events: none; /* No interfiere con el input */
   font-weight: 500;
 }
 
+/* --- 14.24 Tip de dress code --- */
 .dresscode-tip {
   margin-top: 20px;
   padding: 14px 18px;
@@ -1177,6 +1276,7 @@
   line-height: 1.6;
 }
 
+/* --- 14.25 Responsive de dress code --- */
 @media (max-width: 768px) {
   .estilos-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1226,21 +1326,11 @@
   }
 }
 
-/* ============================================
-   HISTORIA - ESTILOS PARA EL FORMULARIO
-   ============================================ */
+/* ================================================================
+   15. SECCIÓN HISTORIA
+   ================================================================ */
 
-.historia-form {
-  padding: 0.5rem 0;
-}
-
-.ayuda-historia {
-  color: #888;
-  font-size: 0.85rem;
-  margin: 4px 0 16px;
-  font-style: italic;
-}
-
+/* --- 15.1 Grid de estilos de historia (4 columnas) --- */
 .estilos-historia-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1248,6 +1338,7 @@
   margin: 10px 0 16px;
 }
 
+/* --- 15.2 Cada opción de estilo de historia --- */
 .estilo-historia-option {
   background: #f8f5f0;
   border: 2px solid transparent;
@@ -1271,6 +1362,7 @@
   transform: translateY(-2px);
 }
 
+/* --- 15.3 Checkmark de selección --- */
 .estilo-historia-option.selected::after {
   content: "✓";
   position: absolute;
@@ -1301,12 +1393,7 @@
   display: block;
 }
 
-.ayuda-momentos {
-  color: #888;
-  font-size: 0.8rem;
-  margin: 4px 0 12px;
-}
-
+/* --- 15.4 Tarjeta de momento (historia) --- */
 .momento-item {
   margin-bottom: 16px;
 }
@@ -1344,6 +1431,7 @@
   border-radius: 12px;
 }
 
+/* --- 15.5 Botón eliminar momento --- */
 .btn-eliminar-momento {
   background: none;
   border: none;
@@ -1361,6 +1449,7 @@
   transform: scale(1.1);
 }
 
+/* --- 15.6 Grid de campos del momento --- */
 .momento-fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1371,6 +1460,7 @@
   grid-column: 1 / -1;
 }
 
+/* --- 15.7 Botón agregar momento --- */
 .btn-agregar-momento {
   background: #f0ebe5;
   border: 2px dashed #c9a87c;
@@ -1395,6 +1485,7 @@
   transform: translateY(0);
 }
 
+/* --- 15.8 Responsive de historia --- */
 @media (max-width: 600px) {
   .estilos-historia-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1439,14 +1530,11 @@
   }
 }
 
-/* ============================================
-   HOSPEDAJE - ESTILOS PARA EL FORMULARIO
-   ============================================ */
+/* ================================================================
+   16. SECCIÓN HOSPEDAJE
+   ================================================================ */
 
-/* ============================================
-   ESTILOS DE LA SECCIÓN - SELECTOR VISUAL
-   ============================================ */
-
+/* --- 16.1 Grid de estilos de hospedaje (5 columnas) --- */
 .estilos-hospedaje-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -1454,6 +1542,7 @@
   margin: 10px 0 16px;
 }
 
+/* --- 16.2 Cada opción de estilo de hospedaje --- */
 .estilo-hospedaje-option {
   background: #f8f5f0;
   border: 2px solid transparent;
@@ -1507,10 +1596,7 @@
   display: block;
 }
 
-/* ============================================
-   ALOJAMIENTOS - TARJETAS
-   ============================================ */
-
+/* --- 16.3 Tarjeta de alojamiento --- */
 .alojamiento-item {
   margin-bottom: 16px;
 }
@@ -1548,6 +1634,7 @@
   border-radius: 12px;
 }
 
+/* --- 16.4 Botón eliminar alojamiento --- */
 .btn-eliminar-alojamiento {
   background: none;
   border: none;
@@ -1565,6 +1652,7 @@
   transform: scale(1.1);
 }
 
+/* --- 16.5 Grid de campos del alojamiento --- */
 .alojamiento-fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1575,10 +1663,7 @@
   grid-column: 1 / -1;
 }
 
-/* ============================================
-   BOTÓN AGREGAR ALOJAMIENTO
-   ============================================ */
-
+/* --- 16.6 Botón agregar alojamiento --- */
 .btn-agregar-alojamiento {
   background: #f0ebe5;
   border: 2px dashed #c9a87c;
@@ -1603,10 +1688,7 @@
   transform: translateY(0);
 }
 
-/* ============================================
-   TIP - NOTA INFORMATIVA
-   ============================================ */
-
+/* --- 16.7 Tip de hospedaje --- */
 .hospedaje-tip {
   margin-top: 20px;
   padding: 14px 18px;
@@ -1630,70 +1712,10 @@
   line-height: 1.6;
 }
 
-/* ============================================
-   INPUT CON CONTADOR (reutilizado)
-   ============================================ */
-
-.input-with-counter {
-  position: relative;
-}
-
-.input-with-counter input,
-.input-with-counter textarea {
-  width: 100%;
-  padding: 10px 60px 10px 14px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  background: #faf9f8;
-  font-family: inherit;
-  box-sizing: border-box;
-}
-
-.input-with-counter input:focus,
-.input-with-counter textarea:focus {
-  border-color: #c9a87c;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
-  background: #ffffff;
-}
-
-.input-with-counter textarea {
-  resize: vertical;
-  min-height: 60px;
-}
-
-.contador {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  font-size: 0.7rem;
-  color: #bbb;
-  pointer-events: none;
-  font-weight: 500;
-}
-
-.subcampo {
-  margin-bottom: 14px;
-}
-
-.subcampo label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #666;
-  margin-bottom: 4px;
-  display: block;
-  letter-spacing: 0;
-}
-
-/* ============================================
-   CHECKBOX PERSONALIZADO
-   ============================================ */
-
+/* --- 16.8 Checkbox personalizado --- */
 .campo label input[type="checkbox"] {
   margin-right: 8px;
-  accent-color: #c9a87c;
+  accent-color: #c9a87c; /* Color del checkbox (soporte en Chrome/Edge) */
   width: 16px;
   height: 16px;
   cursor: pointer;
@@ -1708,31 +1730,23 @@
   cursor: pointer;
 }
 
-/* ============================================
-   RESPONSIVE - HOSPEDAJE
-   ============================================ */
-
+/* --- 16.9 Responsive de hospedaje --- */
 @media (max-width: 600px) {
   .estilos-hospedaje-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .alojamiento-fields {
     grid-template-columns: 1fr;
   }
-
   .alojamiento-card {
     padding: 12px;
   }
-
   .estilo-hospedaje-option {
     padding: 10px 6px;
   }
-
   .estilo-hospedaje-icon {
     font-size: 1.6rem;
   }
-
   .estilo-hospedaje-nombre {
     font-size: 0.7rem;
   }
@@ -1743,52 +1757,44 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
   }
-
   .estilo-hospedaje-option {
     padding: 8px 4px;
   }
-
   .estilo-hospedaje-icon {
     font-size: 1.4rem;
   }
-
   .input-with-counter input,
   .input-with-counter textarea {
     padding: 8px 50px 8px 10px;
     font-size: 0.85rem;
   }
-
   .contador {
     font-size: 0.65rem;
     bottom: 8px;
     right: 8px;
   }
-
   .hospedaje-tip {
     padding: 10px 14px;
     gap: 8px;
   }
-
   .hospedaje-tip .tip-text {
     font-size: 0.75rem;
   }
 }
 
-/* ============================================
-   GALERÍA - ESTILOS PARA EL FORMULARIO
-   ============================================ */
+/* ================================================================
+   17. SECCIÓN GALERÍA
+   ================================================================ */
 
-/* ============================================
-   ESTILOS DE LA SECCIÓN - SELECTOR VISUAL
-   ============================================ */
-
+/* --- 17.1 Grid de estilos de galería (4 columnas) --- */
 .estilos-galeria-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   margin: 10px 0 16px;
 }
 
+/* --- 17.2 Cada opción de estilo de galería --- */
 .estilo-galeria-option {
   background: #f8f5f0;
   border: 2px solid transparent;
@@ -1812,6 +1818,7 @@
   transform: translateY(-2px);
 }
 
+/* --- 17.3 Checkmark de selección --- */
 .estilo-galeria-option.selected::after {
   content: "✓";
   position: absolute;
@@ -1842,10 +1849,7 @@
   display: block;
 }
 
-/* ============================================
-   EFECTOS DE TRANSICIÓN - SELECTOR VISUAL
-   ============================================ */
-
+/* --- 17.4 Grid de efectos de transición (4 columnas) --- */
 .efectos-galeria-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1853,6 +1857,7 @@
   margin: 10px 0 16px;
 }
 
+/* --- 17.5 Cada opción de efecto --- */
 .efecto-galeria-option {
   background: #f8f5f0;
   border: 2px solid transparent;
@@ -1906,10 +1911,7 @@
   display: block;
 }
 
-/* ============================================
-   VELOCIDAD - SLIDER
-   ============================================ */
-
+/* --- 17.6 Control de velocidad (slider) --- */
 .velocidad-control {
   display: flex;
   align-items: center;
@@ -1918,9 +1920,10 @@
   margin-bottom: 8px;
 }
 
+/* --- 17.7 Slider personalizado --- */
 .velocidad-slider {
   flex: 1;
-  -webkit-appearance: none;
+  -webkit-appearance: none; /* Quita el estilo nativo en WebKit */
   appearance: none;
   height: 6px;
   border-radius: 3px;
@@ -1929,6 +1932,7 @@
   transition: background 0.2s ease;
 }
 
+/* --- 17.8 Thumb del slider (la bolita) en WebKit --- */
 .velocidad-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -1945,6 +1949,7 @@
   background: #b8946a;
 }
 
+/* --- 17.9 Thumb del slider en Firefox --- */
 .velocidad-slider::-moz-range-thumb {
   width: 18px;
   height: 18px;
@@ -1954,6 +1959,7 @@
   border: none;
 }
 
+/* --- 17.10 Valor de velocidad (etiqueta) --- */
 .velocidad-valor {
   font-size: 0.85rem;
   font-weight: 600;
@@ -1965,10 +1971,7 @@
   border-radius: 20px;
 }
 
-/* ============================================
-   CONTROLES - CHECKBOXES
-   ============================================ */
-
+/* --- 17.11 Grid de controles (checkboxes) --- */
 .controles-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -2002,16 +2005,7 @@
   flex-shrink: 0;
 }
 
-/* ============================================
-   FOTOS - TARJETAS
-   ============================================ */
-
-.ayuda-fotos {
-  color: #888;
-  font-size: 0.8rem;
-  margin: 4px 0 12px;
-}
-
+/* --- 17.12 Tarjeta de foto --- */
 .foto-item {
   margin-bottom: 16px;
 }
@@ -2054,6 +2048,7 @@
   gap: 8px;
 }
 
+/* --- 17.13 Botón destacar foto (estrella) --- */
 .btn-destacar-foto {
   background: none;
   border: none;
@@ -2062,14 +2057,15 @@
   padding: 4px 8px;
   border-radius: 6px;
   transition: all 0.2s ease;
-  opacity: 0.4;
+  opacity: 0.4; /* Semi-transparente por defecto */
 }
 
 .btn-destacar-foto.destacada {
-  opacity: 1;
-  background: #fff3cd;
+  opacity: 1; /* Totalmente visible cuando está destacada */
+  background: #fff3cd; /* Fondo amarillo claro */
 }
 
+/* --- 17.14 Botón eliminar foto --- */
 .btn-eliminar-foto {
   background: none;
   border: none;
@@ -2086,6 +2082,7 @@
   transform: scale(1.1);
 }
 
+/* --- 17.15 Grid de campos de la foto --- */
 .foto-fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2096,6 +2093,7 @@
   grid-column: 1 / -1;
 }
 
+/* --- 17.16 Botón agregar foto --- */
 .btn-agregar-foto {
   background: #f0ebe5;
   border: 2px dashed #c9a87c;
@@ -2116,10 +2114,7 @@
   transform: translateY(-1px);
 }
 
-/* ============================================
-   TIP
-   ============================================ */
-
+/* --- 17.17 Tip de galería --- */
 .galeria-tip {
   margin-top: 20px;
   padding: 14px 18px;
@@ -2143,27 +2138,20 @@
   line-height: 1.6;
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
+/* --- 17.18 Responsive de galería --- */
 @media (max-width: 768px) {
   .estilos-galeria-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-
   .efectos-galeria-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .controles-grid {
     grid-template-columns: 1fr;
   }
-
   .foto-fields {
     grid-template-columns: 1fr;
   }
-
   .foto-card {
     padding: 12px;
   }
@@ -2173,41 +2161,32 @@
   .estilos-galeria-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .estilo-galeria-option {
     padding: 10px 6px;
   }
-
   .estilo-galeria-icon {
     font-size: 1.6rem;
   }
-
   .estilo-galeria-nombre {
     font-size: 0.7rem;
   }
-
   .efectos-galeria-grid {
     grid-template-columns: 1fr 1fr;
   }
-
   .efecto-galeria-option {
     padding: 10px 6px;
   }
-
   .efecto-galeria-icon {
     font-size: 1.6rem;
   }
-
   .efecto-galeria-nombre {
     font-size: 0.7rem;
   }
-
   .velocidad-control {
-    flex-direction: column;
+    flex-direction: column; /* Apila slider y valor en móvil */
     align-items: stretch;
     gap: 8px;
   }
-
   .velocidad-valor {
     align-self: center;
     min-width: 45px;

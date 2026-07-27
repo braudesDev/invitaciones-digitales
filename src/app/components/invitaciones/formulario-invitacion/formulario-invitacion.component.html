@@ -1,22 +1,38 @@
+<!-- ============================================================
+     FORMULARIO DE CREACIÓN/EDICIÓN DE INVITACIONES
+     ============================================================ -->
 <div class="formulario-container">
+  <!-- ============================================================
+       TÍTULO DINÁMICO
+       - Muestra "Editar invitación" si existe un ID
+       - Muestra "Crear nueva invitación" si es nuevo
+       ============================================================ -->
   <h2 class="title">
     {{ invitacionId ? "✏️ Editar invitación" : "✨ Crear nueva invitación" }}
   </h2>
 
-  <!-- TABS (3) -->
+  <!-- ============================================================
+       TABS DE NAVEGACIÓN (3 pestañas)
+       - Básico: Información principal del evento
+       - Ceremonia: Detalles de ceremonia y recepción
+       - Extras: Secciones adicionales (galería, regalos, etc.)
+       ============================================================ -->
   <div class="tabs">
+    <!-- Tab 1: Básico -->
     <button
       [class.active]="tabActivo === 'basico'"
       (click)="tabActivo = 'basico'"
     >
       📋 Básico
     </button>
+    <!-- Tab 2: Ceremonia -->
     <button
       [class.active]="tabActivo === 'ceremonia'"
       (click)="tabActivo = 'ceremonia'"
     >
       💒 Ceremonia
     </button>
+    <!-- Tab 3: Extras -->
     <button
       [class.active]="tabActivo === 'extras'"
       (click)="tabActivo = 'extras'"
@@ -25,18 +41,35 @@
     </button>
   </div>
 
+  <!-- ============================================================
+       FORMULARIO PRINCIPAL
+       - ngSubmit: Dispara guardarInvitacion() al enviar
+       - #formInvitacion: Referencia para validación
+       ============================================================ -->
   <form (ngSubmit)="guardarInvitacion()" #formInvitacion="ngForm">
-    <!-- ==================== TAB 1: BÁSICO ==================== -->
+    <!-- ==========================================================
+         TAB 1: BÁSICO
+         - Información principal del evento
+         - Paletas de colores premium
+         - Personalización de colores y fuentes
+         ========================================================== -->
     @if (tabActivo === "basico") {
       <div class="tab-content">
         <div class="form-grid">
-          <!-- ⬇️⬇️⬇️ NUEVA SECCIÓN DE IMAGEN PRINCIPAL ⬇️⬇️⬇️ -->
+          <!-- ----------------------------------------------------
+               IMAGEN PRINCIPAL (HERO IMAGE)
+               - Subida de archivos (PNG, JPG, WEBP máx 5MB)
+               - O pegar URL directamente
+               - Vista previa con opción de cambiar/eliminar
+               ---------------------------------------------------- -->
           <div class="campo full-width">
             <label>🖼️ Imagen principal</label>
-            <!-- Botón para subir imagen -->
+
+            <!-- Área de subida de archivos -->
             <div class="upload-area">
               <label class="btn-upload" [class.cargando]="imagenSubiendo">
                 📁 {{ imagenSubiendo ? "Subiendo..." : "Seleccionar imagen" }}
+                <!-- Input oculto para seleccionar archivo -->
                 <input
                   type="file"
                   (change)="subirImagen($event)"
@@ -46,7 +79,8 @@
               </label>
               <span class="upload-info">PNG, JPG, WEBP (máx. 5MB)</span>
             </div>
-            <!-- O pegar URL -->
+
+            <!-- Campo para pegar URL directamente -->
             <div class="url-input">
               <input
                 type="text"
@@ -55,6 +89,7 @@
                 [ngModelOptions]="{ standalone: true }"
                 placeholder="O pega una URL aquí"
               />
+              <!-- Botón para limpiar la URL -->
               @if (nuevaInvitacion.heroImage) {
                 <button
                   class="btn-limpiar-url"
@@ -65,7 +100,8 @@
                 </button>
               }
             </div>
-            <!-- Vista previa -->
+
+            <!-- Vista previa de la imagen -->
             @if (nuevaInvitacion.heroImage) {
               <div class="preview-img">
                 <img [src]="nuevaInvitacion.heroImage" alt="Preview" />
@@ -79,7 +115,15 @@
               </div>
             }
           </div>
-          <!-- ⬆️⬆️⬆️ FIN NUEVA SECCIÓN ⬆️⬆️⬆️ -->
+
+          <!-- ----------------------------------------------------
+               CAMPOS BÁSICOS DEL EVENTO
+               - name: Nombre del evento (requerido)
+               - tipo: Tipo de evento (boda, XV, cumpleaños)
+               - nombres: Nombres del festejado(s) (requerido)
+               - fecha: Fecha y hora del evento (requerido)
+               - lugar: Ubicación del evento (requerido)
+               ---------------------------------------------------- -->
           <div class="campo">
             <label>📌 Nombre del evento *</label>
             <input
@@ -89,6 +133,7 @@
               required
             />
           </div>
+
           <div class="campo">
             <label>🎭 Tipo de evento *</label>
             <select [(ngModel)]="nuevaInvitacion.tipo" name="tipo" required>
@@ -97,6 +142,7 @@
               <option value="cumpleaños">🎂 Cumpleaños</option>
             </select>
           </div>
+
           <div class="campo">
             <label>👰 Nombres del festejado(s) *</label>
             <input
@@ -106,6 +152,7 @@
               required
             />
           </div>
+
           <div class="campo">
             <label>📅 Fecha y hora *</label>
             <input
@@ -115,6 +162,7 @@
               required
             />
           </div>
+
           <div class="campo full-width">
             <label>📍 Lugar *</label>
             <input
@@ -124,11 +172,18 @@
               required
             />
           </div>
-          <!-- PALETAS PREMIUM (6 opciones) -->
+
+          <!-- ----------------------------------------------------
+               PALETAS DE COLORES PREMIUM (6 opciones)
+               - Haz clic en una paleta para aplicar colores
+                 automáticamente
+               - Verde Cemento + Oro, Champagne, Rose Gold,
+                 Lavanda Real, Azul Royal, Black Luxury
+               ---------------------------------------------------- -->
           <div class="campo full-width">
             <label>🎨 Paletas de colores premium</label>
             <div class="paletas">
-              <!-- Verde Cemento + Oro -->
+              <!-- Paleta 1: Verde Cemento + Oro -->
               <div
                 class="paleta"
                 [class.selected]="paletaSeleccionada === 'premium'"
@@ -138,7 +193,7 @@
                 <span style="background: #b08a4a"></span>
                 <span>Verde Cemento</span>
               </div>
-              <!-- Champagne + Dorado -->
+              <!-- Paleta 2: Champagne + Dorado -->
               <div
                 class="paleta"
                 [class.selected]="paletaSeleccionada === 'champagne'"
@@ -148,7 +203,7 @@
                 <span style="background: #b8934e"></span>
                 <span>Champagne</span>
               </div>
-              <!-- Rose Gold -->
+              <!-- Paleta 3: Rose Gold -->
               <div
                 class="paleta"
                 [class.selected]="paletaSeleccionada === 'rosegold'"
@@ -158,7 +213,7 @@
                 <span style="background: #f3d9d9"></span>
                 <span>Rose Gold</span>
               </div>
-              <!-- Lavanda Real -->
+              <!-- Paleta 4: Lavanda Real -->
               <div
                 class="paleta"
                 [class.selected]="paletaSeleccionada === 'lavender'"
@@ -168,7 +223,7 @@
                 <span style="background: #c8b6ff"></span>
                 <span>Lavanda Real</span>
               </div>
-              <!-- Azul Royal -->
+              <!-- Paleta 5: Azul Royal -->
               <div
                 class="paleta"
                 [class.selected]="paletaSeleccionada === 'royal'"
@@ -178,7 +233,7 @@
                 <span style="background: #d4af37"></span>
                 <span>Azul Royal</span>
               </div>
-              <!-- Black Luxury -->
+              <!-- Paleta 6: Black Luxury -->
               <div
                 class="paleta"
                 [class.selected]="paletaSeleccionada === 'black'"
@@ -193,14 +248,25 @@
               💡 Haz clic en una paleta o elige tus propios colores abajo
             </p>
           </div>
+
+          <!-- ----------------------------------------------------
+               PERSONALIZACIÓN DE COLORES
+               - Color principal: Color dominante de la invitación
+               - Color secundario: Color de complemento
+               - Color de acento: Color para detalles y acentos
+               - Color de texto: Color para los textos
+               - Selector de color y campo de texto sincronizados
+               ---------------------------------------------------- -->
           <div class="campo">
             <label>🎨 Color principal</label>
             <div class="color-input">
+              <!-- Selector de color nativo (sincronizado) -->
               <input
                 type="color"
                 [(ngModel)]="nuevaInvitacion.primaryColor"
                 name="primaryColor"
               />
+              <!-- Campo de texto para escribir el hex -->
               <input
                 type="text"
                 [(ngModel)]="nuevaInvitacion.primaryColor"
@@ -208,6 +274,7 @@
               />
             </div>
           </div>
+
           <div class="campo">
             <label>🎨 Color secundario</label>
             <div class="color-input">
@@ -223,6 +290,7 @@
               />
             </div>
           </div>
+
           <div class="campo">
             <label>🎨 Color de acento</label>
             <div class="color-input">
@@ -238,6 +306,7 @@
               />
             </div>
           </div>
+
           <div class="campo">
             <label>📝 Color de texto</label>
             <div class="color-input">
@@ -253,6 +322,14 @@
               />
             </div>
           </div>
+
+          <!-- ----------------------------------------------------
+               FUENTE DEL TEXTO
+               - Playfair Display: Clásica y elegante
+               - Great Vibes: Romántica y cursiva
+               - Dancing Script: Fluida y dinámica
+               - Poppins: Moderna y limpia
+               ---------------------------------------------------- -->
           <div class="campo full-width">
             <label>✍️ Fuente del texto</label>
             <select [(ngModel)]="nuevaInvitacion.fontFamily" name="fontFamily">
@@ -272,10 +349,20 @@
       </div>
     }
 
-    <!-- ==================== TAB 2: CEREMONIA ==================== -->
+    <!-- ==========================================================
+         TAB 2: CEREMONIA
+         - Frase principal y mensaje
+         - Historia (con acordeón)
+         - Detalles de ceremonia y recepción
+         ========================================================== -->
     @if (tabActivo === "ceremonia") {
       <div class="tab-content">
         <div class="form-grid">
+          <!-- ----------------------------------------------------
+               FRASE Y MENSAJE PRINCIPAL
+               - frasePrincipal: Frase destacada del evento
+               - mensajePrincipal: Texto descriptivo del evento
+               ---------------------------------------------------- -->
           <div class="campo full-width">
             <label>💕 Frase principal</label>
             <input
@@ -285,6 +372,7 @@
               placeholder="Ej: ¡Nos casamos!"
             />
           </div>
+
           <div class="campo full-width">
             <label>📖 Mensaje principal</label>
             <textarea
@@ -294,8 +382,17 @@
               placeholder="Describe tu evento..."
             ></textarea>
           </div>
-          <!-- Acordeón: Historia -->
+
+          <!-- ----------------------------------------------------
+               ACORDEÓN: HISTORIA
+               - Sección plegable que contiene:
+                 * Checkbox para mostrar/ocultar sección
+                 * Estilo de visualización (3 opciones)
+                 * Título, descripción
+                 * Lista de momentos (fecha + descripción + imagen)
+               ---------------------------------------------------- -->
           <div class="acordeon full-width">
+            <!-- Header del acordeón (clic para desplegar/plegar) -->
             <div
               class="acordeon-header"
               (click)="acordeonHistoria = !acordeonHistoria"
@@ -303,8 +400,10 @@
               <span>📖 Historia</span>
               <span class="icono">{{ acordeonHistoria ? "▲" : "▼" }}</span>
             </div>
+
+            <!-- Cuerpo del acordeón (se muestra cuando .abierto) -->
             <div class="acordeon-body" [class.abierto]="acordeonHistoria">
-              <!-- Mostrar sección -->
+              <!-- Checkbox: Mostrar sección en la invitación -->
               <div class="campo">
                 <label>
                   <input
@@ -315,7 +414,8 @@
                   Mostrar sección en la invitación
                 </label>
               </div>
-              <!-- Estilo de la sección -->
+
+              <!-- Estilo de la sección (3 opciones visuales) -->
               <div class="campo">
                 <label>🎨 Estilo de la sección</label>
                 <div class="estilos-historia-grid">
@@ -337,7 +437,8 @@
                   }
                 </div>
               </div>
-              <!-- Título -->
+
+              <!-- Título de la sección con contador de caracteres -->
               <div class="subcampo">
                 <label>Título de la sección</label>
                 <div class="input-with-counter">
@@ -351,7 +452,8 @@
                   <span class="contador">{{ historiaTitulo.length }}/30</span>
                 </div>
               </div>
-              <!-- Descripción -->
+
+              <!-- Descripción de la sección con contador -->
               <div class="subcampo">
                 <label>Descripción (opcional)</label>
                 <div class="input-with-counter">
@@ -367,12 +469,15 @@
                   >
                 </div>
               </div>
-              <!-- Momentos -->
+
+              <!-- Momentos: Lista dinámica de eventos importantes -->
               <div class="campo">
                 <label>📅 Momentos</label>
                 <p class="ayuda-momentos">
                   💡 Agrega los momentos más importantes de su historia
                 </p>
+
+                <!-- Iterar sobre la lista de momentos -->
                 @for (
                   momento of historiaMomentos;
                   track momento;
@@ -380,6 +485,7 @@
                 ) {
                   <div class="momento-item">
                     <div class="momento-card">
+                      <!-- Header del momento con número y botón eliminar -->
                       <div class="momento-header">
                         <span class="momento-numero">#{{ i + 1 }}</span>
                         <button
@@ -390,6 +496,7 @@
                           ❌
                         </button>
                       </div>
+                      <!-- Campos del momento -->
                       <div class="momento-fields">
                         <div class="field-group">
                           <label>Fecha</label>
@@ -411,6 +518,7 @@
                           ></textarea>
                         </div>
                         <div class="field-group full-width">
+                          <!-- Componente de subida de imagen -->
                           <app-image-upload
                             label="📸 Imagen (opcional)"
                             [imageUrl]="momento.imagen || ''"
@@ -422,6 +530,7 @@
                     </div>
                   </div>
                 }
+                <!-- Botón para agregar nuevo momento -->
                 <button
                   type="button"
                   class="btn-agregar-momento"
@@ -432,6 +541,13 @@
               </div>
             </div>
           </div>
+
+          <!-- ----------------------------------------------------
+               SUBSECCIÓN: CEREMONIA
+               - Lugar, dirección, hora
+               - URL de Google Maps (opcional)
+               - Imagen del templo (opcional)
+               ---------------------------------------------------- -->
           <div class="subseccion full-width">
             <h4>⛪ Ceremonia</h4>
             <div class="subseccion-grid">
@@ -452,14 +568,14 @@
                 [(ngModel)]="nuevaInvitacion.ceremonia.hora"
                 [ngModelOptions]="{ standalone: true }"
               />
-              <!-- 🆕 Campo para URL de Maps -->
+              <!-- URL de Maps para ubicación interactiva -->
               <input
                 type="text"
                 [(ngModel)]="nuevaInvitacion.ceremonia.mapaUrl"
                 [ngModelOptions]="{ standalone: true }"
                 placeholder="URL de Google Maps (opcional)"
               />
-              <!-- 🆕 Campo para imagen del templo -->
+              <!-- Imagen del templo/iglesia -->
               <input
                 type="text"
                 [(ngModel)]="nuevaInvitacion.ceremonia.imagenTemplo"
@@ -468,6 +584,14 @@
               />
             </div>
           </div>
+
+          <!-- ----------------------------------------------------
+               SUBSECCIÓN: RECEPCIÓN
+               - Lugar, dirección, hora
+               - URL de Google Maps (opcional)
+               - Imagen del lugar (opcional)
+               - Descripción del lugar (opcional)
+               ---------------------------------------------------- -->
           <div class="subseccion full-width">
             <h4>🎉 Recepción</h4>
             <div class="subseccion-grid">
@@ -488,21 +612,21 @@
                 [(ngModel)]="nuevaInvitacion.recepcion.hora"
                 [ngModelOptions]="{ standalone: true }"
               />
-              <!-- URL de Maps -->
+              <!-- URL de Maps para ubicación interactiva -->
               <input
                 type="text"
                 [(ngModel)]="nuevaInvitacion.recepcion.mapaUrl"
                 [ngModelOptions]="{ standalone: true }"
                 placeholder="URL de Google Maps (opcional)"
               />
-              <!-- Imagen -->
+              <!-- Imagen del lugar de recepción -->
               <input
                 type="text"
                 [(ngModel)]="nuevaInvitacion.recepcion.imagen"
                 [ngModelOptions]="{ standalone: true }"
                 placeholder="URL de imagen (opcional)"
               />
-              <!-- Descripción -->
+              <!-- Descripción adicional del lugar -->
               <input
                 type="text"
                 [(ngModel)]="nuevaInvitacion.recepcion.descripcion"
@@ -515,11 +639,29 @@
       </div>
     }
 
-    <!-- ==================== TAB 3: EXTRAS ==================== -->
+    <!-- ==========================================================
+         TAB 3: EXTRAS
+         - Secciones adicionales todas dentro de acordeones:
+           * Padres
+           * Padrinos
+           * Código de Vestimenta
+           * Hospedaje
+           * Galería (con estilos, efectos, fotos)
+           * Regalos
+           * Confirmación
+           * Consideraciones
+           * Hashtag
+         ========================================================== -->
     @if (tabActivo === "extras") {
       <div class="tab-content">
-        <!-- Acordeón: Padres -->
+        <!-- ----------------------------------------------------
+             ACORDEÓN: PADRES
+             - Nombres de novia, novio
+             - Padres de la novia (madre, padre)
+             - Padres del novio (madre, padre)
+             ---------------------------------------------------- -->
         <div class="acordeon">
+          <!-- Header: clic para expandir/contraer -->
           <div
             class="acordeon-header"
             (click)="acordeonAbierto = !acordeonAbierto"
@@ -527,11 +669,11 @@
             <span>👪 Padres</span>
             <span class="icono">{{ acordeonAbierto ? "▲" : "▼" }}</span>
           </div>
+
+          <!-- Cuerpo del acordeón -->
           <div class="acordeon-body" [class.abierto]="acordeonAbierto">
             <div class="form-grid">
-              <!-- ============================================ -->
-              <!-- NOVIA -->
-              <!-- ============================================ -->
+              <!-- Novia y Novio -->
               <div class="campo">
                 <label>Nombre de la Novia</label>
                 <input
@@ -550,9 +692,7 @@
                   placeholder="Nombre del novio"
                 />
               </div>
-              <!-- ============================================ -->
-              <!-- PADRES DE LA NOVIA -->
-              <!-- ============================================ -->
+              <!-- Padres de la Novia -->
               <div class="campo">
                 <label>Madre de la Novia</label>
                 <input
@@ -571,9 +711,7 @@
                   placeholder="Padre de la novia"
                 />
               </div>
-              <!-- ============================================ -->
-              <!-- PADRES DEL NOVIO -->
-              <!-- ============================================ -->
+              <!-- Padres del Novio -->
               <div class="campo">
                 <label>Madre del Novio</label>
                 <input
@@ -595,7 +733,14 @@
             </div>
           </div>
         </div>
-        <!-- Acordeón: Padrinos -->
+
+        <!-- ----------------------------------------------------
+             ACORDEÓN: PADRINOS
+             - Lista dinámica de padrinos
+             - Cada padrino tiene: nombre + rol
+             - Roles disponibles con iconos y descripciones
+             - Vista previa agrupada por rol
+             ---------------------------------------------------- -->
         <div class="acordeon">
           <div
             class="acordeon-header"
@@ -604,8 +749,9 @@
             <span>👑 Padrinos</span>
             <span class="icono">{{ acordeonPadrinos ? "▲" : "▼" }}</span>
           </div>
+
           <div class="acordeon-body" [class.abierto]="acordeonPadrinos">
-            <!-- 📋 Vista previa agrupada -->
+            <!-- Vista previa: Muestra padrinos agrupados por rol -->
             @if (nuevaInvitacion.padrinos.length > 0) {
               <div class="padrinos-preview">
                 @for (grupo of getPadrinosAgrupados(); track grupo) {
@@ -620,7 +766,8 @@
                 }
               </div>
             }
-            <!-- Formulario de padrinos -->
+
+            <!-- Formulario dinámico para cada padrino -->
             @for (
               padrino of nuevaInvitacion.padrinos;
               track trackByIndex(i, padrino);
@@ -628,6 +775,7 @@
             ) {
               <div class="padrino-item">
                 <div class="padrino-card">
+                  <!-- Header: número y botón eliminar -->
                   <div class="padrino-header">
                     <span class="padrino-numero">#{{ i + 1 }}</span>
                     <button
@@ -638,6 +786,8 @@
                       ❌
                     </button>
                   </div>
+
+                  <!-- Campos del padrino -->
                   <div class="padrino-fields">
                     <!-- Nombre -->
                     <div class="field-group">
@@ -652,10 +802,11 @@
                         required
                       />
                     </div>
-                    <!-- Rol -->
+                    <!-- Rol: Selector con icono dinámico -->
                     <div class="field-group">
                       <label>Rol</label>
                       <div class="rol-select-container">
+                        <!-- Icono del rol seleccionado -->
                         @if (padrino.rol && getRolIcon(padrino.rol)) {
                           <img
                             [src]="getRolIcon(padrino.rol)"
@@ -663,6 +814,7 @@
                             class="rol-icon-select"
                           />
                         }
+                        <!-- Selector de roles -->
                         <select
                           [(ngModel)]="padrino.rol"
                           [ngModelOptions]="{ standalone: true }"
@@ -677,6 +829,7 @@
                           }
                         </select>
                       </div>
+                      <!-- Descripción del rol seleccionado -->
                       @if (padrino.rol) {
                         <small class="help-text">
                           {{ getRolDescripcion(padrino.rol) }}
@@ -687,6 +840,8 @@
                 </div>
               </div>
             }
+
+            <!-- Botón para agregar nuevo padrino -->
             <button
               type="button"
               class="btn-agregar"
@@ -696,7 +851,15 @@
             </button>
           </div>
         </div>
-        <!-- Acordeón: Código de Vestimenta -->
+
+        <!-- ----------------------------------------------------
+             ACORDEÓN: CÓDIGO DE VESTIMENTA
+             - 4 pasos:
+               1. Seleccionar estilo (con imágenes)
+               2. Colores sugeridos (máx 4)
+               3. Colores reservados (NO usar)
+               4. Personalizar mensaje (título, descripción, etc.)
+             ---------------------------------------------------- -->
         <div class="acordeon">
           <div
             class="acordeon-header"
@@ -705,8 +868,9 @@
             <span>👗 Código de Vestimenta</span>
             <span class="icono">{{ acordeonDressCode ? "▲" : "▼" }}</span>
           </div>
+
           <div class="acordeon-body" [class.abierto]="acordeonDressCode">
-            <!-- 1. SELECCIONA EL ESTILO -->
+            <!-- PASO 1: Estilo de vestimenta -->
             <div class="campo">
               <label>🎯 1. SELECCIONA EL ESTILO</label>
               <div class="estilos-grid">
@@ -718,7 +882,7 @@
                     "
                     (click)="nuevaInvitacion.dressCode.estilo = estilo.valor"
                   >
-                    <!-- ✅ IMAGEN en lugar de emoji -->
+                    <!-- Imagen del estilo en lugar de emoji -->
                     <div class="estilo-icon-wrapper">
                       <img
                         [src]="estilo.icon"
@@ -728,6 +892,7 @@
                       />
                     </div>
                     <span class="estilo-nombre">{{ estilo.nombre }}</span>
+                    <!-- Muestra descripción cuando está seleccionado -->
                     @if (nuevaInvitacion.dressCode.estilo === estilo.valor) {
                       <span class="estilo-descripcion">
                         {{ estilo.descripcion }}
@@ -737,7 +902,8 @@
                 }
               </div>
             </div>
-            <!-- 2. COLORES SUGERIDOS -->
+
+            <!-- PASO 2: Colores sugeridos (máx 4) -->
             <div class="campo">
               <label>🎨 2. COLORES SUGERIDOS</label>
               <p class="ayuda-colores">
@@ -758,7 +924,7 @@
                   </div>
                 }
               </div>
-              <!-- ✅ CON ?. PARA COLORS (PUEDE SER UNDEFINED) -->
+              <!-- Muestra los colores seleccionados como chips -->
               @if (nuevaInvitacion.dressCode.colores.length > 0) {
                 <div class="colores-seleccionados">
                   <span class="colores-label-seleccionados"
@@ -782,7 +948,8 @@
                 </div>
               }
             </div>
-            <!-- 3. COLORES RESERVADOS -->
+
+            <!-- PASO 3: Colores reservados (NO usar) -->
             <div class="campo">
               <label>🚫 3. COLORES RESERVADOS (opcional)</label>
               <p class="ayuda-colores">
@@ -803,7 +970,7 @@
                   </div>
                 }
               </div>
-              <!-- ✅ CON ?. PARA COLORES RESERVADOS (PUEDE SER UNDEFINED) -->
+              <!-- Muestra colores reservados como chips -->
               @if (nuevaInvitacion.dressCode.coloresReservados.length > 0) {
                 <div class="colores-seleccionados">
                   <span class="colores-label-seleccionados"
@@ -830,10 +997,12 @@
                 </div>
               }
             </div>
-            <!-- 4. PERSONALIZA TU MENSAJE -->
+
+            <!-- PASO 4: Personalizar mensaje -->
             <div class="campo">
               <label>✏️ 4. PERSONALIZA TU MENSAJE</label>
-              <!-- Título (SIEMPRE ES STRING) ✅ SIN ?. -->
+
+              <!-- Título de la sección -->
               <div class="subcampo">
                 <label>Título de la sección</label>
                 <div class="input-with-counter">
@@ -849,7 +1018,8 @@
                   >
                 </div>
               </div>
-              <!-- Descripción (SIEMPRE ES STRING) ✅ SIN ?. -->
+
+              <!-- Descripción de la sección -->
               <div class="subcampo">
                 <label>Descripción (opcional)</label>
                 <div class="input-with-counter">
@@ -867,7 +1037,8 @@
                   >
                 </div>
               </div>
-              <!-- Sugerencia (SIEMPRE ES STRING) ✅ SIN ?. -->
+
+              <!-- Texto de sugerencia -->
               <div class="subcampo">
                 <label>Texto de sugerencia</label>
                 <div class="input-with-counter">
@@ -885,7 +1056,8 @@
                   >
                 </div>
               </div>
-              <!-- Nota adicional (SIEMPRE ES STRING) ✅ SIN ?. -->
+
+              <!-- Nota adicional -->
               <div class="subcampo">
                 <label>Nota adicional (opcional)</label>
                 <div class="input-with-counter">
@@ -904,6 +1076,7 @@
                 </div>
               </div>
             </div>
+
             <!-- Tip para el anfitrión -->
             <div class="dresscode-tip">
               <span class="tip-icon">💡</span>
@@ -915,7 +1088,15 @@
             </div>
           </div>
         </div>
-        <!-- Acordeón: Hospedaje -->
+
+        <!-- ----------------------------------------------------
+             ACORDEÓN: HOSPEDAJE
+             - Mostrar/ocultar sección
+             - Estilo de la sección (3 opciones)
+             - Lista de alojamientos Airbnb (título, ubicación,
+               distancia, capacidad, enlace, imagen)
+             - Personalización de mensajes
+             ---------------------------------------------------- -->
         <div class="acordeon">
           <div
             class="acordeon-header"
@@ -924,8 +1105,9 @@
             <span>🏠 Hospedaje</span>
             <span class="icono">{{ acordeonHospedaje ? "▲" : "▼" }}</span>
           </div>
+
           <div class="acordeon-body" [class.abierto]="acordeonHospedaje">
-            <!-- Mostrar sección -->
+            <!-- Checkbox: Mostrar sección en la invitación -->
             <div class="campo">
               <label>
                 <input
@@ -936,7 +1118,8 @@
                 Mostrar sección en la invitación
               </label>
             </div>
-            <!-- ESTILO DE LA SECCIÓN -->
+
+            <!-- Estilo de la sección (3 opciones visuales) -->
             <div class="campo">
               <label>🎨 ESTILO DE LA SECCIÓN</label>
               <div class="estilos-hospedaje-grid">
@@ -956,10 +1139,12 @@
                 }
               </div>
             </div>
+
             <!-- OPCIONES DE AIRBNB -->
             <div class="campo">
               <label>🏠 OPCIONES DE AIRBNB</label>
-              <!-- Título -->
+
+              <!-- Título de la sección -->
               <div class="subcampo">
                 <label>Título de la sección</label>
                 <div class="input-with-counter">
@@ -973,7 +1158,8 @@
                   <span class="contador">{{ hospedajeTitulo.length }}/30</span>
                 </div>
               </div>
-              <!-- Descripción -->
+
+              <!-- Descripción de la sección -->
               <div class="subcampo">
                 <label>Descripción</label>
                 <div class="input-with-counter">
@@ -989,7 +1175,8 @@
                   >
                 </div>
               </div>
-              <!-- Alojamientos -->
+
+              <!-- Lista dinámica de alojamientos -->
               <div class="subcampo">
                 <label>Agregar alojamiento de Airbnb</label>
                 @for (
@@ -999,6 +1186,7 @@
                 ) {
                   <div class="alojamiento-item">
                     <div class="alojamiento-card">
+                      <!-- Header: número y botón eliminar -->
                       <div class="alojamiento-header">
                         <span class="alojamiento-numero">#{{ i + 1 }}</span>
                         <button
@@ -1009,8 +1197,8 @@
                           ❌
                         </button>
                       </div>
+                      <!-- Campos del alojamiento -->
                       <div class="alojamiento-fields">
-                        <!-- Título del alojamiento -->
                         <div class="field-group full-width">
                           <label>Título del alojamiento</label>
                           <input
@@ -1021,7 +1209,6 @@
                             class="form-control"
                           />
                         </div>
-                        <!-- Ubicación -->
                         <div class="field-group">
                           <label>Ubicación</label>
                           <input
@@ -1032,7 +1219,6 @@
                             class="form-control"
                           />
                         </div>
-                        <!-- Distancia -->
                         <div class="field-group">
                           <label>Distancia (opcional)</label>
                           <input
@@ -1043,7 +1229,6 @@
                             class="form-control"
                           />
                         </div>
-                        <!-- Capacidad -->
                         <div class="field-group">
                           <label>Capacidad (opcional)</label>
                           <input
@@ -1054,7 +1239,6 @@
                             class="form-control"
                           />
                         </div>
-                        <!-- Enlace de Airbnb -->
                         <div class="field-group full-width">
                           <label>Enlace de Airbnb</label>
                           <input
@@ -1065,8 +1249,8 @@
                             class="form-control"
                           />
                         </div>
-                        <!-- Imagen -->
                         <div class="field-group full-width">
+                          <!-- Componente de subida de imagen -->
                           <app-image-upload
                             label="📸 Imagen (opcional)"
                             [imageUrl]="alojamiento.imagen || ''"
@@ -1078,6 +1262,7 @@
                     </div>
                   </div>
                 }
+                <!-- Botón para agregar alojamiento -->
                 <button
                   type="button"
                   class="btn-agregar-alojamiento"
@@ -1087,7 +1272,8 @@
                 </button>
               </div>
             </div>
-            <!-- PERSONALIZA TU MENSAJE -->
+
+            <!-- Personalización de mensajes -->
             <div class="campo">
               <label>✏️ PERSONALIZA TU MENSAJE</label>
               <div class="subcampo">
@@ -1121,7 +1307,8 @@
                 </div>
               </div>
             </div>
-            <!-- TIP -->
+
+            <!-- Tip para el anfitrión -->
             <div class="hospedaje-tip">
               <span class="tip-icon">💡</span>
               <span class="tip-text">
@@ -1132,7 +1319,18 @@
           </div>
         </div>
 
-        <!-- Acordeón: Galería -->
+        <!-- ----------------------------------------------------
+             ACORDEÓN: GALERÍA
+             - Mostrar/ocultar sección
+             - Estilo de visualización (4 opciones: Grid, Carrusel,
+               Presentación, Masonry)
+             - Efecto al ver foto en grande (3 opciones: Suave,
+               Zoom, Deslizar)
+             - Configuración del carrusel (velocidad y controles)
+             - Personalización (título, subtítulo, descripción)
+             - Lista dinámica de fotos (imagen, título, descripción,
+               destacada)
+             ---------------------------------------------------- -->
         <div class="acordeon">
           <div
             class="acordeon-header"
@@ -1141,8 +1339,9 @@
             <span>📸 Galería</span>
             <span class="icono">{{ acordeonGaleria ? "▲" : "▼" }}</span>
           </div>
+
           <div class="acordeon-body" [class.abierto]="acordeonGaleria">
-            <!-- Mostrar sección -->
+            <!-- Checkbox: Mostrar sección en la invitación -->
             <div class="campo">
               <label>
                 <input
@@ -1154,129 +1353,222 @@
               </label>
             </div>
 
-            <!-- ESTILO DE LA SECCIÓN -->
+            <!-- ESTILO DE VISUALIZACIÓN (4 opciones) -->
             <div class="campo">
-              <label>🎨 ESTILO DE LA SECCIÓN</label>
+              <label>🎨 ¿Cómo quieres que se vea la galería?</label>
               <div class="estilos-galeria-grid">
-                @for (estilo of estilosGaleria; track estilo) {
-                  <div
-                    class="estilo-galeria-option"
-                    [class.selected]="
-                      nuevaInvitacion.galeria?.estilo === estilo.valor
-                    "
-                    (click)="seleccionarEstiloGaleria(estilo.valor)"
-                  >
-                    <span class="estilo-galeria-icon">{{ estilo.icon }}</span>
-                    <span class="estilo-galeria-nombre">{{
-                      estilo.nombre
-                    }}</span>
-                  </div>
-                }
-              </div>
-            </div>
-
-            <!-- EFECTO DE TRANSICIÓN -->
-            <div class="campo">
-              <label>🎬 EFECTO DE TRANSICIÓN</label>
-              <div class="efectos-galeria-grid">
-                @for (efecto of efectosGaleria; track efecto) {
-                  <div
-                    class="efecto-galeria-option"
-                    [class.selected]="
-                      nuevaInvitacion.galeria?.efecto === efecto.valor
-                    "
-                    (click)="seleccionarEfectoGaleria(efecto.valor)"
-                  >
-                    <span class="efecto-galeria-icon">{{ efecto.icon }}</span>
-                    <span class="efecto-galeria-nombre">{{
-                      efecto.nombre
-                    }}</span>
-                  </div>
-                }
-              </div>
-            </div>
-
-            <!-- Velocidad -->
-            <div class="campo">
-              <label>⏱️ VELOCIDAD DE TRANSICIÓN</label>
-              <div class="velocidad-control">
-                <input
-                  type="range"
-                  [(ngModel)]="galeriaVelocidad"
-                  [ngModelOptions]="{ standalone: true }"
-                  min="500"
-                  max="3000"
-                  step="100"
-                  class="velocidad-slider"
-                />
-                <span class="velocidad-valor">{{ galeriaVelocidad }}ms</span>
-              </div>
-            </div>
-
-            <!-- Controles -->
-            <div class="campo">
-              <label>🎮 CONTROLES</label>
-              <div class="controles-grid">
-                <label>
-                  <input
-                    type="checkbox"
-                    [(ngModel)]="galeriaMostrarControles"
-                    [ngModelOptions]="{ standalone: true }"
-                  />
-                  Mostrar controles (siguiente/anterior)
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    [(ngModel)]="galeriaMostrarCompartir"
-                    [ngModelOptions]="{ standalone: true }"
-                  />
-                  Mostrar botón de compartir
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    [(ngModel)]="galeriaMostrarPaginacion"
-                    [ngModelOptions]="{ standalone: true }"
-                  />
-                  Mostrar paginación (puntos)
-                </label>
-              </div>
-            </div>
-
-            <!-- Título -->
-            <div class="subcampo">
-              <label>Título de la sección</label>
-              <div class="input-with-counter">
-                <input
-                  type="text"
-                  [(ngModel)]="galeriaTitulo"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Nuestros Momentos"
-                  maxlength="30"
-                />
-                <span class="contador">{{ galeriaTitulo.length }}/30</span>
-              </div>
-            </div>
-
-            <!-- Descripción -->
-            <div class="subcampo">
-              <label>Descripción (opcional)</label>
-              <div class="input-with-counter">
-                <textarea
-                  [(ngModel)]="galeriaDescripcion"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Compartimos algunos de nuestros mejores momentos..."
-                  rows="2"
-                  maxlength="120"
-                ></textarea>
-                <span class="contador"
-                  >{{ galeriaDescripcion.length }}/120</span
+                <!-- Opción 1: Grid - Fotos en cuadrícula -->
+                <div
+                  class="estilo-galeria-option"
+                  [class.selected]="nuevaInvitacion.galeria?.estilo === 'grid'"
+                  (click)="seleccionarEstiloGaleria('grid')"
                 >
+                  <span class="estilo-galeria-icon">📐</span>
+                  <span class="estilo-galeria-nombre">Grid</span>
+                  <span class="estilo-galeria-desc"
+                    >Fotos organizadas en cuadrícula</span
+                  >
+                </div>
+
+                <!-- Opción 2: Carrusel - Deslizable horizontalmente -->
+                <div
+                  class="estilo-galeria-option"
+                  [class.selected]="
+                    nuevaInvitacion.galeria?.estilo === 'carousel'
+                  "
+                  (click)="seleccionarEstiloGaleria('carousel')"
+                >
+                  <span class="estilo-galeria-icon">🎠</span>
+                  <span class="estilo-galeria-nombre">Carrusel</span>
+                  <span class="estilo-galeria-desc"
+                    >Pasa las fotos deslizando</span
+                  >
+                </div>
+
+                <!-- Opción 3: Presentación - Autoplay con loop -->
+                <div
+                  class="estilo-galeria-option"
+                  [class.selected]="
+                    nuevaInvitacion.galeria?.estilo === 'slideshow'
+                  "
+                  (click)="seleccionarEstiloGaleria('slideshow')"
+                >
+                  <span class="estilo-galeria-icon">🎬</span>
+                  <span class="estilo-galeria-nombre">Presentación</span>
+                  <span class="estilo-galeria-desc"
+                    >Reproducción automática</span
+                  >
+                </div>
+
+                <!-- Opción 4: Masonry - Estilo Pinterest -->
+                <div
+                  class="estilo-galeria-option"
+                  [class.selected]="
+                    nuevaInvitacion.galeria?.estilo === 'masonry'
+                  "
+                  (click)="seleccionarEstiloGaleria('masonry')"
+                >
+                  <span class="estilo-galeria-icon">🧱</span>
+                  <span class="estilo-galeria-nombre">Masonry</span>
+                  <span class="estilo-galeria-desc"
+                    >Estilo Pinterest con columnas</span
+                  >
+                </div>
+              </div>
+              <small class="help-text">
+                💡 Elige el estilo que mejor se adapte a tus fotos
+              </small>
+            </div>
+
+            <!-- EFECTO AL VER FOTO EN GRANDE (3 opciones) -->
+            <div class="campo">
+              <label>🖼️ Efecto al ver las fotos en grande</label>
+              <div class="efectos-galeria-grid">
+                <!-- Efecto: Suave (fade) -->
+                <div
+                  class="efecto-galeria-option"
+                  [class.selected]="nuevaInvitacion.galeria?.efecto === 'fade'"
+                  (click)="seleccionarEfectoGaleria('fade')"
+                >
+                  <span class="efecto-galeria-icon">🌫️</span>
+                  <span class="efecto-galeria-nombre">Suave</span>
+                  <span class="efecto-galeria-desc"
+                    >Aparece con delicadeza</span
+                  >
+                </div>
+
+                <!-- Efecto: Zoom -->
+                <div
+                  class="efecto-galeria-option"
+                  [class.selected]="nuevaInvitacion.galeria?.efecto === 'zoom'"
+                  (click)="seleccionarEfectoGaleria('zoom')"
+                >
+                  <span class="efecto-galeria-icon">🔍</span>
+                  <span class="efecto-galeria-nombre">Zoom</span>
+                  <span class="efecto-galeria-desc"
+                    >La foto crece al abrirse</span
+                  >
+                </div>
+
+                <!-- Efecto: Deslizar (slide) -->
+                <div
+                  class="efecto-galeria-option"
+                  [class.selected]="nuevaInvitacion.galeria?.efecto === 'slide'"
+                  (click)="seleccionarEfectoGaleria('slide')"
+                >
+                  <span class="efecto-galeria-icon">➡️</span>
+                  <span class="efecto-galeria-nombre">Deslizar</span>
+                  <span class="efecto-galeria-desc">Entra desde un lado</span>
+                </div>
+              </div>
+              <small class="help-text">
+                💡 El efecto que se ve cuando alguien hace clic en una foto para
+                verla en grande
+              </small>
+            </div>
+
+            <!-- CONFIGURACIÓN DEL CARRUSEL (solo si está seleccionado) -->
+            @if (
+              nuevaInvitacion.galeria?.estilo === "carousel" ||
+              nuevaInvitacion.galeria?.estilo === "slideshow"
+            ) {
+              <div class="campo configuracion-carrusel">
+                <label>⚙️ Configuración del carrusel</label>
+
+                <!-- Velocidad de transición (slider) -->
+                <div class="subcampo">
+                  <label>⏱️ Velocidad de transición</label>
+                  <div class="velocidad-control">
+                    <input
+                      type="range"
+                      [(ngModel)]="galeriaVelocidad"
+                      [ngModelOptions]="{ standalone: true }"
+                      min="500"
+                      max="3000"
+                      step="100"
+                      class="velocidad-slider"
+                    />
+                    <span class="velocidad-valor"
+                      >{{ galeriaVelocidad }}ms</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Controles (checkboxes) -->
+                <div class="subcampo">
+                  <label>🎮 Controles</label>
+                  <div class="controles-grid">
+                    <label>
+                      <input
+                        type="checkbox"
+                        [(ngModel)]="galeriaMostrarControles"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      Botones siguiente/anterior
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        [(ngModel)]="galeriaMostrarPaginacion"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      Puntos de navegación
+                    </label>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- PERSONALIZACIÓN (título, subtítulo, descripción) -->
+            <div class="campo">
+              <label>📝 Personalización</label>
+
+              <div class="subcampo">
+                <label>Título de la sección</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="galeriaTitulo"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Ej: Nuestros Momentos"
+                    maxlength="30"
+                  />
+                  <span class="contador">{{ galeriaTitulo.length }}/30</span>
+                </div>
+              </div>
+
+              <div class="subcampo">
+                <label>Subtítulo (opcional)</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="galeriaSubtitulo"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Ej: Recuerdos inolvidables"
+                    maxlength="30"
+                  />
+                  <span class="contador">{{ galeriaSubtitulo.length }}/30</span>
+                </div>
+              </div>
+
+              <div class="subcampo">
+                <label>Descripción (opcional)</label>
+                <div class="input-with-counter">
+                  <textarea
+                    [(ngModel)]="galeriaDescripcion"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Compartimos algunos de nuestros mejores momentos..."
+                    rows="2"
+                    maxlength="120"
+                  ></textarea>
+                  <span class="contador"
+                    >{{ galeriaDescripcion.length }}/120</span
+                  >
+                </div>
               </div>
             </div>
 
-            <!-- Fotos -->
+            <!-- FOTOS: Lista dinámica con imagen, título y descripción -->
             <div class="campo">
               <label>📸 Fotos</label>
               <p class="ayuda-fotos">
@@ -1286,9 +1578,11 @@
               @for (foto of galeriaFotos; track foto; let i = $index) {
                 <div class="foto-item">
                   <div class="foto-card">
+                    <!-- Header: número, botón destacar, botón eliminar -->
                     <div class="foto-header">
                       <span class="foto-numero">#{{ i + 1 }}</span>
                       <div class="foto-actions">
+                        <!-- Botón destacar (estrella) -->
                         <button
                           type="button"
                           class="btn-destacar-foto"
@@ -1297,17 +1591,20 @@
                         >
                           ⭐
                         </button>
+                        <!-- Botón eliminar -->
                         <button
                           type="button"
                           class="btn-eliminar-foto"
-                          (click)="eliminarFoto(i)"
+                          (click)="eliminarFotoGaleria(i)"
                         >
                           ❌
                         </button>
                       </div>
                     </div>
 
+                    <!-- Campos de la foto -->
                     <div class="foto-fields">
+                      <!-- Componente de subida de imagen -->
                       <div class="field-group full-width">
                         <app-image-upload
                           label="📸 Imagen"
@@ -1317,6 +1614,7 @@
                         ></app-image-upload>
                       </div>
 
+                      <!-- Título (opcional) -->
                       <div class="field-group">
                         <label>Título (opcional)</label>
                         <input
@@ -1328,6 +1626,7 @@
                         />
                       </div>
 
+                      <!-- Descripción (opcional) -->
                       <div class="field-group full-width">
                         <label>Descripción (opcional)</label>
                         <textarea
@@ -1343,6 +1642,7 @@
                 </div>
               }
 
+              <!-- Botón para agregar nueva foto -->
               <button
                 type="button"
                 class="btn-agregar-foto"
@@ -1351,24 +1651,24 @@
                 ➕ Agregar foto
               </button>
             </div>
-            <!-- Cierra el div.campo de Fotos -->
 
-            <!-- Tip -->
+            <!-- Tip para el usuario -->
             <div class="galeria-tip">
               <span class="tip-icon">💡</span>
               <span class="tip-text">
-                Comparte los momentos más especiales de su historia. Las fotos
-                destacadas aparecerán más grandes.
+                Recomendamos usar fotos en alta resolución y con buena
+                iluminación para que luzcan increíbles en tu invitación.
               </span>
             </div>
           </div>
-          <!-- Cierra acordeon-body -->
         </div>
-        <!-- Cierra acordeon -->
 
-        <!-- Acordeón: Regalos -->
+        <!-- ----------------------------------------------------
+             ACORDEÓN: REGALOS (Mesa de regalos)
+             - Texto de agradecimiento
+             - Lista dinámica de tiendas/links (nombre + URL)
+             ---------------------------------------------------- -->
         <div class="acordeon">
-          <!-- ✅ AGREGAR ESTE HEADER -->
           <div
             class="acordeon-header"
             (click)="acordeonRegalos = !acordeonRegalos"
@@ -1376,12 +1676,16 @@
             <span>🎁 Mesa de regalos</span>
             <span class="icono">{{ acordeonRegalos ? "▲" : "▼" }}</span>
           </div>
+
           <div class="acordeon-body" [class.abierto]="acordeonRegalos">
+            <!-- Texto de agradecimiento -->
             <textarea
               [(ngModel)]="nuevaInvitacion.regalos.texto"
               [ngModelOptions]="{ standalone: true }"
               placeholder="Texto de agradecimiento"
             ></textarea>
+
+            <!-- Lista dinámica de tiendas -->
             @for (
               link of nuevaInvitacion.regalos.links;
               track link;
@@ -1405,6 +1709,8 @@
                 </button>
               </div>
             }
+
+            <!-- Botón para agregar tienda -->
             <button
               type="button"
               class="btn-agregar"
@@ -1415,7 +1721,11 @@
           </div>
         </div>
 
-        <!-- Acordeón: Confirmación -->
+        <!-- ----------------------------------------------------
+             ACORDEÓN: CONFIRMACIÓN DE ASISTENCIA
+             - Teléfono de contacto
+             - WhatsApp de contacto
+             ---------------------------------------------------- -->
         <div class="acordeon">
           <div
             class="acordeon-header"
@@ -1424,6 +1734,7 @@
             <span>✅ Confirmar asistencia</span>
             <span class="icono">{{ acordeonConfirmacion ? "▲" : "▼" }}</span>
           </div>
+
           <div class="acordeon-body" [class.abierto]="acordeonConfirmacion">
             <div class="form-grid">
               <input
@@ -1441,7 +1752,12 @@
             </div>
           </div>
         </div>
-        <!-- Acordeón: Consideraciones -->
+
+        <!-- ----------------------------------------------------
+             ACORDEÓN: CONSIDERACIONES
+             - Texto libre para notas importantes
+               (niños, alergias, estacionamiento, etc.)
+             ---------------------------------------------------- -->
         <div class="acordeon">
           <div
             class="acordeon-header"
@@ -1450,6 +1766,7 @@
             <span>📋 Consideraciones</span>
             <span class="icono">{{ acordeonConsideraciones ? "▲" : "▼" }}</span>
           </div>
+
           <div class="acordeon-body" [class.abierto]="acordeonConsideraciones">
             <textarea
               [(ngModel)]="nuevaInvitacion.consideraciones"
@@ -1459,7 +1776,12 @@
             ></textarea>
           </div>
         </div>
-        <!-- Acordeón: Hashtag -->
+
+        <!-- ----------------------------------------------------
+             ACORDEÓN: HASHTAG
+             - Hashtag personalizado para el evento
+               (ej: #MiBodaFeliz)
+             ---------------------------------------------------- -->
         <div class="acordeon">
           <div
             class="acordeon-header"
@@ -1468,6 +1790,7 @@
             <span>#️⃣ Hashtag</span>
             <span class="icono">{{ acordeonHashtag ? "▲" : "▼" }}</span>
           </div>
+
           <div class="acordeon-body" [class.abierto]="acordeonHashtag">
             <input
               type="text"
@@ -1480,7 +1803,11 @@
       </div>
     }
 
-    <!-- Botón guardar -->
+    <!-- ============================================================
+         BOTÓN DE GUARDAR
+         - Deshabilitado si faltan campos requeridos
+           (name y fecha son obligatorios)
+         ============================================================ -->
     <div class="acciones">
       <button
         type="submit"
