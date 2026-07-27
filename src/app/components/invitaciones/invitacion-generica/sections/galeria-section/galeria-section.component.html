@@ -1,13 +1,45 @@
-<!-- src/app/components/invitaciones/invitacion-generica/sections/galeria-section/galeria-section.component.html -->
+<!-- ================================================================
+     SECCIÓN DE GALERÍA - TEMPLATE
+     ================================================================
+     Esta sección muestra la galería de fotos del evento.
+     Soporta múltiples estilos: Grid, Masonry, Carrusel y Presentación.
+     Los estilos y configuraciones vienen desde el componente padre.
+     ================================================================ -->
 
+<!-- ================================================================
+     CONDICIÓN DE RENDERIZADO
+     La galería solo se muestra si se cumplen TODAS estas condiciones:
+     1. data existe (la configuración de la galería está definida)
+     2. data.mostrarSeccion es true (el usuario activó la sección)
+     3. fotos.length > 0 (hay al menos una foto para mostrar)
+     ================================================================ -->
 @if (data && data.mostrarSeccion && fotos.length > 0) {
+  <!-- ============================================================
+       CONTENEDOR PRINCIPAL DE LA GALERÍA
+       ============================================================ -->
   <div class="galeria-section">
+    <!-- ==========================================================
+         ENCABEZADO DE LA GALERÍA
+         ==========================================================
+         Contiene:
+         - Icono decorativo (📸)
+         - Título principal (con valor por defecto si no existe)
+         - Subtítulo opcional (solo se muestra si existe)
+         - Divisor decorativo (línea - icono - línea)
+         ========================================================== -->
     <div class="galeria-header">
+      <!-- Icono decorativo -->
       <span class="galeria-icono">📸</span>
+
+      <!-- Título principal - usa el valor de data.titulo o un texto por defecto -->
       <h2 class="galeria-titulo">{{ data.titulo || "Nuestros Momentos" }}</h2>
+
+      <!-- Subtítulo - solo se renderiza si data.subtitulo tiene contenido -->
       @if (data.subtitulo) {
         <p class="galeria-subtitulo">{{ data.subtitulo }}</p>
       }
+
+      <!-- Divisor decorativo: línea izquierda, icono central, línea derecha -->
       <div class="galeria-divider">
         <span class="divider-line"></span>
         <span class="divider-icon">✦</span>
@@ -15,24 +47,59 @@
       </div>
     </div>
 
+    <!-- ==========================================================
+         DESCRIPCIÓN DE LA GALERÍA
+         Solo se muestra si data.descripcion tiene contenido
+         ========================================================== -->
     @if (data.descripcion) {
       <p class="galeria-descripcion">{{ data.descripcion }}</p>
     }
 
-    <!-- Galería -->
+    <!-- ==========================================================
+         CONTENEDOR DE LA GALERÍA
+         ==========================================================
+         Clases dinámicas:
+         - {{ estiloGrid }}: Define el estilo de visualización
+           (galeria-grid, galeria-masonry, galeria-carousel, galeria-slideshow)
+         - efecto-{{ efectoClase }}: Define el efecto de transición
+           (efecto-slide, efecto-fade, efecto-zoom)
+
+         Variables CSS:
+         - --velocidad-transicion: Velocidad en milisegundos para las transiciones
+
+         Referencia local:
+         - #galeriaContainer: Permite acceder al elemento desde el componente
+         ========================================================== -->
     <div
       class="{{ estiloGrid }} efecto-{{ efectoClase }}"
       [style.--velocidad-transicion]="velocidadMs"
       #galeriaContainer
     >
+      <!-- ==========================================================
+           ITERACIÓN SOBRE LAS FOTOS
+           ==========================================================
+           for (foto of fotos): Recorre el array de URLs de fotos
+           track: Angular trackBy para optimizar el renderizado
+           i = $index: Índice de la iteración
+           ========================================================== -->
       @for (foto of fotos; track foto; let i = $index) {
+        <!-- ========================================================
+             CADA ITEM DE LA GALERÍA
+             ========================================================
+             (click): Abre el modal con la foto al hacer clic
+             animation-delay: Retraso escalonado para animación de entrada
+             class.activo: Marca la foto actual (para carrusel/presentación)
+             ======================================================== -->
         <div
           class="galeria-item"
           (click)="abrirModal(i)"
           [style.animation-delay]="i * 0.1 + 's'"
           [class.activo]="i === indiceActual"
         >
+          <!-- Imagen con carga perezosa (lazy) para optimizar rendimiento -->
           <img [src]="foto" [alt]="'Foto ' + (i + 1)" loading="lazy" />
+
+          <!-- Badge "Destacada" - solo se muestra si la foto tiene destacada=true -->
           @if (data.fotos[i]?.destacada) {
             <span class="galeria-destacada">⭐ Destacada</span>
           }
@@ -40,97 +107,210 @@
       }
     </div>
 
-    <!-- Controles (solo si están activados) -->
-    @if (data.mostrarControles) {
-      <div class="galeria-controles" [class.destacados]="controlesDestacados">
-        <button class="btn-prev" (click)="slideAnterior()">❮</button>
-
-        <!-- Botón de autoplay (solo para carrusel y presentación) -->
-        @if (autoplayActivo) {
+    <!-- ==========================================================
+         CONTROLES DEL CARRUSEL / PRESENTACIÓN
+         ==========================================================
+         Solo se muestran si el estilo es "galeria-carousel"
+         o "galeria-slideshow"
+         ========================================================== -->
+    @if (
+      estiloGrid === "galeria-carousel" || estiloGrid === "galeria-slideshow"
+    ) {
+      <!-- ========================================================
+           BOTONES DE NAVEGACIÓN (Anterior / Autoplay / Siguiente)
+           ========================================================
+           data.mostrarControles: Controla si se muestran los botones
+           controlesDestacados: Clase para estilo destacado (opcional)
+           ======================================================== -->
+      @if (data.mostrarControles) {
+        <div class="galeria-controles" [class.destacados]="controlesDestacados">
+          <!-- Botón: Foto Anterior -->
           <button
-            class="btn-autoplay"
-            (click)="toggleAutoplay()"
-            [title]="
-              autoplayInterval ? 'Pausar presentación' : 'Iniciar presentación'
-            "
+            class="btn-prev"
+            (click)="slideAnterior()"
+            aria-label="Anterior"
           >
-            @if (autoplayInterval) {
-              <!-- Icono Pausa -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="6" y="4" width="4" height="16"></rect>
-                <rect x="14" y="4" width="4" height="16"></rect>
-              </svg>
-            } @else {
-              <!-- Icono Play (el que tienes) -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"
-                />
-              </svg>
-            }
-            <span class="autoplay-label">{{ autoplayInterval ? "" : "" }}</span>
+            <!-- SVG de flecha izquierda (polyline) -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
           </button>
-        }
 
-        <button class="btn-next" (click)="slideSiguiente()">❯</button>
-      </div>
+          <!-- Botón: Autoplay (solo si está activado en la configuración) -->
+          @if (autoplayActivo) {
+            <button
+              class="btn-autoplay"
+              (click)="toggleAutoplay()"
+              [title]="
+                autoplayInterval
+                  ? 'Pausar presentación'
+                  : 'Iniciar presentación'
+              "
+            >
+              <!-- Icono dinámico: Pausa o Play según estado -->
+              @if (autoplayInterval) {
+                <!-- Icono de Pausa (dos rectángulos verticales) -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="6" y="4" width="4" height="16"></rect>
+                  <rect x="14" y="4" width="4" height="16"></rect>
+                </svg>
+              } @else {
+                <!-- Icono de Play (triángulo) -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              }
+              <!-- Etiqueta del botón (cambia según estado) -->
+              <span class="autoplay-label">{{
+                autoplayInterval ? "Pausar" : "Autoplay"
+              }}</span>
+            </button>
+          }
+
+          <!-- Botón: Foto Siguiente -->
+          <button
+            class="btn-next"
+            (click)="slideSiguiente()"
+            aria-label="Siguiente"
+          >
+            <!-- SVG de flecha derecha (polyline) -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      }
+
+      <!-- ========================================================
+           PAGINACIÓN (Puntos indicadores)
+           ========================================================
+           data.mostrarPaginacion: Controla si se muestran los puntos
+           Cada punto representa una foto en el carrusel
+           El punto activo tiene la clase "activo"
+           Al hacer clic en un punto, navega a esa foto
+           ======================================================== -->
+      @if (data.mostrarPaginacion) {
+        <div class="galeria-paginacion">
+          @for (foto of fotos; track foto; let i = $index) {
+            <span
+              class="punto"
+              [class.activo]="i === indiceActual"
+              (click)="irASlide(i)"
+              [title]="'Ir a foto ' + (i + 1)"
+            ></span>
+          }
+        </div>
+      }
     }
 
-    <!-- Paginación -->
-    @if (data.mostrarPaginacion) {
-      <div class="galeria-paginacion">
-        @for (foto of fotos; track foto; let i = $index) {
-          <span
-            class="punto"
-            [class.activo]="i === indiceActual"
-            (click)="irASlide(i)"
-            [title]="'Ir a foto ' + (i + 1)"
-          ></span>
-        }
-      </div>
-    }
-
-    <!-- Compartir -->
-    @if (data.mostrarCompartir) {
-      <button class="btn-compartir" (click)="compartirGaleria()">
-        📤 Compartir galería
-      </button>
-    }
-
-    <!-- Modal -->
+    <!-- ==========================================================
+         MODAL DE VISUALIZACIÓN EN GRANDE
+         ==========================================================
+         Se abre cuando el usuario hace clic en una foto
+         class.active: Controla la visibilidad del modal
+         (click) en el fondo: Cierra el modal al hacer clic fuera
+         ========================================================== -->
     <div
       class="galeria-modal"
       [class.active]="modalAbierto"
       (click)="cerrarModal()"
     >
+      <!-- Contenido del modal -->
       <div class="galeria-modal-content" (click)="$event.stopPropagation()">
+        <!-- Botón de cierre (X) -->
         <span class="galeria-modal-close" (click)="cerrarModal()">&times;</span>
-        <img [src]="fotoActual" alt="Foto" />
-        <button class="galeria-modal-prev" (click)="anterior()">❮</button>
-        <button class="galeria-modal-next" (click)="siguiente()">❯</button>
+
+        <!-- ========================================================
+             CONTENEDOR DE LA IMAGEN EN EL MODAL
+             ========================================================
+             solo se renderiza si modalAbierto es true y hay fotoActual
+             [class.efecto-{{ efectoClase }}]: Aplica el efecto de transición
+             ======================================================== -->
+        <div class="galeria-modal-imagen-wrapper">
+          @if (modalAbierto && fotoActual) {
+            <img
+              [src]="fotoActual"
+              [alt]="'Foto ' + (indiceActual + 1)"
+              class="modal-imagen"
+              [class.efecto-{{ efectoClase }}]="true"
+            />
+          }
+        </div>
+
+        <!-- ========================================================
+             BOTONES DE NAVEGACIÓN EN EL MODAL
+             ======================================================== -->
+        <!-- Botón: Foto anterior (❮) -->
+        <button
+          class="galeria-modal-prev"
+          (click)="anterior()"
+          aria-label="Foto anterior"
+        >
+          ❮
+        </button>
+
+        <!-- Botón: Siguiente foto (❯) -->
+        <button
+          class="galeria-modal-next"
+          (click)="siguiente()"
+          aria-label="Siguiente foto"
+        >
+          ❯
+        </button>
+
+        <!-- ========================================================
+             CONTADOR DE FOTOS
+             Muestra la posición actual y el total: "3 / 10"
+             ======================================================== -->
         <div class="galeria-modal-counter">
           {{ indiceActual + 1 }} / {{ fotos.length }}
         </div>
+
+        <!-- ========================================================
+             INDICADOR DE DESLIZAR
+             Para dispositivos táctiles (mobile)
+             ======================================================== -->
+        <div class="swipe-indicator">↔ Desliza para navegar</div>
       </div>
     </div>
   </div>

@@ -19,7 +19,7 @@ export interface Galeria {
   descripcion: string;
   fotos: Foto[];
   estilo: EstiloGaleria;
-  efecto: 'slide' | 'fade' | 'zoom' | 'flip';
+  efecto: 'slide' | 'fade' | 'zoom';
   velocidad: number;
   mostrarControles: boolean;
   mostrarCompartir: boolean;

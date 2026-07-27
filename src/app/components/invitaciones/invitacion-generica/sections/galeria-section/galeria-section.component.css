@@ -1,9 +1,15 @@
-/* src/app/components/invitaciones/invitacion-generica/sections/galeria-section/galeria-section.component.css */
+/* ================================================================
+   GALERÍA - ESTILOS COMPLETOS
+   ================================================================
+   Archivo: galeria-section.component.css
+   Componente: GaleriaSectionComponent
+   ================================================================ */
 
 /* ============================================
    GALERÍA - BASE
    ============================================ */
 
+/* Contenedor principal de la sección de galería */
 .galeria-section {
   padding: 4rem 2rem;
   background: var(--secondary, #f5ede4);
@@ -12,6 +18,7 @@
   overflow: hidden;
 }
 
+/* Decoración de fondo: patrón de puntos sutil */
 .galeria-section::before {
   content: "";
   position: absolute;
@@ -25,12 +32,14 @@
   z-index: 0;
 }
 
+/* Encabezado de la galería */
 .galeria-header {
   position: relative;
   z-index: 1;
   margin-bottom: 2rem;
 }
 
+/* Icono decorativo (📸) */
 .galeria-icono {
   font-size: 2.8rem;
   display: block;
@@ -38,6 +47,7 @@
   opacity: 0.7;
 }
 
+/* Título principal de la galería */
 .galeria-titulo {
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.6rem, 4vw, 2.6rem);
@@ -47,6 +57,7 @@
   letter-spacing: 2px;
 }
 
+/* Subtítulo de la galería (opcional) */
 .galeria-subtitulo {
   font-family: "Cormorant Garamond", serif;
   font-size: 1.1rem;
@@ -56,6 +67,7 @@
   font-style: italic;
 }
 
+/* Divisor decorativo: línea - icono - línea */
 .galeria-divider {
   display: flex;
   align-items: center;
@@ -65,6 +77,7 @@
   margin: 0.5rem auto 0;
 }
 
+/* Líneas del divisor */
 .galeria-divider .divider-line {
   flex: 1;
   height: 1px;
@@ -76,12 +89,14 @@
   );
 }
 
+/* Icono central del divisor */
 .galeria-divider .divider-icon {
   color: var(--accent, #c9a87c);
   font-size: 0.8rem;
   opacity: 0.7;
 }
 
+/* Descripción de la galería */
 .galeria-descripcion {
   position: relative;
   z-index: 1;
@@ -98,6 +113,7 @@
    ESTILO: GRID
    ============================================ */
 
+/* Grid: Fotos en cuadrícula responsive */
 .galeria-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -106,6 +122,7 @@
   margin: 0 auto;
 }
 
+/* Items en Grid: relación cuadrada 1:1 */
 .galeria-grid .galeria-item {
   aspect-ratio: 1/1;
 }
@@ -114,6 +131,7 @@
    ESTILO: MASONRY
    ============================================ */
 
+/* Masonry: Estilo Pinterest con columnas */
 .galeria-masonry {
   column-count: 3;
   column-gap: 16px;
@@ -121,11 +139,13 @@
   margin: 0 auto;
 }
 
+/* Cada item no se rompe entre columnas */
 .galeria-masonry .galeria-item {
   break-inside: avoid;
   margin-bottom: 16px;
 }
 
+/* Alturas variables para efecto Masonry */
 .galeria-masonry .galeria-item:nth-child(3n + 1) {
   aspect-ratio: 1/1.2;
 }
@@ -142,20 +162,22 @@
    ESTILO: CARRUSEL
    ============================================ */
 
+/* Carrusel: Deslizable horizontalmente */
 .galeria-carousel {
   display: flex;
-  gap: 20px; /* 👈 Aumentar gap para mejor separación */
+  gap: 20px;
   overflow-x: auto;
-  padding: 20px 0; /* 👈 Aumentar padding */
+  padding: 20px 0;
   scroll-snap-type: x mandatory;
-  max-width: 1200px; /* 👈 Más ancho */
+  max-width: 1200px;
   margin: 0 auto;
   -webkit-overflow-scrolling: touch;
 }
 
+/* Items del carrusel con tamaño fijo */
 .galeria-carousel .galeria-item {
-  flex: 0 0 450px; /* 👈 Imagen más grande */
-  aspect-ratio: 1/0.7; /* 👈 Relación de aspecto */
+  flex: 0 0 450px;
+  aspect-ratio: 1/0.7;
   scroll-snap-align: start;
   border-radius: 16px;
   transition:
@@ -163,12 +185,13 @@
     box-shadow 0.3s ease;
 }
 
+/* Hover del carrusel */
 .galeria-carousel .galeria-item:hover {
   transform: scale(1.02);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Scrollbar personalizada */
+/* Scrollbar personalizada para carrusel */
 .galeria-carousel::-webkit-scrollbar {
   height: 10px;
 }
@@ -187,6 +210,7 @@
    ESTILO: SLIDESHOW
    ============================================ */
 
+/* Slideshow: Presentación automática */
 .galeria-slideshow {
   display: flex;
   gap: 20px;
@@ -198,9 +222,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* Items del slideshow más grandes que carrusel */
 .galeria-slideshow .galeria-item {
-  flex: 0 0 550px; /* 👈 Imagen más grande */
-  aspect-ratio: 1/0.6; /* 👈 Relación de aspecto */
+  flex: 0 0 550px;
+  aspect-ratio: 1/0.6;
   scroll-snap-align: center;
   border-radius: 16px;
   transition:
@@ -208,6 +233,7 @@
     box-shadow 0.3s ease;
 }
 
+/* Hover del slideshow */
 .galeria-slideshow .galeria-item:hover {
   transform: scale(1.02);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
@@ -293,6 +319,7 @@
    ESTILO: ÁLBUM
    ============================================ */
 
+/* Álbum: Grid con foto destacada más grande */
 .galeria-album {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -301,11 +328,13 @@
   margin: 0 auto;
 }
 
+/* Primera foto (destacada) ocupa 2 filas */
 .galeria-album .galeria-item:first-child {
   grid-row: span 2;
   aspect-ratio: 1/1.2;
 }
 
+/* Las demás fotos */
 .galeria-album .galeria-item:not(:first-child) {
   aspect-ratio: 1/0.7;
 }
@@ -314,6 +343,7 @@
    ESTILO: SLIDESHOW (Presentación automática)
    ============================================ */
 
+/* Slideshow (versión alternativa) */
 .galeria-slideshow {
   display: flex;
   gap: 16px;
@@ -335,6 +365,7 @@
    ITEM DE GALERÍA (común a todos los estilos)
    ============================================ */
 
+/* Cada foto individual */
 .galeria-item {
   position: relative;
   cursor: pointer;
@@ -347,6 +378,7 @@
   opacity: 0;
 }
 
+/* Animación de entrada de las fotos */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -358,12 +390,14 @@
   }
 }
 
+/* Hover de la foto */
 .galeria-item:hover {
   transform: translateY(-4px) scale(1.02);
   border-color: var(--accent, #c9a87c);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
+/* Imagen dentro de la foto */
 .galeria-item img {
   width: 100%;
   height: 100%;
@@ -372,11 +406,12 @@
   transition: transform 0.5s ease;
 }
 
+/* Zoom de la imagen al hacer hover */
 .galeria-item:hover img {
   transform: scale(1.05);
 }
 
-/* Badge de destacada */
+/* Badge "Destacada" */
 .galeria-destacada {
   position: absolute;
   top: 10px;
@@ -389,8 +424,6 @@
   font-weight: 600;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
-
-/* src/app/components/invitaciones/invitacion-generica/sections/galeria-section/galeria-section.component.css */
 
 /* ============================================
    EFECTOS DE TRANSICIÓN
@@ -453,7 +486,7 @@
   transform: scale(1.1);
 }
 
-/* 👇 EFECTO FLIP */
+/* 👇 EFECTO FLIP (3D) */
 .efecto-flip .galeria-item {
   perspective: 1000px;
   transition: all 0.6s ease;
@@ -473,6 +506,7 @@
    MODAL
    ============================================ */
 
+/* Fondo del modal */
 .galeria-modal {
   display: none;
   position: fixed;
@@ -487,11 +521,13 @@
   backdrop-filter: blur(8px);
 }
 
+/* Modal activo (visible) */
 .galeria-modal.active {
   display: flex;
   animation: modalFadeIn 0.3s ease;
 }
 
+/* Animación de entrada del modal */
 @keyframes modalFadeIn {
   from {
     opacity: 0;
@@ -503,12 +539,14 @@
   }
 }
 
+/* Contenido del modal */
 .galeria-modal-content {
   position: relative;
   max-width: 90%;
   max-height: 90%;
 }
 
+/* Imagen dentro del modal */
 .galeria-modal-content img {
   width: 100%;
   height: auto;
@@ -518,6 +556,7 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
+/* Botón de cierre (X) */
 .galeria-modal-close {
   position: absolute;
   top: -50px;
@@ -535,6 +574,7 @@
   opacity: 1;
 }
 
+/* Botones de navegación en el modal */
 .galeria-modal-prev,
 .galeria-modal-next {
   position: absolute;
@@ -563,14 +603,17 @@
   border-color: var(--accent, #c9a87c);
 }
 
+/* Posición del botón anterior */
 .galeria-modal-prev {
   left: -60px;
 }
 
+/* Posición del botón siguiente */
 .galeria-modal-next {
   right: -60px;
 }
 
+/* Contador de fotos (ej: "3 / 10") */
 .galeria-modal-counter {
   position: absolute;
   bottom: -40px;
@@ -585,6 +628,7 @@
    RESPONSIVE
    ============================================ */
 
+/* Tablets */
 @media (max-width: 768px) {
   .galeria-section {
     padding: 2.5rem 1rem;
@@ -641,6 +685,7 @@
   }
 }
 
+/* Móviles */
 @media (max-width: 480px) {
   .galeria-section {
     padding: 2rem 0.8rem;
@@ -704,9 +749,83 @@
 }
 
 /* ============================================
+   EFECTOS DE TRANSICIÓN EN EL MODAL
+   ============================================ */
+
+/* Imagen dentro del modal */
+.modal-imagen {
+  transition: all 0.3s ease;
+}
+
+/* Slide en modal */
+.efecto-slide.modal-imagen {
+  animation: modalSlideIn 1s ease forwards !important;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Fade en modal */
+.efecto-fade.modal-imagen {
+  animation: modalFadeIn 1s ease forwards !important;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Zoom en modal */
+.efecto-zoom.modal-imagen {
+  animation: modalZoomIn 1s ease forwards !important;
+}
+
+@keyframes modalZoomIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Flip en modal */
+.efecto-flip.modal-imagen {
+  animation: modalFlipIn 0.6s ease forwards !important;
+}
+
+@keyframes modalFlipIn {
+  from {
+    transform: rotateY(20deg) scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================
    CONTROLES Y PAGINACIÓN
    ============================================ */
 
+/* Contenedor de controles (botones) */
 .galeria-controles {
   display: flex;
   justify-content: center;
@@ -716,6 +835,7 @@
   z-index: 2;
 }
 
+/* Botones anterior/siguiente */
 .btn-prev,
 .btn-next {
   background: var(--accent, #c9a87c);
@@ -743,7 +863,7 @@
   transform: scale(0.95);
 }
 
-/* Paginación */
+/* Contenedor de paginación (puntos) */
 .galeria-paginacion {
   display: flex;
   justify-content: center;
@@ -753,6 +873,7 @@
   z-index: 2;
 }
 
+/* Cada punto de paginación */
 .punto {
   display: inline-block;
   width: 12px;
@@ -764,6 +885,7 @@
   transition: all 0.3s ease;
 }
 
+/* Punto activo (foto actual) */
 .punto.activo {
   opacity: 1;
   transform: scale(1.3);
@@ -776,41 +898,12 @@
   transform: scale(1.15);
 }
 
-/* Compartir */
-.btn-compartir {
-  background: var(--accent, #c9a87c);
-  color: white;
-  border: none;
-  padding: 10px 24px;
-  border-radius: 50px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-  margin: 10px auto 0;
-  display: inline-block;
-  font-family: "Cormorant Garamond", serif;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  position: relative;
-  z-index: 2;
-}
-
-.btn-compartir:hover {
-  background: var(--primary, #5c3d2e);
-  transform: scale(1.05);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-.btn-compartir:active {
-  transform: scale(0.95);
-}
-
-/* Velocidad dinámica */
+/* Velocidad dinámica desde CSS variable */
 .galeria-item {
   transition-duration: var(--velocidad-transicion, 300ms);
 }
 
-/* Responsive controles */
+/* Responsive de controles */
 @media (max-width: 480px) {
   .btn-prev,
   .btn-next {
@@ -822,17 +915,13 @@
     width: 10px;
     height: 10px;
   }
-
-  .btn-compartir {
-    padding: 8px 18px;
-    font-size: 0.85rem;
-  }
 }
 
 /* ============================================
    CONTROLES DESTACADOS (para carrusel y presentación)
    ============================================ */
 
+/* Controles con estilo destacado para carrusel y slideshow */
 .galeria-controles.destacados .btn-prev,
 .galeria-controles.destacados .btn-next {
   background: var(--accent, #c9a87c);
@@ -847,6 +936,7 @@
   box-shadow: 0 6px 30px rgba(201, 168, 124, 0.4);
 }
 
+/* Botón de autoplay */
 .btn-autoplay {
   background: var(--primary, #5c3d2e);
   color: white;
@@ -864,7 +954,7 @@
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
 }
 
-/* Efectos más notorios para carrusel y presentación */
+/* Efectos más notorios para carrusel y slideshow */
 .galeria-carousel .galeria-item,
 .galeria-slideshow .galeria-item {
   transition-duration: var(--velocidad-transicion, 500ms);
@@ -880,6 +970,7 @@
    BOTÓN AUTOPLAY CON LUCIDE
    ============================================ */
 
+/* Botón autoplay con ícono y texto */
 .btn-autoplay {
   display: inline-flex;
   align-items: center;
@@ -915,7 +1006,7 @@
   font-size: 0.85rem;
 }
 
-/* Responsive */
+/* Responsive del autoplay en móvil */
 @media (max-width: 480px) {
   .btn-autoplay {
     padding: 8px 14px;
@@ -923,6 +1014,7 @@
     font-size: 0.8rem;
   }
 
+  /* Oculta el texto en móvil, solo ícono */
   .btn-autoplay .autoplay-label {
     display: none;
   }
@@ -930,5 +1022,107 @@
   .btn-autoplay svg {
     width: 22px;
     height: 22px;
+  }
+}
+
+/* ============================================
+   EFECTOS DE TRANSICIÓN EN EL MODAL
+   ============================================ */
+
+/* Wrapper de la imagen en el modal */
+.galeria-modal-imagen-wrapper {
+  overflow: hidden;
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Imagen dentro del modal */
+.modal-imagen {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  transition: all 0.5s ease;
+}
+
+/* ============================================
+   EFECTO: SLIDE EN MODAL
+   ============================================ */
+
+.efecto-modal-slide .modal-imagen {
+  animation: modalSlideIn 0.5s ease forwards;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   EFECTO: FADE EN MODAL
+   ============================================ */
+
+.efecto-modal-fade .modal-imagen {
+  animation: modalFadeIn 0.6s ease forwards;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   EFECTO: ZOOM EN MODAL
+   ============================================ */
+
+.efecto-modal-zoom .modal-imagen {
+  animation: modalZoomIn 0.5s ease forwards;
+}
+
+@keyframes modalZoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   EFECTO: FLIP EN MODAL
+   ============================================ */
+
+.efecto-modal-flip .modal-imagen {
+  animation: modalFlipIn 0.6s ease forwards;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+@keyframes modalFlipIn {
+  from {
+    transform: rotateY(15deg) scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
   }
 }
