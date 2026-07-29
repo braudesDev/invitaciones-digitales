@@ -149,7 +149,7 @@ export class GaleriaSectionComponent
     const estilo = this.data?.estilo || 'grid';
     return (
       (estilo === 'carousel' || estilo === 'slideshow') &&
-      this.data?.mostrarControles !== false
+      this.data?.mostrarControles !== true
     );
   }
 
