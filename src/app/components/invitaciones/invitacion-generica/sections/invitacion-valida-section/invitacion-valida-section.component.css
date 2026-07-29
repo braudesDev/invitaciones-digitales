@@ -1,3 +1,10 @@
+/* ================================================================
+   INVITACIÓN VÁLIDA - SOLO TEXTOS ACENTUADOS
+   ================================================================
+   Sin divisiones, sin bordes, sin fondos contrastantes.
+   Solo textos más grandes y con más peso visual.
+   ================================================================ */
+
 .invitacion-valida-section {
   background: var(--secondary);
   padding: 2rem;
@@ -6,56 +13,153 @@
   margin: 0;
 }
 
-/* Línea decorativa superior */
+/* ============================================
+   LÍNEA DECORATIVA SUPERIOR (YA EXISTE)
+   ============================================ */
 
 .ceremonia-section::before {
   content: "";
-
   position: absolute;
-
   top: 0;
   left: 0;
-
   width: 100%;
   height: 5px;
-
   background: linear-gradient(90deg, var(--primary), var(--accent));
 }
 
+/* ============================================
+   TÍTULO PRINCIPAL - "INVITACIÓN VÁLIDA PARA"
+   ============================================ */
+
 .invitacion-valida-section h3 {
   color: var(--primary);
-  font-size: 1.5rem;
+  font-size: 1.8rem; /* 👈 Más grande */
+  font-weight: 700; /* 👈 Más grueso */
   margin-bottom: 1rem;
+  letter-spacing: 2px; /* 👈 Separación entre letras */
 }
+
+/* ============================================
+   NOMBRE DEL INVITADO
+   ============================================ */
 
 .invitacion-valida-section .invitado-nombre {
   color: var(--accent);
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2.8rem; /* 👈 Más grande */
+  font-weight: 700; /* 👈 Más grueso */
   margin: 1rem 0;
+  letter-spacing: 1px; /* 👈 Separación entre letras */
 }
 
-.invitacion-valida-section .pases {
+/* ============================================
+   ETIQUETA "Estimado(a)"
+   ============================================ */
+
+.invitacion-valida-section .label {
+  display: block;
+  font-size: 0.85rem; /* 👈 Un poco más grande */
   color: var(--text);
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 3px; /* 👈 Separación entre letras */
+  font-weight: 600; /* 👈 Más grueso */
+  opacity: 0.6;
 }
+
+/* ============================================
+   NÚMERO DE PASES
+   ============================================ */
+
+.invitacion-valida-section .pases {
+  color: var(--primary); /* 👈 Cambiado a primary para más contraste */
+  font-size: 1.8rem; /* 👈 Más grande */
+  font-weight: 700; /* 👈 Más grueso */
+  margin: 0.5rem 0;
+  letter-spacing: 2px; /* 👈 Separación entre letras */
+}
+
+/* ============================================
+   CONTADOR DE PASES (si tiene clases específicas)
+   ============================================ */
+
+.invitacion-valida-section .pases-count {
+  color: var(--accent);
+  font-size: 3.5rem; /* 👈 Muy grande */
+  font-weight: 700;
+}
+
+.invitacion-valida-section .pases-label {
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.invitacion-valida-section .pases-desc {
+  color: var(--text);
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+/* ============================================
+   MENSAJE PERSONALIZADO
+   ============================================ */
+
+.invitacion-valida-section .mensaje-texto {
+  font-size: 1.1rem; /* 👈 Más grande */
+  color: var(--text);
+  font-style: italic;
+  line-height: 1.8;
+}
+
+/* ============================================
+   QR CODE
+   ============================================ */
 
 .invitacion-valida-section .qr-code {
   margin: 1.5rem auto;
-  width: 180px;
-  height: 180px;
+  width: 200px; /* 👈 Un poco más grande */
+  height: 200px; /* 👈 Un poco más grande */
 }
+
+/* ============================================
+   HEADER DEL QR
+   ============================================ */
+
+.invitacion-valida-section .qr-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 3px;
+  opacity: 0.5;
+}
+
+/* ============================================
+   TEXTO DEL FOOTER QR
+   ============================================ */
+
+.invitacion-valida-section .qr-footer p {
+  font-size: 0.85rem;
+  color: var(--text);
+  opacity: 0.5;
+  font-style: italic;
+}
+
+/* ============================================
+   BOTÓN DESCARGAR QR
+   ============================================ */
 
 .invitacion-valida-section button {
   background: var(--accent);
   color: white;
   border: none;
   border-radius: 999px;
-  padding: 0.8rem 1.5rem;
+  padding: 0.9rem 2rem; /* 👈 Más padding */
+  font-size: 1rem; /* 👈 Más grande */
+  font-weight: 600; /* 👈 Más grueso */
   cursor: pointer;
   transition: all 0.3s ease;
   margin: 0.5rem;
+  letter-spacing: 1px; /* 👈 Separación entre letras */
 }
 
 .invitacion-valida-section button:hover {
@@ -63,11 +167,43 @@
   filter: brightness(1.05);
 }
 
+/* ============================================
+   ESTADO DE ACCESO
+   ============================================ */
+
+.invitacion-valida-section .estado-acceso {
+  font-size: 1rem; /* 👈 Más grande */
+  font-weight: 600; /* 👈 Más grueso */
+  padding: 0.5rem 0;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
 @media (max-width: 768px) {
   .invitacion-valida-section {
     padding: 1.5rem;
   }
+
+  .invitacion-valida-section h3 {
+    font-size: 1.4rem;
+  }
+
   .invitacion-valida-section .invitado-nombre {
+    font-size: 2.2rem; /* 👈 De 1.5rem a 2.2rem */
+  }
+
+  .invitacion-valida-section .pases {
     font-size: 1.5rem;
+  }
+
+  .invitacion-valida-section .pases-count {
+    font-size: 2.8rem;
+  }
+
+  .invitacion-valida-section .qr-code {
+    width: 160px;
+    height: 160px;
   }
 }

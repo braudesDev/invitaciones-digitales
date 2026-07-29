@@ -39,24 +39,25 @@
           </div>
         </div>
         <!-- Indicación del estado -->
-        @if (estadoActual === 'confirmado') {
+        @if (estadoActual === "confirmado") {
           <div class="estado-acceso">
             <div class="acceso-confirmado">
               ✅ Acceso confirmado - Presenta tu QR en la entrada
             </div>
           </div>
         }
-        @if (estadoActual === 'pendiente') {
+        @if (estadoActual === "pendiente") {
           <div class="estado-acceso">
             <div class="acceso-pendiente">
               ⏳ Confirma tu asistencia para generar tu pase de acceso
             </div>
           </div>
         }
-        @if (estadoActual === 'rechazado') {
+        @if (estadoActual === "rechazado") {
           <div class="estado-acceso">
             <div class="acceso-rechazado">
-              💔 No podrás asistir - Si cambias de opinión, confirma tu asistencia
+              💔 No podrás asistir - Si cambias de opinión, confirma tu
+              asistencia
             </div>
           </div>
         }
