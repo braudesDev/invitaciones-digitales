@@ -54,3 +54,5 @@ src/environments/environment.*.ts
 .env.local
 
 !src/environments/environment.example.ts
+
+.firebase/
