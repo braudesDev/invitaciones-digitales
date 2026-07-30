@@ -32,6 +32,12 @@
         [textColor]="data.textColor ?? '#3F4A42'"
       ></app-nos-casamos-section>
     }
+    @if (data.contador) {
+      <app-contador-section
+        [data]="contadorFormateado"
+        modo="vista"
+      ></app-contador-section>
+    }
     <!-- 🎟️ INVITACIÓN VÁLIDA (nombre, pases, mensaje, QR) -->
     @if (data) {
       <app-invitacion-valida-section
@@ -82,9 +88,6 @@
     }
     @if (data.hashtag) {
       <app-hashtag-section [data]="data.hashtag"></app-hashtag-section>
-    }
-    @if (data.contador) {
-      <app-contador-section [data]="data.contador"></app-contador-section>
     }
     @if (data.regalos) {
       <app-regalos-section [data]="data.regalos"></app-regalos-section>

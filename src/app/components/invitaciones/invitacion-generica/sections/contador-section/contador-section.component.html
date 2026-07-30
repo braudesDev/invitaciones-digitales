@@ -1,1 +1,318 @@
-<p>contador-section works!</p>
+<!-- src/app/components/invitaciones/invitacion-generica/sections/contador-section/contador-section.component.html -->
+
+<!-- ================================================================
+     SECCIÓN CONTADOR - TEMPLATE
+     ================================================================ -->
+
+<!-- ================================================================
+     MODO: EDICIÓN (FORMULARIO)
+     ================================================================ -->
+@if (modo === "edicion") {
+  <div class="contador-form">
+    <!-- ==========================================================
+         TÍTULO Y DESCRIPCIÓN
+         ========================================================== -->
+    <div class="form-header">
+      <h3>⏳ Cuenta regresiva para tu boda</h3>
+      <p class="form-desc">Personaliza el contador para tu gran día</p>
+    </div>
+
+    <!-- ==========================================================
+         MOSTRAR SECCIÓN
+         ========================================================== -->
+    <div class="campo">
+      <label>
+        <input
+          type="checkbox"
+          [checked]="data.mostrarSeccion"
+          (change)="toggleMostrarSeccion()"
+        />
+        Mostrar sección en la invitación
+      </label>
+    </div>
+
+    <!-- ==========================================================
+         1. FECHA DEL GRAN DÍA
+         ========================================================== -->
+    <div class="campo">
+      <label>📅 1. FECHA DE TU GRAN DÍA</label>
+      <div class="subcampo">
+        <label>Fecha del gran día</label>
+        <input
+          type="date"
+          [(ngModel)]="data.fechaEvento"
+          (change)="calcularTiempoRestante()"
+          class="form-control"
+        />
+        <small class="help-text">Selecciona la fecha de tu boda</small>
+      </div>
+    </div>
+
+    <!-- ==========================================================
+         2. ESTILO DEL CONTADOR
+         ========================================================== -->
+    <div class="campo">
+      <label>🎨 2. ESTILO DEL CONTADOR</label>
+      <div class="estilos-grid">
+        @for (estilo of estilos; track estilo) {
+          <div
+            class="estilo-option"
+            [class.selected]="data.estilo === estilo.valor"
+            (click)="seleccionarEstilo(estilo.valor)"
+          >
+            <span class="estilo-icon">{{ estilo.icon }}</span>
+            <span class="estilo-nombre">{{ estilo.nombre }}</span>
+          </div>
+        }
+      </div>
+      <small class="help-text">Elige el estilo que más te guste</small>
+    </div>
+
+    <!-- ==========================================================
+         3. PERSONALIZA LOS TEXTOS
+         ========================================================== -->
+    <div class="campo">
+      <label>✏️ 3. PERSONALIZA LOS TEXTOS</label>
+
+      <div class="subcampo">
+        <label>Título de la sección</label>
+        <div class="input-with-counter">
+          <input
+            type="text"
+            [(ngModel)]="data.titulo"
+            placeholder="Faltan para nuestro gran día"
+            maxlength="40"
+          />
+          <span class="contador">{{ data.titulo?.length || 0 }}/40</span>
+        </div>
+      </div>
+
+      <div class="subcampo">
+        <label>Mensaje debajo del contador (opcional)</label>
+        <div class="input-with-counter">
+          <textarea
+            [(ngModel)]="data.mensaje"
+            placeholder="¡No podemos esperar para celebrar contigo!"
+            rows="2"
+            maxlength="80"
+          ></textarea>
+          <span class="contador">{{ data.mensaje?.length || 0 }}/80</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================
+         4. PERSONALIZA LOS COLORES
+         ========================================================== -->
+    <div class="campo">
+      <label>🎨 4. PERSONALIZA LOS COLORES</label>
+
+      <div class="subcampo">
+        <label>Color principal</label>
+        <div class="color-input">
+          <input type="color" [(ngModel)]="data.colorPrincipal" />
+          <input
+            type="text"
+            [(ngModel)]="data.colorPrincipal"
+            placeholder="#c9a87c"
+          />
+        </div>
+      </div>
+
+      <div class="colores-grid">
+        <div class="subcampo">
+          <label>Días</label>
+          <div class="color-input">
+            <input type="color" [(ngModel)]="data.colores.dias" />
+            <input
+              type="text"
+              [(ngModel)]="data.colores.dias"
+              placeholder="#5c3d2e"
+            />
+          </div>
+        </div>
+        <div class="subcampo">
+          <label>Horas</label>
+          <div class="color-input">
+            <input type="color" [(ngModel)]="data.colores.horas" />
+            <input
+              type="text"
+              [(ngModel)]="data.colores.horas"
+              placeholder="#8b6b4a"
+            />
+          </div>
+        </div>
+        <div class="subcampo">
+          <label>Minutos</label>
+          <div class="color-input">
+            <input type="color" [(ngModel)]="data.colores.minutos" />
+            <input
+              type="text"
+              [(ngModel)]="data.colores.minutos"
+              placeholder="#c9a87c"
+            />
+          </div>
+        </div>
+        <div class="subcampo">
+          <label>Segundos</label>
+          <div class="color-input">
+            <input type="color" [(ngModel)]="data.colores.segundos" />
+            <input
+              type="text"
+              [(ngModel)]="data.colores.segundos"
+              placeholder="#e8d5c0"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================
+         5. ETIQUETAS DEL CONTADOR
+         ========================================================== -->
+    <div class="campo">
+      <label>📝 5. ETIQUETAS DEL CONTADOR</label>
+
+      <div class="etiquetas-grid">
+        <div class="subcampo">
+          <label>Días</label>
+          <div class="input-with-counter">
+            <input
+              type="text"
+              [(ngModel)]="data.etiquetas.dias"
+              placeholder="DÍAS"
+              maxlength="10"
+            />
+            <span class="contador"
+              >{{ data.etiquetas.dias?.length || 0 }}/10</span
+            >
+          </div>
+        </div>
+        <div class="subcampo">
+          <label>Horas</label>
+          <div class="input-with-counter">
+            <input
+              type="text"
+              [(ngModel)]="data.etiquetas.horas"
+              placeholder="HORAS"
+              maxlength="10"
+            />
+            <span class="contador"
+              >{{ data.etiquetas.horas?.length || 0 }}/10</span
+            >
+          </div>
+        </div>
+        <div class="subcampo">
+          <label>Minutos</label>
+          <div class="input-with-counter">
+            <input
+              type="text"
+              [(ngModel)]="data.etiquetas.minutos"
+              placeholder="MINUTOS"
+              maxlength="10"
+            />
+            <span class="contador"
+              >{{ data.etiquetas.minutos?.length || 0 }}/10</span
+            >
+          </div>
+        </div>
+        <div class="subcampo">
+          <label>Segundos</label>
+          <div class="input-with-counter">
+            <input
+              type="text"
+              [(ngModel)]="data.etiquetas.segundos"
+              placeholder="SEGUNDOS"
+              maxlength="10"
+            />
+            <span class="contador"
+              >{{ data.etiquetas.segundos?.length || 0 }}/10</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIP -->
+    <div class="contador-tip">
+      <span class="tip-icon">💡</span>
+      <span class="tip-text">
+        El contador se actualizará automáticamente según la fecha que elijas.
+      </span>
+    </div>
+  </div>
+}
+
+<!-- ================================================================
+     MODO: VISTA (PREVIEW)
+     ================================================================ -->
+@if (modo === "vista" && data && data.mostrarSeccion && data.fechaEvento) {
+  <div class="contador-section {{ 'estilo-' + data.estilo }}">
+    <!-- ==========================================================
+         TÍTULO
+         ========================================================== -->
+    <div class="contador-header">
+      <h2 class="contador-titulo">
+        {{ data.titulo || "Faltan para nuestro gran día" }}
+      </h2>
+      <p class="contador-fecha">{{ fechaFormateada }}</p>
+      <div class="contador-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✦</span>
+        <span class="divider-line"></span>
+      </div>
+    </div>
+
+    <!-- ==========================================================
+         CONTADOR
+         ========================================================== -->
+    <div class="contador-numeros">
+      <!-- Días -->
+      <div class="contador-item">
+        <div class="contador-valor" [style.color]="data.colores.dias">
+          {{ formatearNumero(dias) }}
+        </div>
+        <div class="contador-etiqueta" [style.color]="data.colores.dias">
+          {{ data.etiquetas.dias || "DÍAS" }}
+        </div>
+      </div>
+
+      <!-- Horas -->
+      <div class="contador-item">
+        <div class="contador-valor" [style.color]="data.colores.horas">
+          {{ formatearNumero(horas) }}
+        </div>
+        <div class="contador-etiqueta" [style.color]="data.colores.horas">
+          {{ data.etiquetas.horas || "HORAS" }}
+        </div>
+      </div>
+
+      <!-- Minutos -->
+      <div class="contador-item">
+        <div class="contador-valor" [style.color]="data.colores.minutos">
+          {{ formatearNumero(minutos) }}
+        </div>
+        <div class="contador-etiqueta" [style.color]="data.colores.minutos">
+          {{ data.etiquetas.minutos || "MINUTOS" }}
+        </div>
+      </div>
+
+      <!-- Segundos -->
+      <div class="contador-item">
+        <div class="contador-valor" [style.color]="data.colores.segundos">
+          {{ formatearNumero(segundos) }}
+        </div>
+        <div class="contador-etiqueta" [style.color]="data.colores.segundos">
+          {{ data.etiquetas.segundos || "SEGUNDOS" }}
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================
+         MENSAJE
+         ========================================================== -->
+    @if (data.mensaje) {
+      <p class="contador-mensaje">{{ data.mensaje }}</p>
+    }
+  </div>
+}

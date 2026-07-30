@@ -1801,6 +1801,268 @@
           </div>
         </div>
       </div>
+
+      <!-- Acordeón: Contador -->
+      <div class="acordeon">
+        <div
+          class="acordeon-header"
+          (click)="acordeonContador = !acordeonContador"
+        >
+          <span>⏳ Cuenta regresiva</span>
+          <span class="icono">{{ acordeonContador ? "▲" : "▼" }}</span>
+        </div>
+        <div class="acordeon-body" [class.abierto]="acordeonContador">
+          <!-- Mostrar sección -->
+          <div class="campo">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="contadorData.mostrarSeccion"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              Mostrar sección en la invitación
+            </label>
+          </div>
+
+          <!-- 1. FECHA DEL GRAN DÍA -->
+          <div class="campo">
+            <label>📅 1. FECHA DE TU GRAN DÍA</label>
+            <div class="subcampo">
+              <label>Fecha del gran día</label>
+              <input
+                type="date"
+                [(ngModel)]="contadorData.fechaEvento"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+              />
+              <small class="help-text">Selecciona la fecha de tu boda</small>
+            </div>
+          </div>
+
+          <!-- 2. ESTILO DEL CONTADOR -->
+          <div class="campo">
+            <label>🎨 2. ESTILO DEL CONTADOR</label>
+            <div class="estilos-contador-grid">
+              @for (estilo of estilosContador; track estilo) {
+                <div
+                  class="estilo-contador-option"
+                  [class.selected]="contadorData.estilo === estilo.valor"
+                  (click)="seleccionarEstiloContador(estilo.valor)"
+                >
+                  <span class="estilo-contador-icon">{{ estilo.icon }}</span>
+                  <span class="estilo-contador-nombre">{{
+                    estilo.nombre
+                  }}</span>
+                </div>
+              }
+            </div>
+            <small class="help-text">Elige el estilo que más te guste</small>
+          </div>
+
+          <!-- 3. PERSONALIZA LOS TEXTOS -->
+          <div class="campo">
+            <label>✏️ 3. PERSONALIZA LOS TEXTOS</label>
+
+            <div class="subcampo">
+              <label>Título de la sección</label>
+              <div class="input-with-counter">
+                <input
+                  type="text"
+                  [(ngModel)]="contadorData.titulo"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Faltan para nuestro gran día"
+                  maxlength="40"
+                />
+                <span class="contador"
+                  >{{ contadorData.titulo?.length || 0 }}/40</span
+                >
+              </div>
+            </div>
+
+            <div class="subcampo">
+              <label>Mensaje debajo del contador (opcional)</label>
+              <div class="input-with-counter">
+                <textarea
+                  [(ngModel)]="contadorData.mensaje"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="¡No podemos esperar para celebrar contigo!"
+                  rows="2"
+                  maxlength="80"
+                ></textarea>
+                <span class="contador"
+                  >{{ contadorData.mensaje?.length || 0 }}/80</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. PERSONALIZA LOS COLORES -->
+          <div class="campo">
+            <label>🎨 4. PERSONALIZA LOS COLORES</label>
+
+            <div class="subcampo">
+              <label>Color principal</label>
+              <div class="color-input">
+                <input
+                  type="color"
+                  [(ngModel)]="contadorData.colorPrincipal"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                <input
+                  type="text"
+                  [(ngModel)]="contadorData.colorPrincipal"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="#c9a87c"
+                />
+              </div>
+            </div>
+
+            <div class="colores-contador-grid">
+              <div class="subcampo">
+                <label>Días</label>
+                <div class="color-input">
+                  <input
+                    type="color"
+                    [(ngModel)]="contadorData.colores.dias"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                  <input
+                    type="text"
+                    [(ngModel)]="contadorData.colores.dias"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="#5c3d2e"
+                  />
+                </div>
+              </div>
+              <div class="subcampo">
+                <label>Horas</label>
+                <div class="color-input">
+                  <input
+                    type="color"
+                    [(ngModel)]="contadorData.colores.horas"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                  <input
+                    type="text"
+                    [(ngModel)]="contadorData.colores.horas"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="#8b6b4a"
+                  />
+                </div>
+              </div>
+              <div class="subcampo">
+                <label>Minutos</label>
+                <div class="color-input">
+                  <input
+                    type="color"
+                    [(ngModel)]="contadorData.colores.minutos"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                  <input
+                    type="text"
+                    [(ngModel)]="contadorData.colores.minutos"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="#c9a87c"
+                  />
+                </div>
+              </div>
+              <div class="subcampo">
+                <label>Segundos</label>
+                <div class="color-input">
+                  <input
+                    type="color"
+                    [(ngModel)]="contadorData.colores.segundos"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                  <input
+                    type="text"
+                    [(ngModel)]="contadorData.colores.segundos"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="#e8d5c0"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. ETIQUETAS DEL CONTADOR -->
+          <div class="campo">
+            <label>📝 5. ETIQUETAS DEL CONTADOR</label>
+
+            <div class="etiquetas-contador-grid">
+              <div class="subcampo">
+                <label>Días</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="contadorData.etiquetas.dias"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="DÍAS"
+                    maxlength="10"
+                  />
+                  <span class="contador"
+                    >{{ contadorData.etiquetas.dias?.length || 0 }}/10</span
+                  >
+                </div>
+              </div>
+              <div class="subcampo">
+                <label>Horas</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="contadorData.etiquetas.horas"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="HORAS"
+                    maxlength="10"
+                  />
+                  <span class="contador"
+                    >{{ contadorData.etiquetas.horas?.length || 0 }}/10</span
+                  >
+                </div>
+              </div>
+              <div class="subcampo">
+                <label>Minutos</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="contadorData.etiquetas.minutos"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="MINUTOS"
+                    maxlength="10"
+                  />
+                  <span class="contador"
+                    >{{ contadorData.etiquetas.minutos?.length || 0 }}/10</span
+                  >
+                </div>
+              </div>
+              <div class="subcampo">
+                <label>Segundos</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="contadorData.etiquetas.segundos"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="SEGUNDOS"
+                    maxlength="10"
+                  />
+                  <span class="contador"
+                    >{{ contadorData.etiquetas.segundos?.length || 0 }}/10</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tip -->
+          <div class="contador-tip">
+            <span class="tip-icon">💡</span>
+            <span class="tip-text">
+              El contador se actualizará automáticamente según la fecha que
+              elijas.
+            </span>
+          </div>
+        </div>
+      </div>
     }
 
     <!-- ============================================================

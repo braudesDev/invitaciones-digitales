@@ -1,0 +1,529 @@
+/* src/app/components/invitaciones/invitacion-generica/sections/contador-section/contador-section.component.css */
+
+/* ================================================================
+   CONTADOR - ESTILOS COMPLETOS
+   ================================================================ */
+
+/* ============================================
+   MODO EDICIÓN - FORMULARIO
+   ============================================ */
+
+.contador-form {
+  padding: 0.5rem 0;
+}
+
+.form-header {
+  margin-bottom: 1.5rem;
+}
+
+.form-header h3 {
+  color: var(--primary, #5c3d2e);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 0 0.3rem;
+}
+
+.form-desc {
+  color: var(--text, #666);
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.campo {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.1);
+}
+
+.campo:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.campo > label {
+  display: block;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.subcampo {
+  margin-bottom: 12px;
+}
+
+.subcampo label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text, #666);
+  margin-bottom: 4px;
+}
+
+.help-text {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text, #666);
+  opacity: 0.6;
+  margin-top: 0.5rem;
+}
+
+/* Estilos grid */
+.estilos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.estilo-option {
+  background: #f8f5f0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.estilo-option:hover {
+  background: #f0ebe5;
+  transform: translateY(-2px);
+}
+
+.estilo-option.selected {
+  border-color: var(--accent, #c9a87c);
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.25);
+  transform: translateY(-2px);
+}
+
+.estilo-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.estilo-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.estilo-nombre {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+/* Input with counter */
+.input-with-counter {
+  position: relative;
+}
+
+.input-with-counter input,
+.input-with-counter textarea {
+  width: 100%;
+  padding: 10px 60px 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  background: #faf9f8;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.input-with-counter input:focus,
+.input-with-counter textarea:focus {
+  border-color: var(--accent, #c9a87c);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
+  background: #ffffff;
+}
+
+.input-with-counter textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.contador {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-size: 0.7rem;
+  color: #bbb;
+  pointer-events: none;
+  font-weight: 500;
+}
+
+/* Color input */
+.color-input {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.color-input input[type="color"] {
+  width: 50px;
+  height: 44px;
+  padding: 4px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.color-input input[type="text"] {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* Colores grid */
+.colores-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.etiquetas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+.form-control:focus {
+  border-color: var(--accent, #c9a87c);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
+}
+
+/* Tip */
+.contador-tip {
+  margin-top: 1.5rem;
+  padding: 14px 18px;
+  background: #f8f5f0;
+  border-radius: 12px;
+  border-left: 4px solid var(--accent, #c9a87c);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.tip-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tip-text {
+  font-size: 0.82rem;
+  color: var(--text, #666);
+  line-height: 1.6;
+}
+
+/* ============================================
+   MODO VISTA - PREVIEW
+   ============================================ */
+
+.contador-section {
+  padding: 3rem 2rem;
+  background: var(--secondary, #f5ede4);
+  text-align: center;
+  position: relative;
+}
+
+/* Encabezado */
+.contador-header {
+  margin-bottom: 2rem;
+}
+
+.contador-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 400;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.3rem;
+  letter-spacing: 2px;
+}
+
+.contador-fecha {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--accent, #c9a87c);
+  margin: 0.3rem 0 0.5rem;
+  letter-spacing: 3px;
+}
+
+.contador-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 200px;
+  margin: 0.5rem auto 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent, #c9a87c),
+    transparent
+  );
+}
+
+.divider-icon {
+  color: var(--accent, #c9a87c);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Números del contador */
+.contador-numeros {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contador-item {
+  text-align: center;
+  min-width: 70px;
+}
+
+.contador-valor {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.contador-etiqueta {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* Mensaje */
+.contador-mensaje {
+  font-size: 1rem;
+  color: var(--text, #666);
+  font-style: italic;
+  margin: 1.5rem 0 0;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+/* ============================================
+   ESTILOS DEL CONTADOR
+   ============================================ */
+
+/* Clásico elegante */
+.estilo-clasico .contador-valor {
+  font-family: "Playfair Display", serif;
+  font-size: 4rem;
+  background: linear-gradient(
+    180deg,
+    var(--primary, #5c3d2e),
+    var(--accent, #c9a87c)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.estilo-clasico .contador-etiqueta {
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  letter-spacing: 4px;
+}
+
+/* Minimalista */
+.estilo-minimalista .contador-valor {
+  font-weight: 300;
+  font-size: 3.5rem;
+  letter-spacing: 4px;
+}
+
+.estilo-minimalista .contador-etiqueta {
+  font-weight: 300;
+  letter-spacing: 4px;
+  font-size: 0.6rem;
+}
+
+.estilo-minimalista .contador-item {
+  min-width: 60px;
+}
+
+/* Floral */
+.estilo-floral .contador-item {
+  position: relative;
+}
+
+.estilo-floral .contador-item::before {
+  content: "🌸";
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.estilo-floral .contador-item:first-child::before {
+  content: "🌹";
+}
+
+.estilo-floral .contador-item:nth-child(2)::before {
+  content: "🌷";
+}
+
+.estilo-floral .contador-item:nth-child(3)::before {
+  content: "🌻";
+}
+
+.estilo-floral .contador-item:last-child::before {
+  content: "🌺";
+}
+
+.estilo-floral .contador-valor {
+  font-family: "Dancing Script", cursive;
+  font-size: 3.8rem;
+}
+
+/* Romántico */
+.estilo-romantico .contador-valor {
+  font-family: "Great Vibes", cursive;
+  font-size: 4rem;
+  color: var(--accent, #c9a87c);
+}
+
+.estilo-romantico .contador-etiqueta {
+  font-family: "Great Vibes", cursive;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+
+.estilo-romantico .contador-item {
+  border: 1px solid rgba(201, 168, 124, 0.2);
+  padding: 0.8rem 1.2rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .estilos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .colores-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .etiquetas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contador-numeros {
+    gap: 1rem;
+  }
+
+  .contador-item {
+    min-width: 50px;
+  }
+
+  .contador-valor {
+    font-size: 2.5rem !important;
+  }
+
+  .contador-titulo {
+    font-size: 1.6rem;
+  }
+
+  .contador-section {
+    padding: 2rem 1rem;
+  }
+
+  .estilo-floral .contador-item::before {
+    font-size: 1.2rem;
+  }
+
+  .estilo-romantico .contador-item {
+    padding: 0.5rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contador-numeros {
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .contador-item {
+    min-width: 60px;
+    flex: 1;
+  }
+
+  .contador-valor {
+    font-size: 2rem !important;
+  }
+
+  .contador-etiqueta {
+    font-size: 0.55rem !important;
+  }
+
+  .estilo-romantico .contador-item {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .estilo-clasico .contador-valor {
+    font-size: 2.8rem !important;
+  }
+
+  .estilo-floral .contador-item::before {
+    font-size: 1rem;
+  }
+
+  .estilo-romantico .contador-valor {
+    font-size: 2.8rem !important;
+  }
+}

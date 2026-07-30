@@ -2192,3 +2192,153 @@
     min-width: 45px;
   }
 }
+
+/* src/app/components/invitaciones/formulario-invitacion/formulario-invitacion.component.css */
+
+/* Estilos para contador en el formulario */
+
+.estilos-contador-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.estilo-contador-option {
+  background: #f8f5f0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.estilo-contador-option:hover {
+  background: #f0ebe5;
+  transform: translateY(-2px);
+}
+
+.estilo-contador-option.selected {
+  border-color: var(--accent, #c9a87c);
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.25);
+  transform: translateY(-2px);
+}
+
+.estilo-contador-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.estilo-contador-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.estilo-contador-nombre {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+.colores-contador-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.etiquetas-contador-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.subcampo {
+  margin-bottom: 12px;
+}
+
+.subcampo label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text, #666);
+  margin-bottom: 4px;
+}
+
+.color-input {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.color-input input[type="color"] {
+  width: 50px;
+  height: 44px;
+  padding: 4px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.color-input input[type="text"] {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.contador-tip {
+  margin-top: 1.5rem;
+  padding: 14px 18px;
+  background: #f8f5f0;
+  border-radius: 12px;
+  border-left: 4px solid var(--accent, #c9a87c);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.contador-tip .tip-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.contador-tip .tip-text {
+  font-size: 0.82rem;
+  color: var(--text, #666);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .estilos-contador-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .colores-contador-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .etiquetas-contador-grid {
+    grid-template-columns: 1fr;
+  }
+}
