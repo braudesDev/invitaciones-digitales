@@ -31,6 +31,7 @@ import { DressCode } from '../../../models/dress-code.model';
 import { Historia } from '../../../models/historia.model';
 import { Hospedaje } from '../../../models/hospedaje.model';
 import { Galeria } from '../../../models/galeria.model';
+import { Contador } from '../../../models/contador.model';
 
 @Component({
   selector: 'app-invitacion-generica',
@@ -205,6 +206,79 @@ export class InvitacionGenericaComponent implements OnInit {
       mostrarControles: (g as any).mostrarControles ?? true,
       mostrarCompartir: (g as any).mostrarCompartir ?? true,
       mostrarPaginacion: (g as any).mostrarPaginacion ?? true,
+    };
+  }
+
+  get defaultContador(): Contador {
+    return {
+      mostrarSeccion: true,
+      fechaEvento: '',
+      estilo: 'clasico',
+      titulo: 'Faltan para nuestro gran día',
+      mensaje: '¡No podemos esperar para celebrar contigo!',
+      colorPrincipal: '#c9a87c',
+      colores: {
+        dias: '#5c3d2e',
+        horas: '#8b6b4a',
+        minutos: '#c9a87c',
+        segundos: '#e8d5c0',
+      },
+      etiquetas: {
+        dias: 'DÍAS',
+        horas: 'HORAS',
+        minutos: 'MINUTOS',
+        segundos: 'SEGUNDOS',
+      },
+    };
+  }
+
+  get contadorFormateado(): Contador {
+    const c = this.data?.contador || {};
+
+    console.log('📊 Contador raw:', c);
+
+    // Si viene como string, convertirlo (por si acaso)
+    let contadorData = c;
+    if (typeof c === 'string') {
+      try {
+        contadorData = JSON.parse(c);
+      } catch (e) {
+        console.error('Error parsing contador:', e);
+        contadorData = {};
+      }
+    }
+
+    // Mapear fechaObjetivo a fechaEvento si existe
+    const fechaEvento =
+      (contadorData as any).fechaEvento ||
+      (contadorData as any).fechaObjetivo ||
+      '';
+
+    // Asegurar que colores y etiquetas tengan estructura correcta
+    const colores = (contadorData as any).colores || {};
+    const etiquetas = (contadorData as any).etiquetas || {};
+
+    return {
+      mostrarSeccion: (contadorData as any).mostrarSeccion ?? true,
+      fechaEvento: fechaEvento,
+      estilo: (contadorData as any).estilo || 'clasico',
+      titulo: (contadorData as any).titulo || 'Faltan para nuestro gran día',
+      mensaje:
+        (contadorData as any).mensaje ||
+        '¡No podemos esperar para celebrar contigo!',
+      colorPrincipal: (contadorData as any).colorPrincipal || '#c9a87c',
+      colores: {
+        dias: colores.dias || '#5c3d2e',
+        horas: colores.horas || '#8b6b4a',
+        minutos: colores.minutos || '#c9a87c',
+        segundos: colores.segundos || '#e8d5c0',
+      },
+      etiquetas: {
+        dias: etiquetas.dias || 'DÍAS',
+        horas: etiquetas.horas || 'HORAS',
+        minutos: etiquetas.minutos || 'MINUTOS',
+        segundos: etiquetas.segundos || 'SEGUNDOS',
+      },
     };
   }
 }

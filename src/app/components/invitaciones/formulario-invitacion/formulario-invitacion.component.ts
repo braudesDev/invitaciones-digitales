@@ -35,6 +35,8 @@ import {
   getEstiloIcon,
   getEstiloDescripcion,
 } from '../../../models/dress-code.model'; // Modelos y utilidades de dress code
+import { Contador } from '../../../models/contador.model'; // Modelo y utilidades del contador
+import { ESTILOS_CONTADOR } from '../../../models/contador.model';
 
 // ================================================================
 // 1. INTERFAZ: Invitación Completa
@@ -154,6 +156,7 @@ export interface InvitacionCompleta {
     mostrarCompartir: boolean;
     mostrarPaginacion: boolean;
   };
+  contador?: Contador; //
 }
 
 // ================================================================
@@ -350,6 +353,27 @@ export class FormularioInvitacionComponent implements OnInit {
     confirmacion: { telefono: '', whatsapp: '', link: '' }, // Confirmación (vacía)
     hashtag: '',
     consideraciones: '',
+
+    contador: {
+      mostrarSeccion: true,
+      fechaEvento: '',
+      estilo: 'clasico',
+      titulo: 'Faltan para nuestro gran día',
+      mensaje: '¡No podemos esperar para celebrar contigo!',
+      colorPrincipal: '#c9a87c',
+      colores: {
+        dias: '#5c3d2e',
+        horas: '#8b6b4a',
+        minutos: '#c9a87c',
+        segundos: '#e8d5c0',
+      },
+      etiquetas: {
+        dias: 'DÍAS',
+        horas: 'HORAS',
+        minutos: 'MINUTOS',
+        segundos: 'SEGUNDOS',
+      },
+    },
   };
 
   // ==============================================================
@@ -367,6 +391,7 @@ export class FormularioInvitacionComponent implements OnInit {
   acordeonDressCode = false; // Sección de dress code
   acordeonHistoria = false; // Sección de historia
   acordeonHospedaje = false; // Sección de hospedaje
+  acordeonContador = false; // Seccion del contador
   imagenSubiendo = false; // Estado de subida de imagen
 
   // ==============================================================
@@ -767,6 +792,26 @@ export class FormularioInvitacionComponent implements OnInit {
         confirmacion: { telefono: '', whatsapp: '', link: '' },
         hashtag: '',
         consideraciones: '',
+        contador: {
+          mostrarSeccion: true,
+          fechaEvento: '',
+          estilo: 'clasico',
+          titulo: 'Faltan para nuestro gran día',
+          mensaje: '¡No podemos esperar para celebrar contigo!',
+          colorPrincipal: '#c9a87c',
+          colores: {
+            dias: '#5c3d2e',
+            horas: '#8b6b4a',
+            minutos: '#c9a87c',
+            segundos: '#e8d5c0',
+          },
+          etiquetas: {
+            dias: 'DÍAS',
+            horas: 'HORAS',
+            minutos: 'MINUTOS',
+            segundos: 'SEGUNDOS',
+          },
+        },
       };
       this.tabActivo = 'basico'; // Vuelve a la pestaña básica
     } catch (err) {
@@ -1416,6 +1461,49 @@ export class FormularioInvitacionComponent implements OnInit {
 
   get galeriaFotos(): any[] {
     return this.nuevaInvitacion.galeria?.fotos || [];
+  }
+
+  get estilosContador() {
+    return ESTILOS_CONTADOR;
+  }
+
+  get contadorData(): Contador {
+    if (!this.nuevaInvitacion.contador) {
+      // Si no existe, crear uno por defecto
+      this.nuevaInvitacion.contador = {
+        mostrarSeccion: true,
+        fechaEvento: '',
+        estilo: 'clasico',
+        titulo: 'Faltan para nuestro gran día',
+        mensaje: '¡No podemos esperar para celebrar contigo!',
+        colorPrincipal: '#c9a87c',
+        colores: {
+          dias: '#5c3d2e',
+          horas: '#8b6b4a',
+          minutos: '#c9a87c',
+          segundos: '#e8d5c0',
+        },
+        etiquetas: {
+          dias: 'DÍAS',
+          horas: 'HORAS',
+          minutos: 'MINUTOS',
+          segundos: 'SEGUNDOS',
+        },
+      };
+    }
+    return this.nuevaInvitacion.contador;
+  }
+
+  seleccionarEstiloContador(estilo: string) {
+    // Validar que el estilo sea uno de los permitidos
+    const estilosPermitidos = ['clasico', 'minimalista', 'floral', 'romantico'];
+    if (estilosPermitidos.includes(estilo)) {
+      this.contadorData.estilo = estilo as
+        | 'clasico'
+        | 'minimalista'
+        | 'floral'
+        | 'romantico';
+    }
   }
 
   /**
