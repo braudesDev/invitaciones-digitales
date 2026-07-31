@@ -1,7 +1,9 @@
-/* hospedaje-section.component.css */
+/* ================================================================
+   HOSPEDAJE - ESTILOS COMPLETOS CON IMÁGENES
+   ================================================================ */
 
 /* ============================================
-   HOSPEDAJE - VISTA PÚBLICA
+   BASE
    ============================================ */
 
 .hospedaje-section {
@@ -89,24 +91,50 @@
   font-family: "Georgia", serif;
 }
 
-/* ============================================
-   ESTILO: TARJETAS - VERSIÓN MODERNA
-   ============================================ */
-
-.hospedaje-tarjetas {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 0 10px 0;
+.hospedaje-texto-adicional {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 2rem auto 0;
+  color: var(--text, #666);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-style: italic;
+  opacity: 0.7;
 }
 
 /* ============================================
-   TARJETA INDIVIDUAL
+   ESTILO: TARJETAS - SCROLL HORIZONTAL
    ============================================ */
 
+.hospedaje-tarjetas {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 16px 8px 24px;
+  max-width: 100%;
+  margin: 0 auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.hospedaje-tarjetas::-webkit-scrollbar {
+  height: 6px;
+}
+
+.hospedaje-tarjetas::-webkit-scrollbar-thumb {
+  background: var(--accent, #c9a87c);
+  border-radius: 3px;
+}
+
+.hospedaje-tarjetas::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
 .hospedaje-tarjeta {
+  flex: 0 0 300px;
   background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
@@ -115,8 +143,9 @@
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: auto;
   position: relative;
+  scroll-snap-align: start;
 }
 
 .hospedaje-tarjeta:hover {
@@ -124,30 +153,6 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
   border-color: var(--accent, #c9a87c);
 }
-
-/* ============================================
-   BADGE DE DESTACADO (opcional)
-   ============================================ */
-
-.hospedaje-tarjeta .tarjeta-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: var(--accent, #c9a87c);
-  color: white;
-  padding: 4px 14px;
-  border-radius: 20px;
-  font-size: 0.65rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  z-index: 2;
-  box-shadow: 0 2px 12px rgba(201, 168, 124, 0.3);
-}
-
-/* ============================================
-   IMAGEN DE LA TARJETA
-   ============================================ */
 
 .tarjeta-imagen {
   width: 100%;
@@ -161,7 +166,6 @@
   transform: scale(1.03);
 }
 
-/* Placeholder si no hay imagen */
 .tarjeta-imagen-placeholder {
   width: 100%;
   height: 200px;
@@ -177,10 +181,6 @@
   opacity: 0.4;
   flex-shrink: 0;
 }
-
-/* ============================================
-   CONTENIDO DE LA TARJETA
-   ============================================ */
 
 .tarjeta-contenido {
   padding: 1.2rem 1.2rem 1.5rem;
@@ -226,10 +226,6 @@
   margin: 0.15rem 0 0.6rem;
 }
 
-/* ============================================
-   BOTÓN EN TARJETA
-   ============================================ */
-
 .tarjeta-contenido .btn-hospedaje {
   display: inline-flex;
   align-items: center;
@@ -247,89 +243,62 @@
   border: 2px solid transparent;
   cursor: pointer;
   letter-spacing: 0.5px;
-  position: relative;
-  overflow: hidden;
   align-self: flex-start;
-}
-
-/* Efecto de brillo en hover */
-.tarjeta-contenido .btn-hospedaje::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
-
-.tarjeta-contenido .btn-hospedaje:hover::before {
-  left: 100%;
 }
 
 .tarjeta-contenido .btn-hospedaje:hover {
   background: var(--primary, #5c3d2e);
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(201, 168, 124, 0.35);
-  border-color: var(--primary, #5c3d2e);
-}
-
-.tarjeta-contenido .btn-hospedaje:active {
-  transform: scale(0.97);
-}
-
-/* Icono del botón (flecha) */
-.tarjeta-contenido .btn-hospedaje .btn-icono {
-  font-size: 0.9rem;
-  transition: transform 0.3s ease;
-  display: inline-block;
-}
-
-.tarjeta-contenido .btn-hospedaje:hover .btn-icono {
-  transform: translateX(4px);
 }
 
 /* ============================================
-   TARJETAS - RESPONSIVE MEJORADO
+   INDICADOR DE SCROLL
+   ============================================ */
+
+.scroll-indicator {
+  margin-top: 0.8rem;
+  text-align: center;
+  color: var(--text, #666);
+  font-size: 0.8rem;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.scroll-indicator .scroll-arrow {
+  display: inline-block;
+  animation: scrollPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(8px);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   RESPONSIVE TARJETAS
    ============================================ */
 
 @media (max-width: 768px) {
-  .hospedaje-tarjetas {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
-    max-width: 500px;
-    padding: 0 8px;
+  .hospedaje-tarjeta {
+    flex: 0 0 260px;
   }
-
-  .tarjeta-imagen {
-    height: 150px;
-  }
-
+  .tarjeta-imagen,
   .tarjeta-imagen-placeholder {
-    height: 150px;
-    font-size: 2.2rem;
+    height: 160px;
   }
-
-  .tarjeta-titulo {
-    font-size: 1rem;
-  }
-
-  .tarjeta-contenido {
-    padding: 0.8rem 0.8rem 1rem;
-  }
-
-  .tarjeta-ubicacion,
-  .tarjeta-distancia,
-  .tarjeta-capacidad {
-    font-size: 0.8rem;
-  }
-
   .tarjeta-contenido .btn-hospedaje {
     padding: 0.4rem 1.2rem;
     font-size: 0.75rem;
@@ -337,36 +306,24 @@
 }
 
 @media (max-width: 480px) {
-  .hospedaje-tarjetas {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    max-width: 100%;
-    padding: 0 4px;
+  .hospedaje-tarjeta {
+    flex: 0 0 220px;
   }
-
-  .tarjeta-imagen {
-    height: 120px;
-  }
-
+  .tarjeta-imagen,
   .tarjeta-imagen-placeholder {
-    height: 120px;
-    font-size: 1.8rem;
+    height: 140px;
   }
-
   .tarjeta-titulo {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
-
   .tarjeta-ubicacion,
   .tarjeta-distancia,
   .tarjeta-capacidad {
     font-size: 0.7rem;
   }
-
   .tarjeta-contenido {
-    padding: 0.5rem 0.5rem 0.8rem;
+    padding: 0.5rem 0.8rem 0.8rem;
   }
-
   .tarjeta-contenido .btn-hospedaje {
     padding: 0.3rem 0.8rem;
     font-size: 0.65rem;
@@ -374,6 +331,28 @@
     justify-content: center;
   }
 }
+
+/* ============================================
+   HIDE SCROLLBAR (opcional - para navegadores que lo soporten)
+   ============================================ */
+
+.hospedaje-tarjetas {
+  scrollbar-width: thin;
+}
+
+.hospedaje-tarjetas::-webkit-scrollbar {
+  height: 4px;
+}
+
+.hospedaje-tarjetas::-webkit-scrollbar-thumb {
+  background: var(--accent, #c9a87c);
+  border-radius: 2px;
+}
+
+.hospedaje-tarjetas::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 /* ============================================
    ESTILO: TIMELINE - CON IMAGEN A LA IZQUIERDA
    ============================================ */
@@ -383,9 +362,26 @@
   margin: 0 auto;
   padding: 20px 0 20px 40px;
   position: relative;
+  max-height: 600px; /* 👈 Límite de altura */
+  overflow-y: auto; /* 👈 Scroll vertical */
+  padding-right: 8px; /* 👈 Espacio para scrollbar */
 }
 
-/* Línea vertical con degradado */
+/* Scrollbar personalizada para timeline */
+.hospedaje-timeline::-webkit-scrollbar {
+  width: 4px;
+}
+
+.hospedaje-timeline::-webkit-scrollbar-thumb {
+  background: var(--accent, #c9a87c);
+  border-radius: 2px;
+}
+
+.hospedaje-timeline::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}
+
 .hospedaje-timeline::before {
   content: "";
   position: absolute;
@@ -398,7 +394,7 @@
 }
 
 /* ============================================
-   ITEM DE TIMELINE
+   ITEM CON ANIMACIÓN DE ENTRADA
    ============================================ */
 
 .timeline-item {
@@ -407,6 +403,36 @@
   margin-bottom: 2.5rem;
   text-align: left;
   position: relative;
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.timeline-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.timeline-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.timeline-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.timeline-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.timeline-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .timeline-item:last-child {
@@ -414,7 +440,7 @@
 }
 
 /* ============================================
-   MARCADOR CON EFECTO
+   MARCADOR CON EFECTO MEJORADO
    ============================================ */
 
 .timeline-marker {
@@ -430,7 +456,6 @@
   font-weight: 700;
   font-size: 0.75rem;
   margin-top: 2px;
-  position: relative;
   z-index: 2;
   box-shadow:
     0 0 0 4px var(--secondary, #f5ede4),
@@ -438,48 +463,51 @@
   transition: all 0.3s ease;
 }
 
-.timeline-marker::after {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 2px solid var(--accent, #c9a87c);
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-
 .timeline-item:hover .timeline-marker {
   transform: scale(1.15);
   box-shadow:
     0 0 0 4px var(--secondary, #f5ede4),
-    0 6px 28px rgba(201, 168, 124, 0.45);
-}
-
-.timeline-item:hover .timeline-marker::after {
-  opacity: 1;
-  transform: scale(1.3);
+    0 6px 28px rgba(201, 168, 124, 0.5);
 }
 
 /* ============================================
-   CONTENIDO DE LA TARJETA - CON IMAGEN
+   BADGE DE DESTACADO (opcional)
+   ============================================ */
+
+.timeline-badge {
+  position: absolute;
+  top: -8px;
+  right: 16px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  padding: 2px 12px;
+  border-radius: 20px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 12px rgba(201, 168, 124, 0.3);
+  z-index: 3;
+}
+
+/* ============================================
+   CONTENIDO CON MEJOR VISIBILIDAD
    ============================================ */
 
 .timeline-content {
   flex: 1;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.95);
   padding: 0.8rem 1.2rem 1.2rem;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
-  position: relative;
   display: flex;
   gap: 16px;
   align-items: flex-start;
+  position: relative;
 }
 
-/* Flecha que apunta al marcador */
 .timeline-content::before {
   content: "";
   position: absolute;
@@ -489,18 +517,18 @@
   height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right: 10px solid rgba(255, 255, 255, 0.92);
-  transition: all 0.3s ease;
+  border-right: 10px solid rgba(255, 255, 255, 0.95);
 }
 
 .timeline-item:hover .timeline-content {
   transform: translateX(6px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border-color: var(--accent, #c9a87c);
+  background: rgba(255, 255, 255, 0.98);
 }
 
 /* ============================================
-   IMAGEN EN LA TIMELINE
+   IMAGEN MEJORADA
    ============================================ */
 
 .timeline-imagen-wrapper {
@@ -511,6 +539,8 @@
   flex-shrink: 0;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
+  background: var(--secondary, #f5ede4);
+  position: relative;
 }
 
 .timeline-item:hover .timeline-imagen-wrapper {
@@ -525,7 +555,6 @@
   display: block;
 }
 
-/* Placeholder si no hay imagen */
 .timeline-imagen-wrapper.sin-imagen {
   background: linear-gradient(
     135deg,
@@ -540,7 +569,7 @@
 }
 
 /* ============================================
-   INFO DE LA TIMELINE
+   INFO
    ============================================ */
 
 .timeline-info {
@@ -565,11 +594,7 @@
   gap: 6px;
   font-size: 0.85rem;
   color: var(--text, #666);
-  margin: 0.2rem 0;
-}
-
-.timeline-ubicacion {
-  margin-top: 0.3rem;
+  margin: 0.15rem 0;
 }
 
 /* ============================================
@@ -581,7 +606,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 0.8rem;
+  margin-top: 0.6rem;
   padding: 0.5rem 1.6rem;
   background: var(--accent, #c9a87c);
   color: white;
@@ -597,7 +622,7 @@
   overflow: hidden;
 }
 
-/* Efecto de brillo en hover */
+/* Efecto de brillo */
 .timeline-info .btn-hospedaje::before {
   content: "";
   position: absolute;
@@ -620,127 +645,98 @@
 
 .timeline-info .btn-hospedaje:hover {
   background: var(--primary, #5c3d2e);
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(201, 168, 124, 0.35);
   border-color: var(--primary, #5c3d2e);
 }
 
-.timeline-info .btn-hospedaje:active {
-  transform: scale(0.97);
-}
-
-/* Icono del botón (flecha) */
-.timeline-info .btn-hospedaje .btn-icono {
-  font-size: 0.9rem;
-  transition: transform 0.3s ease;
-  display: inline-block;
-}
-
-.timeline-info .btn-hospedaje:hover .btn-icono {
-  transform: translateX(4px);
-}
-
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE MEJORADO
    ============================================ */
 
 @media (max-width: 768px) {
   .hospedaje-timeline {
     padding: 16px 0 16px 30px;
+    max-height: 500px;
   }
-
   .hospedaje-timeline::before {
     left: 12px;
   }
-
   .timeline-marker {
     width: 30px;
     height: 30px;
     font-size: 0.65rem;
-    margin-top: 4px;
   }
-
   .timeline-content {
-    padding: 0.8rem 1rem 1rem;
-    border-radius: 12px;
     flex-direction: column;
     gap: 12px;
   }
-
   .timeline-content::before {
     left: -8px;
     top: 14px;
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
-    border-right: 8px solid rgba(255, 255, 255, 0.92);
+    border-right: 8px solid rgba(255, 255, 255, 0.95);
   }
-
   .timeline-imagen-wrapper {
     flex: 0 0 auto;
     width: 100%;
-    height: 160px;
+    height: 180px;
   }
-
   .timeline-titulo {
     font-size: 1.1rem;
   }
-
   .timeline-item {
-    gap: 16px;
-    margin-bottom: 2rem;
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
-
-  .timeline-info .btn-hospedaje {
-    padding: 0.5rem 1.4rem;
-    font-size: 0.8rem;
+  .timeline-badge {
+    top: -4px;
+    right: 8px;
+    font-size: 0.55rem;
+    padding: 2px 10px;
   }
 }
 
 @media (max-width: 480px) {
   .hospedaje-timeline {
-    padding: 12px 0 12px 20px;
+    padding: 12px 0 12px 16px;
+    max-height: 400px;
   }
-
   .hospedaje-timeline::before {
     left: 8px;
   }
-
   .timeline-marker {
     width: 24px;
     height: 24px;
     font-size: 0.55rem;
   }
-
   .timeline-content {
     padding: 0.6rem 0.8rem 0.8rem;
-    border-radius: 10px;
+    border-radius: 12px;
   }
-
   .timeline-content::before {
     display: none;
   }
-
   .timeline-imagen-wrapper {
     height: 140px;
+    border-radius: 8px;
   }
-
   .timeline-titulo {
     font-size: 0.95rem;
   }
-
   .timeline-ubicacion,
   .timeline-distancia,
   .timeline-capacidad {
     font-size: 0.75rem;
   }
-
   .timeline-item {
-    gap: 12px;
+    gap: 10px;
     margin-bottom: 1.5rem;
   }
-
   .timeline-info .btn-hospedaje {
-    padding: 0.4rem 1.2rem;
+    padding: 0.4rem 1rem;
     font-size: 0.75rem;
     width: 100%;
     justify-content: center;
@@ -748,25 +744,39 @@
 }
 
 /* ============================================
-   ESTILO: CATÁLOGO - VERSIÓN MODERNA
+   ESTILO: CATÁLOGO - SCROLL HORIZONTAL
    ============================================ */
 
 .hospedaje-catalogo {
   display: flex;
-  flex-direction: column;
-  gap: 24px;
-  max-width: 800px;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 16px 8px 24px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 0 10px 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
-/* ============================================
-   ITEM DEL CATÁLOGO
-   ============================================ */
+.hospedaje-catalogo::-webkit-scrollbar {
+  height: 6px;
+}
+
+.hospedaje-catalogo::-webkit-scrollbar-thumb {
+  background: var(--accent, #c9a87c);
+  border-radius: 3px;
+}
+
+.hospedaje-catalogo::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
 
 .catalogo-item {
+  flex: 0 0 380px;
   display: flex;
-  gap: 0;
+  flex-direction: column;
   background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
@@ -775,21 +785,43 @@
   text-align: left;
   transition: all 0.3s ease;
   position: relative;
+  scroll-snap-align: start;
 }
 
 .catalogo-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
   border-color: var(--accent, #c9a87c);
 }
 
 /* ============================================
-   IMAGEN DEL CATÁLOGO
+   BADGE DE DESTACADO
+   ============================================ */
+
+.catalogo-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  box-shadow: 0 2px 12px rgba(201, 168, 124, 0.3);
+}
+
+/* ============================================
+   IMAGEN
    ============================================ */
 
 .catalogo-imagen-wrapper {
-  flex: 0 0 220px;
-  height: 180px;
+  flex: 0 0 auto;
+  width: 100%;
+  height: 200px;
   overflow: hidden;
   flex-shrink: 0;
   position: relative;
@@ -806,7 +838,6 @@
   transform: scale(1.05);
 }
 
-/* Placeholder si no hay imagen */
 .catalogo-imagen-wrapper.sin-imagen {
   background: linear-gradient(
     135deg,
@@ -821,35 +852,14 @@
 }
 
 /* ============================================
-   BADGE DE DESTACADO (opcional)
-   ============================================ */
-
-.catalogo-item .catalogo-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: var(--accent, #c9a87c);
-  color: white;
-  padding: 4px 14px;
-  border-radius: 20px;
-  font-size: 0.65rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  z-index: 2;
-  box-shadow: 0 2px 12px rgba(201, 168, 124, 0.3);
-}
-
-/* ============================================
-   INFO DEL CATÁLOGO
+   INFO
    ============================================ */
 
 .catalogo-info {
-  padding: 1.2rem 1.5rem 1.5rem;
+  padding: 1.2rem 1.2rem 1.5rem;
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .catalogo-titulo {
@@ -861,16 +871,9 @@
   letter-spacing: 0.5px;
 }
 
-.catalogo-ubicacion {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: var(--text, #666);
-  margin: 0.2rem 0;
-}
-
-.catalogo-distancia {
+.catalogo-ubicacion,
+.catalogo-distancia,
+.catalogo-capacidad {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -879,17 +882,8 @@
   margin: 0.15rem 0;
 }
 
-.catalogo-capacidad {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: var(--text, #666);
-  margin: 0.15rem 0 0.6rem;
-}
-
 /* ============================================
-   BOTÓN EN CATÁLOGO
+   BOTÓN
    ============================================ */
 
 .catalogo-info .btn-hospedaje {
@@ -909,12 +903,12 @@
   border: 2px solid transparent;
   cursor: pointer;
   letter-spacing: 0.5px;
+  align-self: flex-start;
   position: relative;
   overflow: hidden;
-  align-self: flex-start;
 }
 
-/* Efecto de brillo en hover */
+/* Efecto de brillo */
 .catalogo-info .btn-hospedaje::before {
   content: "";
   position: absolute;
@@ -946,58 +940,52 @@
   transform: scale(0.97);
 }
 
-/* Icono del botón (flecha) */
-.catalogo-info .btn-hospedaje .btn-icono {
-  font-size: 0.9rem;
-  transition: transform 0.3s ease;
-  display: inline-block;
+/* ============================================
+   INDICADOR DE SCROLL
+   ============================================ */
+
+.scroll-indicator {
+  margin-top: 0.8rem;
+  text-align: center;
+  color: var(--text, #666);
+  font-size: 0.8rem;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
-.catalogo-info .btn-hospedaje:hover .btn-icono {
-  transform: translateX(4px);
+.scroll-indicator .scroll-arrow {
+  display: inline-block;
+  animation: scrollPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(8px);
+    opacity: 1;
+  }
 }
 
 /* ============================================
-   CATÁLOGO - RESPONSIVE MEJORADO
+   RESPONSIVE CATÁLOGO
    ============================================ */
 
 @media (max-width: 768px) {
-  .hospedaje-catalogo {
-    max-width: 500px;
-    gap: 16px;
-    padding: 0 8px;
-  }
-
   .catalogo-item {
-    flex-direction: column;
-    border-radius: 14px;
+    flex: 0 0 320px;
   }
-
   .catalogo-imagen-wrapper {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 160px;
+    height: 180px;
   }
-
-  .catalogo-imagen-wrapper.sin-imagen {
-    height: 160px;
-    font-size: 2.5rem;
-  }
-
-  .catalogo-info {
-    padding: 0.8rem 1rem 1rem;
-  }
-
-  .catalogo-titulo {
-    font-size: 1rem;
-  }
-
-  .catalogo-ubicacion,
-  .catalogo-distancia,
-  .catalogo-capacidad {
-    font-size: 0.8rem;
-  }
-
   .catalogo-info .btn-hospedaje {
     padding: 0.4rem 1.2rem;
     font-size: 0.75rem;
@@ -1006,63 +994,75 @@
 
 @media (max-width: 480px) {
   .hospedaje-catalogo {
-    max-width: 100%;
-    gap: 12px;
-    padding: 0 4px;
+    gap: 14px;
+    padding: 12px 4px 20px;
   }
-
   .catalogo-item {
+    flex: 0 0 280px;
     border-radius: 12px;
   }
-
   .catalogo-imagen-wrapper {
-    height: 140px;
+    height: 150px;
   }
-
   .catalogo-imagen-wrapper.sin-imagen {
-    height: 140px;
+    height: 150px;
     font-size: 2rem;
   }
-
   .catalogo-info {
     padding: 0.6rem 0.8rem 0.8rem;
   }
-
   .catalogo-titulo {
     font-size: 0.9rem;
   }
-
   .catalogo-ubicacion,
   .catalogo-distancia,
   .catalogo-capacidad {
     font-size: 0.7rem;
   }
-
   .catalogo-info .btn-hospedaje {
     padding: 0.3rem 0.8rem;
     font-size: 0.65rem;
     width: 100%;
     justify-content: center;
   }
+  .catalogo-badge {
+    font-size: 0.5rem;
+    padding: 2px 10px;
+  }
 }
+
 /* ============================================
-   ESTILO: ÍCONOS - CON IMÁGENES REDONDAS
+   ESTILO: ÍCONOS - SCROLL HORIZONTAL
    ============================================ */
 
 .hospedaje-iconos {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  display: flex;
   gap: 20px;
-  max-width: 800px;
+  overflow-x: auto;
+  padding: 16px 8px 24px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 0 10px 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
-/* ============================================
-   ITEM DE ÍCONOS
-   ============================================ */
+.hospedaje-iconos::-webkit-scrollbar {
+  height: 6px;
+}
+
+.hospedaje-iconos::-webkit-scrollbar-thumb {
+  background: var(--accent, #c9a87c);
+  border-radius: 3px;
+}
+
+.hospedaje-iconos::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
 
 .icono-item {
+  flex: 0 0 200px;
   background: #ffffff;
   padding: 1.8rem 1.2rem 1.5rem;
   border-radius: 16px;
@@ -1074,6 +1074,7 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  scroll-snap-align: start;
 }
 
 .icono-item:hover {
@@ -1083,7 +1084,26 @@
 }
 
 /* ============================================
-   IMAGEN REDONDA (AVATAR)
+   BADGE DE DESTACADO
+   ============================================ */
+
+.icono-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  padding: 2px 12px;
+  border-radius: 20px;
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 12px rgba(201, 168, 124, 0.3);
+}
+
+/* ============================================
+   IMAGEN REDONDA
    ============================================ */
 
 .icono-imagen-wrapper {
@@ -1112,7 +1132,6 @@
   display: block;
 }
 
-/* Placeholder si no hay imagen */
 .icono-imagen-placeholder {
   width: 100%;
   height: 100%;
@@ -1125,26 +1144,7 @@
 }
 
 /* ============================================
-   BADGE DE DESTACADO (opcional)
-   ============================================ */
-
-.icono-item .icono-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: var(--accent, #c9a87c);
-  color: white;
-  padding: 2px 12px;
-  border-radius: 20px;
-  font-size: 0.6rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 12px rgba(201, 168, 124, 0.3);
-}
-
-/* ============================================
-   TÍTULO
+   TÍTULO Y UBICACIÓN
    ============================================ */
 
 .icono-titulo {
@@ -1157,10 +1157,6 @@
   line-height: 1.3;
 }
 
-/* ============================================
-   UBICACIÓN
-   ============================================ */
-
 .icono-ubicacion {
   font-size: 0.8rem;
   color: var(--text, #666);
@@ -1172,7 +1168,7 @@
 }
 
 /* ============================================
-   DETALLES ADICIONALES
+   DETALLES (distancia, capacidad)
    ============================================ */
 
 .icono-detalles {
@@ -1195,7 +1191,7 @@
 }
 
 /* ============================================
-   BOTÓN
+   BOTÓN CON EFECTO
    ============================================ */
 
 .icono-item .btn-hospedaje {
@@ -1215,13 +1211,13 @@
   border: 2px solid transparent;
   cursor: pointer;
   letter-spacing: 0.5px;
-  position: relative;
-  overflow: hidden;
   width: 100%;
   max-width: 160px;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Efecto de brillo en hover */
+/* Efecto de brillo */
 .icono-item .btn-hospedaje::before {
   content: "";
   position: absolute;
@@ -1253,40 +1249,57 @@
   transform: scale(0.97);
 }
 
-.icono-item .btn-hospedaje .btn-icono {
+/* ============================================
+   INDICADOR DE SCROLL
+   ============================================ */
+
+.scroll-indicator {
+  margin-top: 0.8rem;
+  text-align: center;
+  color: var(--text, #666);
   font-size: 0.8rem;
-  transition: transform 0.3s ease;
-  display: inline-block;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
-.icono-item .btn-hospedaje:hover .btn-icono {
-  transform: translateX(4px);
+.scroll-indicator .scroll-arrow {
+  display: inline-block;
+  animation: scrollPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(8px);
+    opacity: 1;
+  }
 }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE ÍCONOS
    ============================================ */
 
 @media (max-width: 768px) {
-  .hospedaje-iconos {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
-    max-width: 600px;
-  }
-
   .icono-item {
+    flex: 0 0 170px;
     padding: 1.2rem 0.8rem 1.2rem;
   }
-
   .icono-imagen-wrapper {
     width: 60px;
     height: 60px;
   }
-
   .icono-titulo {
     font-size: 0.95rem;
   }
-
   .icono-item .btn-hospedaje {
     padding: 0.4rem 1rem;
     font-size: 0.7rem;
@@ -1296,64 +1309,77 @@
 
 @media (max-width: 480px) {
   .hospedaje-iconos {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    max-width: 380px;
+    gap: 14px;
+    padding: 12px 4px 20px;
   }
-
   .icono-item {
+    flex: 0 0 150px;
     padding: 1rem 0.6rem 1rem;
     border-radius: 12px;
   }
-
   .icono-imagen-wrapper {
     width: 50px;
     height: 50px;
     border-width: 2px;
   }
-
   .icono-imagen-placeholder {
     font-size: 1.5rem;
   }
-
   .icono-titulo {
     font-size: 0.85rem;
   }
-
   .icono-ubicacion {
     font-size: 0.7rem;
   }
-
   .icono-detalle {
     font-size: 0.6rem;
     padding: 1px 8px;
   }
-
   .icono-item .btn-hospedaje {
     padding: 0.3rem 0.8rem;
-    font-size: 0.65rem;
-    max-width: 120px;
+    font-size: 0.6rem;
+    max-width: 110px;
+  }
+  .icono-badge {
+    font-size: 0.45rem;
+    padding: 1px 8px;
+    top: 6px;
+    right: 6px;
   }
 }
 
 /* ============================================
-   ESTILO: MOSAICO - VERSIÓN MODERNA
+   ESTILO: MOSAICO - CON SCROLL HORIZONTAL
    ============================================ */
 
 .hospedaje-mosaico {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 14px;
-  max-width: 950px;
+  overflow-x: auto;
+  padding: 16px 8px 24px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 0 10px 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
-/* ============================================
-   ITEMS DEL MOSAICO
-   ============================================ */
+.hospedaje-mosaico::-webkit-scrollbar {
+  height: 6px;
+}
+
+.hospedaje-mosaico::-webkit-scrollbar-thumb {
+  background: var(--accent, #c9a87c);
+  border-radius: 3px;
+}
+
+.hospedaje-mosaico::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
 
 .mosaico-item {
+  flex: 0 0 280px;
   position: relative;
   border-radius: 14px;
   overflow: hidden;
@@ -1362,24 +1388,37 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
   background: var(--secondary, #f5ede4);
+  scroll-snap-align: start;
+}
+
+/* Item más grande (destacado) */
+.mosaico-grande {
+  flex: 0 0 380px;
 }
 
 .mosaico-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Item grande (2x2) */
-.mosaico-grande {
-  grid-column: span 2;
-  grid-row: span 2;
-  aspect-ratio: auto;
-}
+/* ============================================
+   BADGE DE DESTACADO
+   ============================================ */
 
-/* Item mediano (1x1) */
-.mosaico-medio {
-  grid-column: span 1;
-  grid-row: span 1;
+.mosaico-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 3;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* ============================================
@@ -1397,7 +1436,6 @@
   transform: scale(1.08);
 }
 
-/* Placeholder si no hay imagen */
 .mosaico-imagen-placeholder {
   width: 100%;
   height: 100%;
@@ -1415,7 +1453,7 @@
 }
 
 /* ============================================
-   OVERLAY (fondo al hacer hover)
+   OVERLAY MEJORADO (siempre visible)
    ============================================ */
 
 .mosaico-overlay {
@@ -1426,39 +1464,9 @@
   padding: 1.2rem 1.2rem 1.5rem;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.75) 0%,
-    rgba(0, 0, 0, 0.3) 50%,
-    transparent 100%
-  );
-  color: white;
-  text-align: left;
-  transition: all 0.4s ease;
-}
-
-.mosaico-item:hover .mosaico-overlay {
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.85) 0%,
-    rgba(0, 0, 0, 0.4) 60%,
-    transparent 100%
-  );
-}
-
-/* ============================================
-   OVERLAY - MEJOR LEGIBILIDAD
-   ============================================ */
-
-.mosaico-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1.2rem 1.2rem 1.5rem;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.85) 0%,
-    rgba(0, 0, 0, 0.5) 50%,
-    rgba(0, 0, 0, 0.1) 100%
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.05) 100%
   );
   color: #ffffff;
   text-align: left;
@@ -1469,10 +1477,14 @@
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.95) 0%,
-    rgba(0, 0, 0, 0.6) 60%,
-    rgba(0, 0, 0, 0.15) 100%
+    rgba(0, 0, 0, 0.5) 60%,
+    rgba(0, 0, 0, 0.1) 100%
   );
 }
+
+/* ============================================
+   TÍTULO Y UBICACIÓN
+   ============================================ */
 
 .mosaico-titulo {
   font-family: "Cormorant Garamond", serif;
@@ -1495,10 +1507,9 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-.mosaico-ubicacion::before {
-  content: "📍";
-  font-size: 0.7rem;
-}
+/* ============================================
+   BOTÓN SIEMPRE VISIBLE (mejor UX)
+   ============================================ */
 
 .btn-mosaico {
   display: inline-flex;
@@ -1515,59 +1526,21 @@
   border: none;
   cursor: pointer;
   letter-spacing: 0.5px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s ease 0.1s;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0.8; /* Siempre visible pero sutil */
+  transform: translateY(0);
 }
 
 .mosaico-item:hover .btn-mosaico {
   opacity: 1;
-  transform: translateY(0);
+  transform: scale(1.05);
 }
 
 .btn-mosaico:hover {
   background: #ffffff;
   color: var(--primary, #5c3d2e);
-  transform: scale(1.05);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* ============================================
-   BOTÓN EN MOSAICO
-   ============================================ */
-
-.btn-mosaico {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0.35rem 1.2rem;
-  background: var(--accent, #c9a87c);
-  color: white;
-  border-radius: 50px;
-  text-decoration: none;
-  font-size: 0.7rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-  letter-spacing: 0.5px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s ease 0.1s;
-}
-
-.mosaico-item:hover .btn-mosaico {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.btn-mosaico:hover {
-  background: #ffffff;
-  color: var(--primary, #5c3d2e);
-  transform: scale(1.05);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .btn-mosaico .btn-icono {
@@ -1581,114 +1554,112 @@
 }
 
 /* ============================================
-   ANIMACIONES DE ENTRADA
+   INDICADOR DE SCROLL
    ============================================ */
 
-.mosaico-item:hover .mosaico-titulo {
-  transform: translateY(-2px);
+.scroll-indicator {
+  margin-top: 0.8rem;
+  text-align: center;
+  color: var(--text, #666);
+  font-size: 0.8rem;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
-.mosaico-item:hover .mosaico-ubicacion {
-  transform: translateY(-2px);
-  opacity: 1;
+.scroll-indicator .scroll-arrow {
+  display: inline-block;
+  animation: scrollPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(8px);
+    opacity: 1;
+  }
 }
 
 /* ============================================
-   BADGE (opcional)
-   ============================================ */
-
-.mosaico-item .mosaico-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: var(--accent, #c9a87c);
-  color: white;
-  padding: 3px 14px;
-  border-radius: 20px;
-  font-size: 0.6rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  z-index: 2;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* ============================================
-   RESPONSIVE
+   RESPONSIVE MOSAICO
    ============================================ */
 
 @media (max-width: 768px) {
-  .hospedaje-mosaico {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    max-width: 600px;
+  .mosaico-item {
+    flex: 0 0 220px;
   }
-
   .mosaico-grande {
-    grid-column: span 2;
-    grid-row: span 1;
-    aspect-ratio: 1/1;
+    flex: 0 0 280px;
   }
-
-  .mosaico-imagen-placeholder {
-    font-size: 2.5rem;
-  }
-
   .mosaico-overlay {
     padding: 0.8rem 1rem 1.2rem;
   }
-
   .mosaico-titulo {
     font-size: 1rem;
   }
-
   .btn-mosaico {
     padding: 0.25rem 1rem;
     font-size: 0.65rem;
+  }
+  .mosaico-badge {
+    font-size: 0.55rem;
+    padding: 2px 10px;
   }
 }
 
 @media (max-width: 480px) {
   .hospedaje-mosaico {
-    grid-template-columns: 1fr;
     gap: 12px;
-    max-width: 380px;
+    padding: 12px 4px 20px;
   }
-
+  .mosaico-item {
+    flex: 0 0 180px;
+    border-radius: 12px;
+  }
   .mosaico-grande {
-    grid-column: span 1;
-    aspect-ratio: 1/1;
+    flex: 0 0 220px;
   }
-
-  .mosaico-medio {
-    grid-column: span 1;
-  }
-
   .mosaico-imagen-placeholder {
     font-size: 2.5rem;
   }
-
   .mosaico-overlay {
     padding: 0.6rem 0.8rem 1rem;
   }
-
   .mosaico-titulo {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
   }
-
   .mosaico-ubicacion {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
   }
-
   .btn-mosaico {
     padding: 0.2rem 0.8rem;
-    font-size: 0.6rem;
+    font-size: 0.55rem;
   }
-
-  .mosaico-item .mosaico-badge {
+  .mosaico-badge {
+    font-size: 0.45rem;
+    padding: 2px 8px;
     top: 8px;
     right: 8px;
-    font-size: 0.5rem;
-    padding: 2px 10px;
   }
+}
+
+/* ============================================
+   SECCIÓN SIN ALOJAMIENTOS
+   ============================================ */
+
+.sin-alojamientos {
+  position: relative;
+  z-index: 1;
+  color: var(--text, #999);
+  font-size: 0.95rem;
+  font-style: italic;
+  padding: 2rem;
 }
