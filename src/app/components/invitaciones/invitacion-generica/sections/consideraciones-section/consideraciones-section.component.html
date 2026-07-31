@@ -1,1 +1,60 @@
-<p>consideraciones-section works!</p>
+<!-- ================================================================
+     SECCIÓN CONSIDERACIONES - TEMPLATE
+     ================================================================ -->
+
+<!-- ================================================================
+     MODO: VISTA (PREVIEW)
+     ================================================================ -->
+@if (data && data.mostrarSeccion && data.items?.length > 0) {
+  <div class="consideraciones-section {{ 'estilo-' + data.estilo }}">
+    <!-- ==========================================================
+         ENCABEZADO
+         ========================================================== -->
+    <div class="consideraciones-header">
+      <h2 class="consideraciones-titulo">
+        {{ data.titulo || "Consideraciones" }}
+      </h2>
+      @if (data.subtitulo) {
+        <p class="consideraciones-subtitulo">{{ data.subtitulo }}</p>
+      }
+      <div class="consideraciones-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✦</span>
+        <span class="divider-line"></span>
+      </div>
+    </div>
+
+    <!-- Mensaje introductorio -->
+    @if (data.mensajeIntro) {
+      <p class="consideraciones-intro">{{ data.mensajeIntro }}</p>
+    }
+
+    <!-- ==========================================================
+         LISTA DE CONSIDERACIONES
+         ========================================================== -->
+    <div class="consideraciones-lista">
+      @for (item of data.items; track item; let i = $index) {
+        <div class="consideracion-item">
+          <div class="consideracion-contenido">
+            <div class="consideracion-icono" [style.color]="data.colorIconos">
+              {{ item.icono || getIconoItem(item.titulo) }}
+            </div>
+            <div class="consideracion-info">
+              <h4 class="consideracion-titulo">{{ item.titulo }}</h4>
+              @if (item.descripcion) {
+                <p class="consideracion-descripcion">{{ item.descripcion }}</p>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- ==========================================================
+         PIE
+         ========================================================== -->
+    <div class="consideraciones-footer">
+      <p class="footer-texto">¡Gracias por acompañarnos!</p>
+    </div>
+  </div>
+}

@@ -33,6 +33,7 @@ import { Hospedaje } from '../../../models/hospedaje.model';
 import { Galeria } from '../../../models/galeria.model';
 import { Contador } from '../../../models/contador.model';
 import { Regalos } from '../../../models/regalos.model';
+import { Consideraciones } from '../../../models/consideraciones.model';
 
 @Component({
   selector: 'app-invitacion-generica',
@@ -322,6 +323,66 @@ export class InvitacionGenericaComponent implements OnInit {
         'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, encontrarás nuestras opciones aquí.',
       opciones: (r as any).opciones || [],
       textoBoton: (r as any).textoBoton || 'Ver mesa de regalos',
+    };
+  }
+
+  get consideracionesFormateado(): Consideraciones {
+    // 👇 LOG PARA VER QUÉ LLEGA
+    console.log('🔍 DATA COMPLETA en invitación:', this.data);
+    console.log('🔍 consideracionesData:', this.data?.consideracionesData);
+    console.log(
+      '🔍 consideraciones (antiguo):',
+      (this.data as any)?.consideraciones,
+    );
+
+    // ✅ PRIMERO: Buscar en consideracionesData (formato nuevo)
+    const c = this.data?.consideracionesData;
+
+    // Si existe consideracionesData y tiene items, usarlo
+    if (c && (c as any).items && (c as any).items.length > 0) {
+      console.log('✅ Usando consideracionesData con items:', (c as any).items);
+      return {
+        mostrarSeccion: (c as any).mostrarSeccion ?? true,
+        estilo: (c as any).estilo || 'iconos',
+        titulo: (c as any).titulo || 'Consideraciones',
+        subtitulo: (c as any).subtitulo || 'Para que todo salga perfecto',
+        mensajeIntro:
+          (c as any).mensajeIntro ||
+          'Gracias por ser parte de este momento tan especial. Te compartimos algunas recomendaciones importantes.',
+        colorIconos: (c as any).colorIconos || '#c9a87c',
+        items: (c as any).items || [],
+      };
+    }
+
+    // Si consideracionesData no tiene items, buscar en consideraciones (formato antiguo)
+    const antiguo = (this.data as any)?.consideraciones;
+
+    // Si es string y no está vacío, convertirlo a items
+    if (typeof antiguo === 'string' && antiguo.trim() !== '') {
+      return {
+        mostrarSeccion: true,
+        estilo: 'iconos',
+        titulo: 'Consideraciones',
+        subtitulo: 'Para que todo salga perfecto',
+        mensajeIntro: 'Gracias por ser parte de este momento tan especial.',
+        colorIconos: '#c9a87c',
+        items: [
+          { titulo: 'Consideraciones', descripcion: antiguo, icono: '📌' },
+        ],
+      };
+    }
+
+    // Si no hay datos, devolver valores por defecto
+
+    return {
+      mostrarSeccion: true,
+      estilo: 'iconos',
+      titulo: 'Consideraciones',
+      subtitulo: 'Para que todo salga perfecto',
+      mensajeIntro:
+        'Gracias por ser parte de este momento tan especial. Te compartimos algunas recomendaciones importantes.',
+      colorIconos: '#c9a87c',
+      items: [],
     };
   }
 }

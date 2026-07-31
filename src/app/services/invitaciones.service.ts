@@ -15,6 +15,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
+import { Consideraciones } from '../models/consideraciones.model';
 
 export interface Invitacion {
   id: string;
@@ -151,7 +152,7 @@ export interface Invitacion {
     links?: { nombre: string; url: string }[];
   };
 
-  consideraciones?: string;
+  consideracionesData?: string;
 
   confirmacion?: {
     telefono?: string;

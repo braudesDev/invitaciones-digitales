@@ -2821,3 +2821,457 @@
   margin-bottom: 0;
   padding-bottom: 0;
 }
+
+/* ================================================================
+   FORMULARIO - CONSIDERACIONES
+   ================================================================
+   Estilos para la sección de consideraciones en el formulario
+   ================================================================ */
+
+/* ============================================
+   ESTILOS DE LA SECCIÓN - SELECTOR VISUAL
+   ============================================ */
+
+.estilos-consideraciones-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin: 10px 0 16px;
+}
+
+.estilo-consideraciones-option {
+  background: #f8f5f0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.estilo-consideraciones-option:hover {
+  background: #f0ebe5;
+  transform: translateY(-2px);
+}
+
+.estilo-consideraciones-option.selected {
+  border-color: var(--accent, #c9a87c);
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.25);
+  transform: translateY(-2px);
+}
+
+.estilo-consideraciones-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.estilo-consideraciones-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.estilo-consideraciones-nombre {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+/* ============================================
+   TARJETAS DE CONSIDERACIONES (Formulario)
+   ============================================ */
+
+.consideracion-item-form {
+  margin-bottom: 16px;
+}
+
+.consideracion-card {
+  background: #faf8f6;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #e8e0d8;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.consideracion-card:hover {
+  border-color: var(--accent, #c9a87c);
+  box-shadow: 0 2px 8px rgba(201, 168, 124, 0.12);
+}
+
+.consideracion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0ebe5;
+}
+
+.consideracion-numero {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--accent, #c9a87c);
+  background: #f0ebe5;
+  padding: 2px 12px;
+  border-radius: 12px;
+}
+
+.btn-eliminar-consideracion {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.btn-eliminar-consideracion:hover {
+  background: #fde8e8;
+  transform: scale(1.1);
+}
+
+.consideracion-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.consideracion-fields .full-width {
+  grid-column: 1 / -1;
+}
+
+/* ============================================
+   BOTÓN AGREGAR CONSIDERACIÓN
+   ============================================ */
+
+.btn-agregar-consideracion {
+  background: #f0ebe5;
+  border: 2px dashed var(--accent, #c9a87c);
+  color: var(--primary, #5c3d2e);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btn-agregar-consideracion:hover {
+  background: #e8dfd6;
+  border-color: #b8946a;
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   TIP
+   ============================================ */
+
+.consideraciones-tip {
+  margin-top: 1.5rem;
+  padding: 14px 18px;
+  background: #f8f5f0;
+  border-radius: 12px;
+  border-left: 4px solid var(--accent, #c9a87c);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.consideraciones-tip .tip-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.consideraciones-tip .tip-text {
+  font-size: 0.82rem;
+  color: var(--text, #666);
+  line-height: 1.6;
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text, #666);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  opacity: 0.4;
+}
+
+.empty-state p {
+  font-weight: 600;
+  margin: 0;
+}
+
+.empty-state small {
+  opacity: 0.5;
+}
+
+/* ============================================
+   SUBCAMPOS
+   ============================================ */
+
+.subcampo {
+  margin-bottom: 12px;
+}
+
+.subcampo label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text, #666);
+  margin-bottom: 4px;
+}
+
+/* ============================================
+   INPUTS Y FORMULARIOS (Reutilizados)
+   ============================================ */
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-group label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text, #666);
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: var(--accent, #c9a87c);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
+}
+
+/* ============================================
+   COLOR INPUT
+   ============================================ */
+
+.color-input {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.color-input input[type="color"] {
+  width: 50px;
+  height: 44px;
+  padding: 4px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.color-input input[type="text"] {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   INPUT WITH COUNTER
+   ============================================ */
+
+.input-with-counter {
+  position: relative;
+}
+
+.input-with-counter input,
+.input-with-counter textarea {
+  width: 100%;
+  padding: 10px 60px 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  background: #faf9f8;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.input-with-counter input:focus,
+.input-with-counter textarea:focus {
+  border-color: var(--accent, #c9a87c);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
+  background: #ffffff;
+}
+
+.input-with-counter textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.contador {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-size: 0.7rem;
+  color: #bbb;
+  pointer-events: none;
+  font-weight: 500;
+}
+
+/* ============================================
+   HELP TEXT
+   ============================================ */
+
+.help-text {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text, #666);
+  opacity: 0.6;
+  margin-top: 0.5rem;
+}
+
+.campo > label {
+  display: block;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.campo {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.1);
+}
+
+.campo:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* ============================================
+   CHECKBOX PERSONALIZADO
+   ============================================ */
+
+.campo label input[type="checkbox"] {
+  margin-right: 8px;
+  accent-color: var(--accent, #c9a87c);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.campo label {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #444;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .estilos-consideraciones-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .consideracion-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .consideracion-fields .full-width {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .estilos-consideraciones-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .estilo-consideraciones-option {
+    padding: 10px 6px;
+  }
+
+  .estilo-consideraciones-icon {
+    font-size: 1.6rem;
+  }
+
+  .estilo-consideraciones-nombre {
+    font-size: 0.7rem;
+  }
+
+  .consideracion-card {
+    padding: 12px;
+  }
+
+  .input-with-counter input,
+  .input-with-counter textarea {
+    padding: 8px 50px 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .contador {
+    font-size: 0.65rem;
+    bottom: 8px;
+    right: 8px;
+  }
+
+  .consideraciones-tip {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .consideraciones-tip .tip-text {
+    font-size: 0.75rem;
+  }
+
+  .color-input input[type="color"] {
+    width: 40px;
+    height: 38px;
+  }
+}

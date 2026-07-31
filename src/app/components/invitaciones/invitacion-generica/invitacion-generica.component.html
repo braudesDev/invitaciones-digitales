@@ -90,14 +90,11 @@
       <app-hashtag-section [data]="data.hashtag"></app-hashtag-section>
     }
     @if (data.regalos) {
-      <app-regalos-section
-        [data]="regalosFormateado"
-        modo="vista"
-      ></app-regalos-section>
+      <app-regalos-section [data]="regalosFormateado"></app-regalos-section>
     }
-    @if (data.consideraciones) {
+    @if (data.consideracionesData) {
       <app-consideraciones-section
-        [data]="data.consideraciones"
+        [data]="consideracionesFormateado"
       ></app-consideraciones-section>
     }
     <!-- ✅ CONFIRMACIÓN DE ASISTENCIA (botones, estado, contacto) -->

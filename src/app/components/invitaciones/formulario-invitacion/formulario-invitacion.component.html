@@ -1943,11 +1943,7 @@
           </div>
         </div>
 
-        <!-- ----------------------------------------------------
-             ACORDEÓN: CONSIDERACIONES
-             - Texto libre para notas importantes
-               (niños, alergias, estacionamiento, etc.)
-             ---------------------------------------------------- -->
+        <!-- Acordeón: Consideraciones -->
         <div class="acordeon">
           <div
             class="acordeon-header"
@@ -1958,12 +1954,201 @@
           </div>
 
           <div class="acordeon-body" [class.abierto]="acordeonConsideraciones">
-            <textarea
-              [(ngModel)]="nuevaInvitacion.consideraciones"
-              [ngModelOptions]="{ standalone: true }"
-              rows="3"
-              placeholder="Niños, alergias, estacionamiento..."
-            ></textarea>
+            <!-- Mostrar sección -->
+            <div class="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  [(ngModel)]="consideracionesData.mostrarSeccion"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                Mostrar sección en la invitación
+              </label>
+            </div>
+
+            <!-- 1. ESTILO DE LA SECCIÓN -->
+            <div class="campo">
+              <label>🎨 1. ESTILO DE LA SECCIÓN</label>
+              <div class="estilos-consideraciones-grid">
+                @for (estilo of estilosConsideraciones; track estilo) {
+                  <div
+                    class="estilo-consideraciones-option"
+                    [class.selected]="
+                      consideracionesData.estilo === estilo.valor
+                    "
+                    (click)="seleccionarEstiloConsideraciones(estilo.valor)"
+                  >
+                    <span class="estilo-consideraciones-icon">{{
+                      estilo.icon
+                    }}</span>
+                    <span class="estilo-consideraciones-nombre">{{
+                      estilo.nombre
+                    }}</span>
+                  </div>
+                }
+              </div>
+              <small class="help-text"
+                >Elige el estilo que mejor combine con tu invitación.</small
+              >
+            </div>
+
+            <!-- 2. PERSONALIZA TU SECCIÓN -->
+            <div class="campo">
+              <label>✏️ 2. PERSONALIZA TU SECCIÓN</label>
+
+              <div class="subcampo">
+                <label>Título de la sección</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="consideracionesData.titulo"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Consideraciones"
+                    maxlength="30"
+                  />
+                  <span class="contador"
+                    >{{ consideracionesData.titulo?.length || 0 }}/30</span
+                  >
+                </div>
+              </div>
+
+              <div class="subcampo">
+                <label>Subtítulo (opcional)</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="consideracionesData.subtitulo"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Para que todo salga perfecto"
+                    maxlength="50"
+                  />
+                  <span class="contador"
+                    >{{ consideracionesData.subtitulo?.length || 0 }}/50</span
+                  >
+                </div>
+              </div>
+
+              <div class="subcampo">
+                <label>Mensaje introductorio (opcional)</label>
+                <div class="input-with-counter">
+                  <textarea
+                    [(ngModel)]="consideracionesData.mensajeIntro"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Gracias por ser parte de este momento tan especial. Te compartimos algunas recomendaciones importantes."
+                    rows="3"
+                    maxlength="150"
+                  ></textarea>
+                  <span class="contador"
+                    >{{
+                      consideracionesData.mensajeIntro?.length || 0
+                    }}/150</span
+                  >
+                </div>
+              </div>
+
+              <div class="subcampo">
+                <label>🎨 Color principal de los íconos</label>
+                <div class="color-input">
+                  <input
+                    type="color"
+                    [(ngModel)]="consideracionesData.colorIconos"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                  <input
+                    type="text"
+                    [(ngModel)]="consideracionesData.colorIconos"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="#c9a87c"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. LISTA DE CONSIDERACIONES -->
+            <div class="campo">
+              <label>📋 3. LISTA DE CONSIDERACIONES</label>
+
+              @if (consideracionesData.items?.length === 0) {
+                <div class="empty-state">
+                  <span class="empty-icon">📋</span>
+                  <p>No hay consideraciones agregadas</p>
+                  <small
+                    >Agrega recomendaciones importantes para tus
+                    invitados</small
+                  >
+                </div>
+              }
+
+              @for (
+                item of consideracionesData.items;
+                track item;
+                let i = $index
+              ) {
+                <div class="consideracion-item-form">
+                  <div class="consideracion-card">
+                    <div class="consideracion-header">
+                      <span class="consideracion-numero">#{{ i + 1 }}</span>
+                      <button
+                        type="button"
+                        class="btn-eliminar-consideracion"
+                        (click)="eliminarItemConsideracion(i)"
+                      >
+                        ❌
+                      </button>
+                    </div>
+                    <div class="consideracion-fields">
+                      <div class="field-group">
+                        <label>Título</label>
+                        <input
+                          type="text"
+                          [(ngModel)]="item.titulo"
+                          [ngModelOptions]="{ standalone: true }"
+                          placeholder="Ej: Llega con tiempo"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="field-group full-width">
+                        <label>Descripción</label>
+                        <textarea
+                          [(ngModel)]="item.descripcion"
+                          [ngModelOptions]="{ standalone: true }"
+                          placeholder="Ej: Te recomendamos llegar 30 minutos antes de la ceremonia."
+                          class="form-control"
+                          rows="2"
+                        ></textarea>
+                      </div>
+                      <div class="field-group">
+                        <label>🎨 Icono (opcional)</label>
+                        <input
+                          type="text"
+                          [(ngModel)]="item.icono"
+                          [ngModelOptions]="{ standalone: true }"
+                          placeholder="⏰ 🚗 👔 ✅"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+
+              <button
+                type="button"
+                class="btn-agregar-consideracion"
+                (click)="agregarItemConsideracion()"
+              >
+                ➕ Agregar consideración
+              </button>
+            </div>
+
+            <!-- Tip -->
+            <div class="consideraciones-tip">
+              <span class="tip-icon">💡</span>
+              <span class="tip-text">
+                Las consideraciones claras ayudan a que todos disfruten la
+                celebración al máximo.
+              </span>
+            </div>
           </div>
         </div>
 

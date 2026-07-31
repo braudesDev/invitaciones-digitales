@@ -40,6 +40,10 @@ import { ESTILOS_CONTADOR } from '../../../models/contador.model';
 import { Regalos } from '../../../models/regalos.model';
 import { RegalosSectionComponent } from '../invitacion-generica/sections/regalos-section/regalos-section.component';
 import { ESTILOS_REGALOS } from '../../../models/regalos.model';
+import {
+  Consideraciones,
+  ESTILOS_CONSIDERACIONES,
+} from '../../../models/consideraciones.model';
 
 // ================================================================
 // 1. INTERFAZ: Invitación Completa
@@ -118,7 +122,7 @@ export interface InvitacionCompleta {
     link: string;
   };
   hashtag: string; // Hashtag del evento
-  consideraciones: string; // Notas adicionales
+  consideracionesData?: Consideraciones;
   hospedaje?: {
     // Sección de hospedaje (opcional)
     mostrarSeccion: boolean;
@@ -351,7 +355,16 @@ export class FormularioInvitacionComponent implements OnInit {
     padrinos: [], // Lista de padrinos (vacía)
     confirmacion: { telefono: '', whatsapp: '', link: '' }, // Confirmación (vacía)
     hashtag: '',
-    consideraciones: '',
+    consideracionesData: {
+      mostrarSeccion: true,
+      estilo: 'iconos',
+      titulo: 'Consideraciones',
+      subtitulo: 'Para que todo salga perfecto',
+      mensajeIntro:
+        'Gracias por ser parte de este momento tan especial. Te compartimos algunas recomendaciones importantes.',
+      colorIconos: '#c9a87c',
+      items: [],
+    },
     contador: {
       mostrarSeccion: true,
       fechaEvento: '',
@@ -399,6 +412,7 @@ export class FormularioInvitacionComponent implements OnInit {
   acordeonHistoria = false; // Sección de historia
   acordeonHospedaje = false; // Sección de hospedaje
   acordeonContador = false; // Seccion del contador
+  cordeonConsideraciones = false; // Seccion consideraciones
   imagenSubiendo = false; // Estado de subida de imagen
 
   // ==============================================================
@@ -764,12 +778,19 @@ export class FormularioInvitacionComponent implements OnInit {
       .replace(/\s+/g, '-')
       .replace(/[^\w\-]+/g, '');
 
+    console.log(
+      '📤 Datos a guardar - consideracionesData:',
+      this.nuevaInvitacion.consideracionesData,
+    );
+
     // --- PREPARAR OBJETO PARA GUARDAR ---
     const invitacionParaGuardar = {
       ...this.nuevaInvitacion,
       padrinos: padrinosFiltrados,
       anfitrionId: user.uid,
     };
+
+    console.log('📤 Objeto completo a guardar:', invitacionParaGuardar);
 
     // --- GUARDAR EN FIRESTORE ---
     const ref = doc(
@@ -850,7 +871,16 @@ export class FormularioInvitacionComponent implements OnInit {
         },
         confirmacion: { telefono: '', whatsapp: '', link: '' },
         hashtag: '',
-        consideraciones: '',
+        consideracionesData: {
+          mostrarSeccion: true,
+          estilo: 'iconos',
+          titulo: 'Consideraciones',
+          subtitulo: 'Para que todo salga perfecto',
+          mensajeIntro:
+            'Gracias por ser parte de este momento tan especial. Te compartimos algunas recomendaciones importantes.',
+          colorIconos: '#c9a87c',
+          items: [],
+        },
         contador: {
           mostrarSeccion: true,
           fechaEvento: '',
@@ -1693,6 +1723,65 @@ export class FormularioInvitacionComponent implements OnInit {
   eliminarOpcionRegalo(index: number) {
     if (this.nuevaInvitacion.regalos.opciones) {
       this.nuevaInvitacion.regalos.opciones.splice(index, 1);
+    }
+  }
+  // Getter para estilos
+  get estilosConsideraciones() {
+    return ESTILOS_CONSIDERACIONES;
+  }
+
+  // Getter para consideracionesData
+  get consideracionesData(): Consideraciones {
+    if (!this.nuevaInvitacion.consideracionesData) {
+      this.nuevaInvitacion.consideracionesData = {
+        mostrarSeccion: true,
+        estilo: 'iconos',
+        titulo: 'Consideraciones',
+        subtitulo: 'Para que todo salga perfecto',
+        mensajeIntro:
+          'Gracias por ser parte de este momento tan especial. Te compartimos algunas recomendaciones importantes.',
+        colorIconos: '#c9a87c',
+        items: [],
+      };
+    }
+    return this.nuevaInvitacion.consideracionesData;
+  }
+
+  // Método para seleccionar estilo
+  seleccionarEstiloConsideraciones(estilo: string) {
+    const estilosPermitidos = [
+      'iconos',
+      'tarjetas',
+      'minimalista',
+      'clasico',
+      'elegante',
+    ];
+    if (estilosPermitidos.includes(estilo)) {
+      this.consideracionesData.estilo = estilo as
+        | 'iconos'
+        | 'tarjetas'
+        | 'minimalista'
+        | 'clasico'
+        | 'elegante';
+    }
+  }
+
+  // Método para agregar item
+  agregarItemConsideracion() {
+    if (!this.consideracionesData.items) {
+      this.consideracionesData.items = [];
+    }
+    this.consideracionesData.items.push({
+      titulo: '',
+      descripcion: '',
+      icono: '📌',
+    });
+  }
+
+  // Método para eliminar item
+  eliminarItemConsideracion(index: number) {
+    if (this.consideracionesData.items) {
+      this.consideracionesData.items.splice(index, 1);
     }
   }
 }

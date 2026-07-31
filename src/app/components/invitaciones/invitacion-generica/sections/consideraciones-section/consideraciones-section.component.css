@@ -1,0 +1,344 @@
+/* src/app/components/invitaciones/invitacion-generica/sections/consideraciones-section/consideraciones-section.component.css */
+
+/* ================================================================
+   CONSIDERACIONES - ESTILOS DE VISTA (PREVIEW)
+   ================================================================ */
+
+/* ============================================
+   CONTENEDOR PRINCIPAL
+   ============================================ */
+
+.consideraciones-section {
+  padding: 3rem 2rem;
+  background: var(--secondary, #f5ede4);
+  text-align: center;
+  position: relative;
+}
+
+/* ============================================
+   ENCABEZADO
+   ============================================ */
+
+.consideraciones-header {
+  margin-bottom: 1.5rem;
+}
+
+.consideraciones-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 400;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.3rem;
+  letter-spacing: 2px;
+}
+
+.consideraciones-subtitulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text, #666);
+  margin: 0 0 0.5rem;
+  font-style: italic;
+}
+
+.consideraciones-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 200px;
+  margin: 0.5rem auto 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent, #c9a87c),
+    transparent
+  );
+}
+
+.divider-icon {
+  color: var(--accent, #c9a87c);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* ============================================
+   MENSAJE INTRODUCTORIO
+   ============================================ */
+
+.consideraciones-intro {
+  max-width: 600px;
+  margin: 0.5rem auto 2rem;
+  color: var(--text, #666);
+  font-size: 1rem;
+  line-height: 1.8;
+  font-style: italic;
+}
+
+/* ============================================
+   LISTA DE CONSIDERACIONES
+   ============================================ */
+
+.consideraciones-lista {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.consideracion-item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.08);
+}
+
+.consideracion-item:last-child {
+  border-bottom: none;
+}
+
+.consideracion-contenido {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.consideracion-icono {
+  font-size: 1.8rem;
+  width: 48px;
+  text-align: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.consideracion-info {
+  flex: 1;
+}
+
+.consideracion-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.consideracion-descripcion {
+  font-size: 0.9rem;
+  color: var(--text, #666);
+  margin: 4px 0 0;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* ============================================
+   PIE
+   ============================================ */
+
+.consideraciones-footer {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(201, 168, 124, 0.12);
+  text-align: center;
+}
+
+.footer-texto {
+  font-size: 0.9rem;
+  color: var(--text, #666);
+  font-style: italic;
+  opacity: 0.6;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* ============================================
+   ESTILOS DE CONSIDERACIONES
+   ============================================ */
+
+/* Iconos en lista (por defecto) */
+.estilo-iconos .consideracion-item {
+  padding: 14px 0;
+}
+
+.estilo-iconos .consideracion-icono {
+  font-size: 2rem;
+}
+
+/* Tarjetas */
+.estilo-tarjetas .consideracion-item {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(201, 168, 124, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.estilo-tarjetas .consideracion-item:last-child {
+  margin-bottom: 0;
+}
+
+.estilo-tarjetas .consideracion-contenido {
+  align-items: center;
+}
+
+/* Minimalista */
+.estilo-minimalista .consideracion-item {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.05);
+}
+
+.estilo-minimalista .consideracion-icono {
+  font-size: 1.2rem;
+  width: 32px;
+  opacity: 0.6;
+}
+
+.estilo-minimalista .consideracion-titulo {
+  font-size: 0.95rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.estilo-minimalista .consideracion-descripcion {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* Clásico */
+.estilo-clasico .consideracion-item {
+  padding: 16px 0;
+  border-bottom: 2px solid rgba(201, 168, 124, 0.06);
+}
+
+.estilo-clasico .consideracion-icono {
+  display: none;
+}
+
+.estilo-clasico .consideracion-titulo {
+  font-family: "Georgia", serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.estilo-clasico .consideracion-descripcion {
+  font-size: 0.95rem;
+  font-family: "Georgia", serif;
+}
+
+/* Elegante */
+.estilo-elegante .consideracion-item {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.06);
+  position: relative;
+}
+
+.estilo-elegante .consideracion-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--accent, #c9a87c);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 2px;
+}
+
+.estilo-elegante .consideracion-item:hover::before {
+  opacity: 1;
+}
+
+.estilo-elegante .consideracion-contenido {
+  padding-left: 16px;
+}
+
+.estilo-elegante .consideracion-icono {
+  font-size: 1.6rem;
+}
+
+.estilo-elegante .consideracion-titulo {
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .consideraciones-section {
+    padding: 2rem 1rem;
+  }
+
+  .consideracion-contenido {
+    gap: 12px;
+  }
+
+  .consideracion-icono {
+    font-size: 1.5rem;
+    width: 36px;
+  }
+
+  .estilo-iconos .consideracion-icono {
+    font-size: 1.6rem;
+  }
+
+  .estilo-tarjetas .consideracion-item {
+    padding: 14px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .consideraciones-titulo {
+    font-size: 1.4rem;
+  }
+
+  .consideraciones-subtitulo {
+    font-size: 0.95rem;
+  }
+
+  .consideraciones-intro {
+    font-size: 0.9rem;
+  }
+
+  .consideracion-item {
+    padding: 10px 0;
+  }
+
+  .consideracion-contenido {
+    gap: 10px;
+  }
+
+  .consideracion-icono {
+    font-size: 1.3rem;
+    width: 32px;
+  }
+
+  .consideracion-titulo {
+    font-size: 0.95rem;
+  }
+
+  .consideracion-descripcion {
+    font-size: 0.8rem;
+  }
+
+  .estilo-tarjetas .consideracion-item {
+    padding: 12px 14px;
+  }
+
+  .estilo-elegante .consideracion-contenido {
+    padding-left: 10px;
+  }
+
+  .footer-texto {
+    font-size: 0.8rem;
+  }
+}
