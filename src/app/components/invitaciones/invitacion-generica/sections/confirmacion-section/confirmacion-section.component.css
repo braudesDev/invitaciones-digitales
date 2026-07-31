@@ -1,11 +1,78 @@
+/* src/app/components/invitaciones/invitacion-generica/sections/confirmacion-section/confirmacion-section.component.css */
+
+/* ================================================================
+   CONFIRMACIÓN - CON COLORES DE LA INVITACIÓN
+   ================================================================ */
+
 .confirmacion-section {
-  margin: 20px auto;
-  padding: 20px;
-  max-width: 500px;
+  margin: 0;
+  padding: 40px 20px;
+  background: var(--secondary, #f5ede4);
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
+
+/* ============================================
+   ENCABEZADO PERSONALIZADO
+   ============================================ */
+
+.confirmacion-header {
+  margin-bottom: 1.5rem;
+}
+
+.confirmacion-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 400;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.3rem;
+  letter-spacing: 2px;
+}
+
+.confirmacion-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 200px;
+  margin: 0.5rem auto 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent, #c9a87c),
+    transparent
+  );
+}
+
+.divider-icon {
+  color: var(--accent, #c9a87c);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.confirmacion-descripcion {
+  max-width: 500px;
+  margin: 0.5rem auto 2rem;
+  color: var(--text, #666);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ============================================
+   ESTADO - BORDE ELEGANTE
+   ============================================ */
 
 .estado-card {
   margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
 }
 
 .estado-confirmado,
@@ -15,91 +82,365 @@
   align-items: center;
   gap: 15px;
   padding: 15px 20px;
-  border-radius: 16px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  background: transparent;
+  border-left: 4px solid transparent;
 }
 
+/* CONFIRMADO */
 .estado-confirmado {
-  background: #d1fae5;
-  border-left: 4px solid #10b981;
+  border-left-color: var(--accent, #c9a87c);
+  background: rgba(201, 168, 124, 0.05);
+  color: var(--primary, #5c3d2e);
 }
+
+/* RECHAZADO */
 .estado-rechazado {
-  background: #fee2e2;
-  border-left: 4px solid #ef4444;
+  border-left-color: var(--text, #666);
+  background: rgba(102, 102, 102, 0.05);
+  color: var(--text, #666);
 }
+
+/* PENDIENTE */
 .estado-pendiente {
-  background: #fef3c7;
-  border-left: 4px solid #f59e0b;
+  border-left-color: var(--primary, #5c3d2e);
+  background: rgba(92, 61, 46, 0.05);
+  color: var(--primary, #5c3d2e);
 }
 
 .estado-card span {
-  font-size: 32px;
+  font-size: 28px;
+  flex-shrink: 0;
 }
 .estado-card strong {
   display: block;
   font-size: 1rem;
+  font-weight: 600;
 }
 .estado-card p {
   margin: 0;
   font-size: 0.85rem;
-  opacity: 0.8;
+  opacity: 0.6;
 }
+
+/* ============================================
+   RESPUESTA FINAL
+   ============================================ */
+
+.respuesta-final {
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin: 0 auto 20px auto;
+  font-weight: 500;
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.respuesta-final.confirmado {
+  background: rgba(16, 185, 129, 0.15);
+  color: #065f46;
+}
+.respuesta-final.rechazado {
+  background: rgba(239, 68, 68, 0.15);
+  color: #991b1b;
+}
+
+/* ============================================
+   BOTONES DE ACCIÓN
+   ============================================ */
 
 .botones-accion {
   display: flex;
-  gap: 15px;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
   margin-bottom: 20px;
 }
 
 .btn-confirmar,
 .btn-rechazar {
-  padding: 12px 24px;
+  padding: 14px 24px;
   border: none;
   border-radius: 40px;
   font-weight: 500;
   cursor: pointer;
-  transition: transform 0.2s;
-  flex: 1;
-  min-width: 180px;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 500px;
+  font-family: inherit;
+  box-sizing: border-box;
 }
 
 .btn-confirmar {
-  background: linear-gradient(135deg, #11998e, #38ef7d);
-  color: white;
+  background: var(--accent, #c9a87c);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(201, 168, 124, 0.3);
 }
+
+.btn-confirmar:hover:not(:disabled) {
+  background: var(--primary, #5c3d2e);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(92, 61, 46, 0.4);
+}
+
 .btn-rechazar {
-  background: linear-gradient(135deg, #eb3349, #f45c43);
-  color: white;
+  background: var(--text, #666);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(102, 102, 102, 0.3);
 }
+
+.btn-rechazar:hover:not(:disabled) {
+  background: var(--primary, #5c3d2e);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(92, 61, 46, 0.4);
+}
+
 .btn-confirmar:disabled,
 .btn-rechazar:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none !important;
 }
-.btn-confirmar:hover:not(:disabled),
-.btn-rechazar:hover:not(:disabled) {
-  transform: translateY(-2px);
-}
+
+/* ============================================
+   BOTÓN CALENDARIO
+   ============================================ */
 
 .calendario-accion {
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .btn-calendario {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
+  background: var(--primary, #5c3d2e);
+  color: #ffffff;
   border: none;
-  padding: 12px 24px;
+  padding: 14px 24px;
   border-radius: 40px;
   font-weight: 500;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 15px rgba(92, 61, 46, 0.3);
+  font-family: inherit;
+  box-sizing: border-box;
 }
 
 .btn-calendario:hover {
-  transform: translateY(-2px);
+  background: var(--accent, #c9a87c);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(201, 168, 124, 0.4);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.confirmacion-footer {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(201, 168, 124, 0.12);
+}
+
+.footer-texto {
+  font-size: 0.8rem;
+  color: var(--text, #666);
+  font-style: italic;
+  opacity: 0.6;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* ================================================================
+   ESTILOS POR ESTILO SELECCIONADO
+   ================================================================ */
+
+/* ---------- TARJETAS ---------- */
+.estilo-tarjetas .btn-confirmar,
+.estilo-tarjetas .btn-rechazar {
+  border-radius: 12px;
+}
+
+/* ---------- MINIMALISTA ---------- */
+.estilo-minimalista .btn-confirmar,
+.estilo-minimalista .btn-rechazar,
+.estilo-minimalista .btn-calendario {
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.estilo-minimalista .btn-confirmar {
+  background: var(--accent, #c9a87c);
+}
+.estilo-minimalista .btn-rechazar {
+  background: var(--text, #666);
+}
+.estilo-minimalista .btn-calendario {
+  background: var(--primary, #5c3d2e);
+}
+
+.estilo-minimalista .btn-confirmar:hover:not(:disabled) {
+  background: var(--primary, #5c3d2e);
+  box-shadow: none;
+}
+.estilo-minimalista .btn-rechazar:hover:not(:disabled) {
+  background: var(--primary, #5c3d2e);
+  box-shadow: none;
+}
+.estilo-minimalista .btn-calendario:hover {
+  background: var(--accent, #c9a87c);
+  box-shadow: none;
+}
+
+/* ---------- LISTA ---------- */
+.estilo-lista .btn-confirmar,
+.estilo-lista .btn-rechazar,
+.estilo-lista .btn-calendario {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  justify-content: flex-start;
+  padding-left: 20px;
+}
+
+.estilo-lista .btn-confirmar {
+  color: var(--primary, #5c3d2e);
+  border: 1px solid rgba(201, 168, 124, 0.15);
+}
+.estilo-lista .btn-rechazar {
+  color: var(--text, #666);
+  border: 1px solid rgba(201, 168, 124, 0.15);
+}
+.estilo-lista .btn-calendario {
+  color: var(--primary, #5c3d2e);
+  border: 1px solid rgba(201, 168, 124, 0.15);
+}
+
+.estilo-lista .btn-confirmar:hover:not(:disabled) {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+  transform: none;
+}
+.estilo-lista .btn-rechazar:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  transform: none;
+}
+.estilo-lista .btn-calendario:hover {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: #667eea;
+  transform: none;
+}
+
+/* ---------- ELEGANTE ---------- */
+.estilo-elegante .btn-confirmar,
+.estilo-elegante .btn-rechazar,
+.estilo-elegante .btn-calendario {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 14px 24px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  border: 1px solid rgba(201, 168, 124, 0.08);
+}
+
+.estilo-elegante .btn-confirmar {
+  color: var(--primary, #5c3d2e);
+}
+.estilo-elegante .btn-rechazar {
+  color: var(--text, #666);
+}
+.estilo-elegante .btn-calendario {
+  color: var(--primary, #5c3d2e);
+}
+
+.estilo-elegante .btn-confirmar:hover:not(:disabled) {
+  background: rgba(16, 185, 129, 0.05);
+  border-color: #10b981;
+  transform: none;
+}
+.estilo-elegante .btn-rechazar:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.05);
+  border-color: #ef4444;
+  transform: none;
+}
+.estilo-elegante .btn-calendario:hover {
+  background: rgba(102, 126, 234, 0.05);
+  border-color: #667eea;
+  transform: none;
+}
+
+/* ---------- MODERNO ---------- */
+.estilo-moderno .btn-confirmar,
+.estilo-moderno .btn-rechazar,
+.estilo-moderno .btn-calendario {
+  border-radius: 16px;
+  padding: 14px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.estilo-moderno .btn-confirmar {
+  background: var(--accent, #c9a87c);
+}
+.estilo-moderno .btn-rechazar {
+  background: var(--text, #666);
+}
+.estilo-moderno .btn-calendario {
+  background: var(--primary, #5c3d2e);
+}
+
+.estilo-moderno .btn-confirmar:hover:not(:disabled) {
+  background: var(--primary, #5c3d2e);
+  box-shadow: 0 6px 30px rgba(92, 61, 46, 0.3);
+}
+.estilo-moderno .btn-rechazar:hover:not(:disabled) {
+  background: var(--primary, #5c3d2e);
+  box-shadow: 0 6px 30px rgba(92, 61, 46, 0.3);
+}
+.estilo-moderno .btn-calendario:hover {
+  background: var(--accent, #c9a87c);
+  box-shadow: 0 6px 30px rgba(201, 168, 124, 0.3);
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 480px) {
+  .confirmacion-section {
+    padding: 30px 16px;
+  }
+
+  .btn-confirmar,
+  .btn-rechazar,
+  .btn-calendario {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  .estado-confirmado,
+  .estado-rechazado,
+  .estado-pendiente {
+    padding: 12px 16px;
+  }
+
+  .estado-card span {
+    font-size: 24px;
+  }
+
+  .confirmacion-titulo {
+    font-size: 1.4rem;
+  }
 }

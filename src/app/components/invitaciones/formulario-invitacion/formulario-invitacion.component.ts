@@ -44,6 +44,10 @@ import {
   Consideraciones,
   ESTILOS_CONSIDERACIONES,
 } from '../../../models/consideraciones.model';
+import {
+  Confirmacion,
+  ESTILOS_CONFIRMACION,
+} from '../../../models/confirmacion.model';
 
 // ================================================================
 // 1. INTERFAZ: Invitación Completa
@@ -121,6 +125,7 @@ export interface InvitacionCompleta {
     whatsapp: string;
     link: string;
   };
+  confirmacionData?: Confirmacion;
   hashtag: string; // Hashtag del evento
   consideracionesData?: Consideraciones;
   hospedaje?: {
@@ -354,6 +359,16 @@ export class FormularioInvitacionComponent implements OnInit {
     },
     padrinos: [], // Lista de padrinos (vacía)
     confirmacion: { telefono: '', whatsapp: '', link: '' }, // Confirmación (vacía)
+    confirmacionData: {
+      mostrarSeccion: true,
+      estilo: 'tarjetas',
+      titulo: 'Confirma tu asistencia',
+      descripcion:
+        'Nos encantaría compartir este momento contigo. Por favor confirma tu asistencia.',
+      mostrarConfirmar: true,
+      mostrarRechazar: true,
+      mostrarCalendario: true,
+    },
     hashtag: '',
     consideracionesData: {
       mostrarSeccion: true,
@@ -870,6 +885,16 @@ export class FormularioInvitacionComponent implements OnInit {
           textoBoton: 'Ver mesa de regalos',
         },
         confirmacion: { telefono: '', whatsapp: '', link: '' },
+        confirmacionData: {
+          mostrarSeccion: true,
+          estilo: 'tarjetas',
+          titulo: 'Confirma tu asistencia',
+          descripcion:
+            'Nos encantaría compartir este momento contigo. Por favor confirma tu asistencia.',
+          mostrarConfirmar: true,
+          mostrarRechazar: true,
+          mostrarCalendario: true,
+        },
         hashtag: '',
         consideracionesData: {
           mostrarSeccion: true,
@@ -1782,6 +1807,41 @@ export class FormularioInvitacionComponent implements OnInit {
   eliminarItemConsideracion(index: number) {
     if (this.consideracionesData.items) {
       this.consideracionesData.items.splice(index, 1);
+    }
+  }
+  // Getter para estilos
+  get estilosConfirmacion() {
+    return ESTILOS_CONFIRMACION;
+  }
+
+  // Getter para confirmacionData
+  get confirmacionData(): Confirmacion {
+    if (!this.nuevaInvitacion.confirmacionData) {
+      this.nuevaInvitacion.confirmacionData = {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Confirma tu asistencia',
+        descripcion:
+          'Nos encantaría compartir este momento contigo. Por favor confirma tu asistencia.',
+        mostrarConfirmar: true,
+        mostrarRechazar: true,
+        mostrarCalendario: true,
+      };
+    }
+    return this.nuevaInvitacion.confirmacionData;
+  }
+
+  // Método para seleccionar estilo
+  seleccionarEstiloConfirmacion(estilo: string) {
+    const estilosPermitidos = [
+      'tarjetas',
+      'minimalista',
+      'lista',
+      'elegante',
+      'moderno',
+    ];
+    if (estilosPermitidos.includes(estilo)) {
+      this.confirmacionData.estilo = estilo as any;
     }
   }
 }

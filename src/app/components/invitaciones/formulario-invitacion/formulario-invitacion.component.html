@@ -1912,10 +1912,10 @@
         </div>
 
         <!-- ----------------------------------------------------
-             ACORDEÓN: CONFIRMACIÓN DE ASISTENCIA
-             - Teléfono de contacto
-             - WhatsApp de contacto
-             ---------------------------------------------------- -->
+     ACORDEÓN: CONFIRMACIÓN DE ASISTENCIA
+     - Personalización de la sección
+     - Teléfono y WhatsApp de contacto
+     ---------------------------------------------------- -->
         <div class="acordeon">
           <div
             class="acordeon-header"
@@ -1926,19 +1926,170 @@
           </div>
 
           <div class="acordeon-body" [class.abierto]="acordeonConfirmacion">
-            <div class="form-grid">
-              <input
-                type="tel"
-                [(ngModel)]="nuevaInvitacion.confirmacion.telefono"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="Teléfono"
-              />
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.confirmacion.whatsapp"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="WhatsApp"
-              />
+            <!-- ==========================================================
+         MOSTRAR SECCIÓN
+         ========================================================== -->
+            <div class="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  [(ngModel)]="confirmacionData.mostrarSeccion"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                Mostrar sección en la invitación
+              </label>
+            </div>
+
+            <!-- ==========================================================
+         1. ESTILO DE LA SECCIÓN
+         ========================================================== -->
+            <div class="campo">
+              <label>🎨 1. ESTILO DE LA SECCIÓN</label>
+              <div class="estilos-confirmacion-grid">
+                @for (estilo of estilosConfirmacion; track estilo) {
+                  <div
+                    class="estilo-confirmacion-option"
+                    [class.selected]="confirmacionData.estilo === estilo.valor"
+                    (click)="seleccionarEstiloConfirmacion(estilo.valor)"
+                  >
+                    <span class="estilo-confirmacion-icon">{{
+                      estilo.icon
+                    }}</span>
+                    <span class="estilo-confirmacion-nombre">{{
+                      estilo.nombre
+                    }}</span>
+                  </div>
+                }
+              </div>
+              <small class="help-text"
+                >Elige cómo se mostrará esta sección en tu invitación.</small
+              >
+            </div>
+
+            <!-- ==========================================================
+         2. PERSONALIZA TU MENSAJE
+         ========================================================== -->
+            <div class="campo">
+              <label>✏️ 2. PERSONALIZA TU MENSAJE</label>
+
+              <div class="subcampo">
+                <label>Título de la sección</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="confirmacionData.titulo"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Confirma tu asistencia"
+                    maxlength="30"
+                  />
+                  <span class="contador"
+                    >{{ confirmacionData.titulo?.length || 0 }}/30</span
+                  >
+                </div>
+              </div>
+
+              <div class="subcampo">
+                <label>Descripción (opcional)</label>
+                <div class="input-with-counter">
+                  <textarea
+                    [(ngModel)]="confirmacionData.descripcion"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Nos encantaría compartir este momento contigo. Por favor confirma tu asistencia."
+                    rows="3"
+                    maxlength="120"
+                  ></textarea>
+                  <span class="contador"
+                    >{{ confirmacionData.descripcion?.length || 0 }}/120</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- ==========================================================
+         3. ACCIONES QUE VERÁN TUS INVITADOS
+         ========================================================== -->
+            <div class="campo">
+              <label>⚙️ 3. ACCIONES QUE VERÁN TUS INVITADOS</label>
+
+              <div class="acciones-confirmacion-grid">
+                <div class="accion-checkbox">
+                  <label>
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="confirmacionData.mostrarConfirmar"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <span>✅ Confirmar asistencia</span>
+                  </label>
+                  <small class="accion-desc"
+                    >Tus invitados podrán confirmar que asistirán al
+                    evento.</small
+                  >
+                </div>
+
+                <div class="accion-checkbox">
+                  <label>
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="confirmacionData.mostrarRechazar"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <span>💔 No podré asistir</span>
+                  </label>
+                  <small class="accion-desc"
+                    >Tus invitados podrán indicar que no podrán asistir.</small
+                  >
+                </div>
+
+                <div class="accion-checkbox">
+                  <label>
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="confirmacionData.mostrarCalendario"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <span>📅 Guardar evento en mi calendario</span>
+                  </label>
+                  <small class="accion-desc"
+                    >Tus invitados podrán agregar el evento a su
+                    calendario.</small
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- ==========================================================
+         4. DATOS DE CONTACTO (EXISTENTE)
+         ========================================================== -->
+            <div class="campo">
+              <label>📞 4. DATOS DE CONTACTO</label>
+              <div class="form-grid">
+                <input
+                  type="tel"
+                  [(ngModel)]="nuevaInvitacion.confirmacion.telefono"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Teléfono"
+                />
+                <input
+                  type="text"
+                  [(ngModel)]="nuevaInvitacion.confirmacion.whatsapp"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="WhatsApp"
+                />
+              </div>
+              <small class="help-text"
+                >Estos datos se mostrarán para que los invitados puedan
+                contactarte.</small
+              >
+            </div>
+
+            <!-- Tip -->
+            <div class="confirmacion-tip">
+              <span class="tip-icon">💡</span>
+              <span class="tip-text">
+                Mantén esta sección visible para que tus invitados puedan
+                confirmar su asistencia fácilmente.
+              </span>
             </div>
           </div>
         </div>

@@ -1,11 +1,30 @@
+<!-- src/app/components/invitaciones/invitacion-generica/sections/confirmacion-section/confirmacion-section.component.html -->
+
 @if (cargando) {
   <div class="cargando-msg">⏳ Cargando tu invitación...</div>
 }
 
-@if (!cargando) {
-  <div class="confirmacion-section">
-    <!-- Estado actual -->
-    @if (estadoActual === 'confirmado') {
+@if (!cargando && data && data.mostrarSeccion) {
+  <div class="confirmacion-section {{ 'estilo-' + data.estilo }}">
+    <!-- ✅ ENCABEZADO PERSONALIZADO -->
+    <div class="confirmacion-header">
+      <h2 class="confirmacion-titulo">
+        {{ data.titulo || "Confirma tu asistencia" }}
+      </h2>
+      <div class="confirmacion-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✦</span>
+        <span class="divider-line"></span>
+      </div>
+    </div>
+
+    <!-- ✅ DESCRIPCIÓN PERSONALIZADA -->
+    @if (data.descripcion) {
+      <p class="confirmacion-descripcion">{{ data.descripcion }}</p>
+    }
+
+    <!-- ✅ ESTADO ACTUAL (ESENCIA ORIGINAL) -->
+    @if (estadoActual === "confirmado") {
       <div class="estado-card">
         <div class="estado-confirmado">
           <span>✅</span>
@@ -16,7 +35,7 @@
         </div>
       </div>
     }
-    @if (estadoActual === 'rechazado') {
+    @if (estadoActual === "rechazado") {
       <div class="estado-card">
         <div class="estado-rechazado">
           <span>💔</span>
@@ -27,7 +46,7 @@
         </div>
       </div>
     }
-    @if (estadoActual === 'pendiente') {
+    @if (estadoActual === "pendiente") {
       <div class="estado-card">
         <div class="estado-pendiente">
           <span>⏳</span>
@@ -38,41 +57,60 @@
         </div>
       </div>
     }
-    <!-- Botones de confirmación - solo visibles si está pendiente -->
-    @if (estadoActual === 'pendiente') {
+
+    <!-- ✅ BOTONES DE ACCIÓN (ESENCIA ORIGINAL + PERSONALIZACIÓN) -->
+    @if (estadoActual === "pendiente") {
       <div class="botones-accion">
-        <button
-          class="btn-confirmar"
-          (click)="confirmarAsistencia()"
-          [disabled]="confirmando"
+        <!-- Confirmar asistencia (solo si está habilitado) -->
+        @if (data.mostrarConfirmar !== false) {
+          <button
+            class="btn-confirmar"
+            (click)="confirmarAsistencia()"
+            [disabled]="confirmando"
           >
-          ✅ Confirmar asistencia
-        </button>
-        <button
-          class="btn-rechazar"
-          (click)="rechazarAsistencia()"
-          [disabled]="confirmando"
+            ✅ Confirmar asistencia
+          </button>
+        }
+
+        <!-- No podré asistir (solo si está habilitado) -->
+        @if (data.mostrarRechazar !== false) {
+          <button
+            class="btn-rechazar"
+            (click)="rechazarAsistencia()"
+            [disabled]="confirmando"
           >
-          💔 No podré asistir
-        </button>
+            💔 No podré asistir
+          </button>
+        }
       </div>
     }
-    <!-- Mensaje cuando ya respondió -->
-    @if (estadoActual === 'confirmado') {
-      <div class="respuesta-final">
+
+    <!-- ✅ MENSAJES DE RESPUESTA (ESENCIA ORIGINAL) -->
+    @if (estadoActual === "confirmado") {
+      <div class="respuesta-final confirmado">
         ✅ Ya confirmaste tu asistencia. ¡Te esperamos! 🎉
       </div>
     }
-    @if (estadoActual === 'rechazado') {
-      <div class="respuesta-final">
+    @if (estadoActual === "rechazado") {
+      <div class="respuesta-final rechazado">
         💔 Has rechazado la invitación. Gracias por avisar.
       </div>
     }
-    <!-- Guardar en calendario -->
-    <div class="calendario-accion">
-      <button class="btn-calendario" (click)="guardarEnCalendario()">
-        <span>📅</span> Guardar evento en mi calendario
-      </button>
+
+    <!-- ✅ GUARDAR EN CALENDARIO (ESENCIA ORIGINAL + PERSONALIZACIÓN) -->
+    @if (data.mostrarCalendario !== false) {
+      <div class="calendario-accion">
+        <button class="btn-calendario" (click)="guardarEnCalendario()">
+          <span>📅</span> Guardar evento en mi calendario
+        </button>
+      </div>
+    }
+
+    <!-- ✅ PIE (ESENCIA ORIGINAL) -->
+    <div class="confirmacion-footer">
+      <p class="footer-texto">
+        ¡Gracias por ser parte de este día tan especial!
+      </p>
     </div>
   </div>
 }

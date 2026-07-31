@@ -34,6 +34,7 @@ import { Galeria } from '../../../models/galeria.model';
 import { Contador } from '../../../models/contador.model';
 import { Regalos } from '../../../models/regalos.model';
 import { Consideraciones } from '../../../models/consideraciones.model';
+import { Confirmacion } from '../../../models/confirmacion.model';
 
 @Component({
   selector: 'app-invitacion-generica',
@@ -383,6 +384,21 @@ export class InvitacionGenericaComponent implements OnInit {
         'Gracias por ser parte de este momento tan especial. Te compartimos algunas recomendaciones importantes.',
       colorIconos: '#c9a87c',
       items: [],
+    };
+  }
+
+  get confirmacionFormateado(): Confirmacion {
+    const c = this.data?.confirmacionData || {};
+    return {
+      mostrarSeccion: (c as any).mostrarSeccion ?? true,
+      estilo: (c as any).estilo || 'tarjetas',
+      titulo: (c as any).titulo || 'Confirma tu asistencia',
+      descripcion:
+        (c as any).descripcion ||
+        'Nos encantaría compartir este momento contigo. Por favor confirma tu asistencia.',
+      mostrarConfirmar: (c as any).mostrarConfirmar ?? true,
+      mostrarRechazar: (c as any).mostrarRechazar ?? true,
+      mostrarCalendario: (c as any).mostrarCalendario ?? true,
     };
   }
 }

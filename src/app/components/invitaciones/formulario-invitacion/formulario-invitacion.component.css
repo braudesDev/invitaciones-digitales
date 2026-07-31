@@ -3275,3 +3275,177 @@
     height: 38px;
   }
 }
+
+/* ================================================================
+   CONFIRMACIÓN - ESTILOS DEL FORMULARIO
+   ================================================================ */
+
+.estilos-confirmacion-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin: 10px 0 16px;
+}
+
+.estilo-confirmacion-option {
+  background: #f8f5f0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.estilo-confirmacion-option:hover {
+  background: #f0ebe5;
+  transform: translateY(-2px);
+}
+
+.estilo-confirmacion-option.selected {
+  border-color: var(--accent, #c9a87c);
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.25);
+  transform: translateY(-2px);
+}
+
+.estilo-confirmacion-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.estilo-confirmacion-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.estilo-confirmacion-nombre {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+.acciones-confirmacion-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.accion-checkbox {
+  padding: 8px 12px;
+  background: #f8f5f0;
+  border-radius: 8px;
+  border: 1px solid rgba(201, 168, 124, 0.08);
+}
+
+.accion-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.accion-checkbox label input[type="checkbox"] {
+  accent-color: var(--accent, #c9a87c);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.accion-desc {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text, #666);
+  opacity: 0.6;
+  margin-left: 34px;
+  margin-top: 2px;
+}
+
+.confirmacion-tip {
+  margin-top: 1.5rem;
+  padding: 14px 18px;
+  background: #f8f5f0;
+  border-radius: 12px;
+  border-left: 4px solid var(--accent, #c9a87c);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.confirmacion-tip .tip-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.confirmacion-tip .tip-text {
+  font-size: 0.82rem;
+  color: var(--text, #666);
+  line-height: 1.6;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-grid input {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-grid input:focus {
+  border-color: var(--accent, #c9a87c);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .estilos-confirmacion-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .estilos-confirmacion-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .estilo-confirmacion-option {
+    padding: 10px 6px;
+  }
+  .estilo-confirmacion-icon {
+    font-size: 1.6rem;
+  }
+  .estilo-confirmacion-nombre {
+    font-size: 0.7rem;
+  }
+}

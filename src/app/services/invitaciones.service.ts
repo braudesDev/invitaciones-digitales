@@ -16,6 +16,7 @@ import {
 import { Observable } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 import { Consideraciones } from '../models/consideraciones.model';
+import { Confirmacion } from '../models/confirmacion.model';
 
 export interface Invitacion {
   id: string;
@@ -159,6 +160,7 @@ export interface Invitacion {
     whatsapp?: string;
     link?: string;
   };
+  confirmacionData?: Confirmacion;
 }
 
 @Injectable({

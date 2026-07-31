@@ -1,19 +1,29 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+// src/app/components/invitaciones/invitacion-generica/sections/confirmacion-section/confirmacion-section.component.ts
 
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { InvitadosService } from '../../../../../services/invitados.service';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { Confirmacion } from '../../../../../models/confirmacion.model';
 
 @Component({
   selector: 'app-confirmacion-section',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './confirmacion-section.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./confirmacion-section.component.css'],
 })
 export class ConfirmacionSectionComponent implements OnInit {
   @Input() eventoData: any = {};
+  @Input() data!: Confirmacion; // 👈 Datos de personalización
+  @Input() modo: 'edicion' | 'vista' = 'vista';
 
   invitadoId: string = '';
   estadoActual: 'pendiente' | 'confirmado' | 'rechazado' = 'pendiente';
@@ -37,8 +47,6 @@ export class ConfirmacionSectionComponent implements OnInit {
       return;
     }
 
-    console.log('🔍 Buscando invitado con slug:', slug);
-
     try {
       const inv = await firstValueFrom(
         this.invitadosService.getInvitadoPorSlug(slug),
@@ -47,9 +55,7 @@ export class ConfirmacionSectionComponent implements OnInit {
         this.invitadoId = inv.id;
         this.estadoActual = inv.estado;
         console.log('✅ Invitado encontrado:', inv);
-        console.log('📌 Estado actual:', this.estadoActual); // 👈 AGREGADO AQUÍ
-      } else {
-        console.error('❌ Invitado no encontrado');
+        console.log('📌 Estado actual:', this.estadoActual);
       }
     } catch (error) {
       console.error('❌ Error al buscar invitado:', error);

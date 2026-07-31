@@ -98,8 +98,12 @@
       ></app-consideraciones-section>
     }
     <!-- ✅ CONFIRMACIÓN DE ASISTENCIA (botones, estado, contacto) -->
-    @if (data) {
-      <app-confirmacion-section [eventoData]="data"> </app-confirmacion-section>
+    @if (data.confirmacionData) {
+      <app-confirmacion-section
+        [data]="confirmacionFormateado"
+        [eventoData]="data"
+        modo="vista"
+      ></app-confirmacion-section>
     }
     <app-footer-section></app-footer-section>
   </div>
