@@ -33,11 +33,14 @@
               }}</span>
               <p class="timeline-descripcion">{{ momento.descripcion }}</p>
               @if (momento.imagen) {
-                <img
-                  [src]="momento.imagen"
-                  alt="Momento"
-                  class="timeline-imagen"
-                />
+                <div class="timeline-imagen-wrapper">
+                  <img
+                    [src]="momento.imagen"
+                    alt="Momento"
+                    class="timeline-imagen"
+                    loading="lazy"
+                  />
+                </div>
               }
             </div>
           </div>
@@ -50,7 +53,10 @@
     <!-- ============================================ -->
     @if (data.estilo === "tarjetas") {
       <div class="historia-tarjetas" #tarjetasContainer>
-        @for (momento of data.momentos; track momento; let i = $index) {
+        @for (
+          momento of verTodos ? data.momentos : data.momentos.slice(0, 6);
+          track momento
+        ) {
           <div class="tarjeta-momento">
             <div class="tarjeta-contenido">
               <span class="tarjeta-fecha">{{
@@ -62,6 +68,7 @@
                   [src]="momento.imagen"
                   alt="Momento"
                   class="tarjeta-imagen"
+                  loading="lazy"
                 />
               }
             </div>
@@ -80,11 +87,15 @@
     <!-- ============================================ -->
     @if (data.estilo === "album") {
       <div class="historia-album" #albumContainer>
-        @for (momento of data.momentos; track momento; let i = $index) {
+        @for (
+          momento of verTodos ? data.momentos : data.momentos.slice(0, 6);
+          track momento;
+          let i = $index
+        ) {
           <div class="album-item">
             <span class="album-number">{{ i + 1 }}</span>
             @if (momento.imagen) {
-              <img [src]="momento.imagen" alt="Momento" />
+              <img [src]="momento.imagen" alt="Momento" loading="lazy" />
             }
             <div class="album-overlay">
               <span class="album-fecha">{{
@@ -106,7 +117,11 @@
     <!-- ============================================ -->
     @if (data.estilo === "minimalista") {
       <div class="historia-minimalista">
-        @for (momento of data.momentos; track momento; let i = $index) {
+        @for (
+          momento of verTodos ? data.momentos : data.momentos.slice(0, 6);
+          track momento;
+          let i = $index
+        ) {
           <div class="minimalista-item">
             <div class="minimalista-header" (click)="toggleMinimalista(i)">
               <span class="minimalista-fecha">{{
@@ -147,8 +162,10 @@
       </p>
     }
 
-    <!-- Botón "Ver más" (si hay muchos momentos) -->
-    @if (data.momentos && data.momentos.length > 6) {
+    <!-- Botón "Ver más" (solo para estilos que no sean timeline) -->
+    @if (
+      data.momentos && data.momentos.length > 6 && data.estilo !== "timeline"
+    ) {
       <div class="ver-mas-container">
         <button class="btn-ver-mas" (click)="verTodos = !verTodos">
           {{ verTodos ? "Ver menos" : "Ver todos" }}
