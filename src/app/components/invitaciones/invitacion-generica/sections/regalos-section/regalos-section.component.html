@@ -1,21 +1,56 @@
-@if (data) {
-  <div class="regalos-section">
-    <div class="section-icon">🎁</div>
-    <h3>Mesa de Regalos</h3>
-    <div class="regalos-content">
-      @if (data.texto) {
-        <p class="regalos-texto">{{ data.texto }}</p>
-      }
-      @if (data.links && data.links.length > 0) {
-        <div class="regalos-links">
-          @for (link of data.links; track link) {
-            <a [href]="link.url" target="_blank" rel="noopener noreferrer" class="regalo-link">
-              <span class="link-icon">🎀</span>
-              {{ link.nombre }}
-            </a>
-          }
+<!-- src/app/components/invitaciones/invitacion-generica/sections/regalos-section/regalos-section.component.html -->
+
+<!-- ================================================================
+     SECCIÓN MESA DE REGALOS - SOLO VISTA (PREVIEW)
+     ================================================================ -->
+
+@if (data && data.mostrarSeccion && data.opciones?.length > 0) {
+  <div class="regalos-section {{ 'estilo-' + data.estilo }}">
+    <!-- Encabezado -->
+    <div class="regalos-header">
+      <h2 class="regalos-titulo">{{ data.titulo || "Mesa de Regalos" }}</h2>
+      <div class="regalos-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✦</span>
+        <span class="divider-line"></span>
+      </div>
+    </div>
+
+    @if (data.descripcion) {
+      <p class="regalos-descripcion">{{ data.descripcion }}</p>
+    }
+
+    <!-- Opciones de regalos -->
+    <div class="regalos-opciones">
+      @for (opcion of data.opciones; track opcion; let i = $index) {
+        <div class="opcion-item-vista">
+          <div class="opcion-contenido">
+            <div class="opcion-icono">
+              {{ opcion.icono || getIconoOpcion(opcion.nombre) }}
+            </div>
+            <div class="opcion-info">
+              <h4 class="opcion-nombre">{{ opcion.nombre }}</h4>
+              @if (opcion.subtitulo) {
+                <p class="opcion-subtitulo">{{ opcion.subtitulo }}</p>
+              }
+            </div>
+            @if (opcion.url) {
+              <a [href]="opcion.url" target="_blank" class="opcion-enlace">
+                🔗 Ver más
+              </a>
+            }
+          </div>
         </div>
       }
     </div>
+
+    <!-- Botón -->
+    @if (data.textoBoton) {
+      <div class="regalos-footer">
+        <button class="btn-regalos">
+          {{ data.textoBoton }}
+        </button>
+      </div>
+    }
   </div>
 }

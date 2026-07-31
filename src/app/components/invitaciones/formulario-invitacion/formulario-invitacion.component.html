@@ -1664,10 +1664,8 @@
         </div>
 
         <!-- ----------------------------------------------------
-             ACORDEÓN: REGALOS (Mesa de regalos)
-             - Texto de agradecimiento
-             - Lista dinámica de tiendas/links (nombre + URL)
-             ---------------------------------------------------- -->
+     ACORDEÓN: REGALOS (Mesa de regalos)
+     ---------------------------------------------------- -->
         <div class="acordeon">
           <div
             class="acordeon-header"
@@ -1678,46 +1676,238 @@
           </div>
 
           <div class="acordeon-body" [class.abierto]="acordeonRegalos">
-            <!-- Texto de agradecimiento -->
-            <textarea
-              [(ngModel)]="nuevaInvitacion.regalos.texto"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Texto de agradecimiento"
-            ></textarea>
+            <!-- Mostrar sección -->
+            <div class="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  [(ngModel)]="nuevaInvitacion.regalos.mostrarSeccion"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                Mostrar sección en la invitación
+              </label>
+            </div>
 
-            <!-- Lista dinámica de tiendas -->
-            @for (
-              link of nuevaInvitacion.regalos.links;
-              track link;
-              let i = $index
-            ) {
-              <div class="campo-dinamico">
-                <input
-                  type="text"
-                  [(ngModel)]="link.nombre"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Nombre tienda"
-                />
-                <input
-                  type="url"
-                  [(ngModel)]="link.url"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="URL"
-                />
-                <button type="button" (click)="eliminarRegaloLink(i)">
-                  ❌
-                </button>
+            <!-- 1. ESTILO DE LA SECCIÓN -->
+            <div class="campo">
+              <label>🎨 1. ESTILO DE LA SECCIÓN</label>
+              <div class="estilos-regalos-grid">
+                @for (estilo of estilosRegalos; track estilo) {
+                  <div
+                    class="estilo-regalos-option"
+                    [class.selected]="
+                      nuevaInvitacion.regalos.estilo === estilo.valor
+                    "
+                    (click)="seleccionarEstiloRegalos(estilo.valor)"
+                  >
+                    <span class="estilo-regalos-icon">{{ estilo.icon }}</span>
+                    <span class="estilo-regalos-nombre">{{
+                      estilo.nombre
+                    }}</span>
+                  </div>
+                }
               </div>
-            }
+              <small class="help-text"
+                >Elige cómo se mostrará tu mesa de regalos en la
+                invitación.</small
+              >
+            </div>
 
-            <!-- Botón para agregar tienda -->
-            <button
-              type="button"
-              class="btn-agregar"
-              (click)="agregarRegaloLink()"
-            >
-              + Agregar tienda
-            </button>
+            <!-- 2. OPCIONES DE REGALOS -->
+            <div class="campo">
+              <label>📋 2. OPCIONES DE REGALOS</label>
+
+              <!-- Ayuda: Explicación de qué son las opciones -->
+              <div class="ayuda-opciones">
+                <p class="ayuda-texto">
+                  💡 Agrega las tiendas o formas en las que tus invitados pueden
+                  tener un detalle contigo.
+                </p>
+                <div class="ayuda-ejemplos">
+                  <span class="ejemplo-tag">🏬 Liverpool</span>
+                  <span class="ejemplo-tag">📦 Amazon</span>
+                  <span class="ejemplo-tag">💵 Lluvia de sobres</span>
+                  <span class="ejemplo-tag">🏦 Transferencia</span>
+                </div>
+              </div>
+
+              @if (nuevaInvitacion.regalos.opciones?.length === 0) {
+                <div class="empty-state">
+                  <span class="empty-icon">🎁</span>
+                  <p>No hay opciones de regalos agregadas</p>
+                  <small>Agrega las tiendas o formas de regalar</small>
+                </div>
+              }
+
+              @for (
+                opcion of nuevaInvitacion.regalos.opciones;
+                track opcion;
+                let i = $index
+              ) {
+                <div class="opcion-item">
+                  <div class="opcion-card">
+                    <div class="opcion-header">
+                      <span class="opcion-numero">#{{ i + 1 }}</span>
+                      <button
+                        type="button"
+                        class="btn-eliminar-opcion"
+                        (click)="eliminarOpcionRegalo(i)"
+                      >
+                        ❌
+                      </button>
+                    </div>
+                    <div class="opcion-fields">
+                      <!-- Nombre -->
+                      <div class="field-group">
+                        <label>Nombre *</label>
+                        <input
+                          type="text"
+                          [(ngModel)]="opcion.nombre"
+                          [ngModelOptions]="{ standalone: true }"
+                          placeholder="Ej: Liverpool, Amazon, Lluvia de sobres"
+                          class="form-control"
+                        />
+                        <small class="field-help"
+                          >Nombre de la tienda o tipo de regalo</small
+                        >
+                      </div>
+
+                      <!-- Subtítulo -->
+                      <div class="field-group">
+                        <label>Subtítulo (opcional)</label>
+                        <input
+                          type="text"
+                          [(ngModel)]="opcion.subtitulo"
+                          [ngModelOptions]="{ standalone: true }"
+                          placeholder="Ej: Evento #589632, Lista de deseos"
+                          class="form-control"
+                        />
+                        <small class="field-help"
+                          >Información adicional como número de evento o
+                          referencia</small
+                        >
+                      </div>
+
+                      <!-- URL (opcional) -->
+                      <div class="field-group full-width">
+                        <label>🔗 Enlace (opcional)</label>
+                        <input
+                          type="url"
+                          [(ngModel)]="opcion.url"
+                          [ngModelOptions]="{ standalone: true }"
+                          placeholder="https://www.tienda.com/lista-de-deseos"
+                          class="form-control"
+                        />
+                        <small class="field-help">
+                          Si agregas un enlace, los invitados podrán hacer clic
+                          y ver la lista de deseos directamente.
+                        </small>
+                      </div>
+
+                      <!-- Icono (opcional) -->
+                      <div class="field-group">
+                        <label>🎨 Icono (opcional)</label>
+                        <input
+                          type="text"
+                          [(ngModel)]="opcion.icono"
+                          [ngModelOptions]="{ standalone: true }"
+                          placeholder="🏬 📦 💵 🏦"
+                          class="form-control"
+                        />
+                        <small class="field-help"
+                          >Puedes usar un emoji para representar la
+                          opción</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+
+              <button
+                type="button"
+                class="btn-agregar-opcion"
+                (click)="agregarOpcionRegalo()"
+              >
+                ➕ Agregar opción
+              </button>
+            </div>
+
+            <!-- 3. PERSONALIZA TU MENSAJE -->
+            <div class="campo">
+              <label>✏️ 3. PERSONALIZA TU MENSAJE</label>
+
+              <div class="subcampo">
+                <label>Título de la sección</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.regalos.titulo"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Mesa de Regalos"
+                    maxlength="30"
+                  />
+                  <span class="contador"
+                    >{{ nuevaInvitacion.regalos.titulo?.length || 0 }}/30</span
+                  >
+                </div>
+                <small class="field-help"
+                  >El título que verán los invitados</small
+                >
+              </div>
+
+              <div class="subcampo">
+                <label>Descripción (opcional)</label>
+                <div class="input-with-counter">
+                  <textarea
+                    [(ngModel)]="nuevaInvitacion.regalos.descripcion"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, encontrarás nuestras opciones aquí."
+                    rows="3"
+                    maxlength="150"
+                  ></textarea>
+                  <span class="contador"
+                    >{{
+                      nuevaInvitacion.regalos.descripcion?.length || 0
+                    }}/150</span
+                  >
+                </div>
+                <small class="field-help"
+                  >Un mensaje de agradecimiento para tus invitados</small
+                >
+              </div>
+
+              <div class="subcampo">
+                <label>Texto del botón</label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.regalos.textoBoton"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Ver mesa de regalos"
+                    maxlength="30"
+                  />
+                  <span class="contador"
+                    >{{
+                      nuevaInvitacion.regalos.textoBoton?.length || 0
+                    }}/30</span
+                  >
+                </div>
+                <small class="field-help"
+                  >Texto que aparecerá en el botón (si usas el estilo de
+                  tarjetas)</small
+                >
+              </div>
+            </div>
+
+            <!-- Tip para el anfitrión -->
+            <div class="regalos-tip">
+              <span class="tip-icon">💡</span>
+              <span class="tip-text">
+                Comparte las opciones para que tus invitados puedan tener un
+                detalle contigo en este día especial.
+              </span>
+            </div>
           </div>
         </div>
 

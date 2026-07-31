@@ -37,6 +37,9 @@ import {
 } from '../../../models/dress-code.model'; // Modelos y utilidades de dress code
 import { Contador } from '../../../models/contador.model'; // Modelo y utilidades del contador
 import { ESTILOS_CONTADOR } from '../../../models/contador.model';
+import { Regalos } from '../../../models/regalos.model';
+import { RegalosSectionComponent } from '../invitacion-generica/sections/regalos-section/regalos-section.component';
+import { ESTILOS_REGALOS } from '../../../models/regalos.model';
 
 // ================================================================
 // 1. INTERFAZ: Invitación Completa
@@ -107,11 +110,7 @@ export interface InvitacionCompleta {
     novia?: string;
   };
   padrinos: PadrinoAsignado[]; // Lista de padrinos (nuevo formato)
-  regalos: {
-    // Mesa de regalos
-    texto: string;
-    links: { nombre: string; url: string }[];
-  };
+  regalos: Regalos;
   confirmacion: {
     // Confirmación de asistencia
     telefono: string;
@@ -156,7 +155,7 @@ export interface InvitacionCompleta {
     mostrarCompartir: boolean;
     mostrarPaginacion: boolean;
   };
-  contador?: Contador; //
+  contador?: Contador; // Seccion contador
 }
 
 // ================================================================
@@ -235,6 +234,7 @@ export class FormularioInvitacionComponent implements OnInit {
 
   paletaSeleccionada: string = ''; // ID de la paleta actualmente seleccionada
 
+  modo: 'edicion' | 'vista' = 'edicion';
   /**
    * Aplica una paleta de colores a la invitación
    * @param tipo - ID de la paleta (premium, champagne, rosegold, etc.)
@@ -349,11 +349,9 @@ export class FormularioInvitacionComponent implements OnInit {
       novia: '',
     },
     padrinos: [], // Lista de padrinos (vacía)
-    regalos: { texto: '', links: [] }, // Mesa de regalos (vacía)
     confirmacion: { telefono: '', whatsapp: '', link: '' }, // Confirmación (vacía)
     hashtag: '',
     consideraciones: '',
-
     contador: {
       mostrarSeccion: true,
       fechaEvento: '',
@@ -373,6 +371,15 @@ export class FormularioInvitacionComponent implements OnInit {
         minutos: 'MINUTOS',
         segundos: 'SEGUNDOS',
       },
+    },
+    regalos: {
+      mostrarSeccion: true,
+      estilo: 'tarjetas',
+      titulo: 'Mesa de Regalos',
+      descripcion:
+        'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, encontrarás nuestras opciones aquí.',
+      opciones: [],
+      textoBoton: 'Ver mesa de regalos',
     },
   };
 
@@ -423,8 +430,6 @@ export class FormularioInvitacionComponent implements OnInit {
         const data = snap.data() as Partial<InvitacionCompleta>;
 
         // --- CONVERSIÓN DE PADRINOS (MIGRACIÓN) ---
-        // Si los padrinos están en formato antiguo (string[]), los convierte
-        // al nuevo formato (PadrinoAsignado[])
         if (
           data.padrinos &&
           Array.isArray(data.padrinos) &&
@@ -439,7 +444,6 @@ export class FormularioInvitacionComponent implements OnInit {
         }
 
         // --- PROCESAR DRESS CODE ---
-        // Asegura que todos los campos del dress code estén presentes
         if (data.dressCode) {
           if (!data.dressCode.colores) data.dressCode.colores = [];
           if (!data.dressCode.coloresReservados)
@@ -451,9 +455,7 @@ export class FormularioInvitacionComponent implements OnInit {
         }
 
         // --- PROCESAR HISTORIA ---
-        // Asegura que todos los campos de la historia estén presentes
         if (data.historia) {
-          // Si es string, convertirlo a objeto
           if (typeof data.historia === 'string') {
             data.historia = {
               mostrarSeccion: true,
@@ -463,7 +465,6 @@ export class FormularioInvitacionComponent implements OnInit {
               momentos: [],
             };
           } else {
-            // Si es objeto, asegurar que tenga todas las propiedades
             if (!data.historia.momentos) data.historia.momentos = [];
             if (!data.historia.titulo)
               data.historia.titulo = 'Nuestra Historia';
@@ -472,6 +473,30 @@ export class FormularioInvitacionComponent implements OnInit {
               data.historia.mostrarSeccion = true;
             if (!data.historia.descripcion) data.historia.descripcion = '';
           }
+        }
+
+        // 👇 AGREGAR MIGRACIÓN DE REGALOS AQUÍ
+        // --- MIGRAR REGALOS DEL FORMATO ANTIGUO ---
+        if (data.regalos && !('opciones' in data.regalos)) {
+          const antiguo = data.regalos as any;
+          const opciones =
+            antiguo.links?.map((link: any) => ({
+              nombre: link.nombre || '',
+              subtitulo: '',
+              icono: '🎁',
+              url: link.url || '',
+            })) || [];
+
+          data.regalos = {
+            mostrarSeccion: true,
+            estilo: 'tarjetas',
+            titulo: 'Mesa de Regalos',
+            descripcion:
+              antiguo.texto ||
+              'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, encontrarás nuestras opciones aquí.',
+            opciones: opciones,
+            textoBoton: 'Ver mesa de regalos',
+          };
         }
 
         // --- ASIGNAR DATOS ---
@@ -483,7 +508,6 @@ export class FormularioInvitacionComponent implements OnInit {
         };
 
         // --- DETECTAR PALETA POR COLORES ---
-        // Verifica si los colores actuales coinciden con alguna paleta
         this.detectarPaletaPorColores();
       }
       this.cargando = false;
@@ -635,24 +659,51 @@ export class FormularioInvitacionComponent implements OnInit {
   }
 
   // ==============================================================
-  // 3.10 MÉTODOS PARA REGALOS
+  // 3.10 MÉTODOS PARA REGALOS (NUEVO FORMATO)
   // ==============================================================
-  // Funciones para gestionar la mesa de regalos
+  // Funciones para gestionar la mesa de regalos usando el nuevo modelo
   // ==============================================================
 
   /**
-   * Agrega un nuevo link de tienda a la mesa de regalos
+   * Getter que asegura que regalos tenga el formato correcto
+   * Migra automáticamente desde el formato antiguo si es necesario
    */
-  agregarRegaloLink() {
-    this.nuevaInvitacion.regalos.links.push({ nombre: '', url: '' });
+  get regalosData(): Regalos {
+    // Si no existe o es el formato antiguo, crear uno nuevo
+    if (
+      !this.nuevaInvitacion.regalos ||
+      !('opciones' in this.nuevaInvitacion.regalos)
+    ) {
+      // Si es el formato antiguo (texto + links), migrar datos
+      const antiguo = this.nuevaInvitacion.regalos as any;
+      const opciones =
+        antiguo?.links?.map((link: any) => ({
+          nombre: link.nombre || '',
+          subtitulo: '',
+          icono: '🎁',
+          url: link.url || '',
+        })) || [];
+
+      this.nuevaInvitacion.regalos = {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Mesa de Regalos',
+        descripcion:
+          antiguo?.texto ||
+          'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, encontrarás nuestras opciones aquí.',
+        opciones: opciones,
+        textoBoton: 'Ver mesa de regalos',
+      };
+    }
+    return this.nuevaInvitacion.regalos as Regalos;
   }
 
   /**
-   * Elimina un link de la mesa de regalos
-   * @param index - Índice del link a eliminar
+   * Maneja los cambios emitidos por el componente regalos-section
+   * @param regalos - Objeto Regalos actualizado
    */
-  eliminarRegaloLink(index: number) {
-    this.nuevaInvitacion.regalos.links.splice(index, 1);
+  onRegalosChange(regalos: Regalos) {
+    this.nuevaInvitacion.regalos = regalos;
   }
 
   // ==============================================================
@@ -788,7 +839,15 @@ export class FormularioInvitacionComponent implements OnInit {
           novia: '',
         },
         padrinos: [],
-        regalos: { texto: '', links: [] },
+        regalos: {
+          mostrarSeccion: true,
+          estilo: 'tarjetas',
+          titulo: 'Mesa de Regalos',
+          descripcion:
+            'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, encontrarás nuestras opciones aquí.',
+          opciones: [],
+          textoBoton: 'Ver mesa de regalos',
+        },
         confirmacion: { telefono: '', whatsapp: '', link: '' },
         hashtag: '',
         consideraciones: '',
@@ -1595,5 +1654,45 @@ export class FormularioInvitacionComponent implements OnInit {
       };
     }
     this.nuevaInvitacion.galeria.efecto = efecto as any;
+  }
+  // Propiedad para estilos de regalos
+  get estilosRegalos() {
+    return ESTILOS_REGALOS;
+  }
+
+  agregarOpcionRegalo() {
+    if (!this.nuevaInvitacion.regalos.opciones) {
+      this.nuevaInvitacion.regalos.opciones = [];
+    }
+    this.nuevaInvitacion.regalos.opciones.push({
+      nombre: '',
+      subtitulo: '',
+      icono: '🎁',
+      url: '',
+    });
+  }
+
+  seleccionarEstiloRegalos(estilo: string) {
+    const estilosPermitidos = [
+      'tarjetas',
+      'timeline',
+      'catalogo',
+      'iconos',
+      'mosaico',
+    ];
+    if (estilosPermitidos.includes(estilo)) {
+      this.nuevaInvitacion.regalos.estilo = estilo as
+        | 'tarjetas'
+        | 'timeline'
+        | 'catalogo'
+        | 'iconos'
+        | 'mosaico';
+    }
+  }
+
+  eliminarOpcionRegalo(index: number) {
+    if (this.nuevaInvitacion.regalos.opciones) {
+      this.nuevaInvitacion.regalos.opciones.splice(index, 1);
+    }
   }
 }

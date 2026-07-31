@@ -32,6 +32,7 @@ import { Historia } from '../../../models/historia.model';
 import { Hospedaje } from '../../../models/hospedaje.model';
 import { Galeria } from '../../../models/galeria.model';
 import { Contador } from '../../../models/contador.model';
+import { Regalos } from '../../../models/regalos.model';
 
 @Component({
   selector: 'app-invitacion-generica',
@@ -279,6 +280,48 @@ export class InvitacionGenericaComponent implements OnInit {
         minutos: etiquetas.minutos || 'MINUTOS',
         segundos: etiquetas.segundos || 'SEGUNDOS',
       },
+    };
+  }
+  /**
+   * Getter que formatea los datos de regalos al nuevo formato
+   * Migra automáticamente desde el formato antiguo si es necesario
+   */
+  get regalosFormateado(): Regalos {
+    const r = this.data?.regalos || {};
+
+    // Si es el formato antiguo (tiene 'texto' y 'links'), migrar datos
+    if (r && 'texto' in r && 'links' in r) {
+      const antiguo = r as any;
+      const opciones =
+        antiguo.links?.map((link: any) => ({
+          nombre: link.nombre || '',
+          subtitulo: '',
+          icono: '🎁',
+          url: link.url || '',
+        })) || [];
+
+      return {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Mesa de Regalos',
+        descripcion:
+          antiguo.texto ||
+          'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, encontrarás nuestras opciones aquí.',
+        opciones: opciones,
+        textoBoton: 'Ver mesa de regalos',
+      };
+    }
+
+    // Si ya es el nuevo formato o no existe, devolverlo con valores por defecto
+    return {
+      mostrarSeccion: (r as any).mostrarSeccion ?? true,
+      estilo: (r as any).estilo || 'tarjetas',
+      titulo: (r as any).titulo || 'Mesa de Regalos',
+      descripcion:
+        (r as any).descripcion ||
+        'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, encontrarás nuestras opciones aquí.',
+      opciones: (r as any).opciones || [],
+      textoBoton: (r as any).textoBoton || 'Ver mesa de regalos',
     };
   }
 }

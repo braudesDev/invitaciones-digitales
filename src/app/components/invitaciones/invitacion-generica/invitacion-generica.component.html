@@ -90,7 +90,10 @@
       <app-hashtag-section [data]="data.hashtag"></app-hashtag-section>
     }
     @if (data.regalos) {
-      <app-regalos-section [data]="data.regalos"></app-regalos-section>
+      <app-regalos-section
+        [data]="regalosFormateado"
+        modo="vista"
+      ></app-regalos-section>
     }
     @if (data.consideraciones) {
       <app-consideraciones-section

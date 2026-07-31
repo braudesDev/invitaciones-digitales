@@ -1,56 +1,338 @@
+/* ================================================================
+   MESA DE REGALOS - ESTILOS DE VISTA (PREVIEW)
+   ================================================================
+   Estilos para la sección de regalos en la invitación
+   ================================================================ */
+
+/* ============================================
+   CONTENEDOR PRINCIPAL
+   ============================================ */
+
 .regalos-section {
-  margin: 30px auto;
-  padding: 30px 25px;
-  max-width: 600px;
-  background: white;
-  border-radius: 24px;
+  padding: 3rem 2rem;
+  background: var(--secondary, #f5ede4);
   text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  position: relative;
 }
 
-.section-icon {
-  font-size: 48px;
-  margin-bottom: 15px;
+/* ============================================
+   ENCABEZADO
+   ============================================ */
+
+.regalos-header {
+  margin-bottom: 1.5rem;
 }
 
-.regalos-section h3 {
-  font-size: 1.5rem;
-  margin-bottom: 25px;
-  color: #2c3e50;
-  font-weight: 600;
+.regalos-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 400;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.3rem;
+  letter-spacing: 2px;
 }
 
-.regalos-texto {
-  color: #555;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.regalos-links {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.regalo-link {
+.regalos-divider {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  text-decoration: none;
-  border-radius: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  font-weight: 500;
+  gap: 12px;
+  max-width: 200px;
+  margin: 0.5rem auto 0;
 }
 
-.regalo-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent, #c9a87c),
+    transparent
+  );
 }
 
-.link-icon {
+.divider-icon {
+  color: var(--accent, #c9a87c);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.regalos-descripcion {
+  max-width: 600px;
+  margin: 0.5rem auto 2rem;
+  color: var(--text, #666);
+  font-size: 1rem;
+  line-height: 1.8;
+  font-style: italic;
+}
+
+/* ============================================
+   OPCIONES EN VISTA
+   ============================================ */
+
+.regalos-opciones {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.opcion-item-vista {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.08);
+}
+
+.opcion-item-vista:last-child {
+  border-bottom: none;
+}
+
+.opcion-contenido {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.opcion-icono {
+  font-size: 1.8rem;
+  width: 48px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.opcion-info {
+  flex: 1;
+}
+
+.opcion-nombre {
+  font-family: "Cormorant Garamond", serif;
   font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  margin: 0;
+}
+
+.opcion-subtitulo {
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  margin: 2px 0 0;
+  opacity: 0.7;
+}
+
+.opcion-enlace {
+  font-size: 0.7rem;
+  color: var(--accent, #c9a87c);
+  text-decoration: none;
+  margin-left: auto;
+  padding: 4px 12px;
+  border: 1px solid rgba(201, 168, 124, 0.2);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.opcion-enlace:hover {
+  background: var(--accent, #c9a87c);
+  color: #ffffff;
+}
+
+/* ============================================
+   BOTÓN
+   ============================================ */
+
+.regalos-footer {
+  margin-top: 2rem;
+}
+
+.btn-regalos {
+  background: var(--accent, #c9a87c);
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  padding: 0.8rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.btn-regalos:hover {
+  background: var(--primary, #5c3d2e);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(201, 168, 124, 0.3);
+}
+
+/* ============================================
+   ESTILOS DE REGALOS
+   ============================================ */
+
+/* Tarjetas */
+.estilo-tarjetas .opcion-item-vista {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(201, 168, 124, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.estilo-tarjetas .opcion-item-vista:last-child {
+  margin-bottom: 0;
+}
+
+/* Timeline */
+.estilo-timeline .opcion-item-vista {
+  padding: 16px 0;
+  border-bottom: 2px dashed rgba(201, 168, 124, 0.1);
+  position: relative;
+  padding-left: 30px;
+}
+
+.estilo-timeline .opcion-item-vista::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent, #c9a87c);
+}
+
+/* Catálogo */
+.estilo-catalogo .opcion-item-vista {
+  display: inline-block;
+  width: calc(50% - 10px);
+  margin: 5px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 168, 124, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  text-align: center;
+}
+
+.estilo-catalogo .opcion-contenido {
+  flex-direction: column;
+  text-align: center;
+}
+
+.estilo-catalogo .opcion-icono {
+  font-size: 2.2rem;
+}
+
+/* Íconos */
+.estilo-iconos .opcion-item-vista {
+  display: inline-block;
+  width: calc(33.33% - 10px);
+  margin: 5px;
+  padding: 16px 8px;
+  text-align: center;
+}
+
+.estilo-iconos .opcion-contenido {
+  flex-direction: column;
+  text-align: center;
+}
+
+.estilo-iconos .opcion-icono {
+  font-size: 2.5rem;
+}
+
+.estilo-iconos .opcion-nombre {
+  font-size: 0.85rem;
+}
+
+.estilo-iconos .opcion-subtitulo {
+  font-size: 0.7rem;
+}
+
+/* Mosaico */
+.estilo-mosaico .regalos-opciones {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.estilo-mosaico .opcion-item-vista {
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 168, 124, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.estilo-mosaico .opcion-item-vista:first-child {
+  grid-column: span 2;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .estilo-catalogo .opcion-item-vista,
+  .estilo-iconos .opcion-item-vista {
+    width: calc(50% - 10px);
+  }
+
+  .estilo-mosaico .regalos-opciones {
+    grid-template-columns: 1fr;
+  }
+
+  .estilo-mosaico .opcion-item-vista:first-child {
+    grid-column: span 1;
+  }
+
+  .regalos-section {
+    padding: 2rem 1rem;
+  }
+
+  .opcion-enlace {
+    font-size: 0.6rem;
+    padding: 3px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .estilo-catalogo .opcion-item-vista,
+  .estilo-iconos .opcion-item-vista {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .regalos-titulo {
+    font-size: 1.4rem;
+  }
+
+  .opcion-nombre {
+    font-size: 1rem;
+  }
+
+  .btn-regalos {
+    padding: 0.6rem 1.8rem;
+    font-size: 0.85rem;
+  }
+
+  .estilo-timeline .opcion-item-vista {
+    padding-left: 20px;
+  }
+
+  .opcion-contenido {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .opcion-icono {
+    font-size: 1.5rem;
+    width: 36px;
+  }
+
+  .opcion-enlace {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
 }
