@@ -1,5 +1,9 @@
+/* ================================================================
+   HISTORIA - ESTILOS COMPLETOS CON IMÁGENES AJUSTADAS
+   ================================================================ */
+
 /* ============================================
-   HISTORIA - VISTA PÚBLICA
+   BASE
    ============================================ */
 
 .historia-section {
@@ -162,33 +166,55 @@
 }
 
 .timeline-imagen {
-  max-width: 100%;
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
   border-radius: 8px;
   margin-top: 0.5rem;
 }
 
 /* ============================================
-   ESTILO: TARJETAS
+   ESTILO: TARJETAS - CARRUSEL
    ============================================ */
 
 .historia-tarjetas {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  display: flex;
   gap: 20px;
-  max-width: 900px;
+  overflow-x: auto;
+  padding: 20px 8px 30px;
+  max-width: 100%;
   margin: 0 auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.historia-tarjetas::-webkit-scrollbar {
+  height: 6px;
+}
+
+.historia-tarjetas::-webkit-scrollbar-thumb {
+  background: var(--accent, #c9a87c);
+  border-radius: 3px;
+}
+
+.historia-tarjetas::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
 }
 
 .tarjeta-momento {
+  flex: 0 0 300px;
   background: white;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  border: 1px solid var(--accent, #c9a87c);
+  border: 1px solid rgba(201, 168, 124, 0.15);
   text-align: left;
   transition: transform 0.3s ease;
+  scroll-snap-align: start;
 }
 
 .tarjeta-momento:hover {
@@ -219,26 +245,76 @@
   border-radius: 8px;
 }
 
+/* Botones de navegación para carrusel */
+.carrusel-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.carrusel-btn {
+  background: var(--accent, #c9a87c);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.carrusel-btn:hover {
+  background: var(--primary, #5c3d2e);
+  transform: scale(1.1);
+}
+
 /* ============================================
-   ESTILO: ÁLBUM
+   ESTILO: ÁLBUM - SCROLL HORIZONTAL
    ============================================ */
 
 .historia-album {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  display: flex;
   gap: 16px;
-  max-width: 900px;
+  overflow-x: auto;
+  padding: 16px 8px 20px;
+  max-width: 100%;
   margin: 0 auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.historia-album::-webkit-scrollbar {
+  height: 6px;
+}
+
+.historia-album::-webkit-scrollbar-thumb {
+  background: var(--accent, #c9a87c);
+  border-radius: 3px;
+}
+
+.historia-album::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
 }
 
 .album-item {
-  position: relative;
+  flex: 0 0 280px;
   border-radius: 12px;
   overflow: hidden;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1/1.2;
   cursor: pointer;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease;
+  position: relative;
+  background: #f0ebe5;
 }
 
 .album-item img {
@@ -248,10 +324,33 @@
   transition: transform 0.3s ease;
 }
 
+.album-item:hover {
+  transform: scale(1.03);
+}
+
 .album-item:hover img {
   transform: scale(1.05);
 }
 
+/* Badge de número */
+.album-number {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+  z-index: 2;
+}
+
+/* Overlay para el álbum */
 .album-overlay {
   position: absolute;
   bottom: 0;
@@ -279,8 +378,21 @@
   margin: 0.2rem 0 0;
 }
 
+/* Indicador de scroll */
+.scroll-indicator {
+  margin-top: 1rem;
+  text-align: center;
+  color: var(--text, #666);
+  font-size: 0.8rem;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 /* ============================================
-   ESTILO: MINIMALISTA
+   ESTILO: MINIMALISTA - CON IMÁGENES
    ============================================ */
 
 .historia-minimalista {
@@ -292,25 +404,147 @@
 }
 
 .minimalista-item {
-  padding: 1rem 0;
+  padding: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
-.minimalista-item:last-child {
-  border-bottom: none;
+.minimalista-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 0 4px;
 }
 
-.minimalista-fecha {
-  font-size: 0.8rem;
+.minimalista-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.minimalista-header:hover {
   color: var(--accent, #c9a87c);
+}
+
+.minimalista-header .minimalista-fecha {
+  font-size: 0.85rem;
   font-weight: 600;
-  display: block;
+  color: var(--accent, #c9a87c);
+}
+
+.minimalista-header .minimalista-icono {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+  color: var(--accent, #c9a87c);
+}
+
+.minimalista-header .minimalista-icono.abierto {
+  transform: rotate(180deg);
+}
+
+.minimalista-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.minimalista-body.abierto {
+  max-height: 500px;
+}
+
+.minimalista-contenido {
+  padding: 0 4px 1rem 4px;
 }
 
 .minimalista-descripcion {
   color: var(--text, #444);
-  margin: 0.2rem 0 0;
-  font-size: 0.95rem;
+  margin: 0.2rem 0 0.5rem 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  padding-right: 0.5rem;
+}
+
+.minimalista-imagen {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Badge de imagen */
+.minimalista-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  color: var(--text, #666);
+  opacity: 0.4;
+  margin-top: 0.2rem;
+}
+
+/* ============================================
+   RESPONSIVE - MINIMALISTA
+   ============================================ */
+
+@media (max-width: 480px) {
+  .minimalista-header {
+    padding: 0.8rem 4px;
+  }
+
+  .minimalista-header .minimalista-fecha {
+    font-size: 0.75rem;
+  }
+
+  .minimalista-descripcion {
+    font-size: 0.85rem;
+  }
+
+  .minimalista-imagen {
+    max-height: 150px;
+  }
+
+  .minimalista-body.abierto {
+    max-height: 400px;
+  }
+}
+
+/* ============================================
+   BOTÓN VER MÁS
+   ============================================ */
+
+.ver-mas-container {
+  margin-top: 1.5rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-ver-mas {
+  background: transparent;
+  border: 2px solid var(--accent, #c9a87c);
+  color: var(--primary, #5c3d2e);
+  padding: 10px 30px;
+  border-radius: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.btn-ver-mas:hover {
+  background: var(--accent, #c9a87c);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(201, 168, 124, 0.3);
+}
+
+.btn-ver-mas:active {
+  transform: scale(0.95);
 }
 
 /* ============================================
@@ -327,7 +561,11 @@
   }
 
   .historia-album {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .album-item {
+    flex: 0 0 220px;
   }
 
   .timeline-item {
@@ -336,8 +574,30 @@
 }
 
 @media (max-width: 480px) {
+  .historia-section {
+    padding: 2rem 0.8rem;
+  }
+
+  .historia-tarjetas {
+    gap: 12px;
+    padding: 12px 4px 20px;
+  }
+
+  .tarjeta-momento {
+    flex: 0 0 250px;
+  }
+
+  .tarjeta-imagen {
+    height: 140px;
+  }
+
   .historia-album {
-    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 4px 16px;
+  }
+
+  .album-item {
+    flex: 0 0 180px;
   }
 
   .timeline-marker {
@@ -350,7 +610,45 @@
     padding: 0.8rem 1rem;
   }
 
-  .tarjeta-imagen {
-    height: 140px;
+  .timeline-imagen {
+    max-height: 150px;
   }
+
+  .album-number {
+    width: 24px;
+    height: 24px;
+    font-size: 0.6rem;
+  }
+
+  .carrusel-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .btn-ver-mas {
+    padding: 8px 20px;
+    font-size: 0.8rem;
+  }
+
+  .scroll-indicator {
+    font-size: 0.7rem;
+  }
+}
+
+/* ============================================
+   CORRECCIÓN PARA IMÁGENES EN ÁLBUM SIN IMAGEN
+   ============================================ */
+
+.album-item.sin-imagen {
+  background: linear-gradient(135deg, #f0ebe5, #e8dfd6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.album-item.sin-imagen::after {
+  content: "📷";
+  font-size: 3rem;
+  opacity: 0.3;
 }

@@ -16,15 +16,14 @@
         {{ data.descripcion }}
       </p>
     }
+
     <!-- ============================================ -->
-    <!-- ESTILO: LÍNEA DE TIEMPO -->
+    <!-- ESTILO: LÍNEA DE TIEMPO (CON SCROLL) -->
     <!-- ============================================ -->
-    @if (data.estilo === 'timeline') {
-      <div class="historia-timeline">
+    @if (data.estilo === "timeline") {
+      <div class="historia-timeline" #timelineContainer>
         @for (momento of data.momentos; track momento; let i = $index) {
-          <div
-            class="timeline-item"
-            >
+          <div class="timeline-item">
             <div class="timeline-marker">
               <span class="timeline-number">{{ i + 1 }}</span>
             </div>
@@ -38,19 +37,20 @@
                   [src]="momento.imagen"
                   alt="Momento"
                   class="timeline-imagen"
-                  />
+                />
               }
             </div>
           </div>
         }
       </div>
     }
+
     <!-- ============================================ -->
-    <!-- ESTILO: TARJETAS -->
+    <!-- ESTILO: TARJETAS (CARRUSEL) -->
     <!-- ============================================ -->
-    @if (data.estilo === 'tarjetas') {
-      <div class="historia-tarjetas">
-        @for (momento of data.momentos; track momento) {
+    @if (data.estilo === "tarjetas") {
+      <div class="historia-tarjetas" #tarjetasContainer>
+        @for (momento of data.momentos; track momento; let i = $index) {
           <div class="tarjeta-momento">
             <div class="tarjeta-contenido">
               <span class="tarjeta-fecha">{{
@@ -62,20 +62,27 @@
                   [src]="momento.imagen"
                   alt="Momento"
                   class="tarjeta-imagen"
-                  />
+                />
               }
             </div>
           </div>
         }
       </div>
+      <!-- Controles del carrusel -->
+      <div class="carrusel-controls">
+        <button class="carrusel-btn" (click)="scrollTarjetas(-1)">‹</button>
+        <button class="carrusel-btn" (click)="scrollTarjetas(1)">›</button>
+      </div>
     }
+
     <!-- ============================================ -->
-    <!-- ESTILO: ÁLBUM -->
+    <!-- ESTILO: ÁLBUM (SCROLL HORIZONTAL) -->
     <!-- ============================================ -->
-    @if (data.estilo === 'album') {
-      <div class="historia-album">
-        @for (momento of data.momentos; track momento) {
+    @if (data.estilo === "album") {
+      <div class="historia-album" #albumContainer>
+        @for (momento of data.momentos; track momento; let i = $index) {
           <div class="album-item">
+            <span class="album-number">{{ i + 1 }}</span>
             @if (momento.imagen) {
               <img [src]="momento.imagen" alt="Momento" />
             }
@@ -88,27 +95,65 @@
           </div>
         }
       </div>
+      <!-- Indicador de scroll -->
+      <div class="scroll-indicator">
+        <span class="scroll-text">↔ Desliza para ver más</span>
+      </div>
     }
+
     <!-- ============================================ -->
-    <!-- ESTILO: MINIMALISTA -->
+    <!-- ESTILO: MINIMALISTA (con imágenes) -->
     <!-- ============================================ -->
-    @if (data.estilo === 'minimalista') {
+    @if (data.estilo === "minimalista") {
       <div class="historia-minimalista">
-        @for (momento of data.momentos; track momento) {
+        @for (momento of data.momentos; track momento; let i = $index) {
           <div class="minimalista-item">
-            <span class="minimalista-fecha">{{
-              momento.fecha | date: "dd MMM yyyy"
-            }}</span>
-            <p class="minimalista-descripcion">{{ momento.descripcion }}</p>
+            <div class="minimalista-header" (click)="toggleMinimalista(i)">
+              <span class="minimalista-fecha">{{
+                momento.fecha | date: "dd MMM yyyy"
+              }}</span>
+              <span
+                class="minimalista-icono"
+                [class.abierto]="minimalistaAbierto[i]"
+              >
+                ▼
+              </span>
+            </div>
+            <div
+              class="minimalista-body"
+              [class.abierto]="minimalistaAbierto[i]"
+            >
+              <div class="minimalista-contenido">
+                <p class="minimalista-descripcion">{{ momento.descripcion }}</p>
+                @if (momento.imagen) {
+                  <img
+                    [src]="momento.imagen"
+                    alt="Momento"
+                    class="minimalista-imagen"
+                    loading="lazy"
+                  />
+                }
+              </div>
+            </div>
           </div>
         }
       </div>
     }
+
     <!-- Si no hay momentos, mostrar mensaje -->
     @if (!data.momentos || data.momentos.length === 0) {
       <p class="sin-momentos">
         Agrega los momentos más importantes de su historia ✨
       </p>
+    }
+
+    <!-- Botón "Ver más" (si hay muchos momentos) -->
+    @if (data.momentos && data.momentos.length > 6) {
+      <div class="ver-mas-container">
+        <button class="btn-ver-mas" (click)="verTodos = !verTodos">
+          {{ verTodos ? "Ver menos" : "Ver todos" }}
+        </button>
+      </div>
     }
   </div>
 }
