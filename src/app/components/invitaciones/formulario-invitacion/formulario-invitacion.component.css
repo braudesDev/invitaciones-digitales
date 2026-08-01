@@ -374,17 +374,186 @@
   font-size: 1rem;
 }
 
+.subseccion-descripcion {
+  font-size: 0.85rem;
+  color: var(--text, #666);
+  opacity: 0.7;
+  margin: 0 0 12px 0;
+  font-style: italic;
+}
+
 /* --- 6.1 Grid interno de la subsección --- */
 .subseccion-grid {
   display: grid;
-  grid-template-columns: 1fr; /* 1 columna en móvil */
+  grid-template-columns: 1fr;
   gap: 12px;
 }
 
-.subseccion-grid input {
-  padding: 10px;
+/* --- 6.2 Estilos para inputs y textareas --- */
+.subseccion-grid input,
+.subseccion-grid textarea {
+  width: 100%;
+  padding: 10px 14px;
   border: 1px solid #ddd;
   border-radius: 10px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.subseccion-grid input:focus,
+.subseccion-grid textarea:focus {
+  border-color: var(--accent, #c9a87c);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.12);
+}
+
+.subseccion-grid textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* --- 6.3 Campo que ocupa todo el ancho --- */
+.subseccion-grid .full-width {
+  grid-column: 1 / -1;
+}
+
+/* --- 6.4 Field group --- */
+.subseccion-grid .field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.subseccion-grid .field-group label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text, #666);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* --- 6.5 Ajuste para el componente image-upload --- */
+.subseccion-grid .field-group app-image-upload {
+  width: 100%;
+}
+
+/* --- 6.6 Campos obligatorios y opcionales --- */
+.campo-obligatorio {
+  color: #e74c3c;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.campo-opcional {
+  color: var(--text, #666);
+  font-weight: 400;
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+
+/* --- 6.7 Grid de 2 columnas en pantallas más grandes --- */
+@media (min-width: 640px) {
+  .subseccion-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .subseccion-grid .full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ================================================================
+   TOOLTIP DE AYUDA (?)
+   ================================================================ */
+
+.help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--accent, #c9a87c);
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  margin-left: 6px;
+  transition: all 0.3s ease;
+  user-select: none;
+  flex-shrink: 0;
+  line-height: 1;
+  border: none;
+  font-family: inherit;
+}
+
+.help-icon:hover {
+  background: var(--primary, #5c3d2e);
+  transform: scale(1.15);
+}
+
+/* Tooltip */
+.help-icon::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 400;
+  white-space: nowrap;
+  max-width: 280px;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.5;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1000;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  font-family: inherit;
+  letter-spacing: 0.3px;
+}
+
+/* Flechita del tooltip */
+.help-icon::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.92);
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Mostrar tooltip al hacer hover */
+.help-icon:hover::after,
+.help-icon:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .help-icon::after {
+    max-width: 200px;
+    font-size: 0.7rem;
+    padding: 8px 12px;
+  }
 }
 
 /* ================================================================

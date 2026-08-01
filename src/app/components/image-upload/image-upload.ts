@@ -1,24 +1,23 @@
 // src/app/components/image-upload/image-upload.component.ts
 
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-image-upload',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './image-upload.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./image-upload.css'],
 })
 export class ImageUploadComponent {
-  @Input() label: string = '🖼️ Imagen';
+  @Input() label: string = '📸 Seleccionar Imagen';
   @Input() imageUrl: string = '';
-  @Input() placeholder: string = 'URL de la imagen (opcional)';
   @Input() required: boolean = false;
+  // ❌ ELIMINAR @Input() placeholder: string = 'URL de la imagen';
   @Output() imageChange = new EventEmitter<string>();
 
   imagenSubiendo = false;
@@ -45,6 +44,7 @@ export class ImageUploadComponent {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', 'invitaciones-app');
+
       const cloudName = 'drsyb53ae';
 
       const response = await this.http

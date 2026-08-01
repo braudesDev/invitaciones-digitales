@@ -428,6 +428,13 @@ export class FormularioInvitacionComponent implements OnInit {
   acordeonHospedaje = false; // Sección de hospedaje
   acordeonContador = false; // Seccion del contador
   cordeonConsideraciones = false; // Seccion consideraciones
+  acordeonCeremonia = false; // Sección de ceremonia
+  acordeonRecepcion = false; // Sección de recepción
+  acordeonFrases = false; // Sección de frases
+  acordeonHeroImage = false; // Sección de imagen principal
+  acordeonEvento = false; // Sección de eventos
+  acordeonColores = false; // Sección de colores
+  acordeonFuente = false; // Sección de fuentes
   imagenSubiendo = false; // Estado de subida de imagen
 
   // ==============================================================

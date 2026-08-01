@@ -1,6 +1,3 @@
-<p>image-upload works!</p>
-<!-- src/app/components/image-upload/image-upload.component.html -->
-
 <div class="image-upload-container">
   <label class="upload-label">{{ label }}</label>
 
@@ -12,31 +9,10 @@
         (change)="subirImagen($event)"
         accept="image/*"
         [disabled]="imagenSubiendo"
-        />
+      />
     </label>
     <span class="upload-info">PNG, JPG, WEBP (máx. 5MB)</span>
   </div>
-
-  @if (!required || !imageUrl) {
-    <div class="url-input">
-      <input
-        type="text"
-        [(ngModel)]="imageUrl"
-        [ngModelOptions]="{ standalone: true }"
-        [placeholder]="placeholder"
-        (input)="imageChange.emit(imageUrl)"
-        />
-      @if (imageUrl) {
-        <button
-          class="btn-limpiar-url"
-          (click)="limpiarImagen()"
-          type="button"
-          >
-          ✕
-        </button>
-      }
-    </div>
-  }
 
   @if (imageUrl) {
     <div class="preview-img">

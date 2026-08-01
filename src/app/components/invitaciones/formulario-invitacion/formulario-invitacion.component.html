@@ -62,288 +62,411 @@
                - O pegar URL directamente
                - Vista previa con opción de cambiar/eliminar
                ---------------------------------------------------- -->
-          <div class="campo full-width">
-            <label>🖼️ Imagen principal</label>
-
-            <!-- Área de subida de archivos -->
-            <div class="upload-area">
-              <label class="btn-upload" [class.cargando]="imagenSubiendo">
-                📁 {{ imagenSubiendo ? "Subiendo..." : "Seleccionar imagen" }}
-                <!-- Input oculto para seleccionar archivo -->
-                <input
-                  type="file"
-                  (change)="subirImagen($event)"
-                  accept="image/*"
-                  [disabled]="imagenSubiendo"
-                />
-              </label>
-              <span class="upload-info">PNG, JPG, WEBP (máx. 5MB)</span>
+          <div class="acordeon full-width">
+            <div
+              class="acordeon-header"
+              (click)="acordeonHeroImage = !acordeonHeroImage"
+            >
+              <span>🖼️ Imagen principal</span>
+              <span class="icono">{{ acordeonHeroImage ? "▲" : "▼" }}</span>
             </div>
 
-            <!-- Campo para pegar URL directamente -->
-            <div class="url-input">
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.heroImage"
-                name="heroImage"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="O pega una URL aquí"
-              />
-              <!-- Botón para limpiar la URL -->
-              @if (nuevaInvitacion.heroImage) {
-                <button
-                  class="btn-limpiar-url"
-                  (click)="nuevaInvitacion.heroImage = ''"
-                  type="button"
+            <div class="acordeon-body" [class.abierto]="acordeonHeroImage">
+              <p class="subseccion-descripcion">
+                📸 Sube una imagen de portada para tu invitación.
+              </p>
+
+              <!-- ✅ Usar el componente app-image-upload -->
+              <div class="field-group full-width">
+                <label>
+                  🖼️ Imagen de portada
+                  <span class="campo-opcional">(opcional)</span>
+                  <span
+                    class="help-icon"
+                    data-tooltip="💡 Sube una imagen de portada que represente tu evento.
+
+          📌 Recomendaciones:
+          - Tamaño: 1200x800px o superior
+          - Formato: JPG, PNG o WEBP
+          - Peso máximo: 5MB
+          - Imagen horizontal (paisaje)"
+                    >?</span
+                  >
+                </label>
+                <app-image-upload
+                  [imageUrl]="nuevaInvitacion.heroImage || ''"
+                  (imageChange)="nuevaInvitacion.heroImage = $event"
+                  placeholder="Sube una imagen de portada"
+                  label="🖼️ Imagen de portada"
+                ></app-image-upload>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================================
+           ACORDEÓN: INFORMACIÓN DEL EVENTO
+           ========================================================== -->
+          <div class="acordeon full-width">
+            <div
+              class="acordeon-header"
+              (click)="acordeonEvento = !acordeonEvento"
+            >
+              <span>📋 Información del evento</span>
+              <span class="icono">{{ acordeonEvento ? "▲" : "▼" }}</span>
+            </div>
+
+            <div class="acordeon-body" [class.abierto]="acordeonEvento">
+              <p class="subseccion-descripcion">
+                📌 Completa los datos básicos de tu evento.
+              </p>
+
+              <div class="form-grid">
+                <!-- Nombre del evento -->
+                <div class="campo">
+                  <label>
+                    📌 Nombre del evento
+                    <span class="campo-obligatorio">*</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="Nombre que identificará tu evento en la invitación.
+
+                  📌 Ejemplo: 'Boda de Mariana y Alejandro', 'XV de Valeria'."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.name"
+                    name="name"
+                    required
+                    placeholder="Ej: Boda de Mariana y Alejandro"
+                  />
+                </div>
+
+                <!-- Tipo de evento -->
+                <div class="campo">
+                  <label>
+                    🎭 Tipo de evento
+                    <span class="campo-obligatorio">*</span>
+                  </label>
+                  <select
+                    [(ngModel)]="nuevaInvitacion.tipo"
+                    name="tipo"
+                    required
+                  >
+                    <option value="boda">💍 Boda</option>
+                    <option value="xv">👗 XV Años</option>
+                    <option value="cumpleaños">🎂 Cumpleaños</option>
+                  </select>
+                </div>
+
+                <!-- Nombres del festejado(s) -->
+                <div class="campo">
+                  <label>
+                    👰 Nombres del festejado(s)
+                    <span class="campo-obligatorio">*</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="Nombre(s) de la(s) persona(s) que celebran el evento.
+
+                  📌 Ejemplo: 'Mariana y Alejandro', 'Valeria'."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.nombres"
+                    name="nombres"
+                    required
+                    placeholder="Ej: Mariana y Alejandro"
+                  />
+                </div>
+
+                <!-- Fecha y hora -->
+                <div class="campo">
+                  <label>
+                    📅 Fecha y hora
+                    <span class="campo-obligatorio">*</span>
+                  </label>
+                  <input
+                    type="datetime-local"
+                    [(ngModel)]="nuevaInvitacion.fecha"
+                    name="fecha"
+                    required
+                  />
+                </div>
+
+                <!-- Lugar -->
+                <div class="campo full-width">
+                  <label>
+                    📍 Lugar
+                    <span class="campo-obligatorio">*</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="Lugar donde se realizará el evento principal.
+
+                  📌 Ejemplo: 'Salón de Eventos Los Jardines'."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.lugar"
+                    name="lugar"
+                    required
+                    placeholder="Ej: Salón de Eventos Los Jardines"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================================
+           ACORDEÓN: PERSONALIZACIÓN DE COLORES
+           ========================================================== -->
+          <div class="acordeon full-width">
+            <div
+              class="acordeon-header"
+              (click)="acordeonColores = !acordeonColores"
+            >
+              <span>🎨 Personalización de colores</span>
+              <span class="icono">{{ acordeonColores ? "▲" : "▼" }}</span>
+            </div>
+
+            <div class="acordeon-body" [class.abierto]="acordeonColores">
+              <p class="subseccion-descripcion">
+                🎨 Elige los colores que darán estilo a tu invitación.
+              </p>
+
+              <!-- Paletas premium -->
+              <div class="campo full-width">
+                <label>🎨 Paletas de colores premium</label>
+                <div class="paletas">
+                  <!-- Paleta 1: Verde Cemento + Oro -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'premium'"
+                    (click)="aplicarPaleta('premium')"
+                  >
+                    <span style="background: #7a8b7d"></span>
+                    <span style="background: #b08a4a"></span>
+                    <span>Verde Cemento</span>
+                  </div>
+                  <!-- Paleta 2: Champagne + Dorado -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'champagne'"
+                    (click)="aplicarPaleta('champagne')"
+                  >
+                    <span style="background: #dcc7a1"></span>
+                    <span style="background: #b8934e"></span>
+                    <span>Champagne</span>
+                  </div>
+                  <!-- Paleta 3: Rose Gold -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'rosegold'"
+                    (click)="aplicarPaleta('rosegold')"
+                  >
+                    <span style="background: #d8a7a7"></span>
+                    <span style="background: #f3d9d9"></span>
+                    <span>Rose Gold</span>
+                  </div>
+                  <!-- Paleta 4: Lavanda Real -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'lavender'"
+                    (click)="aplicarPaleta('lavender')"
+                  >
+                    <span style="background: #8a78a6"></span>
+                    <span style="background: #c8b6ff"></span>
+                    <span>Lavanda Real</span>
+                  </div>
+                  <!-- Paleta 5: Azul Royal -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'royal'"
+                    (click)="aplicarPaleta('royal')"
+                  >
+                    <span style="background: #3d5a80"></span>
+                    <span style="background: #d4af37"></span>
+                    <span>Azul Royal</span>
+                  </div>
+                  <!-- Paleta 6: Black Luxury -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'black'"
+                    (click)="aplicarPaleta('black')"
+                  >
+                    <span style="background: #2b2b2b"></span>
+                    <span style="background: #c9a227"></span>
+                    <span>Black Luxury</span>
+                  </div>
+                </div>
+                <p class="ayuda-paletas">
+                  💡 Haz clic en una paleta o elige tus propios colores abajo
+                </p>
+              </div>
+
+              <!-- Colores personalizados -->
+              <div class="form-grid">
+                <!-- Color principal -->
+                <div class="campo">
+                  <label>
+                    🎨 Color principal
+                    <span
+                      class="help-icon"
+                      data-tooltip="Color principal que dominará el diseño de la invitación.
+
+                  📌 Este color se usará en títulos y elementos principales."
+                      >?</span
+                    >
+                  </label>
+                  <div class="color-input">
+                    <input
+                      type="color"
+                      [(ngModel)]="nuevaInvitacion.primaryColor"
+                      name="primaryColor"
+                    />
+                    <input
+                      type="text"
+                      [(ngModel)]="nuevaInvitacion.primaryColor"
+                      placeholder="#7A8B7D"
+                    />
+                  </div>
+                </div>
+
+                <!-- Color secundario -->
+                <div class="campo">
+                  <label>
+                    🎨 Color secundario
+                    <span
+                      class="help-icon"
+                      data-tooltip="Color complementario que acompañará al color principal.
+
+                  📌 Se usa en fondos y elementos secundarios."
+                      >?</span
+                    >
+                  </label>
+                  <div class="color-input">
+                    <input
+                      type="color"
+                      [(ngModel)]="nuevaInvitacion.secondaryColor"
+                      name="secondaryColor"
+                    />
+                    <input
+                      type="text"
+                      [(ngModel)]="nuevaInvitacion.secondaryColor"
+                      placeholder="#CBB89D"
+                    />
+                  </div>
+                </div>
+
+                <!-- Color de acento -->
+                <div class="campo">
+                  <label>
+                    🎨 Color de acento
+                    <span
+                      class="help-icon"
+                      data-tooltip="Color que resalta detalles importantes.
+
+                  📌 Se usa en botones, íconos y elementos destacados."
+                      >?</span
+                    >
+                  </label>
+                  <div class="color-input">
+                    <input
+                      type="color"
+                      [(ngModel)]="nuevaInvitacion.accentColor"
+                      name="accentColor"
+                    />
+                    <input
+                      type="text"
+                      [(ngModel)]="nuevaInvitacion.accentColor"
+                      placeholder="#B08A4A"
+                    />
+                  </div>
+                </div>
+
+                <!-- Color de texto -->
+                <div class="campo">
+                  <label>
+                    📝 Color de texto
+                    <span
+                      class="help-icon"
+                      data-tooltip="Color de todos los textos de la invitación.
+
+                  📌 Asegúrate de que contraste bien con los fondos."
+                      >?</span
+                    >
+                  </label>
+                  <div class="color-input">
+                    <input
+                      type="color"
+                      [(ngModel)]="nuevaInvitacion.textColor"
+                      name="textColor"
+                    />
+                    <input
+                      type="text"
+                      [(ngModel)]="nuevaInvitacion.textColor"
+                      placeholder="#3F4A42"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================================
+           ACORDEÓN: FUENTE DEL TEXTO
+           ========================================================== -->
+          <div class="acordeon full-width">
+            <div
+              class="acordeon-header"
+              (click)="acordeonFuente = !acordeonFuente"
+            >
+              <span>✍️ Fuente del texto</span>
+              <span class="icono">{{ acordeonFuente ? "▲" : "▼" }}</span>
+            </div>
+
+            <div class="acordeon-body" [class.abierto]="acordeonFuente">
+              <p class="subseccion-descripcion">
+                ✍️ Elige la tipografía que dará personalidad a tu invitación.
+              </p>
+
+              <div class="campo full-width">
+                <label>
+                  ✍️ Fuente del texto
+                  <span
+                    class="help-icon"
+                    data-tooltip="La fuente define el estilo y personalidad de los textos.
+
+                📌 Playfair Display: Clásica y elegante
+                📌 Great Vibes: Romántica y cursiva
+                📌 Dancing Script: Fluida y dinámica
+                📌 Poppins: Moderna y limpia"
+                    >?</span
+                  >
+                </label>
+                <select
+                  [(ngModel)]="nuevaInvitacion.fontFamily"
+                  name="fontFamily"
                 >
-                  ✕
-                </button>
-              }
-            </div>
-
-            <!-- Vista previa de la imagen -->
-            @if (nuevaInvitacion.heroImage) {
-              <div class="preview-img">
-                <img [src]="nuevaInvitacion.heroImage" alt="Preview" />
-                <button
-                  class="btn-cambiar-img"
-                  (click)="nuevaInvitacion.heroImage = ''"
-                  type="button"
-                >
-                  🔄 Cambiar imagen
-                </button>
-              </div>
-            }
-          </div>
-
-          <!-- ----------------------------------------------------
-               CAMPOS BÁSICOS DEL EVENTO
-               - name: Nombre del evento (requerido)
-               - tipo: Tipo de evento (boda, XV, cumpleaños)
-               - nombres: Nombres del festejado(s) (requerido)
-               - fecha: Fecha y hora del evento (requerido)
-               - lugar: Ubicación del evento (requerido)
-               ---------------------------------------------------- -->
-          <div class="campo">
-            <label>📌 Nombre del evento *</label>
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.name"
-              name="name"
-              required
-            />
-          </div>
-
-          <div class="campo">
-            <label>🎭 Tipo de evento *</label>
-            <select [(ngModel)]="nuevaInvitacion.tipo" name="tipo" required>
-              <option value="boda">💍 Boda</option>
-              <option value="xv">👗 XV Años</option>
-              <option value="cumpleaños">🎂 Cumpleaños</option>
-            </select>
-          </div>
-
-          <div class="campo">
-            <label>👰 Nombres del festejado(s) *</label>
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.nombres"
-              name="nombres"
-              required
-            />
-          </div>
-
-          <div class="campo">
-            <label>📅 Fecha y hora *</label>
-            <input
-              type="datetime-local"
-              [(ngModel)]="nuevaInvitacion.fecha"
-              name="fecha"
-              required
-            />
-          </div>
-
-          <div class="campo full-width">
-            <label>📍 Lugar *</label>
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.lugar"
-              name="lugar"
-              required
-            />
-          </div>
-
-          <!-- ----------------------------------------------------
-               PALETAS DE COLORES PREMIUM (6 opciones)
-               - Haz clic en una paleta para aplicar colores
-                 automáticamente
-               - Verde Cemento + Oro, Champagne, Rose Gold,
-                 Lavanda Real, Azul Royal, Black Luxury
-               ---------------------------------------------------- -->
-          <div class="campo full-width">
-            <label>🎨 Paletas de colores premium</label>
-            <div class="paletas">
-              <!-- Paleta 1: Verde Cemento + Oro -->
-              <div
-                class="paleta"
-                [class.selected]="paletaSeleccionada === 'premium'"
-                (click)="aplicarPaleta('premium')"
-              >
-                <span style="background: #7a8b7d"></span>
-                <span style="background: #b08a4a"></span>
-                <span>Verde Cemento</span>
-              </div>
-              <!-- Paleta 2: Champagne + Dorado -->
-              <div
-                class="paleta"
-                [class.selected]="paletaSeleccionada === 'champagne'"
-                (click)="aplicarPaleta('champagne')"
-              >
-                <span style="background: #dcc7a1"></span>
-                <span style="background: #b8934e"></span>
-                <span>Champagne</span>
-              </div>
-              <!-- Paleta 3: Rose Gold -->
-              <div
-                class="paleta"
-                [class.selected]="paletaSeleccionada === 'rosegold'"
-                (click)="aplicarPaleta('rosegold')"
-              >
-                <span style="background: #d8a7a7"></span>
-                <span style="background: #f3d9d9"></span>
-                <span>Rose Gold</span>
-              </div>
-              <!-- Paleta 4: Lavanda Real -->
-              <div
-                class="paleta"
-                [class.selected]="paletaSeleccionada === 'lavender'"
-                (click)="aplicarPaleta('lavender')"
-              >
-                <span style="background: #8a78a6"></span>
-                <span style="background: #c8b6ff"></span>
-                <span>Lavanda Real</span>
-              </div>
-              <!-- Paleta 5: Azul Royal -->
-              <div
-                class="paleta"
-                [class.selected]="paletaSeleccionada === 'royal'"
-                (click)="aplicarPaleta('royal')"
-              >
-                <span style="background: #3d5a80"></span>
-                <span style="background: #d4af37"></span>
-                <span>Azul Royal</span>
-              </div>
-              <!-- Paleta 6: Black Luxury -->
-              <div
-                class="paleta"
-                [class.selected]="paletaSeleccionada === 'black'"
-                (click)="aplicarPaleta('black')"
-              >
-                <span style="background: #2b2b2b"></span>
-                <span style="background: #c9a227"></span>
-                <span>Black Luxury</span>
+                  <option value="'Playfair Display', serif">
+                    Playfair Display (clásica)
+                  </option>
+                  <option value="'Great Vibes', cursive">
+                    Great Vibes (romántica)
+                  </option>
+                  <option value="'Dancing Script', cursive">
+                    Dancing Script (fluida)
+                  </option>
+                  <option value="'Poppins', sans-serif">
+                    Poppins (moderna)
+                  </option>
+                </select>
               </div>
             </div>
-            <p class="ayuda-paletas">
-              💡 Haz clic en una paleta o elige tus propios colores abajo
-            </p>
-          </div>
-
-          <!-- ----------------------------------------------------
-               PERSONALIZACIÓN DE COLORES
-               - Color principal: Color dominante de la invitación
-               - Color secundario: Color de complemento
-               - Color de acento: Color para detalles y acentos
-               - Color de texto: Color para los textos
-               - Selector de color y campo de texto sincronizados
-               ---------------------------------------------------- -->
-          <div class="campo">
-            <label>🎨 Color principal</label>
-            <div class="color-input">
-              <!-- Selector de color nativo (sincronizado) -->
-              <input
-                type="color"
-                [(ngModel)]="nuevaInvitacion.primaryColor"
-                name="primaryColor"
-              />
-              <!-- Campo de texto para escribir el hex -->
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.primaryColor"
-                placeholder="#7A8B7D"
-              />
-            </div>
-          </div>
-
-          <div class="campo">
-            <label>🎨 Color secundario</label>
-            <div class="color-input">
-              <input
-                type="color"
-                [(ngModel)]="nuevaInvitacion.secondaryColor"
-                name="secondaryColor"
-              />
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.secondaryColor"
-                placeholder="#B08A4A"
-              />
-            </div>
-          </div>
-
-          <div class="campo">
-            <label>🎨 Color de acento</label>
-            <div class="color-input">
-              <input
-                type="color"
-                [(ngModel)]="nuevaInvitacion.accentColor"
-                name="accentColor"
-              />
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.accentColor"
-                placeholder="#B08A4A"
-              />
-            </div>
-          </div>
-
-          <div class="campo">
-            <label>📝 Color de texto</label>
-            <div class="color-input">
-              <input
-                type="color"
-                [(ngModel)]="nuevaInvitacion.textColor"
-                name="textColor"
-              />
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.textColor"
-                placeholder="#3F4A42"
-              />
-            </div>
-          </div>
-
-          <!-- ----------------------------------------------------
-               FUENTE DEL TEXTO
-               - Playfair Display: Clásica y elegante
-               - Great Vibes: Romántica y cursiva
-               - Dancing Script: Fluida y dinámica
-               - Poppins: Moderna y limpia
-               ---------------------------------------------------- -->
-          <div class="campo full-width">
-            <label>✍️ Fuente del texto</label>
-            <select [(ngModel)]="nuevaInvitacion.fontFamily" name="fontFamily">
-              <option value="'Playfair Display', serif">
-                Playfair Display (clásica)
-              </option>
-              <option value="'Great Vibes', cursive">
-                Great Vibes (romántica)
-              </option>
-              <option value="'Dancing Script', cursive">
-                Dancing Script (fluida)
-              </option>
-              <option value="'Poppins', sans-serif">Poppins (moderna)</option>
-            </select>
           </div>
         </div>
       </div>
@@ -363,24 +486,64 @@
                - frasePrincipal: Frase destacada del evento
                - mensajePrincipal: Texto descriptivo del evento
                ---------------------------------------------------- -->
-          <div class="campo full-width">
-            <label>💕 Frase principal</label>
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.frasePrincipal"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Ej: ¡Nos casamos!"
-            />
-          </div>
+          <!-- ============================================ -->
+          <!-- ACORDEÓN: FRASE Y MENSAJE PRINCIPAL -->
+          <!-- ============================================ -->
+          <div class="acordeon">
+            <div
+              class="acordeon-header"
+              (click)="acordeonFrases = !acordeonFrases"
+            >
+              <span>💬 Frase y mensaje principal</span>
+              <span class="icono">{{ acordeonFrases ? "▲" : "▼" }}</span>
+            </div>
 
-          <div class="campo full-width">
-            <label>📖 Mensaje principal</label>
-            <textarea
-              [(ngModel)]="nuevaInvitacion.mensajePrincipal"
-              [ngModelOptions]="{ standalone: true }"
-              rows="3"
-              placeholder="Describe tu evento..."
-            ></textarea>
+            <div class="acordeon-body" [class.abierto]="acordeonFrases">
+              <p class="subseccion-descripcion">
+                ✨ Personaliza el mensaje que verán tus invitados al abrir la
+                invitación.
+              </p>
+
+              <!-- Frase principal -->
+              <div class="campo full-width">
+                <label>
+                  💕 Frase principal
+                  <span
+                    class="help-icon"
+                    data-tooltip="Frase corta y llamativa que aparecerá en la portada de la invitación.
+
+          📌 Ejemplo: '¡Nos casamos!', '¡Sí, acepto!', 'El amor nos une'."
+                    >?</span
+                  >
+                </label>
+                <input
+                  type="text"
+                  [(ngModel)]="nuevaInvitacion.frasePrincipal"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Ej: ¡Nos casamos!"
+                />
+              </div>
+
+              <!-- Mensaje principal -->
+              <div class="campo full-width">
+                <label>
+                  📖 Mensaje principal
+                  <span
+                    class="help-icon"
+                    data-tooltip="Mensaje más extenso que describe el evento y da la bienvenida a los invitados.
+
+          📌 Ejemplo: 'Con mucha alegría y amor, los invitamos a ser parte de este día tan especial...'."
+                    >?</span
+                  >
+                </label>
+                <textarea
+                  [(ngModel)]="nuevaInvitacion.mensajePrincipal"
+                  [ngModelOptions]="{ standalone: true }"
+                  rows="3"
+                  placeholder="Describe tu evento..."
+                ></textarea>
+              </div>
+            </div>
           </div>
 
           <!-- ----------------------------------------------------
@@ -541,98 +704,263 @@
               </div>
             </div>
           </div>
+          <!-- ============================================ -->
+          <!-- ACORDEÓN: CEREMONIA -->
+          <!-- ============================================ -->
+          <div class="acordeon">
+            <div
+              class="acordeon-header"
+              (click)="acordeonCeremonia = !acordeonCeremonia"
+            >
+              <span>⛪ Ceremonia</span>
+              <span class="icono">{{ acordeonCeremonia ? "▲" : "▼" }}</span>
+            </div>
 
-          <!-- ----------------------------------------------------
-               SUBSECCIÓN: CEREMONIA
-               - Lugar, dirección, hora
-               - URL de Google Maps (opcional)
-               - Imagen del templo (opcional)
-               ---------------------------------------------------- -->
-          <div class="subseccion full-width">
-            <h4>⛪ Ceremonia</h4>
-            <div class="subseccion-grid">
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.ceremonia.lugar"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="Lugar"
-              />
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.ceremonia.direccion"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="Dirección"
-              />
-              <input
-                type="time"
-                [(ngModel)]="nuevaInvitacion.ceremonia.hora"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              <!-- URL de Maps para ubicación interactiva -->
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.ceremonia.mapaUrl"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="URL de Google Maps (opcional)"
-              />
-              <!-- Imagen del templo/iglesia -->
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.ceremonia.imagenTemplo"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="URL de imagen del templo (opcional)"
-              />
+            <div class="acordeon-body" [class.abierto]="acordeonCeremonia">
+              <p class="subseccion-descripcion">
+                📍 Completa los detalles de dónde se realizará la ceremonia.
+              </p>
+
+              <div class="subseccion-grid">
+                <!-- Lugar -->
+                <div class="field-group">
+                  <label>
+                    🏛️ Lugar
+                    <span class="campo-obligatorio">*</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="Nombre del lugar donde se realizará la ceremonia."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.ceremonia.lugar"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Ej: Parroquia San Francisco de Asís"
+                  />
+                </div>
+
+                <!-- Dirección -->
+                <div class="field-group">
+                  <label>
+                    📍 Dirección
+                    <span class="campo-obligatorio">*</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="Dirección completa del lugar para que los invitados puedan llegar."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.ceremonia.direccion"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Ej: Av. Insurgentes 123, Colonia Centro"
+                  />
+                </div>
+
+                <!-- Hora -->
+                <div class="field-group">
+                  <label>
+                    🕐 Hora
+                    <span class="campo-obligatorio">*</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="Hora de inicio de la ceremonia."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="time"
+                    [(ngModel)]="nuevaInvitacion.ceremonia.hora"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                </div>
+
+                <!-- ✅ Imagen del templo -->
+                <div class="field-group full-width">
+                  <label>
+                    📸 Imagen del templo
+                    <span class="campo-opcional">(opcional)</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="💡 Sube una foto del templo para que tus invitados la reconozcan fácilmente.
+
+            📌 Ejemplo: Una foto de la fachada del templo."
+                      >?</span
+                    >
+                  </label>
+                  <app-image-upload
+                    [imageUrl]="nuevaInvitacion.ceremonia.imagenTemplo || ''"
+                    (imageChange)="
+                      nuevaInvitacion.ceremonia.imagenTemplo = $event
+                    "
+                    placeholder="Sube una imagen del templo"
+                  ></app-image-upload>
+                </div>
+
+                <!-- URL de Maps -->
+                <div class="field-group full-width">
+                  <label>
+                    🗺️ Enlace de Google Maps
+                    <span class="campo-opcional">(opcional)</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="💡 Comparte un enlace de Google Maps para que los invitados puedan llegar fácilmente.
+
+            📌 Ejemplo: Abre Google Maps, busca el lugar y copia el enlace 'Compartir'."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.ceremonia.mapaUrl"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="https://maps.app.goo.gl/..."
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- ----------------------------------------------------
-               SUBSECCIÓN: RECEPCIÓN
-               - Lugar, dirección, hora
-               - URL de Google Maps (opcional)
-               - Imagen del lugar (opcional)
-               - Descripción del lugar (opcional)
-               ---------------------------------------------------- -->
-          <div class="subseccion full-width">
-            <h4>🎉 Recepción</h4>
-            <div class="subseccion-grid">
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.recepcion.lugar"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="Lugar"
-              />
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.recepcion.direccion"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="Dirección"
-              />
-              <input
-                type="time"
-                [(ngModel)]="nuevaInvitacion.recepcion.hora"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              <!-- URL de Maps para ubicación interactiva -->
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.recepcion.mapaUrl"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="URL de Google Maps (opcional)"
-              />
-              <!-- Imagen del lugar de recepción -->
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.recepcion.imagen"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="URL de imagen (opcional)"
-              />
-              <!-- Descripción adicional del lugar -->
-              <input
-                type="text"
-                [(ngModel)]="nuevaInvitacion.recepcion.descripcion"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="Descripción del lugar (opcional)"
-              />
+          <!-- ============================================ -->
+          <!-- ACORDEÓN: RECEPCIÓN -->
+          <!-- ============================================ -->
+          <div class="acordeon">
+            <div
+              class="acordeon-header"
+              (click)="acordeonRecepcion = !acordeonRecepcion"
+            >
+              <span>🎉 Recepción</span>
+              <span class="icono">{{ acordeonRecepcion ? "▲" : "▼" }}</span>
+            </div>
+
+            <div class="acordeon-body" [class.abierto]="acordeonRecepcion">
+              <p class="subseccion-descripcion">
+                🥂 Comparte los detalles del lugar donde celebrarán la
+                recepción.
+              </p>
+
+              <div class="subseccion-grid">
+                <!-- Lugar -->
+                <div class="field-group">
+                  <label>
+                    🏛️ Lugar
+                    <span class="campo-obligatorio">*</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="Nombre del lugar donde se realizará la recepción."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.recepcion.lugar"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Ej: Hotel Casa del Lago"
+                  />
+                </div>
+
+                <!-- Dirección -->
+                <div class="field-group">
+                  <label>
+                    📍 Dirección
+                    <span class="campo-obligatorio">*</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="Dirección completa del lugar de la recepción."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.recepcion.direccion"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Ej: Blvd. Costero 19, Playa Miramar"
+                  />
+                </div>
+
+                <!-- Hora -->
+                <div class="field-group">
+                  <label>
+                    🕐 Hora
+                    <span class="campo-obligatorio">*</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="Hora de inicio de la recepción."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="time"
+                    [(ngModel)]="nuevaInvitacion.recepcion.hora"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                </div>
+
+                <!-- URL de Maps -->
+                <div class="field-group full-width">
+                  <label>
+                    🗺️ Enlace de Google Maps
+                    <span class="campo-opcional">(opcional)</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="💡 Comparte un enlace de Google Maps para que los invitados puedan llegar fácilmente.
+
+            📌 Ejemplo: Abre Google Maps, busca el lugar y copia el enlace 'Compartir'."
+                      >?</span
+                    >
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.recepcion.mapaUrl"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="https://maps.app.goo.gl/..."
+                  />
+                </div>
+
+                <!-- ✅ Imagen del lugar -->
+                <div class="field-group full-width">
+                  <label>
+                    📸 Imagen del lugar
+                    <span class="campo-opcional">(opcional)</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="💡 Sube una foto del lugar de la recepción para que tus invitados sepan cómo es.
+
+            📌 Ejemplo: Una foto del salón de eventos o del jardín donde será la fiesta."
+                      >?</span
+                    >
+                  </label>
+                  <app-image-upload
+                    [imageUrl]="nuevaInvitacion.recepcion.imagen || ''"
+                    (imageChange)="nuevaInvitacion.recepcion.imagen = $event"
+                    placeholder="Sube una imagen del lugar"
+                  ></app-image-upload>
+                </div>
+
+                <!-- Descripción del lugar -->
+                <div class="field-group full-width">
+                  <label>
+                    📝 Descripción del lugar
+                    <span class="campo-opcional">(opcional)</span>
+                    <span
+                      class="help-icon"
+                      data-tooltip="💡 Describe el lugar para que los invitados sepan qué esperar.
+
+            📌 Ejemplo: 'Un salón con vista al jardín, con capacidad para 150 personas.'"
+                      >?</span
+                    >
+                  </label>
+                  <textarea
+                    [(ngModel)]="nuevaInvitacion.recepcion.descripcion"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Ej: Un hermoso jardín con vista al mar, perfecto para celebrar..."
+                    rows="2"
+                  ></textarea>
+                </div>
+              </div>
             </div>
           </div>
         </div>
