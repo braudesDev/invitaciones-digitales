@@ -1,32 +1,29 @@
-// ================================================================
-// FORMULARIO DE INVITACIONES - COMPONENTE PRINCIPAL
-// ================================================================
-// Este componente maneja la creación y edición de invitaciones
-// digitales para eventos (bodas, XV años, cumpleaños).
-// ================================================================
+// src/app/components/invitaciones/formulario-invitacion/formulario-invitacion.component.ts
 
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 // === LIBRERÍAS EXTERNAS ===
-import Swal from 'sweetalert2'; // Alertas bonitas y personalizables
-import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore'; // Firebase Firestore
-import {
-  Storage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from '@angular/fire/storage'; // Firebase Storage para imágenes
-import { ActivatedRoute } from '@angular/router'; // Para obtener parámetros de la URL
-import { Auth } from '@angular/fire/auth'; // Autenticación de Firebase
-import { HttpClient } from '@angular/common/http'; // Para peticiones HTTP (Cloudinary)
-import { ImageUploadComponent } from '../../../components/image-upload/image-upload'; // Componente de subida de imágenes
+import Swal from 'sweetalert2';
+import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
+import { Storage } from '@angular/fire/storage';
+import { ActivatedRoute } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
+import { HttpClient } from '@angular/common/http';
+
+// === COMPONENTES ===
+import { ImageUploadComponent } from '../../../components/image-upload/image-upload';
+import { RegalosSectionComponent } from '../invitacion-generica/sections/regalos-section/regalos-section.component';
+
+// === MODELOS ===
+import { InvitacionCompleta } from '../../../models/invitacion.model';
 import {
   PadrinoAsignado,
   ROLES_PADrinos,
   TipoRolPadrino,
   getRolesPorEvento,
-} from '../../../models/padrino.model'; // Modelos y utilidades de padrinos
+} from '../../../models/padrino.model';
 import {
   ESTILOS_DISPONIBLES,
   COLORES_DISPONIBLES,
@@ -34,12 +31,9 @@ import {
   getEstiloNombre,
   getEstiloIcon,
   getEstiloDescripcion,
-} from '../../../models/dress-code.model'; // Modelos y utilidades de dress code
-import { Contador } from '../../../models/contador.model'; // Modelo y utilidades del contador
-import { ESTILOS_CONTADOR } from '../../../models/contador.model';
-import { Regalos } from '../../../models/regalos.model';
-import { RegalosSectionComponent } from '../invitacion-generica/sections/regalos-section/regalos-section.component';
-import { ESTILOS_REGALOS } from '../../../models/regalos.model';
+} from '../../../models/dress-code.model';
+import { Contador, ESTILOS_CONTADOR } from '../../../models/contador.model';
+import { Regalos, ESTILOS_REGALOS } from '../../../models/regalos.model';
 import {
   Consideraciones,
   ESTILOS_CONSIDERACIONES,
@@ -48,136 +42,7 @@ import {
   Confirmacion,
   ESTILOS_CONFIRMACION,
 } from '../../../models/confirmacion.model';
-
-// ================================================================
-// 1. INTERFAZ: Invitación Completa
-// ================================================================
-// Define la estructura completa de una invitación con todos sus
-// campos y secciones.
-// ================================================================
-export interface InvitacionCompleta {
-  id?: string; // ID opcional (Firebase)
-  name: string; // Nombre del evento (obligatorio)
-  slug: string; // URL amigable (ej: mi-boda)
-  tipo: string; // Tipo: boda, xv, cumpleaños
-  nombres: string; // Nombres del festejado(s)
-  fecha: any; // Fecha y hora del evento
-  lugar: string; // Ubicación del evento
-  heroImage?: string; // Imagen principal (opcional)
-  primaryColor: string; // Color principal (hex)
-  secondaryColor: string; // Color secundario (hex)
-  accentColor: string; // Color de acento (hex)
-  textColor: string; // Color de texto (hex)
-  fontFamily: string; // Fuente tipográfica
-  frasePrincipal?: string; // Frase destacada
-  mensajePrincipal?: string; // Mensaje descriptivo
-  historia?: {
-    // Sección de historia
-    mostrarSeccion: boolean;
-    estilo: 'timeline' | 'tarjetas' | 'album' | 'minimalista';
-    titulo: string;
-    descripcion: string;
-    momentos: { fecha: string; descripcion: string; imagen?: string }[];
-  };
-  photos: string[]; // Fotos antiguas (deprecado)
-  anfitrionId?: string; // ID del anfitrión (usuario)
-  ceremonia: {
-    // Detalles de la ceremonia
-    lugar: string;
-    direccion: string;
-    hora: string;
-    mapaUrl?: string; // URL de Google Maps
-    imagenTemplo?: string; // Imagen del templo/iglesia
-  };
-  recepcion: {
-    // Detalles de la recepción
-    lugar: string;
-    direccion: string;
-    hora: string;
-    mapaUrl?: string; // URL de Google Maps
-    imagen?: string; // Imagen del lugar
-    descripcion?: string; // Descripción adicional
-  };
-  dressCode: {
-    // Código de vestimenta
-    estilo: string; // Estilo seleccionado
-    colores: string[]; // Colores sugeridos
-    coloresReservados: string[]; // Colores que NO deben usar
-    titulo: string; // Título personalizado
-    descripcion: string;
-    sugerencia: string;
-    notaAdicional: string;
-  };
-  padres: {
-    // Nombres de padres
-    padreNovia: string;
-    madreNovia: string;
-    padreNovio: string;
-    madreNovio: string;
-    novio?: string;
-    novia?: string;
-  };
-  padrinos: PadrinoAsignado[]; // Lista de padrinos (nuevo formato)
-  regalos: Regalos;
-  confirmacion: {
-    // Confirmación de asistencia
-    telefono: string;
-    whatsapp: string;
-    link: string;
-  };
-  confirmacionData?: Confirmacion;
-  hashtag: string; // Hashtag del evento
-  consideracionesData?: Consideraciones;
-  hospedaje?: {
-    // Sección de hospedaje (opcional)
-    mostrarSeccion: boolean;
-    estilo: 'tarjetas' | 'timeline' | 'catalogo' | 'iconos' | 'mosaico';
-    titulo: string;
-    descripcion: string;
-    alojamientos: {
-      titulo: string;
-      ubicacion: string;
-      enlace: string;
-      imagen?: string;
-      capacidad?: string;
-      distancia?: string;
-    }[];
-    textoBoton: string;
-    textoAdicional: string;
-  };
-  galeria?: {
-    // Sección de galería (opcional)
-    mostrarSeccion: boolean;
-    titulo: string;
-    subtitulo?: string;
-    descripcion: string;
-    fotos: {
-      url: string;
-      titulo?: string;
-      descripcion?: string;
-      destacada?: boolean;
-    }[];
-    estilo: 'grid' | 'masonry' | 'carousel' | 'album' | 'slideshow';
-    efecto: 'slide' | 'fade' | 'zoom';
-    velocidad: number;
-    mostrarControles: boolean;
-    mostrarCompartir: boolean;
-    mostrarPaginacion: boolean;
-  };
-  contador?: Contador; // Seccion contador
-}
-
-// ================================================================
-// 2. INTERFAZ: Paleta de Colores
-// ================================================================
-// Define la estructura de una paleta de colores premium
-// ================================================================
-interface Paleta {
-  primary: string; // Color principal
-  secondary: string; // Color secundario
-  accent: string; // Color de acento
-  text: string; // Color de texto
-}
+import { Paleta, PALETAS_PREMIUM } from '../../../models/paleta.model';
 
 // ================================================================
 // 3. COMPONENTE PRINCIPAL
@@ -192,54 +57,9 @@ interface Paleta {
 })
 export class FormularioInvitacionComponent implements OnInit {
   // ==============================================================
-  // 3.1 PALETAS DE COLORES PREMIUM
+  // 3.1 PALETAS DE COLORES PREMIUM (importadas del modelo)
   // ==============================================================
-  // 6 paletas predefinidas con combinaciones de colores profesionales
-  // ==============================================================
-  paletas: { [key: string]: Paleta } = {
-    premium: {
-      // Verde Cemento + Oro
-      primary: '#7A8B7D',
-      secondary: '#CBB89D',
-      accent: '#B08A4A',
-      text: '#3F4A42',
-    },
-    champagne: {
-      // Champagne + Dorado
-      primary: '#DCC7A1',
-      secondary: '#F3E9D2',
-      accent: '#B8934E',
-      text: '#4E463B',
-    },
-    rosegold: {
-      // Rose Gold
-      primary: '#D8A7A7',
-      secondary: '#F3D9D9',
-      accent: '#B76E79',
-      text: '#5F4A4A',
-    },
-    lavender: {
-      // Lavanda Real
-      primary: '#8A78A6',
-      secondary: '#E6DDF8',
-      accent: '#C8B6FF',
-      text: '#4F4662',
-    },
-    royal: {
-      // Azul Royal
-      primary: '#3D5A80',
-      secondary: '#E6EEF7',
-      accent: '#D4AF37',
-      text: '#243447',
-    },
-    black: {
-      // Black Luxury
-      primary: '#2B2B2B',
-      secondary: '#F5F5F5',
-      accent: '#C9A227',
-      text: '#333333',
-    },
-  };
+  paletas = PALETAS_PREMIUM; // Paletas de colores premium
 
   paletaSeleccionada: string = ''; // ID de la paleta actualmente seleccionada
 
@@ -427,7 +247,6 @@ export class FormularioInvitacionComponent implements OnInit {
   acordeonHistoria = false; // Sección de historia
   acordeonHospedaje = false; // Sección de hospedaje
   acordeonContador = false; // Seccion del contador
-  cordeonConsideraciones = false; // Seccion consideraciones
   acordeonCeremonia = false; // Sección de ceremonia
   acordeonRecepcion = false; // Sección de recepción
   acordeonFrases = false; // Sección de frases
