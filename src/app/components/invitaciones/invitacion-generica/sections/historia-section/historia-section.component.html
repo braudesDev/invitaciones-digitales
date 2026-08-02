@@ -1,7 +1,5 @@
-<!-- historia-section.component.html -->
-
 @if (data && data.mostrarSeccion) {
-  <div class="historia-section">
+  <div class="historia-section" [style.font-family]="data.fontFamily">
     <div class="historia-header">
       <span class="historia-icono">📖</span>
       <h2 class="historia-titulo">{{ data.titulo || "Nuestra Historia" }}</h2>

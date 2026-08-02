@@ -242,65 +242,261 @@
               <div class="campo full-width">
                 <label>🎨 Paletas de colores premium</label>
                 <div class="paletas">
-                  <!-- Paleta 1: Verde Cemento + Oro -->
+                  <!-- Paleta 1: Azul Acero -->
                   <div
                     class="paleta"
-                    [class.selected]="paletaSeleccionada === 'premium'"
-                    (click)="aplicarPaleta('premium')"
+                    [class.selected]="paletaSeleccionada === 'steel'"
+                    (click)="aplicarPaleta('steel')"
                   >
-                    <span style="background: #7a8b7d"></span>
-                    <span style="background: #b08a4a"></span>
-                    <span>Verde Cemento</span>
+                    <span [style.background]="paletas['steel'].primary"></span>
+                    <span [style.background]="paletas['steel'].accent"></span>
+                    <span>Azul Acero</span>
                   </div>
-                  <!-- Paleta 2: Champagne + Dorado -->
+
+                  <!-- Paleta 2: Rosa Terracota -->
                   <div
                     class="paleta"
-                    [class.selected]="paletaSeleccionada === 'champagne'"
-                    (click)="aplicarPaleta('champagne')"
+                    [class.selected]="paletaSeleccionada === 'rose'"
+                    (click)="aplicarPaleta('rose')"
                   >
-                    <span style="background: #dcc7a1"></span>
-                    <span style="background: #b8934e"></span>
-                    <span>Champagne</span>
+                    <span [style.background]="paletas['rose'].primary"></span>
+                    <span [style.background]="paletas['rose'].accent"></span>
+                    <span>Rosa Terracota</span>
                   </div>
-                  <!-- Paleta 3: Rose Gold -->
+
+                  <!-- Paleta 3: Oliva Natural -->
                   <div
                     class="paleta"
-                    [class.selected]="paletaSeleccionada === 'rosegold'"
-                    (click)="aplicarPaleta('rosegold')"
+                    [class.selected]="paletaSeleccionada === 'olive'"
+                    (click)="aplicarPaleta('olive')"
                   >
-                    <span style="background: #d8a7a7"></span>
-                    <span style="background: #f3d9d9"></span>
-                    <span>Rose Gold</span>
+                    <span [style.background]="paletas['olive'].primary"></span>
+                    <span [style.background]="paletas['olive'].accent"></span>
+                    <span>Oliva Natural</span>
                   </div>
-                  <!-- Paleta 4: Lavanda Real -->
+
+                  <!-- Paleta 4: Acuarela -->
                   <div
                     class="paleta"
-                    [class.selected]="paletaSeleccionada === 'lavender'"
-                    (click)="aplicarPaleta('lavender')"
+                    [class.selected]="paletaSeleccionada === 'acuarela'"
+                    (click)="aplicarPaleta('acuarela')"
                   >
-                    <span style="background: #8a78a6"></span>
-                    <span style="background: #c8b6ff"></span>
-                    <span>Lavanda Real</span>
+                    <span
+                      [style.background]="paletas['acuarela'].primary"
+                    ></span>
+                    <span
+                      [style.background]="paletas['acuarela'].accent"
+                    ></span>
+                    <span>Acuarela</span>
                   </div>
-                  <!-- Paleta 5: Azul Royal -->
+
+                  <!-- Paleta 5: Índigo Moderno -->
                   <div
                     class="paleta"
-                    [class.selected]="paletaSeleccionada === 'royal'"
-                    (click)="aplicarPaleta('royal')"
+                    [class.selected]="paletaSeleccionada === 'indigo'"
+                    (click)="aplicarPaleta('indigo')"
                   >
-                    <span style="background: #3d5a80"></span>
-                    <span style="background: #d4af37"></span>
-                    <span>Azul Royal</span>
+                    <span [style.background]="paletas['indigo'].primary"></span>
+                    <span [style.background]="paletas['indigo'].accent"></span>
+                    <span>Índigo Moderno</span>
                   </div>
-                  <!-- Paleta 6: Black Luxury -->
+
+                  <!-- Paleta 6: Lino Elegante -->
                   <div
                     class="paleta"
-                    [class.selected]="paletaSeleccionada === 'black'"
-                    (click)="aplicarPaleta('black')"
+                    [class.selected]="paletaSeleccionada === 'lino'"
+                    (click)="aplicarPaleta('lino')"
                   >
-                    <span style="background: #2b2b2b"></span>
-                    <span style="background: #c9a227"></span>
-                    <span>Black Luxury</span>
+                    <span [style.background]="paletas['lino'].primary"></span>
+                    <span [style.background]="paletas['lino'].accent"></span>
+                    <span>Lino Elegante</span>
+                  </div>
+
+                  <!-- Paleta 7: Carbón -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'carbon'"
+                    (click)="aplicarPaleta('carbon')"
+                  >
+                    <span [style.background]="paletas['carbon'].primary"></span>
+                    <span [style.background]="paletas['carbon'].accent"></span>
+                    <span>Carbón</span>
+                  </div>
+
+                  <!-- Paleta 8: Champán -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'champan'"
+                    (click)="aplicarPaleta('champan')"
+                  >
+                    <span
+                      [style.background]="paletas['champan'].primary"
+                    ></span>
+                    <span [style.background]="paletas['champan'].accent"></span>
+                    <span>Champán</span>
+                  </div>
+
+                  <!-- Paleta 9: Plata -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'plata'"
+                    (click)="aplicarPaleta('plata')"
+                  >
+                    <span [style.background]="paletas['plata'].primary"></span>
+                    <span [style.background]="paletas['plata'].accent"></span>
+                    <span>Plata</span>
+                  </div>
+
+                  <!-- Paleta 10: Morado Pop -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'morado'"
+                    (click)="aplicarPaleta('morado')"
+                  >
+                    <span [style.background]="paletas['morado'].primary"></span>
+                    <span [style.background]="paletas['morado'].accent"></span>
+                    <span>Morado Pop</span>
+                  </div>
+
+                  <!-- Paleta 11: Menta -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'menta'"
+                    (click)="aplicarPaleta('menta')"
+                  >
+                    <span [style.background]="paletas['menta'].primary"></span>
+                    <span [style.background]="paletas['menta'].accent"></span>
+                    <span>Menta</span>
+                  </div>
+
+                  <!-- Paleta 12: Jungla -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'jungla'"
+                    (click)="aplicarPaleta('jungla')"
+                  >
+                    <span [style.background]="paletas['jungla'].primary"></span>
+                    <span [style.background]="paletas['jungla'].accent"></span>
+                    <span>Jungla</span>
+                  </div>
+                  <!-- Paleta 13: Boda Real -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'bodaReal'"
+                    (click)="aplicarPaleta('bodaReal')"
+                  >
+                    <span
+                      [style.background]="paletas['bodaReal'].primary"
+                    ></span>
+                    <span
+                      [style.background]="paletas['bodaReal'].accent"
+                    ></span>
+                    <span>Boda Real</span>
+                  </div>
+
+                  <!-- Paleta 14: Boda Campestre -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'bodaCampestre'"
+                    (click)="aplicarPaleta('bodaCampestre')"
+                  >
+                    <span
+                      [style.background]="paletas['bodaCampestre'].primary"
+                    ></span>
+                    <span
+                      [style.background]="paletas['bodaCampestre'].accent"
+                    ></span>
+                    <span>Boda Campestre</span>
+                  </div>
+
+                  <!-- Paleta 15: XV Princesa -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'xvPrincesa'"
+                    (click)="aplicarPaleta('xvPrincesa')"
+                  >
+                    <span
+                      [style.background]="paletas['xvPrincesa'].primary"
+                    ></span>
+                    <span
+                      [style.background]="paletas['xvPrincesa'].accent"
+                    ></span>
+                    <span>XV Princesa</span>
+                  </div>
+
+                  <!-- Paleta 16: Boda Playa -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'bodaPlaya'"
+                    (click)="aplicarPaleta('bodaPlaya')"
+                  >
+                    <span
+                      [style.background]="paletas['bodaPlaya'].primary"
+                    ></span>
+                    <span
+                      [style.background]="paletas['bodaPlaya'].accent"
+                    ></span>
+                    <span>Boda Playa</span>
+                  </div>
+
+                  <!-- Paleta 17: XV Elegante -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'xvElegante'"
+                    (click)="aplicarPaleta('xvElegante')"
+                  >
+                    <span
+                      [style.background]="paletas['xvElegante'].primary"
+                    ></span>
+                    <span
+                      [style.background]="paletas['xvElegante'].accent"
+                    ></span>
+                    <span>XV Elegante</span>
+                  </div>
+
+                  <!-- Paleta 18: Boda Rústica -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'bodaRustica'"
+                    (click)="aplicarPaleta('bodaRustica')"
+                  >
+                    <span
+                      [style.background]="paletas['bodaRustica'].primary"
+                    ></span>
+                    <span
+                      [style.background]="paletas['bodaRustica'].accent"
+                    ></span>
+                    <span>Boda Rústica</span>
+                  </div>
+
+                  <!-- Paleta 19: XV Glamour -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'xvGlamour'"
+                    (click)="aplicarPaleta('xvGlamour')"
+                  >
+                    <span
+                      [style.background]="paletas['xvGlamour'].primary"
+                    ></span>
+                    <span
+                      [style.background]="paletas['xvGlamour'].accent"
+                    ></span>
+                    <span>XV Glamour</span>
+                  </div>
+
+                  <!-- Paleta 20: Boda Boho -->
+                  <div
+                    class="paleta"
+                    [class.selected]="paletaSeleccionada === 'bodaBoho'"
+                    (click)="aplicarPaleta('bodaBoho')"
+                  >
+                    <span
+                      [style.background]="paletas['bodaBoho'].primary"
+                    ></span>
+                    <span
+                      [style.background]="paletas['bodaBoho'].accent"
+                    ></span>
+                    <span>Boda Boho</span>
                   </div>
                 </div>
                 <p class="ayuda-paletas">
@@ -318,7 +514,7 @@
                       class="help-icon"
                       data-tooltip="Color principal que dominará el diseño de la invitación.
 
-                  📌 Este color se usará en títulos y elementos principales."
+          📌 Este color se usará en títulos y elementos principales."
                       >?</span
                     >
                   </label>
@@ -344,7 +540,7 @@
                       class="help-icon"
                       data-tooltip="Color complementario que acompañará al color principal.
 
-                  📌 Se usa en fondos y elementos secundarios."
+          📌 Se usa en fondos y elementos secundarios."
                       >?</span
                     >
                   </label>
@@ -370,7 +566,7 @@
                       class="help-icon"
                       data-tooltip="Color que resalta detalles importantes.
 
-                  📌 Se usa en botones, íconos y elementos destacados."
+          📌 Se usa en botones, íconos y elementos destacados."
                       >?</span
                     >
                   </label>
@@ -396,7 +592,7 @@
                       class="help-icon"
                       data-tooltip="Color de todos los textos de la invitación.
 
-                  📌 Asegúrate de que contraste bien con los fondos."
+          📌 Asegúrate de que contraste bien con los fondos."
                       >?</span
                     >
                   </label>
@@ -416,10 +612,9 @@
               </div>
             </div>
           </div>
-
-          <!-- ==========================================================
-           ACORDEÓN: FUENTE DEL TEXTO
-           ========================================================== -->
+          <!-- ========================================================== -->
+          <!-- ACORDEÓN: FUENTE DEL TEXTO                                  -->
+          <!-- ========================================================== -->
           <div class="acordeon full-width">
             <div
               class="acordeon-header"
@@ -434,6 +629,7 @@
                 ✍️ Elige la tipografía que dará personalidad a tu invitación.
               </p>
 
+              <!-- Selector de fuentes (opción 1: Select) -->
               <div class="campo full-width">
                 <label>
                   ✍️ Fuente del texto
@@ -441,30 +637,61 @@
                     class="help-icon"
                     data-tooltip="La fuente define el estilo y personalidad de los textos.
 
-                📌 Playfair Display: Clásica y elegante
-                📌 Great Vibes: Romántica y cursiva
-                📌 Dancing Script: Fluida y dinámica
-                📌 Poppins: Moderna y limpia"
+        📌 Las fuentes se cargan desde Google Fonts automáticamente."
                     >?</span
                   >
                 </label>
+
+                <!-- SELECT con todas las fuentes -->
                 <select
                   [(ngModel)]="nuevaInvitacion.fontFamily"
                   name="fontFamily"
+                  (change)="onFuenteChange($event)"
                 >
-                  <option value="'Playfair Display', serif">
-                    Playfair Display (clásica)
-                  </option>
-                  <option value="'Great Vibes', cursive">
-                    Great Vibes (romántica)
-                  </option>
-                  <option value="'Dancing Script', cursive">
-                    Dancing Script (fluida)
-                  </option>
-                  <option value="'Poppins', sans-serif">
-                    Poppins (moderna)
+                  <option *ngFor="let fuente of fuentes" [value]="fuente.valor">
+                    {{ fuente.nombre }} ({{ fuente.tipo }})
                   </option>
                 </select>
+
+                <!-- Previsualización de la fuente seleccionada -->
+                <div
+                  class="fuente-preview-select"
+                  [style.font-family]="nuevaInvitacion.fontFamily"
+                >
+                  <span>ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
+                  <span>abcdefghijklmnopqrstuvwxyz</span>
+                  <span>1234567890</span>
+                  <span>¡Feliz Boda!</span>
+                </div>
+
+                <p class="ayuda-fuentes">
+                  💡 Selecciona una fuente y mira la previsualización en vivo
+                </p>
+              </div>
+
+              <!-- OPCIÓN 2: Grid visual de fuentes (más bonito) -->
+              <div class="campo full-width">
+                <label>🖼️ Vista rápida de fuentes</label>
+                <div class="fuentes-grid">
+                  @for (fuente of fuentes; track fuente.valor) {
+                    <div
+                      class="fuente-item"
+                      [class.selected]="
+                        nuevaInvitacion.fontFamily === fuente.valor
+                      "
+                      (click)="seleccionarFuente(fuente)"
+                    >
+                      <div
+                        class="fuente-preview"
+                        [style.font-family]="fuente.valor"
+                      >
+                        <span>Abc</span>
+                      </div>
+                      <span class="fuente-nombre">{{ fuente.nombre }}</span>
+                      <span class="fuente-tipo">{{ fuente.tipo }}</span>
+                    </div>
+                  }
+                </div>
               </div>
             </div>
           </div>

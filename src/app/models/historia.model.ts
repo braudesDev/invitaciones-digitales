@@ -14,4 +14,5 @@ export interface Historia {
   titulo: string;
   descripcion: string;
   momentos: Momento[];
+  fontFamily?: string; // Nueva propiedad para la fuente
 }

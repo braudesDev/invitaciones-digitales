@@ -3618,3 +3618,119 @@
     font-size: 0.7rem;
   }
 }
+/* formulario-invitacion.component.css */
+
+/* ============================================
+   FUENTES - SELECT
+   ============================================ */
+.fuente-preview-select {
+  margin-top: 0.8rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: var(--input-bg, #f9f5f0);
+  border: 1px solid var(--border, #e0d5c8);
+  text-align: center;
+  line-height: 2;
+  color: var(--text, #333);
+}
+
+.fuente-preview-select span {
+  display: block;
+  font-size: 1.1rem;
+}
+
+.fuente-preview-select span:first-child {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+/* ============================================
+   FUENTES - GRID VISUAL
+   ============================================ */
+.fuentes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.fuente-item {
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 2px solid var(--border, #e0d5c8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--card-bg, #ffffff);
+  text-align: center;
+}
+
+.fuente-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent, #c9a87c);
+}
+
+.fuente-item.selected {
+  border-color: var(--accent, #b08a4a);
+  box-shadow: 0 0 0 3px rgba(176, 138, 74, 0.2);
+  background: var(--secondary, #f5ede4);
+}
+
+.fuente-preview {
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: var(--input-bg, #f9f5f0);
+  margin-bottom: 0.3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text, #333);
+}
+
+.fuente-nombre {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text, #333);
+  display: block;
+}
+
+.fuente-tipo {
+  font-size: 0.6rem;
+  color: var(--text, #666);
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-top: 0.1rem;
+}
+
+.ayuda-fuentes {
+  font-size: 0.8rem;
+  color: var(--text, #666);
+  opacity: 0.7;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .fuentes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .fuentes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  }
+
+  .fuente-preview {
+    font-size: 1rem;
+  }
+
+  .fuente-nombre {
+    font-size: 0.6rem;
+  }
+}

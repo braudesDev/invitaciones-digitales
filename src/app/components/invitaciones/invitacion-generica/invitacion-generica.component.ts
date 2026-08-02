@@ -177,6 +177,7 @@ export class InvitacionGenericaComponent implements OnInit {
       titulo: (h as any).titulo || 'Nuestra Historia',
       descripcion: (h as any).descripcion || '',
       momentos: (h as any).momentos || [],
+      fontFamily: this.data?.fontFamily || "'Playfair Display', Georgia, serif",
     };
   }
 
@@ -401,4 +402,5 @@ export class InvitacionGenericaComponent implements OnInit {
       mostrarCalendario: (c as any).mostrarCalendario ?? true,
     };
   }
+  // Getter que devuelve la fuente del data
 }
