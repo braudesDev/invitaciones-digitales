@@ -114,6 +114,7 @@ export class ContadorSectionComponent implements OnInit, OnDestroy {
   }
 
   /** Calcula el tiempo restante hasta la fecha del evento */
+  /** Calcula el tiempo restante hasta la fecha del evento */
   calcularTiempoRestante() {
     if (!this.data?.fechaEvento) {
       this.dias = 0;
@@ -123,7 +124,21 @@ export class ContadorSectionComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const fechaEvento = new Date(this.data.fechaEvento);
+    // 📌 CORREGIR EL DESFASE DE ZONA HORARIA
+    // Crear la fecha a partir del string YYYY-MM-DD
+    const partes = this.data.fechaEvento.split('-').map(Number);
+    // Año, Mes (0-11), Día, Hora 0, Minuto 0, Segundo 0, Milisegundo 0
+    const fechaEvento = new Date(
+      partes[0],
+      partes[1] - 1,
+      partes[2],
+      0,
+      0,
+      0,
+      0,
+    );
+
+    // Usar la hora actual para calcular la diferencia exacta
     const ahora = new Date();
     const diferencia = fechaEvento.getTime() - ahora.getTime();
 
@@ -135,12 +150,14 @@ export class ContadorSectionComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Calcular días completos
     this.dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-    this.horas = Math.floor(
-      (diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-    );
-    this.minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
-    this.segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+    // Calcular horas, minutos y segundos restantes del día actual
+    const msRestantes = diferencia - this.dias * 1000 * 60 * 60 * 24;
+    this.horas = Math.floor(msRestantes / (1000 * 60 * 60));
+    this.minutos = Math.floor((msRestantes % (1000 * 60 * 60)) / (1000 * 60));
+    this.segundos = Math.floor((msRestantes % (1000 * 60)) / 1000);
   }
 
   /** Formatea un número con dos dígitos */
@@ -168,7 +185,11 @@ export class ContadorSectionComponent implements OnInit, OnDestroy {
   /** Formatea la fecha para mostrar en la vista */
   get fechaFormateada(): string {
     if (!this.data?.fechaEvento) return '';
-    const fecha = new Date(this.data.fechaEvento);
+
+    // Crear fecha a partir del string YYYY-MM-DD
+    const partes = this.data.fechaEvento.split('-').map(Number);
+    const fecha = new Date(partes[0], partes[1] - 1, partes[2]);
+
     return fecha.toLocaleDateString('es-ES', {
       day: 'numeric',
       month: 'long',
