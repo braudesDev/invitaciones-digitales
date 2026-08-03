@@ -11,6 +11,7 @@
   text-align: center;
   box-shadow: var(--shadow-sm);
   margin: 0;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -33,10 +34,11 @@
 
 .invitacion-valida-section h3 {
   color: var(--primary);
-  font-size: 1.8rem; /* 👈 Más grande */
-  font-weight: 700; /* 👈 Más grueso */
+  font-size: 1.8rem;
+  font-weight: 700;
   margin-bottom: 1rem;
-  letter-spacing: 2px; /* 👈 Separación entre letras */
+  letter-spacing: 2px;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -45,10 +47,11 @@
 
 .invitacion-valida-section .invitado-nombre {
   color: var(--accent);
-  font-size: 2.8rem; /* 👈 Más grande */
-  font-weight: 700; /* 👈 Más grueso */
+  font-size: 2.8rem;
+  font-weight: 700;
   margin: 1rem 0;
-  letter-spacing: 1px; /* 👈 Separación entre letras */
+  letter-spacing: 1px;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -57,12 +60,13 @@
 
 .invitacion-valida-section .label {
   display: block;
-  font-size: 0.85rem; /* 👈 Un poco más grande */
+  font-size: 0.85rem;
   color: var(--text);
   text-transform: uppercase;
-  letter-spacing: 3px; /* 👈 Separación entre letras */
-  font-weight: 600; /* 👈 Más grueso */
+  letter-spacing: 3px;
+  font-weight: 600;
   opacity: 0.6;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -70,11 +74,12 @@
    ============================================ */
 
 .invitacion-valida-section .pases {
-  color: var(--primary); /* 👈 Cambiado a primary para más contraste */
-  font-size: 1.8rem; /* 👈 Más grande */
-  font-weight: 700; /* 👈 Más grueso */
+  color: var(--primary);
+  font-size: 1.8rem;
+  font-weight: 700;
   margin: 0.5rem 0;
-  letter-spacing: 2px; /* 👈 Separación entre letras */
+  letter-spacing: 2px;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -83,8 +88,9 @@
 
 .invitacion-valida-section .pases-count {
   color: var(--accent);
-  font-size: 3.5rem; /* 👈 Muy grande */
+  font-size: 3.5rem;
   font-weight: 700;
+  font-family: inherit;
 }
 
 .invitacion-valida-section .pases-label {
@@ -92,12 +98,14 @@
   font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 3px;
+  font-family: inherit;
 }
 
 .invitacion-valida-section .pases-desc {
   color: var(--text);
   font-size: 0.9rem;
   opacity: 0.6;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -105,10 +113,11 @@
    ============================================ */
 
 .invitacion-valida-section .mensaje-texto {
-  font-size: 1.1rem; /* 👈 Más grande */
+  font-size: 1.1rem;
   color: var(--text);
   font-style: italic;
   line-height: 1.8;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -117,8 +126,8 @@
 
 .invitacion-valida-section .qr-code {
   margin: 1.5rem auto;
-  width: 200px; /* 👈 Un poco más grande */
-  height: 200px; /* 👈 Un poco más grande */
+  width: 200px;
+  height: 200px;
 }
 
 /* ============================================
@@ -131,6 +140,7 @@
   color: var(--text);
   letter-spacing: 3px;
   opacity: 0.5;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -142,6 +152,7 @@
   color: var(--text);
   opacity: 0.5;
   font-style: italic;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -153,13 +164,14 @@
   color: white;
   border: none;
   border-radius: 999px;
-  padding: 0.9rem 2rem; /* 👈 Más padding */
-  font-size: 1rem; /* 👈 Más grande */
-  font-weight: 600; /* 👈 Más grueso */
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   margin: 0.5rem;
-  letter-spacing: 1px; /* 👈 Separación entre letras */
+  letter-spacing: 1px;
+  font-family: inherit;
 }
 
 .invitacion-valida-section button:hover {
@@ -172,9 +184,10 @@
    ============================================ */
 
 .invitacion-valida-section .estado-acceso {
-  font-size: 1rem; /* 👈 Más grande */
-  font-weight: 600; /* 👈 Más grueso */
+  font-size: 1rem;
+  font-weight: 600;
   padding: 0.5rem 0;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -191,7 +204,7 @@
   }
 
   .invitacion-valida-section .invitado-nombre {
-    font-size: 2.2rem; /* 👈 De 1.5rem a 2.2rem */
+    font-size: 2.2rem;
   }
 
   .invitacion-valida-section .pases {
@@ -206,4 +219,13 @@
     width: 160px;
     height: 160px;
   }
+}
+
+/* ============================================
+   FORZAR HERENCIA DE FUENTE
+   ============================================ */
+
+.invitacion-valida-section,
+.invitacion-valida-section * {
+  font-family: inherit !important;
 }

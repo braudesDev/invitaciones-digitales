@@ -8,14 +8,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-export interface Historia {
-  mostrarSeccion: boolean;
-  estilo: 'timeline' | 'tarjetas' | 'album' | 'minimalista';
-  titulo: string;
-  descripcion: string;
-  momentos: { fecha: string; descripcion: string; imagen?: string }[];
-}
+import { Historia } from '../../../../../models/historia.model';
 
 @Component({
   selector: 'app-historia-section',

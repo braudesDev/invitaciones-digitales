@@ -23,7 +23,7 @@
 }
 
 .padres-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
@@ -54,7 +54,7 @@
 
 /* Titulo de la tarjeta con color de acento (#c9a87c) */
 .card-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--accent, #c9a87c);
@@ -124,7 +124,7 @@
 }
 
 .padre-nombre {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-weight: 600;
   color: var(--primary, #5c3d2e);
   font-size: 1.2rem;
@@ -195,4 +195,13 @@
   .padre-nombre {
     font-size: 1.05rem;
   }
+}
+
+/* ============================================
+   FORZAR HERENCIA DE FUENTE
+   ============================================ */
+
+.padres-container,
+.padres-container * {
+  font-family: inherit !important;
 }

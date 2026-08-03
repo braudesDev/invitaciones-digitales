@@ -43,6 +43,11 @@ import {
   ESTILOS_CONFIRMACION,
 } from '../../../models/confirmacion.model';
 import { Paleta, PALETAS_PREMIUM } from '../../../models/paleta.model';
+import {
+  FUENTES_DISPONIBLES,
+  Fuente,
+  getNombreFuente,
+} from '../../../models/fuentes.model';
 
 // ================================================================
 // 3. COMPONENTE PRINCIPAL
@@ -60,6 +65,7 @@ export class FormularioInvitacionComponent implements OnInit {
   // 3.1 PALETAS DE COLORES PREMIUM (importadas del modelo)
   // ==============================================================
   paletas = PALETAS_PREMIUM; // Paletas de colores premium
+  fuentes = FUENTES_DISPONIBLES;
 
   paletaSeleccionada: string = ''; // ID de la paleta actualmente seleccionada
 
@@ -77,6 +83,32 @@ export class FormularioInvitacionComponent implements OnInit {
       this.nuevaInvitacion.accentColor = paleta.accent;
       this.nuevaInvitacion.textColor = paleta.text;
     }
+  }
+
+  obtenerNombrePaleta(key: string): string {
+    const nombres: { [key: string]: string } = {
+      steel: 'Azul Acero',
+      rose: 'Rosa Terracota',
+      olive: 'Oliva Natural',
+      acuarela: 'Acuarela',
+      indigo: 'Índigo Moderno',
+      lino: 'Lino Elegante',
+      carbon: 'Carbón',
+      champan: 'Champán',
+      plata: 'Plata',
+      morado: 'Morado Pop',
+      menta: 'Menta',
+      jungla: 'Jungla',
+      bodaReal: 'Boda Real',
+      bodaCampestre: 'Boda Campestre',
+      xvPrincesa: 'XV Princesa',
+      bodaPlaya: 'Boda Playa',
+      xvElegante: 'XV Elegante',
+      bodaRustica: 'Boda Rústica',
+      xvGlamour: 'XV Glamour',
+      bodaBoho: 'Boda Boho',
+    };
+    return nombres[key] || key;
   }
 
   // ==============================================================
@@ -1669,5 +1701,34 @@ export class FormularioInvitacionComponent implements OnInit {
     if (estilosPermitidos.includes(estilo)) {
       this.confirmacionData.estilo = estilo as any;
     }
+  }
+  /**
+   * Selecciona una fuente desde la vista grid
+   */
+  seleccionarFuente(fuente: Fuente) {
+    this.nuevaInvitacion.fontFamily = fuente.valor;
+    console.log('✅ Fuente seleccionada:', fuente.nombre);
+  }
+
+  /**
+   * Detecta cambio en el select
+   */
+  onFuenteChange(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    const valor = select.value;
+    const fuente = this.fuentes.find((f) => f.valor === valor);
+    if (fuente) {
+      console.log('✅ Fuente seleccionada desde select:', fuente.nombre);
+    }
+  }
+
+  /**
+   * Obtiene el nombre de la fuente actual
+   */
+  get nombreFuenteActual(): string {
+    const fuente = this.fuentes.find(
+      (f) => f.valor === this.nuevaInvitacion.fontFamily,
+    );
+    return fuente?.nombre || 'Playfair Display';
   }
 }

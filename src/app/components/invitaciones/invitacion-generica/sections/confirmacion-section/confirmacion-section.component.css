@@ -22,7 +22,7 @@
 }
 
 .confirmacion-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
@@ -443,4 +443,13 @@
   .confirmacion-titulo {
     font-size: 1.4rem;
   }
+}
+
+/* ============================================
+   FORZAR HERENCIA DE FUENTE
+   ============================================ */
+
+.confirmacion-section,
+.confirmacion-section * {
+  font-family: inherit !important;
 }

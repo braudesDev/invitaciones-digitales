@@ -13,6 +13,7 @@ import { Regalos } from '../../../../../models/regalos.model';
 })
 export class RegalosSectionComponent {
   @Input() data!: Regalos;
+  @Input() fontFamily: string = "'Playfair Display', Georgia, serif";
 
   /** Obtiene un icono según el nombre de la opción */
   getIconoOpcion(nombre: string): string {

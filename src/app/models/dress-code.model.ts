@@ -7,15 +7,16 @@ export type EstiloDressCode =
   | 'boho'
   | 'playa';
 
-// 👇 Definición de cada estilo
+// Definición de cada estilo
 export interface EstiloInfo {
   valor: EstiloDressCode;
   nombre: string;
   icon: string;
   descripcion: string;
+  fontFamily?: string; // Fuente opcional para este estilo
 }
 
-// 👇 Estilos disponibles (para usar en el formulario)
+// Estilos disponibles (para usar en el formulario)
 export const ESTILOS_DISPONIBLES: EstiloInfo[] = [
   {
     valor: 'elegante',
@@ -91,6 +92,7 @@ export interface DressCode {
   descripcion: string;
   sugerencia: string;
   notaAdicional: string;
+  fontFamily: string;
 }
 
 // 👇 Función helper para obtener el nombre del estilo

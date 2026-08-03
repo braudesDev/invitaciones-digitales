@@ -3,6 +3,7 @@
 export interface PadrinoAsignado {
   nombre: string;
   rol: string;
+  fontFamily?: string;
   // observaciones?: string;
 }
 

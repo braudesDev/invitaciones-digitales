@@ -6,10 +6,15 @@
       '--secondary': data.secondaryColor,
       '--accent': data.accentColor,
       '--text': data.textColor,
+      '--font-family': data.fontFamily,
+      '--font-title': data.fontFamily,
+      '--font-body': data.fontFamily,
       'font-family': data.fontFamily,
     }"
   >
-    <!-- Hero Section -->
+    <!-- ======================================== -->
+    <!-- 1. HERO - Portada principal              -->
+    <!-- ======================================== -->
     @if (data.heroImage) {
       <app-hero-section
         [nombres]="data.nombres || ''"
@@ -20,7 +25,10 @@
         [colorTexto]="data.colorTexto ?? '#ffffff'"
       ></app-hero-section>
     }
-    <!-- Nos Casamos (Frase principal) -->
+
+    <!-- ======================================== -->
+    <!-- 2. NOS CASAMOS - Mensaje principal       -->
+    <!-- ======================================== -->
     @if (data.frasePrincipal || data.mensajePrincipal) {
       <app-nos-casamos-section
         [frase]="data.frasePrincipal || ''"
@@ -32,13 +40,38 @@
         [textColor]="data.textColor ?? '#3F4A42'"
       ></app-nos-casamos-section>
     }
+
+    <!-- ======================================== -->
+    <!-- 3. CONTADOR - Cuenta regresiva           -->
+    <!-- ======================================== -->
     @if (data.contador) {
       <app-contador-section
         [data]="contadorFormateado"
         modo="vista"
       ></app-contador-section>
     }
-    <!-- 🎟️ INVITACIÓN VÁLIDA (nombre, pases, mensaje, QR) -->
+
+    <!-- ======================================== -->
+    <!-- 4. CEREMONIA - Dónde y cuándo            -->
+    <!-- ======================================== -->
+    @if (data.ceremonia) {
+      <app-ceremonia-section
+        [data]="data.ceremonia"
+        [recepcionData]="data.recepcion"
+        [fechaEvento]="data.fecha"
+      ></app-ceremonia-section>
+    }
+
+    <!-- ======================================== -->
+    <!-- 5. RECEPCIÓN - Dónde y cuándo            -->
+    <!-- ======================================== -->
+    @if (data.recepcion) {
+      <app-recepcion-section [data]="data.recepcion"></app-recepcion-section>
+    }
+
+    <!-- ======================================== -->
+    <!-- 6. INVITACIÓN VÁLIDA - QR, pases         -->
+    <!-- ======================================== -->
     @if (data) {
       <app-invitacion-valida-section
         [invitado]="data.invitado ?? 'Invitado especial'"
@@ -48,63 +81,113 @@
       >
       </app-invitacion-valida-section>
     }
-    <!-- Secciones del evento -->
-    @if (data.ceremonia) {
-      <app-ceremonia-section [data]="data.ceremonia"></app-ceremonia-section>
+
+    <!-- ======================================== -->
+    <!-- 7. HISTORIA - Conexión emocional         -->
+    <!-- ======================================== -->
+    @if (data.historia && data.historia.mostrarSeccion) {
+      <app-historia-section [data]="historiaFormateada"></app-historia-section>
     }
-    @if (data.recepcion) {
-      <app-recepcion-section [data]="data.recepcion"></app-recepcion-section>
+
+    <!-- ======================================== -->
+    <!-- 8. GALERÍA - Visual                       -->
+    <!-- ======================================== -->
+    @if (data.galeria) {
+      <app-galeria-section [data]="galeriaFormateada"></app-galeria-section>
     }
-    @if (data.padres) {
-      <app-padres-section [data]="data.padres"></app-padres-section>
+
+    <!-- ======================================== -->
+    <!-- 9. ITINERARIO - Logística del día        -->
+    <!-- ======================================== -->
+    @if (data.itinerario) {
+      <app-itinerario-section [data]="data.itinerario"></app-itinerario-section>
     }
-    @if (data.padrinos) {
-      <app-padrinos-section
-        [data]="padrinosFormateados"
-        [titulo]="'Nuestros Padrinos'"
-      ></app-padrinos-section>
-    }
-    @if (data.damas) {
-      <app-damas-section [data]="data.damas"></app-damas-section>
-    }
+
+    <!-- ======================================== -->
+    <!-- 10. DRESS CODE - Instrucciones           -->
+    <!-- ======================================== -->
     @if (data.dressCode) {
       <app-dresscode-section
         [data]="dressCodeFormateado"
       ></app-dresscode-section>
     }
-    @if (data.historia && data.historia.mostrarSeccion) {
-      <app-historia-section [data]="historiaFormateada"></app-historia-section>
+
+    <!-- ======================================== -->
+    <!-- 11. PADRES - Honrar a los padres         -->
+    <!-- ======================================== -->
+    @if (data.padres) {
+      <app-padres-section [data]="data.padres"></app-padres-section>
     }
+
+    <!-- ======================================== -->
+    <!-- 12. PADRINOS - Agradecimiento            -->
+    <!-- ======================================== -->
+    @if (data.padrinos) {
+      <app-padrinos-section
+        [data]="padrinosFormateados"
+        [titulo]="'Nuestros Padrinos'"
+        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
+      ></app-padrinos-section>
+    }
+
+    <!-- ======================================== -->
+    <!-- 13. DAMAS - Opcional                     -->
+    <!-- ======================================== -->
+    @if (data.damas) {
+      <app-damas-section [data]="data.damas"></app-damas-section>
+    }
+
+    <!-- ======================================== -->
+    <!-- 14. HOSPEDAJE - Para invitados de fuera  -->
+    <!-- ======================================== -->
     @if (data.hospedaje) {
       <app-hospedaje-section
         [data]="hospedajeFormateado"
       ></app-hospedaje-section>
     }
-    @if (data.galeria) {
-      <app-galeria-section [data]="galeriaFormateada"></app-galeria-section>
+
+    <!-- ======================================== -->
+    <!-- 15. REGALOS - Información de regalos     -->
+    <!-- ======================================== -->
+    @if (data.regalos) {
+      <app-regalos-section
+        [data]="regalosFormateado"
+        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
+      ></app-regalos-section>
     }
-    @if (data.itinerario) {
-      <app-itinerario-section [data]="data.itinerario"></app-itinerario-section>
-    }
+
+    <!-- ======================================== -->
+    <!-- 16. HASHTAG - Compartir en redes         -->
+    <!-- ======================================== -->
     @if (data.hashtag) {
       <app-hashtag-section [data]="data.hashtag"></app-hashtag-section>
     }
-    @if (data.regalos) {
-      <app-regalos-section [data]="regalosFormateado"></app-regalos-section>
-    }
+
+    <!-- ======================================== -->
+    <!-- 17. CONSIDERACIONES - Notas importantes  -->
+    <!-- ======================================== -->
     @if (data.consideracionesData) {
       <app-consideraciones-section
         [data]="consideracionesFormateado"
+        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
       ></app-consideraciones-section>
     }
-    <!-- ✅ CONFIRMACIÓN DE ASISTENCIA (botones, estado, contacto) -->
+
+    <!-- ======================================== -->
+    <!-- 18. CONFIRMACIÓN - Confirmar asistencia  -->
+    <!-- ======================================== -->
     @if (data.confirmacionData) {
       <app-confirmacion-section
         [data]="confirmacionFormateado"
         [eventoData]="data"
         modo="vista"
+        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
       ></app-confirmacion-section>
     }
+
+    <!-- ======================================== -->
+    <!-- 19. FOOTER - Cierre                      -->
+    <!-- ======================================== -->
     <app-footer-section></app-footer-section>
   </div>
 }

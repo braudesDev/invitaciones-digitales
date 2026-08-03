@@ -32,6 +32,7 @@ export class ConsideracionesSectionComponent implements OnInit {
   @Input() data!: Consideraciones;
   @Input() modo: 'edicion' | 'vista' = 'edicion';
   @Output() dataChange = new EventEmitter<Consideraciones>();
+  @Input() fontFamily: string = 'Playfair Display, Georgia, serif';
 
   // ==============================================================
   // PROPIEDADES

@@ -49,7 +49,7 @@
 
 /* Título principal de la galería */
 .galeria-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: clamp(1.6rem, 4vw, 2.6rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
@@ -59,7 +59,7 @@
 
 /* Subtítulo de la galería (opcional) */
 .galeria-subtitulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.1rem;
   font-weight: 300;
   color: var(--text, #666);
@@ -106,7 +106,7 @@
   font-size: 1.05rem;
   line-height: 1.8;
   font-style: italic;
-  font-family: "Georgia", serif;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -621,7 +621,7 @@
   transform: translateX(-50%);
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.9rem;
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -846,7 +846,7 @@
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.3s ease;
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-weight: 600;
   letter-spacing: 0.5px;
 }
@@ -985,7 +985,7 @@
   font-size: 0.9rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-weight: 600;
   letter-spacing: 0.5px;
   min-width: 110px;
@@ -1125,4 +1125,13 @@
     transform: rotateY(0deg) scale(1);
     opacity: 1;
   }
+}
+
+/* ============================================
+   FORZAR HERENCIA DE FUENTE
+   ============================================ */
+
+.galeria-section,
+.galeria-section * {
+  font-family: inherit !important;
 }

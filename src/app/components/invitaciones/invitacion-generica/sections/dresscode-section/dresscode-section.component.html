@@ -1,7 +1,7 @@
 <!-- dresscode-section.component.html -->
 
 @if (data) {
-  <div class="dresscode-section">
+  <div class="dresscode-section" [style.font-family]="data.fontFamily">
     <div class="dresscode-header">
       <h2 class="dresscode-titulo">
         {{ data.titulo || "Código de Vestimenta" }}
@@ -23,7 +23,7 @@
             [alt]="getEstiloNombre(data.estilo)"
             class="estilo-imagen"
             loading="lazy"
-            />
+          />
         </div>
         <span class="estilo-nombre">{{ getEstiloNombre(data.estilo) }}</span>
       </div>
@@ -40,7 +40,9 @@
     @if (tieneColores) {
       <div class="dresscode-colores">
         <p class="colores-label">✅ Colores sugeridos</p>
-        <p class="colores-sub-label">Te sugerimos estos tonos para tu atuendo</p>
+        <p class="colores-sub-label">
+          Te sugerimos estos tonos para tu atuendo
+        </p>
         <div class="colores-paleta">
           @for (color of data.colores; track color) {
             <span
@@ -64,7 +66,7 @@
               class="color-muestra color-reservado"
               [style.background]="color"
               [title]="color"
-              >
+            >
               <!-- <span class="color-reservado-icon">✕</span> -->
             </span>
           }

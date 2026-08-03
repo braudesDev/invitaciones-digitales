@@ -24,6 +24,7 @@ export class ConfirmacionSectionComponent implements OnInit {
   @Input() eventoData: any = {};
   @Input() data!: Confirmacion; // 👈 Datos de personalización
   @Input() modo: 'edicion' | 'vista' = 'vista';
+  @Input() fontFamily: string = 'Playfair Display, Georgia, serif';
 
   invitadoId: string = '';
   estadoActual: 'pendiente' | 'confirmado' | 'rechazado' = 'pendiente';

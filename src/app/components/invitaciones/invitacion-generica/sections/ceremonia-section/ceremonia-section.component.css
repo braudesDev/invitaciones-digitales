@@ -8,6 +8,7 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  font-family: inherit;
 }
 
 /* Patrón de fondo sutil */
@@ -28,12 +29,12 @@
 .titulo-ceremonia {
   position: relative;
   z-index: 1;
-  font-family: "Cormorant Garamond", serif;
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
   margin-bottom: 2.5rem;
   letter-spacing: 2px;
+  font-family: inherit;
 }
 
 /* Contenedor de tarjetas */
@@ -60,6 +61,7 @@
     transform 0.3s ease,
     box-shadow 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.3);
+  font-family: inherit;
 }
 
 .tarjeta:hover {
@@ -88,23 +90,23 @@
 
 /* Título de la tarjeta */
 .titulo-tarjeta {
-  font-family: "Cormorant Garamond", serif;
   font-size: 1.6rem;
   font-weight: 500;
   color: var(--primary, #5c3d2e);
   margin: 1rem 1rem 0.5rem;
   letter-spacing: 1px;
+  font-family: inherit;
 }
 
 /* Descripción */
 .descripcion-tarjeta {
-  font-family: "Georgia", serif;
   font-size: 0.95rem;
   line-height: 1.7;
   color: var(--text, #5a4a3a);
   margin: 0 1.2rem 0.8rem;
   font-style: italic;
   font-weight: 300;
+  font-family: inherit;
 }
 
 /* Dirección */
@@ -117,6 +119,7 @@
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   line-height: 1.6;
+  font-family: inherit;
 }
 
 .direccion-tarjeta strong {
@@ -129,6 +132,7 @@
   color: var(--text, #5a4a3a);
   margin: 0.5rem 1.2rem;
   line-height: 1.6;
+  font-family: inherit;
 }
 
 .horario-tarjeta strong {
@@ -140,7 +144,6 @@
   display: inline-block;
   margin: 0.8rem 0 1.5rem;
   padding: 0.6rem 1.8rem;
-  font-family: "Cormorant Garamond", serif;
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 1px;
@@ -151,6 +154,7 @@
   text-decoration: none;
   transition: all 0.3s ease;
   cursor: pointer;
+  font-family: inherit;
 }
 
 .boton-mapa:hover {
@@ -239,4 +243,13 @@
     font-size: 0.85rem;
     padding: 0.5rem 1.4rem;
   }
+}
+
+/* ============================================
+   FORZAR HERENCIA DE FUENTE
+   ============================================ */
+
+.ceremonia-container,
+.ceremonia-container * {
+  font-family: inherit !important;
 }
