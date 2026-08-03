@@ -286,6 +286,7 @@ export class FormularioInvitacionComponent implements OnInit {
   acordeonEvento = false; // Sección de eventos
   acordeonColores = false; // Sección de colores
   acordeonFuente = false; // Sección de fuentes
+  filtroFuente = ''; // Filtro de búsqueda de fuentes
   imagenSubiendo = false; // Estado de subida de imagen
 
   // ==============================================================
@@ -1705,21 +1706,36 @@ export class FormularioInvitacionComponent implements OnInit {
   /**
    * Selecciona una fuente desde la vista grid
    */
-  seleccionarFuente(fuente: Fuente) {
-    this.nuevaInvitacion.fontFamily = fuente.valor;
-    console.log('✅ Fuente seleccionada:', fuente.nombre);
-  }
 
   /**
    * Detecta cambio en el select
    */
-  onFuenteChange(event: Event) {
-    const select = event.target as HTMLSelectElement;
-    const valor = select.value;
-    const fuente = this.fuentes.find((f) => f.valor === valor);
-    if (fuente) {
-      console.log('✅ Fuente seleccionada desde select:', fuente.nombre);
+  get fuentesFiltradas(): Fuente[] {
+    if (this.filtroFuente === 'todos') {
+      return this.fuentes;
     }
+    return this.fuentes.filter((f) => f.tipo === this.filtroFuente);
+  }
+
+  /**
+   * Selecciona una fuente desde el grid
+   */
+  seleccionarFuente(fuente: Fuente) {
+    console.log('✅ Fuente seleccionada:', fuente.nombre);
+    this.nuevaInvitacion.fontFamily = fuente.valor;
+
+    // Forzar actualización de la vista previa
+    this.nuevaInvitacion = { ...this.nuevaInvitacion };
+  }
+
+  // formulario-invitacion.component.ts
+
+  /**
+   * Cambia el filtro de fuentes sin disparar guardado
+   */
+  setFiltro(tipo: string) {
+    console.log('🔍 Filtro cambiado a:', tipo);
+    this.filtroFuente = tipo;
   }
 
   /**

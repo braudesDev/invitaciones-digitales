@@ -12,7 +12,6 @@ import { InvitacionValidaSectionComponent } from './sections/invitacion-valida-s
 import { CeremoniaSectionComponent } from './sections/ceremonia-section/ceremonia-section.component';
 // Importa los demás componentes que crearás
 import { PadresSectionComponent } from './sections/padres-section/padres-section.component';
-import { RecepcionSectionComponent } from './sections/recepcion-section/recepcion-section.component';
 import { PadrinosSectionComponent } from './sections/padrinos-section/padrinos-section.component';
 import { DamasSectionComponent } from './sections/damas-section/damas-section.component';
 import { DresscodeSectionComponent } from './sections/dresscode-section/dresscode-section.component';
@@ -46,7 +45,6 @@ import { Confirmacion } from '../../../models/confirmacion.model';
     InvitacionValidaSectionComponent,
     CeremoniaSectionComponent,
     PadresSectionComponent,
-    RecepcionSectionComponent,
     PadrinosSectionComponent,
     DamasSectionComponent,
     DresscodeSectionComponent,

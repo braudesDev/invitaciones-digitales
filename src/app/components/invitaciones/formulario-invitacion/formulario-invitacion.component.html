@@ -629,51 +629,82 @@
                 ✍️ Elige la tipografía que dará personalidad a tu invitación.
               </p>
 
-              <!-- Selector de fuentes (opción 1: Select) -->
+              <!-- Vista previa de la fuente seleccionada -->
               <div class="campo full-width">
                 <label>
-                  ✍️ Fuente del texto
+                  👁️ Vista previa de la fuente seleccionada
                   <span
                     class="help-icon"
-                    data-tooltip="La fuente define el estilo y personalidad de los textos.
-
-        📌 Las fuentes se cargan desde Google Fonts automáticamente."
+                    data-tooltip="Esta es la fuente que se aplicará a toda tu invitación."
                     >?</span
                   >
                 </label>
-
-                <!-- SELECT con todas las fuentes -->
-                <select
-                  [(ngModel)]="nuevaInvitacion.fontFamily"
-                  name="fontFamily"
-                  (change)="onFuenteChange($event)"
-                >
-                  <option *ngFor="let fuente of fuentes" [value]="fuente.valor">
-                    {{ fuente.nombre }} ({{ fuente.tipo }})
-                  </option>
-                </select>
-
-                <!-- Previsualización de la fuente seleccionada -->
                 <div
-                  class="fuente-preview-select"
+                  class="fuente-preview-seleccionada"
                   [style.font-family]="nuevaInvitacion.fontFamily"
                 >
-                  <span>ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
-                  <span>abcdefghijklmnopqrstuvwxyz</span>
-                  <span>1234567890</span>
-                  <span>¡Feliz Boda!</span>
+                  <span class="preview-grande">ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
+                  <span class="preview-mediano"
+                    >abcdefghijklmnopqrstuvwxyz</span
+                  >
+                  <span class="preview-pequeno">1234567890</span>
+                  <span class="preview-frase">¡Feliz Boda!</span>
                 </div>
-
-                <p class="ayuda-fuentes">
-                  💡 Selecciona una fuente y mira la previsualización en vivo
-                </p>
               </div>
 
-              <!-- OPCIÓN 2: Grid visual de fuentes (más bonito) -->
+              <!-- Grid visual de fuentes -->
               <div class="campo full-width">
-                <label>🖼️ Vista rápida de fuentes</label>
+                <label>🎨 Explora todas las fuentes</label>
+                <p class="sub-label">
+                  Haz clic en cualquier fuente para previsualizarla
+                </p>
+
+                <!-- Filtros por tipo -->
+                <div class="filtros-fuentes">
+                  <button
+                    class="filtro-btn"
+                    [class.active]="filtroFuente === 'todos'"
+                    (click)="setFiltro('todos'); $event.stopPropagation()"
+                    type="button"
+                  >
+                    📚 Todas
+                  </button>
+                  <button
+                    class="filtro-btn"
+                    [class.active]="filtroFuente === 'serif'"
+                    (click)="setFiltro('serif'); $event.stopPropagation()"
+                    type="button"
+                  >
+                    📜 Serif
+                  </button>
+                  <button
+                    class="filtro-btn"
+                    [class.active]="filtroFuente === 'sans-serif'"
+                    (click)="setFiltro('sans-serif'); $event.stopPropagation()"
+                    type="button"
+                  >
+                    🔤 Sans-Serif
+                  </button>
+                  <button
+                    class="filtro-btn"
+                    [class.active]="filtroFuente === 'script'"
+                    (click)="setFiltro('script'); $event.stopPropagation()"
+                    type="button"
+                  >
+                    ✍️ Script
+                  </button>
+                  <button
+                    class="filtro-btn"
+                    [class.active]="filtroFuente === 'display'"
+                    (click)="setFiltro('display'); $event.stopPropagation()"
+                    type="button"
+                  >
+                    🎯 Display
+                  </button>
+                </div>
+
                 <div class="fuentes-grid">
-                  @for (fuente of fuentes; track fuente.valor) {
+                  @for (fuente of fuentesFiltradas; track fuente.valor) {
                     <div
                       class="fuente-item"
                       [class.selected]="
@@ -689,6 +720,9 @@
                       </div>
                       <span class="fuente-nombre">{{ fuente.nombre }}</span>
                       <span class="fuente-tipo">{{ fuente.tipo }}</span>
+                      @if (nuevaInvitacion.fontFamily === fuente.valor) {
+                        <span class="fuente-check">✓</span>
+                      }
                     </div>
                   }
                 </div>
