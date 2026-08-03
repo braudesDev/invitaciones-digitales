@@ -52,7 +52,7 @@
     }
 
     <!-- ======================================== -->
-    <!-- 4. CEREMONIA - Dónde y cuándo            -->
+    <!-- 4. CEREMONIA y recepcion - Dónde y cuándo            -->
     <!-- ======================================== -->
     @if (data.ceremonia) {
       <app-ceremonia-section
@@ -60,13 +60,6 @@
         [recepcionData]="data.recepcion"
         [fechaEvento]="data.fecha"
       ></app-ceremonia-section>
-    }
-
-    <!-- ======================================== -->
-    <!-- 5. RECEPCIÓN - Dónde y cuándo            -->
-    <!-- ======================================== -->
-    @if (data.recepcion) {
-      <app-recepcion-section [data]="data.recepcion"></app-recepcion-section>
     }
 
     <!-- ======================================== -->

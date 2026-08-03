@@ -16,7 +16,7 @@ export interface Fuente {
 // FUENTES DISPONIBLES
 // ================================================================
 export const FUENTES_DISPONIBLES: Fuente[] = [
-  // === SERIF (Clásicas) ===
+  // === SERIF (Clásicas) - EXISTENTES ===
   {
     nombre: 'Playfair Display',
     valor: "'Playfair Display', Georgia, serif",
@@ -45,8 +45,31 @@ export const FUENTES_DISPONIBLES: Fuente[] = [
     descripcion: 'Legible y profesional',
     url: 'Merriweather:wght@400;700',
   },
+  // === NUEVAS SERIF ===
+  {
+    nombre: 'Marcellus',
+    valor: "'Marcellus', Georgia, serif",
+    tipo: 'serif',
+    descripcion: 'Elegante con un toque moderno, ideal para títulos de bodas',
+    url: 'Marcellus',
+  },
+  {
+    nombre: 'Prata',
+    valor: "'Prata', Georgia, serif",
+    tipo: 'serif',
+    descripcion:
+      'Serif refinada con gran legibilidad, perfecta para invitaciones',
+    url: 'Prata',
+  },
+  {
+    nombre: 'Alegreya',
+    valor: "'Alegreya', Georgia, serif",
+    tipo: 'serif',
+    descripcion: 'Calidez y elegancia para textos largos en invitaciones',
+    url: 'Alegreya:wght@400;500;600;700',
+  },
 
-  // === SCRIPT (Cursivas) ===
+  // === SCRIPT (Cursivas) - EXISTENTES ===
   {
     nombre: 'Great Vibes',
     valor: "'Great Vibes', cursive",
@@ -75,8 +98,30 @@ export const FUENTES_DISPONIBLES: Fuente[] = [
     descripcion: 'Cursiva casual y encantadora',
     url: 'Satisfy',
   },
+  // === NUEVAS SCRIPT ===
+  {
+    nombre: 'Parisienne',
+    valor: "'Parisienne', cursive",
+    tipo: 'script',
+    descripcion: 'Caligrafía francesa, elegante y romántica para detalles',
+    url: 'Parisienne',
+  },
+  {
+    nombre: 'Alex Brush',
+    valor: "'Alex Brush', cursive",
+    tipo: 'script',
+    descripcion: 'Cursiva fluida y sofisticada para nombres y títulos',
+    url: 'Alex+Brush',
+  },
+  {
+    nombre: 'Allura',
+    valor: "'Allura', cursive",
+    tipo: 'script',
+    descripcion: 'Caligrafía elegante con un toque moderno',
+    url: 'Allura',
+  },
 
-  // === SANS-SERIF (Modernas) ===
+  // === SANS-SERIF (Modernas) - EXISTENTES ===
   {
     nombre: 'Montserrat',
     valor: "'Montserrat', 'Helvetica Neue', sans-serif",
@@ -105,8 +150,30 @@ export const FUENTES_DISPONIBLES: Fuente[] = [
     descripcion: 'Redondeada y moderna',
     url: 'Nunito:wght@300;400;500;600;700',
   },
+  // === NUEVAS SANS-SERIF ===
+  {
+    nombre: 'Josefin Sans',
+    valor: "'Josefin Sans', 'Helvetica Neue', sans-serif",
+    tipo: 'sans-serif',
+    descripcion: 'Geométrica y elegante, ideal para bodas modernas',
+    url: 'Josefin+Sans:wght@300;400;600;700',
+  },
+  {
+    nombre: 'Work Sans',
+    valor: "'Work Sans', 'Helvetica Neue', sans-serif",
+    tipo: 'sans-serif',
+    descripcion: 'Limpia y profesional con un toque de calidez',
+    url: 'Work+Sans:wght@300;400;500;600;700',
+  },
+  {
+    nombre: 'Poppins',
+    valor: "'Poppins', 'Helvetica Neue', sans-serif",
+    tipo: 'sans-serif',
+    descripcion: 'Versátil y moderna, excelente legibilidad',
+    url: 'Poppins:wght@300;400;500;600;700',
+  },
 
-  // === DISPLAY (Decorativas) ===
+  // === DISPLAY (Decorativas) - EXISTENTES ===
   {
     nombre: 'Cinzel',
     valor: "'Cinzel', Georgia, serif",
@@ -127,6 +194,29 @@ export const FUENTES_DISPONIBLES: Fuente[] = [
     tipo: 'display',
     descripcion: 'Contraste elegante y moderno',
     url: 'Bodoni+Moda:wght@400;500;600;700',
+  },
+  // === NUEVAS DISPLAY ===
+  {
+    nombre: 'Cinzel Decorative',
+    valor: "'Cinzel Decorative', Georgia, serif",
+    tipo: 'display',
+    descripcion:
+      'Decorativa con estilo medieval, perfecta para eventos temáticos',
+    url: 'Cinzel+Decorative:wght@400;700',
+  },
+  {
+    nombre: 'Fredericka the Great',
+    valor: "'Fredericka the Great', Georgia, serif",
+    tipo: 'display',
+    descripcion: 'Estilo vintage y divertido para cumpleaños',
+    url: 'Fredericka+the+Great',
+  },
+  {
+    nombre: 'Tienne',
+    valor: "'Tienne', Georgia, serif",
+    tipo: 'display',
+    descripcion: 'Serif robusta con carácter para títulos',
+    url: 'Tienne:wght@400;700;900',
   },
 ];
 

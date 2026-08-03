@@ -1,5 +1,5 @@
 @if (data && (data.lugar || data.direccion || data.hora)) {
-  <div class="ceremonia-container" [style.font-family]="data?.fontfamily">
+  <div class="ceremonia-container" [style.font-family]="data?.fontFamily">
     <!-- Título de la sección -->
     <h1 class="titulo-ceremonia">Donde Comienza Nuestra Historia</h1>
     <div class="contenedor-tarjetas">
@@ -48,7 +48,8 @@
           </a>
         </div>
       }
-      <!-- Tarjeta 2: Recepción (opcional, si tienes datos) -->
+
+      <!-- Tarjeta 2: Recepción -->
       @if (recepcionData) {
         <div class="tarjeta">
           @if (recepcionData.imagen) {
@@ -77,10 +78,7 @@
           }
           @if (recepcionData.hora) {
             <p class="horario-tarjeta">
-              <strong>⏰ Horario:</strong>
-              {{
-                recepcionData.hora | date: "EEEE d 'de' MMMM 'de' yyyy, h:mm a"
-              }}
+              <strong>⏰ Horario:</strong> {{ recepcionData.hora }}
             </p>
           }
           <a
