@@ -1,7 +1,7 @@
 <!-- padrinos-section.component.html -->
 
 @if (tienePadrinos) {
-  <div class="padrinos-container">
+  <div class="padrinos-container" [style.font-family]="fontFamily">
     <div class="padrinos-header">
       <div class="padrinos-icono-wrapper">
         <img
@@ -11,7 +11,7 @@
           loading="lazy"
           width="80"
           height="80"
-          />
+        />
         <h2 class="padrinos-titulo">{{ titulo }}</h2>
         <div class="padrinos-divider">
           <span class="divider-line"></span>
@@ -34,45 +34,50 @@
                     loading="lazy"
                     width="80"
                     height="80"
-                    />
+                  />
                 </div>
                 <h3 class="padrino-rol">{{ grupo.rol }}</h3>
                 <p class="padrino-description">{{ grupo.description }}</p>
                 <div class="padrino-nombres">
-                  @for (nombre of grupo.nombres; track nombre; let last = $last) {
+                  @for (
+                    nombre of grupo.nombres;
+                    track nombre;
+                    let last = $last
+                  ) {
                     <span>
-                      {{ nombre }}@if (!last) {
-                      <span>, </span>
-                    }
-                  </span>
-                }
+                      {{ nombre }}
+                      @if (!last) {
+                        <span>, </span>
+                      }
+                    </span>
+                  }
+                </div>
               </div>
             </div>
-          </div>
-        }
-      </div>
-      <div class="swiper-pagination"></div>
-      <div class="autoplay-progress">
-        <svg viewBox="0 0 48 48">
-          <circle cx="24" cy="24" r="20"></circle>
-        </svg>
-        <span></span>
-      </div>
-    </div>
-  </div>
-  @if (!tienePadrinos) {
-    <div class="padrinos-container">
-      <div class="padrinos-header">
-        <span class="padrinos-icono">👑</span>
-        <h2 class="padrinos-titulo">{{ titulo }}</h2>
-        <div class="padrinos-divider">
-          <span class="divider-line"></span>
-          <span class="divider-icon">✦</span>
-          <span class="divider-line"></span>
+          }
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="autoplay-progress">
+          <svg viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="20"></circle>
+          </svg>
+          <span></span>
         </div>
       </div>
-      <p class="sin-padrinos">Aún no hay padrinos asignados</p>
     </div>
-  }
-</div>
+    @if (!tienePadrinos) {
+      <div class="padrinos-container">
+        <div class="padrinos-header">
+          <span class="padrinos-icono">👑</span>
+          <h2 class="padrinos-titulo">{{ titulo }}</h2>
+          <div class="padrinos-divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">✦</span>
+            <span class="divider-line"></span>
+          </div>
+        </div>
+        <p class="sin-padrinos">Aún no hay padrinos asignados</p>
+      </div>
+    }
+  </div>
 }

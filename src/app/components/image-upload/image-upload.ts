@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./image-upload.css'],
 })
 export class ImageUploadComponent {
-  @Input() label: string = '📸 Seleccionar Imagen';
+  @Input() label: string = '📸 Seleccionar imagen';
   @Input() imageUrl: string = '';
   @Input() required: boolean = false;
   // ❌ ELIMINAR @Input() placeholder: string = 'URL de la imagen';

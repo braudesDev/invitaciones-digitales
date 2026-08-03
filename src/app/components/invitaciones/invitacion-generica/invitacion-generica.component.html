@@ -55,7 +55,11 @@
     <!-- 4. CEREMONIA - Dónde y cuándo            -->
     <!-- ======================================== -->
     @if (data.ceremonia) {
-      <app-ceremonia-section [data]="data.ceremonia"></app-ceremonia-section>
+      <app-ceremonia-section
+        [data]="data.ceremonia"
+        [recepcionData]="data.recepcion"
+        [fechaEvento]="data.fecha"
+      ></app-ceremonia-section>
     }
 
     <!-- ======================================== -->
@@ -122,6 +126,7 @@
       <app-padrinos-section
         [data]="padrinosFormateados"
         [titulo]="'Nuestros Padrinos'"
+        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
       ></app-padrinos-section>
     }
 
@@ -145,7 +150,10 @@
     <!-- 15. REGALOS - Información de regalos     -->
     <!-- ======================================== -->
     @if (data.regalos) {
-      <app-regalos-section [data]="regalosFormateado"></app-regalos-section>
+      <app-regalos-section
+        [data]="regalosFormateado"
+        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
+      ></app-regalos-section>
     }
 
     <!-- ======================================== -->
@@ -161,6 +169,7 @@
     @if (data.consideracionesData) {
       <app-consideraciones-section
         [data]="consideracionesFormateado"
+        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
       ></app-consideraciones-section>
     }
 
@@ -172,6 +181,7 @@
         [data]="confirmacionFormateado"
         [eventoData]="data"
         modo="vista"
+        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
       ></app-confirmacion-section>
     }
 

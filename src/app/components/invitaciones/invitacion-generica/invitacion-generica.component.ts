@@ -149,9 +149,6 @@ export class InvitacionGenericaComponent implements OnInit {
   // invitacion-generica.component.ts
 
   get dressCodeFormateado(): DressCode {
-    console.log('🎯 Ejecutando dressCodeFormateado');
-    console.log('📦 data.dressCode:', this.data?.dressCode);
-
     const dc = this.data?.dressCode || {};
     const resultado = {
       estilo: dc.estilo || '',
@@ -161,14 +158,15 @@ export class InvitacionGenericaComponent implements OnInit {
       descripcion: dc.descripcion || '',
       sugerencia: dc.sugerencia || '',
       notaAdicional: dc.notaAdicional || '',
+      fontFamily: this.data?.fontFamily || "'Playfair Display', Georgia, serif",
     };
 
-    console.log('✅ dressCodeFormateado:', resultado);
     return resultado;
   }
 
   // invitacion-generica.component.ts
 
+  // Historia formateada con valores por defecto
   get historiaFormateada(): Historia {
     const h = this.data?.historia || {};
     return {

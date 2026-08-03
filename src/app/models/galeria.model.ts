@@ -24,4 +24,5 @@ export interface Galeria {
   mostrarControles: boolean;
   mostrarCompartir: boolean;
   mostrarPaginacion: boolean;
+  fontFamily?: string;
 }

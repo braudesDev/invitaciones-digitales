@@ -7,7 +7,7 @@
    ============================================ */
 
 .hospedaje-section {
-  padding: 4rem 2rem;
+  padding: 1rem 2rem;
   background: var(--secondary, #f5ede4);
   text-align: center;
   position: relative;
@@ -45,7 +45,7 @@
 }
 
 .hospedaje-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: clamp(1.6rem, 4vw, 2.6rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
@@ -88,7 +88,7 @@
   font-size: 1.05rem;
   line-height: 1.8;
   font-style: italic;
-  font-family: "Georgia", serif;
+  font-family: inherit;
 }
 
 .hospedaje-texto-adicional {
@@ -190,7 +190,7 @@
 }
 
 .tarjeta-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--primary, #5c3d2e);
@@ -578,7 +578,7 @@
 }
 
 .timeline-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.3rem;
   font-weight: 600;
   color: var(--primary, #5c3d2e);
@@ -863,7 +863,7 @@
 }
 
 .catalogo-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--primary, #5c3d2e);
@@ -1148,7 +1148,7 @@
    ============================================ */
 
 .icono-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--primary, #5c3d2e);
@@ -1487,7 +1487,7 @@
    ============================================ */
 
 .mosaico-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.2rem;
   font-weight: 600;
   margin: 0 0 0.2rem;
@@ -1662,4 +1662,13 @@
   font-size: 0.95rem;
   font-style: italic;
   padding: 2rem;
+}
+
+/* ============================================
+   FORZAR HERENCIA DE FUENTE
+   ============================================ */
+
+.hospedaje-section,
+.hospedaje-section * {
+  font-family: inherit !important;
 }

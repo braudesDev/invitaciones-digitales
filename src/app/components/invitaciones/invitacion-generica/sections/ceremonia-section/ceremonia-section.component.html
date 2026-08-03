@@ -1,7 +1,5 @@
 @if (data && (data.lugar || data.direccion || data.hora)) {
-  <div
-    class="ceremonia-container"
-    >
+  <div class="ceremonia-container" [style.font-family]="data?.fontfamily">
     <!-- Título de la sección -->
     <h1 class="titulo-ceremonia">Donde Comienza Nuestra Historia</h1>
     <div class="contenedor-tarjetas">
@@ -13,7 +11,7 @@
               [src]="data.imagenTemplo"
               alt="Ceremonia Religiosa"
               class="imagen-tarjeta"
-              />
+            />
           } @else {
             <div class="imagen-placeholder">⛪</div>
           }
@@ -25,81 +23,81 @@
           }
           @if (data.lugar || data.direccion) {
             <address class="direccion-tarjeta">
-              <strong>📍 Ubicación:</strong> {{ data.lugar
-              }}@if (data.lugar && data.direccion) {
-              <br />
-            }
-            {{ data.direccion }}
-          </address>
-        }
-        @if (data.hora) {
-          <p class="horario-tarjeta">
-            <strong>⏰ Horario:</strong> {{ data.hora }}
-          </p>
-        }
-        <a
-        [href]="
-          data.mapaUrl ||
-          'https://maps.google.com/?q=' +
-            encodeURIComponent(data.direccion || data.lugar || '')
-        "
-          target="_blank"
-          class="boton-mapa"
-          >
-          🗺️ Cómo llegar
-        </a>
-      </div>
-    }
-    <!-- Tarjeta 2: Recepción (opcional, si tienes datos) -->
-    @if (recepcionData) {
-      <div class="tarjeta">
-        @if (recepcionData.imagen) {
-          <img
-            [src]="recepcionData.imagen"
-            alt="Recepción"
-            class="imagen-tarjeta"
-            />
-        } @else {
-          <div class="imagen-placeholder">🎉</div>
-        }
-        <h2 class="titulo-tarjeta">Recepción</h2>
-        @if (recepcionData.descripcion) {
-          <p class="descripcion-tarjeta">
-            {{ recepcionData.descripcion }}
-          </p>
-        }
-        @if (recepcionData.lugar || recepcionData.direccion) {
-          <address
-            class="direccion-tarjeta"
-            >
-            <strong>📍 Ubicación:</strong> {{ recepcionData.lugar
-            }}@if (recepcionData.lugar && recepcionData.direccion) {
-            <br />
+              <strong>📍 Ubicación:</strong> {{ data.lugar }}
+              @if (data.lugar && data.direccion) {
+                <br />
+              }
+              {{ data.direccion }}
+            </address>
           }
-          {{ recepcionData.direccion }}
-        </address>
+          @if (data.hora) {
+            <p class="horario-tarjeta">
+              <strong>⏰ Horario:</strong> {{ data.hora }}
+            </p>
+          }
+          <a
+            [href]="
+              data.mapaUrl ||
+              'https://maps.google.com/?q=' +
+                encodeURIComponent(data.direccion || data.lugar || '')
+            "
+            target="_blank"
+            class="boton-mapa"
+          >
+            🗺️ Cómo llegar
+          </a>
+        </div>
       }
-      @if (recepcionData.hora) {
-        <p class="horario-tarjeta">
-          <strong>⏰ Horario:</strong>
-          {{ recepcionData.hora | date: "EEEE d 'de' MMMM 'de' yyyy, h:mm a" }}
-        </p>
+      <!-- Tarjeta 2: Recepción (opcional, si tienes datos) -->
+      @if (recepcionData) {
+        <div class="tarjeta">
+          @if (recepcionData.imagen) {
+            <img
+              [src]="recepcionData.imagen"
+              alt="Recepción"
+              class="imagen-tarjeta"
+            />
+          } @else {
+            <div class="imagen-placeholder">🎉</div>
+          }
+          <h2 class="titulo-tarjeta">Recepción</h2>
+          @if (recepcionData.descripcion) {
+            <p class="descripcion-tarjeta">
+              {{ recepcionData.descripcion }}
+            </p>
+          }
+          @if (recepcionData.lugar || recepcionData.direccion) {
+            <address class="direccion-tarjeta">
+              <strong>📍 Ubicación:</strong> {{ recepcionData.lugar }}
+              @if (recepcionData.lugar && recepcionData.direccion) {
+                <br />
+              }
+              {{ recepcionData.direccion }}
+            </address>
+          }
+          @if (recepcionData.hora) {
+            <p class="horario-tarjeta">
+              <strong>⏰ Horario:</strong>
+              {{
+                recepcionData.hora | date: "EEEE d 'de' MMMM 'de' yyyy, h:mm a"
+              }}
+            </p>
+          }
+          <a
+            [href]="
+              recepcionData.mapaUrl ||
+              'https://maps.google.com/?q=' +
+                encodeURIComponent(
+                  recepcionData.direccion || recepcionData.lugar || ''
+                )
+            "
+            target="_blank"
+            class="boton-mapa"
+          >
+            🗺️ Cómo llegar
+          </a>
+        </div>
       }
-      <a
-        [href]="
-          recepcionData.mapaUrl ||
-          'https://maps.google.com/?q=' +
-            encodeURIComponent(
-              recepcionData.direccion || recepcionData.lugar || ''
-            )
-        "
-        target="_blank"
-        class="boton-mapa"
-        >
-        🗺️ Cómo llegar
-      </a>
     </div>
-  }
-</div>
-</div>
+  </div>
 }

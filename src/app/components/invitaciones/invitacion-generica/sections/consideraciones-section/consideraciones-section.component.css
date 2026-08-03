@@ -24,7 +24,7 @@
 }
 
 .consideraciones-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
@@ -33,7 +33,7 @@
 }
 
 .consideraciones-subtitulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.1rem;
   font-weight: 300;
   color: var(--text, #666);
@@ -118,7 +118,7 @@
 }
 
 .consideracion-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--primary, #5c3d2e);
@@ -341,4 +341,13 @@
   .footer-texto {
     font-size: 0.8rem;
   }
+}
+
+/* ============================================
+   FORZAR HERENCIA DE FUENTE
+   ============================================ */
+
+.consideraciones-section,
+.consideraciones-section * {
+  font-family: inherit !important;
 }

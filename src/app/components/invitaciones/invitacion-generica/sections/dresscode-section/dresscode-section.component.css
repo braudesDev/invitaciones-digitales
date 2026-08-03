@@ -73,7 +73,7 @@
 }
 
 .dresscode-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: clamp(1.6rem, 4vw, 2.6rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
@@ -148,7 +148,7 @@
 .estilo-nombre {
   font-weight: 600;
   color: var(--primary, #5c3d2e);
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.1rem;
   letter-spacing: 0.5px;
 }
@@ -166,7 +166,7 @@
   font-size: 1.05rem;
   line-height: 1.8;
   font-style: italic;
-  font-family: "Georgia", serif;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -182,7 +182,7 @@
 .colores-label {
   font-weight: 500;
   color: var(--primary, #5c3d2e);
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.1rem;
   margin-bottom: 0.8rem;
   letter-spacing: 1px;
@@ -330,4 +330,13 @@
   .tip-text {
     font-size: 0.75rem;
   }
+}
+
+/* ============================================
+   FORZAR HERENCIA DE FUENTE
+   ============================================ */
+
+.dresscode-section,
+.dresscode-section * {
+  font-family: inherit !important;
 }

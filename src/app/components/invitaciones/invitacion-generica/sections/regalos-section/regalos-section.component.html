@@ -5,7 +5,10 @@
      ================================================================ -->
 
 @if (data && data.mostrarSeccion && data.opciones?.length > 0) {
-  <div class="regalos-section {{ 'estilo-' + data.estilo }}">
+  <div
+    class="regalos-section {{ 'estilo-' + data.estilo }}"
+    [style.font-family]="fontFamily"
+  >
     <!-- Encabezado -->
     <div class="regalos-header">
       <h2 class="regalos-titulo">{{ data.titulo || "Mesa de Regalos" }}</h2>

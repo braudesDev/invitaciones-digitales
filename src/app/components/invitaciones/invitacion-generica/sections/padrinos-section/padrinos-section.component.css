@@ -36,7 +36,7 @@
 }
 
 .padrinos-titulo {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: clamp(1.6rem, 4vw, 2.6rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
@@ -127,7 +127,7 @@
 }
 
 .padrino-rol {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.3rem;
   font-weight: 600;
   color: var(--primary, #5c3d2e);
@@ -137,7 +137,7 @@
 
 /* 👇 ESTILO PARA LA DESCRIPCIÓN */
 .padrino-description {
-  font-family: "Georgia", serif;
+  font-family: inherit;
   font-size: 0.85rem;
   color: var(--text, #666);
   line-height: 1.6;
@@ -154,7 +154,7 @@
 }
 
 .padrino-nombres {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--primary, #5c3d2e);
@@ -255,7 +255,7 @@
   color: var(--text, #999);
   font-size: 1.1rem;
   padding: 40px 20px;
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
 }
 
 /* ============================================
@@ -365,4 +365,13 @@
     font-size: 0.95rem;
     padding: 30px 15px;
   }
+}
+
+/* ============================================
+   FORZAR HERENCIA DE FUENTE
+   ============================================ */
+
+.padrinos-container,
+.padrinos-container * {
+  font-family: inherit !important;
 }

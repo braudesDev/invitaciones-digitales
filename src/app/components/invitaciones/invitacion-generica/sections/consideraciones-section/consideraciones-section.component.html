@@ -6,7 +6,10 @@
      MODO: VISTA (PREVIEW)
      ================================================================ -->
 @if (data && data.mostrarSeccion && data.items?.length > 0) {
-  <div class="consideraciones-section {{ 'estilo-' + data.estilo }}">
+  <div
+    class="consideraciones-section {{ 'estilo-' + data.estilo }}"
+    [style.font-family]="fontFamily"
+  >
     <!-- ==========================================================
          ENCABEZADO
          ========================================================== -->

@@ -27,6 +27,7 @@ export class PadrinosSectionComponent implements AfterViewInit, OnDestroy {
   // 👇 CAMBIAR DE string[] a PadrinoAsignado[]
   @Input() data: PadrinoAsignado[] = [];
   @Input() titulo: string = 'Nuestros Padrinos';
+  @Input() fontFamily: string = "'Playfair Display', Georgia, serif";
 
   private swiperInstance: any;
 
