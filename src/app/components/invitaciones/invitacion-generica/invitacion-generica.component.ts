@@ -67,13 +67,7 @@ export class InvitacionGenericaComponent implements OnInit {
   @Input() data!: Invitacion;
   constructor() {}
 
-  ngOnInit() {
-    console.log('DATOS COMPLETOS:', this.data);
-    console.log('Ceremonia:', this.data?.ceremonia);
-    console.log('Recepcion:', this.data?.recepcion);
-    console.log('Padrinos:', this.data?.padrinos);
-    console.log('DressCode:', this.data?.dressCode);
-  }
+  ngOnInit() {}
 
   get fechaFormateada(): string {
     if (!this.data?.fecha) return '';
@@ -91,32 +85,14 @@ export class InvitacionGenericaComponent implements OnInit {
 
   // 👇 AGREGAR ESTE GETTER
   get padrinosFormateados(): PadrinoAsignado[] {
-    console.log('🔍 EJECUTANDO GETTER padrinosFormateados');
-    console.log('🔍 data:', this.data);
-    console.log('🔍 data.padrinos:', this.data?.padrinos);
-    console.log('🔍 tipo de data.padrinos:', typeof this.data?.padrinos);
-    console.log('🔍 es array?', Array.isArray(this.data?.padrinos));
-    console.log('🔍 longitud:', this.data?.padrinos?.length);
-
     if (!this.data?.padrinos || this.data.padrinos.length === 0) {
-      console.log('⚠️ No hay padrinos');
       return [];
     }
 
     const primerElemento = this.data.padrinos[0];
-    console.log('🔍 Primer elemento:', primerElemento);
-    console.log('🔍 Tipo del primer elemento:', typeof primerElemento);
-    console.log('🔍 ¿Es string?', typeof primerElemento === 'string');
-    console.log(
-      '🔍 ¿Es objeto con nombre?',
-      typeof primerElemento === 'object' &&
-        primerElemento !== null &&
-        'nombre' in primerElemento,
-    );
 
     // Si es string, convertir a objeto PadrinoAsignado
     if (typeof primerElemento === 'string') {
-      console.log('🔄 Convirtiendo strings a objetos');
       const resultado = (this.data.padrinos as string[]).map(
         (nombre: string) => ({
           nombre: nombre,
@@ -124,7 +100,7 @@ export class InvitacionGenericaComponent implements OnInit {
           observaciones: '',
         }),
       );
-      console.log('✅ Padrinos convertidos:', resultado);
+
       return resultado;
     }
 
@@ -134,13 +110,11 @@ export class InvitacionGenericaComponent implements OnInit {
       primerElemento !== null &&
       'nombre' in primerElemento
     ) {
-      console.log('✅ Ya son objetos PadrinoAsignado');
       const resultado = this.data.padrinos as unknown as PadrinoAsignado[];
-      console.log('📊 Padrinos:', resultado);
+
       return resultado;
     }
 
-    console.log('⚠️ Formato desconocido');
     return [];
   }
 
@@ -235,15 +209,12 @@ export class InvitacionGenericaComponent implements OnInit {
   get contadorFormateado(): Contador {
     const c = this.data?.contador || {};
 
-    console.log('📊 Contador raw:', c);
-
     // Si viene como string, convertirlo (por si acaso)
     let contadorData = c;
     if (typeof c === 'string') {
       try {
         contadorData = JSON.parse(c);
       } catch (e) {
-        console.error('Error parsing contador:', e);
         contadorData = {};
       }
     }
@@ -326,19 +297,12 @@ export class InvitacionGenericaComponent implements OnInit {
 
   get consideracionesFormateado(): Consideraciones {
     // 👇 LOG PARA VER QUÉ LLEGA
-    console.log('🔍 DATA COMPLETA en invitación:', this.data);
-    console.log('🔍 consideracionesData:', this.data?.consideracionesData);
-    console.log(
-      '🔍 consideraciones (antiguo):',
-      (this.data as any)?.consideraciones,
-    );
 
     // ✅ PRIMERO: Buscar en consideracionesData (formato nuevo)
     const c = this.data?.consideracionesData;
 
     // Si existe consideracionesData y tiene items, usarlo
     if (c && (c as any).items && (c as any).items.length > 0) {
-      console.log('✅ Usando consideracionesData con items:', (c as any).items);
       return {
         mostrarSeccion: (c as any).mostrarSeccion ?? true,
         estilo: (c as any).estilo || 'iconos',

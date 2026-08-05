@@ -57,49 +57,146 @@
       <div class="tab-content">
         <div class="form-grid">
           <!-- ----------------------------------------------------
-               IMAGEN PRINCIPAL (HERO IMAGE)
-               - Subida de archivos (PNG, JPG, WEBP máx 5MB)
-               - O pegar URL directamente
-               - Vista previa con opción de cambiar/eliminar
-               ---------------------------------------------------- -->
+     IMAGEN PRINCIPAL (HERO IMAGE)
+     - Subida de archivos (PNG, JPG, WEBP máx 5MB)
+     - O pegar URL directamente
+     - Vista previa con opción de cambiar/eliminar
+     ---------------------------------------------------- -->
+          <!-- ----------------------------------------------------
+     IMAGEN PRINCIPAL (HERO IMAGE)
+     ---------------------------------------------------- -->
+          <!-- ----------------------------------------------------
+     IMAGEN PRINCIPAL (HERO IMAGE)
+     - 2 imágenes: móvil y escritorio
+     ---------------------------------------------------- -->
           <div class="acordeon full-width">
             <div
               class="acordeon-header"
               (click)="acordeonHeroImage = !acordeonHeroImage"
             >
-              <span>🖼️ Imagen principal</span>
+              <span>🖼️ Imagen de portada</span>
               <span class="icono">{{ acordeonHeroImage ? "▲" : "▼" }}</span>
             </div>
 
             <div class="acordeon-body" [class.abierto]="acordeonHeroImage">
               <p class="subseccion-descripcion">
-                📸 Sube una imagen de portada para tu invitación.
+                📸 Sube imágenes de portada para tu invitación. Puedes subir una
+                para móvil y otra para escritorio.
               </p>
 
-              <!-- ✅ Usar el componente app-image-upload -->
-              <div class="field-group full-width">
-                <label>
-                  🖼️ Imagen de portada
-                  <span class="campo-opcional">(opcional)</span>
-                  <span
-                    class="help-icon"
-                    data-tooltip="💡 Sube una imagen de portada que represente tu evento.
-
-          📌 Recomendaciones:
-          - Tamaño: 1200x800px o superior
-          - Formato: JPG, PNG o WEBP
-          - Peso máximo: 5MB
-          - Imagen horizontal (paisaje)"
-                    >?</span
-                  >
-                </label>
-                <app-image-upload
-                  [imageUrl]="nuevaInvitacion.heroImage || ''"
-                  (imageChange)="nuevaInvitacion.heroImage = $event"
-                  placeholder="Sube una imagen de portada"
-                  label="🖼️ Imagen de portada"
-                ></app-image-upload>
+              <!-- ✅ GUÍA RÁPIDA -->
+              <div class="guia-imagenes">
+                <div class="guia-card">
+                  <div class="guia-icono">📱</div>
+                  <div class="guia-info">
+                    <span class="guia-titulo">Imagen para móvil</span>
+                    <span class="guia-descripcion"
+                      >Se verá en celulares y tablets en vertical.</span
+                    >
+                    <span class="guia-ejemplo">Recomendado: 1080x1920px</span>
+                  </div>
+                </div>
+                <div class="guia-card">
+                  <div class="guia-icono">🖥️</div>
+                  <div class="guia-info">
+                    <span class="guia-titulo">Imagen para escritorio</span>
+                    <span class="guia-descripcion"
+                      >Se verá en computadoras y tablets en horizontal.</span
+                    >
+                    <span class="guia-ejemplo">Recomendado: 1920x1080px</span>
+                  </div>
+                </div>
               </div>
+
+              <!-- 📱 CAMPO 1: Imagen para móvil -->
+              <div class="field-group full-width">
+                <div class="campo-imagen">
+                  <div class="campo-header">
+                    <span class="campo-badge">📱</span>
+                    <span class="campo-titulo">Imagen para móvil</span>
+                    <span class="campo-opcional">(opcional)</span>
+                  </div>
+                  <p class="campo-ayuda">
+                    📌 Esta imagen se mostrará en celulares y dispositivos
+                    verticales.
+                    <br />
+                    <span class="ejemplo"
+                      >Ejemplo: 1080 x 1920 píxeles (vertical)</span
+                    >
+                  </p>
+                  <app-image-upload
+                    [imageUrl]="nuevaInvitacion.heroImageMovil || ''"
+                    (imageChange)="nuevaInvitacion.heroImageMovil = $event"
+                    placeholder="Sube una imagen para móvil (vertical)"
+                    label="📱 Imagen para móvil"
+                  ></app-image-upload>
+                </div>
+              </div>
+
+              <!-- 🖥️ CAMPO 2: Imagen para escritorio -->
+              <div class="field-group full-width">
+                <div class="campo-imagen">
+                  <div class="campo-header">
+                    <span class="campo-badge">🖥️</span>
+                    <span class="campo-titulo">Imagen para escritorio</span>
+                    <span class="campo-opcional">(opcional)</span>
+                  </div>
+                  <p class="campo-ayuda">
+                    📌 Esta imagen se mostrará en computadoras y tablets en
+                    horizontal.
+                    <br />
+                    <span class="ejemplo"
+                      >Ejemplo: 1920 x 1080 píxeles (horizontal)</span
+                    >
+                  </p>
+                  <app-image-upload
+                    [imageUrl]="nuevaInvitacion.heroImageEscritorio || ''"
+                    (imageChange)="nuevaInvitacion.heroImageEscritorio = $event"
+                    placeholder="Sube una imagen para escritorio (horizontal)"
+                    label="🖥️ Imagen para escritorio"
+                  ></app-image-upload>
+                </div>
+              </div>
+
+              <!-- ✅ VISTA PREVIA DE AMBAS IMÁGENES -->
+              @if (
+                nuevaInvitacion.heroImageMovil ||
+                nuevaInvitacion.heroImageEscritorio
+              ) {
+                <div class="preview-ambas">
+                  <p class="preview-label">📸 Imágenes subidas:</p>
+                  <div class="preview-grid">
+                    @if (nuevaInvitacion.heroImageMovil) {
+                      <div class="preview-item">
+                        <span class="preview-tag">📱 Móvil</span>
+                        <div class="preview-thumb">
+                          <img
+                            [src]="nuevaInvitacion.heroImageMovil"
+                            alt="Imagen móvil"
+                          />
+                        </div>
+                        <span class="preview-size">Vertical</span>
+                      </div>
+                    }
+                    @if (nuevaInvitacion.heroImageEscritorio) {
+                      <div class="preview-item">
+                        <span class="preview-tag">🖥️ Escritorio</span>
+                        <div class="preview-thumb">
+                          <img
+                            [src]="nuevaInvitacion.heroImageEscritorio"
+                            alt="Imagen escritorio"
+                          />
+                        </div>
+                        <span class="preview-size">Horizontal</span>
+                      </div>
+                    }
+                  </div>
+                  <p class="preview-nota">
+                    💡 La imagen correcta se mostrará automáticamente según el
+                    dispositivo del invitado.
+                  </p>
+                </div>
+              }
             </div>
           </div>
 
@@ -216,6 +313,47 @@
                     required
                     placeholder="Ej: Salón de Eventos Los Jardines"
                   />
+                </div>
+
+                <!-- ========================================================== -->
+                <!-- ANIMACIONES DEL HERO                                        -->
+                <!-- ========================================================== -->
+                <div class="campo full-width">
+                  <label>
+                    🎬 Animación del título
+                    <span
+                      class="help-icon"
+                      data-tooltip="Elige la animación que tendrá el título en la portada."
+                      >?</span
+                    >
+                  </label>
+
+                  <div class="animaciones-grid">
+                    @for (animacion of animacionesHero; track animacion.valor) {
+                      <div
+                        class="animacion-item"
+                        [class.selected]="
+                          nuevaInvitacion.animacionHero === animacion.valor
+                        "
+                        (click)="seleccionarAnimacionHero(animacion)"
+                      >
+                        <span class="animacion-icon">{{
+                          animacion.nombre.split(" ")[0]
+                        }}</span>
+                        <span class="animacion-nombre">{{
+                          animacion.nombre
+                        }}</span>
+                        <span class="animacion-descripcion">{{
+                          animacion.descripcion
+                        }}</span>
+                        @if (
+                          nuevaInvitacion.animacionHero === animacion.valor
+                        ) {
+                          <span class="animacion-check">✓</span>
+                        }
+                      </div>
+                    }
+                  </div>
                 </div>
               </div>
             </div>

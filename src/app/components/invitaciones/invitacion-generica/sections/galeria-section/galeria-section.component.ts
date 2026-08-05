@@ -179,8 +179,6 @@ export class GaleriaSectionComponent
    * Inicia el autoplay si está activo después de 1 segundo
    */
   ngOnInit() {
-    console.log('📸 Galería - Estilo seleccionado:', this.data?.estilo);
-    console.log('📸 Galería - Data completa:', this.data);
     if (this.autoplayActivo) {
       setTimeout(() => this.iniciarAutoplay(), 1000);
     }

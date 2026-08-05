@@ -128,4 +128,11 @@ export interface InvitacionCompleta {
 
   contador?: Contador;
   itinerario?: any; // Puedes tiparlo mejor si tienes el modelo
+
+  animacionHero?: string; // Animación seleccionada para el Hero Section
+
+  orientacionImagen?: string; // 'horizontal' | 'vertical' | 'auto'
+
+  heroImageMovil?: string; // Imagen para móvil (vertical)
+  heroImageEscritorio?: string; // Imagen para escritorio (horizontal)
 }

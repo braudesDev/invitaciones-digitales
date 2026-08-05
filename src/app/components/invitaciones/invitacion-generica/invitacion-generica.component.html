@@ -15,14 +15,18 @@
     <!-- ======================================== -->
     <!-- 1. HERO - Portada principal              -->
     <!-- ======================================== -->
+
     @if (data.heroImage) {
       <app-hero-section
         [nombres]="data.nombres || ''"
         [fecha]="fechaFormateada"
         [lugar]="data.lugar || ''"
         [heroImage]="data.heroImage"
-        [fuente]="data.fuente ?? 'Playfair Display, serif'"
+        [heroImageMovil]="data.heroImageMovil || ''"
+        [heroImageEscritorio]="data.heroImageEscritorio || ''"
+        [fuente]="data.fontFamily ?? 'Playfair Display, serif'"
         [colorTexto]="data.colorTexto ?? '#ffffff'"
+        [animacion]="data.animacionHero || 'shimmer'"
       ></app-hero-section>
     }
 

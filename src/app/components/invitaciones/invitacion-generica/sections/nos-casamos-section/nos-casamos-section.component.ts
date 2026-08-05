@@ -4,9 +4,8 @@ import {
   HostBinding,
   OnChanges,
   SimpleChanges,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
-
 
 @Component({
   selector: 'app-nos-casamos-section',
@@ -65,11 +64,6 @@ export class NosCasamosSectionComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['frase'] || changes['mensaje']) {
-      console.log(
-        'Seccion "Nos casamos" actualizada: ',
-        this.frase,
-        this.mensaje,
-      );
     }
   }
 }

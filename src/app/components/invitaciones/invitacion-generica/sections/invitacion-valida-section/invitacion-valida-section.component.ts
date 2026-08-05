@@ -132,8 +132,6 @@ export class InvitacionValidaSectionComponent implements OnInit {
     this.qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(qrText)}`;
 
     // --- 4. Logs para depuración ---
-    console.log('📱 QR generado para:', this.invitado);
-    console.log('🔗 URL del QR:', this.qrCodeUrl);
   }
 
   // ==============================================================
@@ -173,12 +171,8 @@ export class InvitacionValidaSectionComponent implements OnInit {
         // ✅ Cerrar el Swal de carga sin mostrar mensaje de éxito
         // El navegador ya muestra su propio diálogo de descarga
         Swal.close();
-
-        console.log('✅ QR descargado correctamente');
       })
       .catch((error) => {
-        console.error('❌ Error al descargar el QR:', error);
-
         // ❌ Solo mostrar error si algo falla
         Swal.fire({
           icon: 'error',

@@ -48,6 +48,10 @@ import {
   Fuente,
   getNombreFuente,
 } from '../../../models/fuentes.model';
+import {
+  AnimacionHero,
+  ANIMACIONES_HERO,
+} from '../../../models/animaciones.model';
 
 // ================================================================
 // 3. COMPONENTE PRINCIPAL
@@ -66,6 +70,8 @@ export class FormularioInvitacionComponent implements OnInit {
   // ==============================================================
   paletas = PALETAS_PREMIUM; // Paletas de colores premium
   fuentes = FUENTES_DISPONIBLES;
+  animacionesHero = ANIMACIONES_HERO;
+  animacionSeleccionada: string = ''; // ID de la animación actualmente seleccionada
 
   paletaSeleccionada: string = ''; // ID de la paleta actualmente seleccionada
 
@@ -448,7 +454,6 @@ export class FormularioInvitacionComponent implements OnInit {
         Swal.fire('✅ Imagen subida correctamente', '', 'success');
       }
     } catch (error) {
-      console.error('Error al subir imagen:', error);
       Swal.fire('Error', 'No se pudo subir la imagen', 'error');
     } finally {
       this.imagenSubiendo = false;
@@ -685,6 +690,8 @@ export class FormularioInvitacionComponent implements OnInit {
         fecha: new Date().toISOString().substring(0, 16),
         lugar: '',
         heroImage: '',
+        heroImageMovil: '', // 👈 AGREGAR
+        heroImageEscritorio: '', // 👈 AGREGAR
         primaryColor: '#7A8B7D',
         secondaryColor: '#CBB89D',
         accentColor: '#B08A4A',
@@ -1721,7 +1728,6 @@ export class FormularioInvitacionComponent implements OnInit {
    * Selecciona una fuente desde el grid
    */
   seleccionarFuente(fuente: Fuente) {
-    console.log('✅ Fuente seleccionada:', fuente.nombre);
     this.nuevaInvitacion.fontFamily = fuente.valor;
 
     // Forzar actualización de la vista previa
@@ -1734,7 +1740,6 @@ export class FormularioInvitacionComponent implements OnInit {
    * Cambia el filtro de fuentes sin disparar guardado
    */
   setFiltro(tipo: string) {
-    console.log('🔍 Filtro cambiado a:', tipo);
     this.filtroFuente = tipo;
   }
 
@@ -1746,5 +1751,55 @@ export class FormularioInvitacionComponent implements OnInit {
       (f) => f.valor === this.nuevaInvitacion.fontFamily,
     );
     return fuente?.nombre || 'Playfair Display';
+  }
+
+  /**
+   * Selecciona una animación para el Hero
+   */
+  // Propiedades
+  orientacionImagen: string = 'auto'; // 'horizontal' | 'vertical' | 'auto'
+  esImagenVertical: boolean = false;
+
+  // Método para seleccionar orientación
+  seleccionarOrientacion(tipo: string) {
+    this.orientacionImagen = tipo;
+
+    // Guardar la orientación en la invitación
+    this.nuevaInvitacion.orientacionImagen = tipo;
+
+    console.log('📐 Orientación seleccionada:', tipo);
+  }
+
+  // Detectar orientación automática
+  detectarOrientacionImagen(url: string) {
+    if (!url || this.orientacionImagen !== 'auto') return;
+
+    const img = new Image();
+    img.onload = () => {
+      this.esImagenVertical = img.height > img.width;
+      console.log(
+        '📐 Orientación detectada:',
+        this.esImagenVertical ? 'Vertical' : 'Horizontal',
+      );
+    };
+    img.src = url;
+  }
+
+  // En el evento de cambio de imagen
+  onImageChange(url: string) {
+    this.nuevaInvitacion.heroImage = url;
+    if (this.orientacionImagen === 'auto') {
+      this.detectarOrientacionImagen(url);
+    }
+  }
+
+  /**
+   * Selecciona una animación para el Hero
+   * @param animacion - Objeto de la animación seleccionada
+   */
+  seleccionarAnimacionHero(animacion: AnimacionHero) {
+    this.nuevaInvitacion.animacionHero = animacion.valor;
+    console.log('🎬 Animación seleccionada:', animacion.nombre);
+    console.log('🎬 Valor guardado:', this.nuevaInvitacion.animacionHero);
   }
 }

@@ -90,17 +90,9 @@ export class PadrinosSectionComponent implements AfterViewInit, OnDestroy {
   // padrinos-section.component.ts
 
   ngAfterViewInit(): void {
-    console.log('📊 Padrinos recibidos en componente:', this.data);
-    console.log('📊 Tipo de data:', typeof this.data);
-    console.log('📊 Es array?', Array.isArray(this.data));
-    console.log('📊 Longitud:', this.data?.length);
-    console.log('📊 Primer elemento:', this.data?.[0]);
-
     if (this.tienePadrinos) {
-      console.log('✅ Hay padrinos, inicializando Swiper...');
       setTimeout(() => this.inicializarSwiper(), 100);
     } else {
-      console.log('⚠️ No hay padrinos en el componente');
     }
   }
 

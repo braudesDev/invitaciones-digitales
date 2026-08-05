@@ -2,11 +2,15 @@
   class="hero-section"
   [style.backgroundImage]="'url(' + heroImage + ')'"
 >
-  <div class="overlay"></div>
+  <div class="overlay">
+    <div class="pattern-overlay"></div>
+    <div class="gradient-overlay"></div>
+  </div>
 
   <div class="hero-content">
     <h1
       class="hero-title"
+      [ngClass]="animacion"
       [ngStyle]="{
         'font-family': fuente,
         color: colorTexto,
@@ -15,12 +19,44 @@
       {{ nombres }}
     </h1>
 
+    <!-- ✅ LÍNEA DIVISORA -->
+    <div class="hero-divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">◆</span>
+      <span class="divider-line"></span>
+    </div>
+
     <p class="hero-date" [style.color]="colorTexto">
-      {{ fecha }}
+      <span class="date-day">{{ fechaFormateadaObj.dia }}</span>
+      <span class="date-month">{{ fechaFormateadaObj.mes }}</span>
+      <span class="date-year">{{ fechaFormateadaObj.anio }}</span>
     </p>
 
     <p class="hero-location" [style.color]="colorTexto">
       {{ lugar }}
     </p>
+
+    <!-- Scroll -->
+    <div class="hero-scroll" (click)="scrollToNextSection()">
+      <span class="scroll-text">Descubre más</span>
+      <div class="scroll-arrow-wrapper">
+        <svg
+          class="scroll-arrow"
+          xmlns="http://www.w3.org/2000/svg"
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+        </svg>
+      </div>
+    </div>
   </div>
+
+  <div class="hero-glow"></div>
 </section>

@@ -5,7 +5,10 @@
 }
 
 @if (!cargando && data && data.mostrarSeccion) {
-  <div class="confirmacion-section {{ 'estilo-' + data.estilo }}">
+  <div
+    class="confirmacion-section {{ 'estilo-' + data.estilo }}"
+    [style.font-family]="fontFamily"
+  >
     <!-- ✅ ENCABEZADO PERSONALIZADO -->
     <div class="confirmacion-header">
       <h2 class="confirmacion-titulo">

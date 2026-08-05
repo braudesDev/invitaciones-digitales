@@ -39,6 +39,8 @@ export interface Invitacion {
 
   // DISEÑO / HERO
   heroImage?: string;
+  heroImageMovil?: string; // 👈 AGREGAR
+  heroImageEscritorio?: string; // 👈 AGREGAR
   shareImage?: string;
   photos?: string[];
   primaryColor?: string;
@@ -161,6 +163,7 @@ export interface Invitacion {
     link?: string;
   };
   confirmacionData?: Confirmacion;
+  animacionHero?: string; // Animación seleccionada para el Hero Section
 }
 
 @Injectable({
