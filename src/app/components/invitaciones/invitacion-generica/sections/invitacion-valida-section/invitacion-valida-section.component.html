@@ -31,12 +31,13 @@
         <!-- Código QR -->
         <div class="qr-container">
           <div class="qr-card">
-            <div class="qr-header">📱 CÓDIGO QR DE ACCESO</div>
+            <div class="qr-header">CÓDIGO QR DE ACCESO</div>
             <img [src]="qrCodeUrl" alt="QR" class="qr-code" />
             <div class="qr-footer">
               <p>Presenta este código en la entrada</p>
               <button class="btn-descargar-qr" (click)="descargarQR()">
-                ⬇️ Descargar QR
+                <ng-icon name="lucideArrowBigDown"></ng-icon>
+                Descargar QR
               </button>
             </div>
           </div>
@@ -45,22 +46,25 @@
         @if (estadoActual === "confirmado") {
           <div class="estado-acceso">
             <div class="acceso-confirmado">
-              ✅ Acceso confirmado - Presenta tu QR en la entrada
+              <ng-icon name="heroCheckBadge"></ng-icon>
+              Acceso confirmado! - Presenta tu QR en la entrada
             </div>
           </div>
         }
         @if (estadoActual === "pendiente") {
           <div class="estado-acceso">
             <div class="acceso-pendiente">
-              ⏳ Confirma tu asistencia para generar tu pase de acceso
+              <ng-icon name="lucideHourglass"></ng-icon>
+              Confirma tu asistencia para generar tu pase de acceso
             </div>
           </div>
         }
         @if (estadoActual === "rechazado") {
           <div class="estado-acceso">
             <div class="acceso-rechazado">
-              💔 No podrás asistir - Si cambias de opinión, confirma tu
-              asistencia
+              <ng-icon name="lucideHeartCrack"></ng-icon>
+              No podrás asistir - Si crees que es un error, contacta a los
+              novios para más información
             </div>
           </div>
         }

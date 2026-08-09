@@ -16,7 +16,7 @@
     @if (data.estilo) {
       <div class="dresscode-estilo">
         <span class="estilo-tag">Estilo</span>
-        <!-- ✅ Imagen con wrapper -->
+        <!-- Imagen con wrapper -->
         <div class="estilo-imagen-wrapper">
           <img
             [src]="getEstiloIcon(data.estilo)"
@@ -39,7 +39,10 @@
     <!-- ============================================ -->
     @if (tieneColores) {
       <div class="dresscode-colores">
-        <p class="colores-label">✅ Colores sugeridos</p>
+        <p class="colores-label">
+          <ng-icon name="heroCheck" class="colores-icon"></ng-icon>
+          Colores sugeridos
+        </p>
         <p class="colores-sub-label">
           Te sugerimos estos tonos para tu atuendo
         </p>
@@ -59,7 +62,10 @@
     <!-- ============================================ -->
     @if (tieneColoresReservados) {
       <div class="dresscode-colores-reservados">
-        <p class="colores-label">🚫 Colores reservados</p>
+        <p class="colores-label">
+          <ng-icon name="lucideBan" class="colores-icon"></ng-icon>
+          Colores reservados
+        </p>
         <div class="colores-paleta">
           @for (color of data.coloresReservados; track color) {
             <span
@@ -78,7 +84,9 @@
     <!-- ============================================ -->
     @if (tieneNotaAdicional) {
       <div class="dresscode-tip">
-        <span class="tip-icon">💡</span>
+        <span class="tip-icon">
+          <ng-icon name="hugeBulb" class="tip-icono"></ng-icon>
+        </span>
         <span class="tip-text">{{ data.notaAdicional }}</span>
       </div>
     }

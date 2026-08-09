@@ -52,6 +52,8 @@ import {
   AnimacionHero,
   ANIMACIONES_HERO,
 } from '../../../models/animaciones.model';
+// formulario-invitacion.component.ts
+import { NgIcon } from '@ng-icons/core'; // 👈 AGREGAR
 
 // ================================================================
 // 3. COMPONENTE PRINCIPAL
@@ -59,7 +61,7 @@ import {
 @Component({
   selector: 'app-formulario-invitacion', // Selector HTML
   standalone: true, // Componente standalone (no necesita NgModule)
-  imports: [FormsModule, ImageUploadComponent], // Módulos importados
+  imports: [FormsModule, ImageUploadComponent, NgIcon], // Módulos importados
   templateUrl: './formulario-invitacion.component.html',
   changeDetection: ChangeDetectionStrategy.Eager, // Estrategia de detección de cambios
   styleUrls: ['./formulario-invitacion.component.css'],
@@ -227,7 +229,16 @@ export class FormularioInvitacionComponent implements OnInit {
       mostrarRechazar: true,
       mostrarCalendario: true,
     },
-    hashtag: '',
+    hashtag: {
+      titulo: 'HASHTAG',
+      subtitulo: 'Comparte tus momentos',
+      hashtag: '#MarianaYAlejandro',
+      mensaje: '¡Únete a la celebración!',
+      icono: 'fas fa-hashtag',
+      mostrarIcono: true,
+      resaltarHashtag: true,
+      mostrarCaracteristicas: true,
+    },
     consideracionesData: {
       mostrarSeccion: true,
       estilo: 'iconos',
@@ -391,6 +402,46 @@ export class FormularioInvitacionComponent implements OnInit {
             opciones: opciones,
             textoBoton: 'Ver mesa de regalos',
           };
+        }
+
+        // ================================================================
+        // # NORMALIZAR HASHTAG (AGREGAR ESTO)
+        // ================================================================
+        if (data.hashtag) {
+          // Si es string, convertirlo a objeto
+          if (typeof data.hashtag === 'string') {
+            data.hashtag = {
+              titulo: 'HASHTAG',
+              subtitulo: 'Comparte tus momentos',
+              hashtag: data.hashtag || '#MiEvento',
+              mensaje: '¡Únete a la celebración!',
+              icono: 'fas fa-hashtag',
+              mostrarIcono: true,
+              resaltarHashtag: true,
+              mostrarCaracteristicas: true,
+            };
+          } else {
+            // Si ya es objeto, asegurar que tenga todas las propiedades
+            data.hashtag = {
+              titulo: data.hashtag.titulo || 'HASHTAG',
+              subtitulo: data.hashtag.subtitulo || 'Comparte tus momentos',
+              hashtag: data.hashtag.hashtag || '#MiEvento',
+              mensaje: data.hashtag.mensaje || '¡Únete a la celebración!',
+              icono: data.hashtag.icono || 'fas fa-hashtag',
+              mostrarIcono:
+                data.hashtag.mostrarIcono !== undefined
+                  ? data.hashtag.mostrarIcono
+                  : true,
+              resaltarHashtag:
+                data.hashtag.resaltarHashtag !== undefined
+                  ? data.hashtag.resaltarHashtag
+                  : true,
+              mostrarCaracteristicas:
+                data.hashtag.mostrarCaracteristicas !== undefined
+                  ? data.hashtag.mostrarCaracteristicas
+                  : true,
+            };
+          }
         }
 
         // --- ASIGNAR DATOS ---
@@ -761,7 +812,16 @@ export class FormularioInvitacionComponent implements OnInit {
           mostrarRechazar: true,
           mostrarCalendario: true,
         },
-        hashtag: '',
+        hashtag: {
+          titulo: 'HASHTAG',
+          subtitulo: 'Comparte tus momentos',
+          hashtag: '#MarianaYAlejandro',
+          mensaje: '¡Únete a la celebración!',
+          icono: 'fas fa-hashtag',
+          mostrarIcono: true,
+          resaltarHashtag: true,
+          mostrarCaracteristicas: true,
+        },
         consideracionesData: {
           mostrarSeccion: true,
           estilo: 'iconos',
@@ -1802,4 +1862,25 @@ export class FormularioInvitacionComponent implements OnInit {
     console.log('🎬 Animación seleccionada:', animacion.nombre);
     console.log('🎬 Valor guardado:', this.nuevaInvitacion.animacionHero);
   }
+
+  // ✅ ICONOS DISPONIBLES PARA CONSIDERACIONES (en el formulario)
+  iconosConsideraciones = [
+    { valor: 'heroClock', label: 'Tiempo' },
+    { valor: 'lucideCar', label: 'Transporte' },
+    { valor: 'hugeSuit02', label: 'Vestimenta' },
+    { valor: 'lucideCheckCheck', label: 'Confirmar' },
+    { valor: 'lucideClipboard', label: 'Asistencia' },
+    { valor: 'lucideBaby', label: 'Niños' },
+    { valor: 'lucideEye', label: 'Supervisión' },
+    { valor: 'lucideSmartphone', label: 'Celulares' },
+    { valor: 'lucideParkingCircle', label: 'Estacionamiento' },
+    { valor: 'lucideSparkles', label: 'Disfruta' },
+    { valor: 'hugeStar', label: 'Especial' },
+    { valor: 'heroHeart', label: 'Amor' },
+    { valor: 'heroGift', label: 'Regalo' },
+    { valor: 'heroMapPin', label: 'Ubicación' },
+    { valor: 'hugePhoneOff01', label: 'Apagar Telefono' },
+    { valor: 'lucideMail', label: 'Correo' },
+    { valor: 'heroCamera', label: 'Fotografía' },
+  ];
 }

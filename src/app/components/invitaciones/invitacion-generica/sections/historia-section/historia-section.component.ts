@@ -9,11 +9,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Historia } from '../../../../../models/historia.model';
+import { NgIcon } from '@ng-icons/core'; // iconos
 
 @Component({
   selector: 'app-historia-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgIcon],
   templateUrl: './historia-section.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./historia-section.component.css'],

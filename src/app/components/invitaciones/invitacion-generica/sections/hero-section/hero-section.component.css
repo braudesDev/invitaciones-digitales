@@ -84,7 +84,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.8rem;
   min-height: 100vh;
   justify-content: center;
 }
@@ -92,7 +92,7 @@
 /* El scroll se queda abajo */
 .hero-scroll {
   position: absolute;
-  bottom: 40px;
+  bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -100,7 +100,7 @@
   align-items: center;
   gap: 0.3rem;
   opacity: 0;
-  animation: fadeIn 1s ease 1.6s forwards;
+  animation: fadeIn 0.8s ease 0.9s forwards;
   cursor: pointer;
   transition: all 0.3s ease;
   z-index: 3;
@@ -417,11 +417,13 @@
 .hero-date {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 8px; /* Aumentado de 6px a 8px */
   margin: 0.3rem 0;
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.5s forwards;
   color: var(--color-texto, #ffffff);
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en móvil */
+  justify-content: center; /* Centra en móvil */
 }
 
 .hero-date .date-day {
@@ -456,41 +458,14 @@
   animation: fadeInUp 0.8s ease 0.7s forwards;
   color: var(--color-texto, #ffffff);
   opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio entre icono y texto */
 }
 
 /* ============================================
    SCROLL INDICADOR - CON FLECHA ANIMADA
    ============================================ */
-
-.hero-scroll {
-  position: absolute;
-  bottom: 50px; /* 👈 Desde la parte inferior */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-  opacity: 0;
-  animation: fadeIn 0.8s ease 0.9s forwards;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 3;
-}
-
-/* Asegurar que el contenedor hero-content no tenga overflow */
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 900px;
-  padding: 3rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  min-height: 100vh; /* 👈 Asegura que ocupe toda la altura */
-  justify-content: center; /* 👈 Centra el contenido verticalmente */
-}
 
 .hero-scroll:hover {
   opacity: 0.8;
@@ -539,88 +514,6 @@
   }
   50% {
     transform: translateY(8px);
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero-scroll {
-    margin-top: 2.5rem;
-  }
-
-  .scroll-text {
-    font-size: 0.6rem;
-    letter-spacing: 3px;
-  }
-
-  .scroll-arrow {
-    width: 22px;
-    height: 22px;
-  }
-
-  .scroll-arrow-wrapper::after {
-    height: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-scroll {
-    margin-top: 2rem;
-  }
-
-  .scroll-text {
-    font-size: 0.5rem;
-    letter-spacing: 2px;
-  }
-
-  .scroll-arrow {
-    width: 18px;
-    height: 18px;
-  }
-
-  .scroll-arrow-wrapper::after {
-    height: 15px;
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero-scroll {
-    margin-top: 2.5rem;
-  }
-
-  .scroll-text {
-    font-size: 0.6rem;
-    letter-spacing: 3px;
-  }
-
-  .scroll-arrow {
-    width: 22px;
-    height: 22px;
-  }
-
-  .scroll-arrow-wrapper::after {
-    height: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-scroll {
-    margin-top: 2rem;
-  }
-
-  .scroll-text {
-    font-size: 0.5rem;
-    letter-spacing: 2px;
-  }
-
-  .scroll-arrow {
-    width: 18px;
-    height: 18px;
-  }
-
-  .scroll-arrow-wrapper::after {
-    height: 15px;
   }
 }
 
@@ -677,7 +570,7 @@
   .hero-title,
   .hero-date,
   .hero-location {
-    transform: translateY(-60px); /* 👈 SUBIR MÁS */
+    transform: translateY(-60px);
   }
 
   .hero-date .date-day {
@@ -699,6 +592,20 @@
   .hero-scroll {
     margin-top: 1.5rem;
   }
+
+  .scroll-text {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+  }
+
+  .scroll-arrow {
+    width: 22px;
+    height: 22px;
+  }
+
+  .scroll-arrow-wrapper::after {
+    height: 20px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -715,7 +622,7 @@
   .hero-title,
   .hero-date,
   .hero-location {
-    transform: translateY(-40px); /* 👈 SUBIR MÁS EN MÓVIL */
+    transform: translateY(-40px);
   }
 
   .hero-date .date-day {
@@ -739,8 +646,17 @@
   }
 
   .scroll-text {
-    font-size: 0.9rem;
+    font-size: 0.5rem;
     letter-spacing: 2px;
+  }
+
+  .scroll-arrow {
+    width: 18px;
+    height: 18px;
+  }
+
+  .scroll-arrow-wrapper::after {
+    height: 15px;
   }
 }
 
@@ -753,4 +669,194 @@
 .hero-date,
 .hero-location {
   transform: translateY(-30px);
+}
+
+/* ============================================
+   ICONOS NG ICONS - HERO (MEJORADO)
+   ============================================ */
+
+/* Iconos inline (fecha y lugar) - Más grandes y con padding */
+.inline-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  margin-right: 8px; /* Aumentado de 6px */
+  stroke-width: 2;
+  width: 24px; /* Aumentado de 18px */
+  height: 24px; /* Aumentado de 18px */
+  flex-shrink: 0; /* Evita que se encoja */
+  padding: 2px; /* Pequeño padding para mejor visibilidad */
+}
+
+/* Icono del divisor (corazón) - Más grande */
+.divider-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  flex-shrink: 0;
+  stroke-width: 1.5;
+  width: 24px; /* Aumentado de 20px */
+  height: 24px; /* Aumentado de 20px */
+  padding: 2px;
+}
+
+/* Iconos de fecha específicos */
+.date-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+/* Flecha del scroll - Más grande */
+.scroll-arrow {
+  display: block;
+  margin: 0 auto;
+  animation: bounceArrow 2s ease-in-out infinite;
+  stroke-width: 2;
+  width: 32px; /* Aumentado de 28px */
+  height: 32px; /* Aumentado de 28px */
+  flex-shrink: 0;
+}
+
+/* ============================================
+   COLORES DE LOS ICONOS
+   ============================================ */
+
+/* Fecha y lugar - heredan el color del texto */
+.hero-date ng-icon,
+.hero-location ng-icon {
+  color: var(--color-texto, #ffffff);
+}
+
+/* Corazón del divisor - usa color de acento */
+.hero-divider ng-icon {
+  color: var(--accent, #c9a87c);
+}
+
+/* Flecha del scroll - blanco con opacidad */
+.scroll-arrow {
+  color: rgba(255, 255, 255, 0.7); /* Más visible */
+}
+
+/* ============================================
+   RESPONSIVE - ICONOS (MEJORADO)
+   ============================================ */
+
+@media (max-width: 768px) {
+  .inline-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+  }
+
+  .divider-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .scroll-arrow {
+    width: 28px;
+    height: 28px;
+  }
+
+  .date-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .hero-date {
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-location {
+    font-size: 1.2rem;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inline-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+  }
+
+  .divider-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .scroll-arrow {
+    width: 24px;
+    height: 24px;
+  }
+
+  .date-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hero-date {
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-location {
+    font-size: 1rem;
+    gap: 4px;
+  }
+}
+
+/* ============================================
+   AJUSTE DE POSICIÓN - TÍTULO, FECHA Y LUGAR
+   ============================================ */
+
+/* En desktop, subir ligeramente */
+.hero-title,
+.hero-date,
+.hero-location {
+  transform: translateY(-30px);
+}
+
+/* Asegurar que los iconos tengan espacio suficiente */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+/* Forzar el tamaño mínimo de los iconos */
+ng-icon {
+  min-width: 20px;
+  min-height: 20px;
+}
+
+@media (max-width: 768px) {
+  ng-icon {
+    min-width: 16px;
+    min-height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  ng-icon {
+    min-width: 14px;
+    min-height: 14px;
+  }
 }

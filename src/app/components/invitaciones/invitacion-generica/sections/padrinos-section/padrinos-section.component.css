@@ -37,7 +37,7 @@
 
 .padrinos-titulo {
   font-family: inherit;
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
   margin: 0 0 0.8rem;
@@ -374,4 +374,54 @@
 .padrinos-container,
 .padrinos-container * {
   font-family: inherit !important;
+}
+
+/* ============================================
+   ICONOS - PADRINOS SECTION
+   ============================================ */
+
+/* Contenedor del icono */
+.padrinos-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  width: 50px;
+  height: 50px;
+  background: var(--secondary, #f5ede4);
+}
+
+/* Icono dentro del contenedor */
+.padrinos-icono ng-icon {
+  color: var(--accent, #c9a87c);
+  stroke-width: 1.5;
+  width: 48px;
+  height: 48px;
+  display: block;
+  overflow: visible;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .padrinos-icono {
+    width: 64px;
+    height: 64px;
+  }
+
+  .padrinos-icono ng-icon {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .padrinos-icono {
+    width: 56px;
+    height: 56px;
+  }
+
+  .padrinos-icono ng-icon {
+    width: 32px;
+    height: 32px;
+  }
 }

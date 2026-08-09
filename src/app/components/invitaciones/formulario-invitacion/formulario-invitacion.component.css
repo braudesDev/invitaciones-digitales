@@ -3154,6 +3154,84 @@
 }
 
 /* ============================================
+   SELECTOR DE ICONOS - CUADRÍCULA VISUAL
+   ============================================ */
+
+.icono-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.icono-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  border: 2px solid var(--border, #e0d5c8);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--card-bg, #ffffff);
+  min-height: 56px;
+}
+
+.icono-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: var(--accent, #c9a87c);
+}
+
+.icono-option.selected {
+  border-color: var(--accent, #b08a4a);
+  background: var(--secondary, #f5ede4);
+  box-shadow: 0 0 0 3px rgba(176, 138, 74, 0.15);
+}
+
+.icono-option ng-icon {
+  display: block;
+  color: var(--text, #333);
+  stroke-width: 2;
+  width: 24px;
+  height: 24px;
+}
+
+.icono-label {
+  font-size: 0.5rem;
+  color: var(--text, #666);
+  text-align: center;
+  margin-top: 2px;
+  line-height: 1.1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .icono-selector-grid {
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  }
+
+  .icono-option {
+    padding: 6px 2px;
+    min-height: 48px;
+  }
+
+  .icono-option ng-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .icono-label {
+    font-size: 0.4rem;
+  }
+}
+
+/* ============================================
    TIP
    ============================================ */
 
@@ -4509,5 +4587,114 @@
     width: 100%;
     max-width: 200px;
     height: 120px;
+  }
+}
+
+/* ============================================
+   ESTILOS DEL FORMULARIO - HASHTAG
+   ============================================ */
+
+/* Contador de caracteres */
+.char-count {
+  display: block;
+  text-align: right;
+  font-size: 0.65rem;
+  color: #8a7a6e;
+  margin-top: 0.2rem;
+  opacity: 0.7;
+}
+
+/* Toggles del formulario */
+.toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  flex-wrap: wrap;
+}
+
+.toggle-group input[type="checkbox"] {
+  width: 38px;
+  height: 20px;
+  appearance: none;
+  background: #d5cbc3;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  border: none;
+  outline: none;
+}
+
+.toggle-group input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-group input[type="checkbox"]:checked {
+  background: var(--accent, #c9a87c);
+}
+
+.toggle-group input[type="checkbox"]:checked::before {
+  left: 20px;
+}
+
+.toggle-group label {
+  font-size: 0.85rem;
+  color: var(--text, #5a4a3a);
+  font-weight: 400;
+  cursor: pointer;
+  margin: 0;
+}
+
+.toggle-group small {
+  font-size: 0.65rem;
+  color: #8a7a6e;
+  margin-left: auto;
+  opacity: 0.7;
+}
+
+/* Campo full-width para textarea */
+.campo.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Select personalizado */
+.campo select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: #fff;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.campo select:focus {
+  border-color: var(--accent, #c9a87c);
+}
+
+/* Ajustes responsive para toggles */
+@media (max-width: 600px) {
+  .toggle-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .toggle-group small {
+    margin-left: 0;
   }
 }

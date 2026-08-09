@@ -4,14 +4,9 @@
   <div class="padrinos-container" [style.font-family]="fontFamily">
     <div class="padrinos-header">
       <div class="padrinos-icono-wrapper">
-        <img
-          src="https://res.cloudinary.com/drsyb53ae/image/upload/v1784655778/image-Uc7IR2VI4erGKCZmKKJMTNjg6KOEsN_sxur0n.png"
-          [alt]="titulo"
-          class="padrinos-icono-img"
-          loading="lazy"
-          width="80"
-          height="80"
-        />
+        <span class="padrinos-icono">
+          <ng-icon name="heroUsers" size="48" class="icono-padrinos"></ng-icon>
+        </span>
         <h2 class="padrinos-titulo">{{ titulo }}</h2>
         <div class="padrinos-divider">
           <span class="divider-line"></span>
@@ -22,7 +17,7 @@
       <!-- Swiper con efecto creative -->
       <div class="padrinos-swiper swiper">
         <div class="swiper-wrapper">
-          <!-- 👇 CADA SLIDE = UN ROL CON SUS PADRINOS -->
+          <!-- CADA SLIDE = UN ROL CON SUS PADRINOS -->
           @for (grupo of padrinosAgrupados; track grupo) {
             <div class="swiper-slide">
               <div class="padrino-card">
@@ -68,7 +63,9 @@
     @if (!tienePadrinos) {
       <div class="padrinos-container">
         <div class="padrinos-header">
-          <span class="padrinos-icono">👑</span>
+          <span class="padrinos-icono">
+            <ng-icon name="lucideCrown" size="48"></ng-icon>
+          </span>
           <h2 class="padrinos-titulo">{{ titulo }}</h2>
           <div class="padrinos-divider">
             <span class="divider-line"></span>

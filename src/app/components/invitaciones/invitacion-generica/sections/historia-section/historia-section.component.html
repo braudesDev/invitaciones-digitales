@@ -1,7 +1,9 @@
 @if (data && data.mostrarSeccion) {
   <div class="historia-section" [style.font-family]="data.fontFamily">
     <div class="historia-header">
-      <span class="historia-icono">📖</span>
+      <span class="historia-icono">
+        <ng-icon name="heroBookOpen" size="50"></ng-icon>
+      </span>
       <h2 class="historia-titulo">{{ data.titulo || "Nuestra Historia" }}</h2>
       <div class="historia-divider">
         <span class="divider-line"></span>
@@ -156,7 +158,8 @@
     <!-- Si no hay momentos, mostrar mensaje -->
     @if (!data.momentos || data.momentos.length === 0) {
       <p class="sin-momentos">
-        Agrega los momentos más importantes de su historia ✨
+        Agrega los momentos más importantes de su historia
+        <ng-icon name="heroSparkles" size="24"></ng-icon>
       </p>
     }
 

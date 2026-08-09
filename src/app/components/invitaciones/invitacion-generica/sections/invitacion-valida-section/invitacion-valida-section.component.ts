@@ -9,7 +9,7 @@
 // - Código QR personalizado
 // - Estado de confirmación
 // ================================================================
-
+import { CommonModule } from '@angular/common';
 import {
   Component,
   Input,
@@ -19,6 +19,7 @@ import {
 import { InvitadosService } from '../../../../../services/invitados.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { NgIcon } from '@ng-icons/core'; // iconos
 
 // ================================================================
 // DECORADOR DEL COMPONENTE
@@ -26,7 +27,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-invitacion-valida-section', // Selector HTML
   standalone: true, // Componente standalone
-  imports: [], // Sin imports adicionales
+  imports: [NgIcon, CommonModule], // Sin imports adicionales
   templateUrl: './invitacion-valida-section.component.html',
   changeDetection: ChangeDetectionStrategy.Eager, // Estrategia de detección de cambios
   styleUrls: ['./invitacion-valida-section.component.css'],

@@ -29,12 +29,48 @@
 .titulo-ceremonia {
   position: relative;
   z-index: 1;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
   margin-bottom: 2.5rem;
   letter-spacing: 2px;
   font-family: inherit;
+}
+
+/* ============================================
+   DIVISOR - CEREMONIA
+   ============================================ */
+
+.ceremonia-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 200px;
+  margin: 1.5rem auto;
+  padding: 0 20px;
+}
+
+.ceremonia-divider .divider-line {
+  flex: 1; /* 👈 Ocupa el espacio disponible */
+  height: 1px; /* 👈 Aumentar a 2px para mejor visibilidad */
+  min-width: 30px; /* 👈 Agregar: ancho mínimo para que siempre se vea */
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent, #c9a87c) 30%,
+    var(--accent, #c9a87c) 70%,
+    transparent
+  );
+  border-radius: 2px; /* 👈 Agregar: bordes redondeados */
+}
+
+.ceremonia-divider .divider-icon {
+  color: var(--accent, #c9a87c);
+  font-size: 0.9rem; /* 👈 Aumentar un poco */
+  opacity: 0.8; /* 👈 Aumentar opacidad */
+  flex-shrink: 0; /* 👈 Evitar que se encoja */
 }
 
 /* Contenedor de tarjetas */
@@ -252,4 +288,125 @@
 .ceremonia-container,
 .ceremonia-container * {
   font-family: inherit !important;
+}
+/* ============================================
+   ICONOS - CEREMONIA SECTION
+   ============================================ */
+
+/* Icono de placeholder (iglesia) */
+.placeholder-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 200px;
+  background: var(--accent, #c9a87c);
+  opacity: 0.3;
+}
+
+/* Icono dentro del placeholder */
+.placeholder-icon ng-icon {
+  color: rgba(255, 255, 255, 0.8);
+  width: 150px;
+  height: 150px;
+  display: block;
+  overflow: visible;
+}
+
+/* Iconos inline (ubicación y horario) */
+.inline-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+  color: var(--accent, #c9a87c);
+  stroke-width: 2;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: -6px;
+  overflow: visible;
+}
+
+/* Icono del botón (mapa) */
+.btn-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+  color: white;
+  stroke-width: 1.5;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: -4px;
+  overflow: visible;
+}
+
+/* ============================================
+   COLORES ESPECÍFICOS
+   ============================================ */
+
+/* Ubicación y horario - color de acento */
+.direccion-tarjeta ng-icon,
+.horario-tarjeta ng-icon {
+  color: var(--accent, #c9a87c);
+}
+
+/* Botón - color blanco */
+.boton-mapa ng-icon {
+  color: white;
+}
+
+/* Placeholder - icono blanco */
+.placeholder-icon ng-icon {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================
+   RESPONSIVE - ICONOS (CORREGIDO)
+   ============================================ */
+
+@media (max-width: 768px) {
+  .inline-icon {
+    width: 18px; /* 👈 ANTES: 14px */
+    height: 18px; /* 👈 ANTES: 14px */
+    margin-right: 6px;
+  }
+
+  .btn-icon {
+    width: 18px; /* 👈 ANTES: 14px */
+    height: 18px; /* 👈 ANTES: 14px */
+    margin-right: 6px;
+  }
+
+  .placeholder-icon {
+    height: 160px;
+  }
+
+  .placeholder-icon ng-icon {
+    width: 60px; /* 👈 ANTES: 40px */
+    height: 60px; /* 👈 ANTES: 40px */
+  }
+}
+
+@media (max-width: 480px) {
+  .inline-icon {
+    width: 16px; /* 👈 ANTES: 12px */
+    height: 16px; /* 👈 ANTES: 12px */
+    margin-right: 4px;
+  }
+
+  .btn-icon {
+    width: 16px; /* 👈 ANTES: 12px */
+    height: 16px; /* 👈 ANTES: 12px */
+    margin-right: 4px;
+  }
+
+  .placeholder-icon {
+    height: 140px;
+  }
+
+  .placeholder-icon ng-icon {
+    width: 50px; /* 👈 ANTES: 32px */
+    height: 50px; /* 👈 ANTES: 32px */
+  }
 }

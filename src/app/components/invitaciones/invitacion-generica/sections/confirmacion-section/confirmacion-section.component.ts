@@ -11,11 +11,12 @@ import { InvitadosService } from '../../../../../services/invitados.service';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Confirmacion } from '../../../../../models/confirmacion.model';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-confirmacion-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgIcon],
   templateUrl: './confirmacion-section.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./confirmacion-section.component.css'],

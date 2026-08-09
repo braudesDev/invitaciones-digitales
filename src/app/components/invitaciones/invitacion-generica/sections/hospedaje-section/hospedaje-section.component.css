@@ -35,18 +35,19 @@
   position: relative;
   z-index: 1;
   margin-bottom: 2rem;
+  margin-top: -1rem;
 }
 
 .hospedaje-icono {
   font-size: 2.8rem;
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.9rem;
   opacity: 0.7;
 }
 
 .hospedaje-titulo {
   font-family: inherit;
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
   margin: 0 0 0.8rem;
@@ -1671,4 +1672,165 @@
 .hospedaje-section,
 .hospedaje-section * {
   font-family: inherit !important;
+}
+
+/* ============================================
+   ICONOS - HOSPEDAJE SECTION
+   ============================================ */
+
+/* ============================================
+   ICONO PRINCIPAL (CASA)
+   ============================================ */
+
+.hospedaje-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  min-height: 40px;
+}
+
+.hospedaje-icono ng-icon {
+  color: var(--accent, #c9a87c);
+  stroke-width: 1.5;
+  width: 50px;
+  height: 50px;
+  display: block;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   ICONOS DEL DIVISOR
+   ============================================ */
+
+.hospedaje-divider .divider-icon {
+  color: var(--accent, #c9a87c);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* ============================================
+   ICONOS EN TARJETAS (ubicación, distancia, capacidad)
+   ============================================ */
+
+.hospedaje-tarjeta ng-icon,
+.timeline-info ng-icon,
+.catalogo-info ng-icon,
+.icono-item ng-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+  color: var(--accent, #c9a87c);
+  stroke-width: 2;
+  width: 18px;
+  height: 18px;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   ICONO EN BOTÓN (flecha)
+   ============================================ */
+
+.btn-hospedaje .btn-icono {
+  display: inline-block;
+  margin-left: 6px;
+  color: white;
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-hospedaje:hover .btn-icono {
+  transform: translateX(4px);
+}
+
+/* ============================================
+   ICONO PLACEHOLDER (cuando no hay imagen)
+   ============================================ */
+
+.icono-imagen-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--secondary, #f5ede4);
+  border-radius: 50%;
+  border: 2px solid var(--border, #e0d5c8);
+}
+
+.icono-imagen-placeholder ng-icon {
+  color: var(--accent, #c9a87c);
+  stroke-width: 1.5;
+  width: 32px;
+  height: 32px;
+  display: block;
+  overflow: visible;
+}
+
+/* ============================================
+   ICONO EN MOSAICO
+   ============================================ */
+
+.mosaico-overlay ng-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+  color: white;
+  stroke-width: 2;
+  width: 18px;
+  height: 18px;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   RESPONSIVE - ICONOS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .hospedaje-icono ng-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .hospedaje-tarjeta ng-icon,
+  .timeline-info ng-icon,
+  .catalogo-info ng-icon,
+  .icono-item ng-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
+
+  .icono-imagen-placeholder ng-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hospedaje-icono ng-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hospedaje-tarjeta ng-icon,
+  .timeline-info ng-icon,
+  .catalogo-info ng-icon,
+  .icono-item ng-icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 3px;
+  }
+
+  .icono-imagen-placeholder ng-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .btn-hospedaje .btn-icono {
+    font-size: 0.9rem;
+  }
 }

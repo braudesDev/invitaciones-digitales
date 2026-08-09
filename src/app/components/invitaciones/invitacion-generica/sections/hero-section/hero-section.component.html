@@ -1,6 +1,6 @@
 <section
   class="hero-section"
-  [style.backgroundImage]="'url(' + heroImage + ')'"
+  [style.backgroundImage]="'url(' + imagenSeleccionada + ')'"
 >
   <div class="overlay">
     <div class="pattern-overlay"></div>
@@ -19,42 +19,31 @@
       {{ nombres }}
     </h1>
 
-    <!-- ✅ LÍNEA DIVISORA -->
+    <!--  DIVISOR CON CORAZÓN (reemplaza ◆) -->
     <div class="hero-divider">
       <span class="divider-line"></span>
-      <span class="divider-icon">◆</span>
+      <ng-icon name="heroHeart" size="20" class="divider-icon"></ng-icon>
       <span class="divider-line"></span>
     </div>
 
+    <!-- FECHA CON CALENDARIO -->
     <p class="hero-date" [style.color]="colorTexto">
+      <ng-icon name="heroCalendar" size="18" class="inline-icon"></ng-icon>
       <span class="date-day">{{ fechaFormateadaObj.dia }}</span>
       <span class="date-month">{{ fechaFormateadaObj.mes }}</span>
       <span class="date-year">{{ fechaFormateadaObj.anio }}</span>
     </p>
 
+    <!--  LUGAR CON MAP PIN -->
     <p class="hero-location" [style.color]="colorTexto">
+      <ng-icon name="heroMapPin" size="18" class="inline-icon"></ng-icon>
       {{ lugar }}
     </p>
 
-    <!-- Scroll -->
+    <!--  SCROLL CON FLECHA (reemplaza el SVG manual) -->
     <div class="hero-scroll" (click)="scrollToNextSection()">
       <span class="scroll-text">Descubre más</span>
-      <div class="scroll-arrow-wrapper">
-        <svg
-          class="scroll-arrow"
-          xmlns="http://www.w3.org/2000/svg"
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
-        </svg>
-      </div>
+      <ng-icon name="heroArrowDown" size="28" class="scroll-arrow"></ng-icon>
     </div>
   </div>
 

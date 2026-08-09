@@ -144,7 +144,16 @@ export interface Invitacion {
     mostrarPaginacion: boolean;
   };
 
-  hashtag?: string;
+  hashtag?: {
+    titulo: string;
+    subtitulo: string;
+    hashtag: string;
+    mensaje: string;
+    icono: string;
+    mostrarIcono: boolean;
+    resaltarHashtag: boolean;
+    mostrarCaracteristicas: boolean;
+  };
 
   contador?: {
     fechaObjetivo: string;

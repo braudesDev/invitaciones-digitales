@@ -9,11 +9,15 @@ import {
   ElementRef,
   HostListener,
 } from '@angular/core';
+import { NgIcon } from '@ng-icons/core'; // 👈 IMPORTAR
 
 @Component({
   selector: 'app-hero-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    NgIcon, // 👈 AGREGAR
+  ],
   templateUrl: './hero-section.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./hero-section.component.css'],
@@ -135,14 +139,16 @@ export class HeroSectionComponent implements OnInit, OnChanges {
   actualizarImagenSegunDispositivo() {
     const isMobile = window.innerWidth <= 768;
 
-    // Si hay imagen específica para el dispositivo, usarla
-    // Si no, usar la imagen que exista (fallback)
+    // 👈 ASIGNAR A imagenSeleccionada, NO a heroImage
     if (isMobile && this.heroImageMovil) {
-      this.heroImage = this.heroImageMovil;
+      this.imagenSeleccionada = this.heroImageMovil;
     } else if (!isMobile && this.heroImageEscritorio) {
-      this.heroImage = this.heroImageEscritorio;
+      this.imagenSeleccionada = this.heroImageEscritorio;
     } else {
-      this.heroImage = this.heroImageMovil || this.heroImageEscritorio || '';
+      this.imagenSeleccionada =
+        this.heroImageMovil || this.heroImageEscritorio || this.heroImage || '';
     }
+
+    console.log('📐 Imagen seleccionada:', this.imagenSeleccionada);
   }
 }

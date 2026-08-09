@@ -14,11 +14,12 @@ import {
   ROLES_PADrinos,
   TipoRolPadrino,
 } from '../../../../../models/padrino.model';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-padrinos-section',
   standalone: true,
-  imports: [],
+  imports: [NgIcon],
   templateUrl: './padrinos-section.component.html',
   styleUrls: ['./padrinos-section.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
