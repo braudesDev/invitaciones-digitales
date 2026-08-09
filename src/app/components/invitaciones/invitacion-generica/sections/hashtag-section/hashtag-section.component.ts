@@ -1,20 +1,30 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { NgIcon } from '@ng-icons/core'; // 👈 IMPORTAR
 
 @Component({
   selector: 'app-hashtag-section',
   standalone: true,
-  imports: [],
-  template: `
-    @if (data) {
-      <div class="section">
-        <h3>#️⃣ {{ data }}</h3>
-      </div>
-    }
-    `,
+  imports: [NgIcon],
+  templateUrl: './hashtag-section.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styles: [`.section { margin: 20px; padding: 15px; border-radius: 8px; background: #f5f5f5; text-align: center; font-size: 1.5em; }`]
+  styleUrls: ['./hashtag-section.component.css'],
 })
-export class HashtagSectionComponent {
-  @Input() data: any;
+export class HashtagSectionComponent implements OnInit {
+  @Input() data!: {
+    titulo: string;
+    subtitulo: string;
+    hashtag: string;
+    mensaje: string;
+    icono: string;
+    mostrarIcono: boolean;
+    resaltarHashtag: boolean;
+    mostrarCaracteristicas: boolean;
+  };
+
+  ngOnInit() {}
 }

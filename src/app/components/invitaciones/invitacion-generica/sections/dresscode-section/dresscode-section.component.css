@@ -74,7 +74,7 @@
 
 .dresscode-titulo {
   font-family: inherit;
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
   margin: 0 0 0.8rem;
@@ -339,4 +339,165 @@
 .dresscode-section,
 .dresscode-section * {
   font-family: inherit !important;
+}
+
+/* ============================================
+   ICONOS - DRESS CODE SECTION (CORREGIDO)
+   ============================================ */
+
+/* Asegurar que los contenedores no corten los iconos */
+.dresscode-header,
+.dresscode-estilo,
+.dresscode-colores,
+.dresscode-tip {
+  overflow: visible;
+}
+
+/* Icono del título */
+.titulo-icono {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  color: var(--accent, #c9a87c);
+  stroke-width: 1.5;
+  width: 32px; /* 👈 ANTES: 28px */
+  height: 32px; /* 👈 ANTES: 28px */
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+/* Icono del divisor */
+.divider-icono {
+  display: inline-block;
+  vertical-align: middle;
+  color: var(--accent, #c9a87c);
+  stroke-width: 1.5;
+  width: 18px; /* 👈 ANTES: 16px */
+  height: 18px; /* 👈 ANTES: 16px */
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+/* Iconos de colores */
+.colores-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+  color: var(--accent, #c9a87c);
+  stroke-width: 2;
+  width: 22px; /* 👈 ANTES: 20px */
+  height: 22px; /* 👈 ANTES: 20px */
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+/* Icono de nota (bombilla) */
+.tip-icono {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 12px;
+  color: var(--accent, #c9a87c);
+  stroke-width: 1.5;
+  width: 32px; /* 👈 ANTES: 28px */
+  height: 32px; /* 👈 ANTES: 28px */
+  overflow: visible;
+  flex-shrink: 0;
+  margin-top: -7px; /* Ajuste vertical para alinear con el texto */
+}
+
+/* Icono reservado (sobre el color) */
+.reservado-icon {
+  color: white;
+  stroke-width: 2.5;
+  width: 16px; /* 👈 ANTES: 14px */
+  height: 16px; /* 👈 ANTES: 14px */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+}
+
+/* Colores reservados - contenedor relativo */
+.color-reservado {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  cursor: default;
+  overflow: visible; /* 👈 Para que no corte el icono */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .titulo-icono {
+    width: 28px;
+    height: 28px;
+    margin-right: 8px;
+  }
+
+  .tip-icono {
+    width: 28px;
+    height: 28px;
+  }
+
+  .colores-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .divider-icono {
+    width: 16px;
+    height: 16px;
+  }
+
+  .color-reservado {
+    width: 40px;
+    height: 40px;
+  }
+
+  .reservado-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .titulo-icono {
+    width: 24px;
+    height: 24px;
+    margin-right: 6px;
+  }
+
+  .colores-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .tip-icono {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+
+  .divider-icono {
+    width: 14px;
+    height: 14px;
+  }
+
+  .color-reservado {
+    width: 34px;
+    height: 34px;
+  }
+
+  .reservado-icon {
+    width: 12px;
+    height: 12px;
+  }
 }

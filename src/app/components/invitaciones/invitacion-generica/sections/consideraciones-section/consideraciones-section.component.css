@@ -105,12 +105,39 @@
   gap: 16px;
 }
 
+/* ============================================
+   ICONOS - CONSIDERACIONES
+   ============================================ */
+
 .consideracion-icono {
-  font-size: 1.8rem;
-  width: 48px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
   flex-shrink: 0;
-  margin-top: 2px;
+  border-radius: 50%;
+  background: var(--secondary, #f5ede4);
+  border: 2px solid var(--border, #e0d5c8);
+  transition: all 0.3s ease;
+  color: var(--color-iconos, var(--accent, #c9a87c));
+  margin-top: -2px;
+}
+
+.consideracion-icono ng-icon {
+  display: block;
+  stroke-width: 1.5;
+  width: 28px;
+  height: 28px;
+  overflow: visible;
+  flex-shrink: 0;
+  color: inherit;
+  margin-top: -5px;
+}
+
+.consideracion-item:hover .consideracion-icono {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .consideracion-info {
@@ -283,8 +310,13 @@
   }
 
   .consideracion-icono {
-    font-size: 1.5rem;
-    width: 36px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .consideracion-icono ng-icon {
+    width: 24px;
+    height: 24px;
   }
 
   .estilo-iconos .consideracion-icono {
@@ -318,8 +350,14 @@
   }
 
   .consideracion-icono {
-    font-size: 1.3rem;
-    width: 32px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .consideracion-icono ng-icon {
+    width: 20px;
+    height: 20px;
+    margin-top: -4px;
   }
 
   .consideracion-titulo {

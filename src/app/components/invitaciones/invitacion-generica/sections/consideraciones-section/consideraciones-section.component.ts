@@ -15,11 +15,12 @@ import {
   ItemConsideracion,
   ESTILOS_CONSIDERACIONES,
 } from '../../../../../models/consideraciones.model';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-consideraciones-section',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgIcon],
   templateUrl: './consideraciones-section.component.html',
   styleUrls: ['./consideraciones-section.component.css'],
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -39,6 +40,26 @@ export class ConsideracionesSectionComponent implements OnInit {
   // ==============================================================
 
   estilos = ESTILOS_CONSIDERACIONES;
+
+  // ✅ ICONOS DISPONIBLES PARA CONSIDERACIONES
+  iconosConsideraciones = [
+    { valor: 'lucideClock', label: '⏰ Tiempo' },
+    { valor: 'lucideCar', label: '🚗 Transporte' },
+    { valor: 'lucideShirt', label: '👔 Vestimenta' },
+    { valor: 'lucideCheckCheck', label: '✅ Confirmar' },
+    { valor: 'lucideClipboard', label: '📋 Asistencia' },
+    { valor: 'lucideBaby', label: '👶 Niños' },
+    { valor: 'lucideEye', label: '👀 Supervisión' },
+    { valor: 'lucideSmartphone', label: '📱 Celulares' },
+    { valor: 'lucideParkingCircle', label: '🅿️ Estacionamiento' },
+    { valor: 'lucideSparkles', label: '✨ Disfruta' },
+    { valor: 'lucideStar', label: '⭐ Momento especial' },
+    { valor: 'lucideHeart', label: '❤️ Amor' },
+    { valor: 'lucideGift', label: '🎁 Regalo' },
+    { valor: 'lucideMapPin', label: '📍 Ubicación' },
+    { valor: 'lucidePhone', label: '📞 Teléfono' },
+    { valor: 'lucideMail', label: '✉️ Correo' },
+  ];
 
   // ==============================================================
   // CICLO DE VIDA
@@ -89,7 +110,7 @@ export class ConsideracionesSectionComponent implements OnInit {
     this.data.items.push({
       titulo: '',
       descripcion: '',
-      icono: '📌',
+      icono: 'lucidePin',
     });
     this.emitirCambios();
   }
@@ -105,23 +126,23 @@ export class ConsideracionesSectionComponent implements OnInit {
   /** Obtiene un icono según el título */
   getIconoItem(titulo: string): string {
     const iconos: { [key: string]: string } = {
-      tiempo: '⏰',
-      llegada: '🚗',
-      vestimenta: '👔',
-      confirmar: '✅',
-      asistencia: '📋',
-      niños: '👶',
-      supervisión: '👀',
-      celulares: '📱',
-      teléfonos: '📱',
-      estacionamiento: '🅿️',
-      disfruta: '🎉',
-      momento: '💫',
-      llegar: '🚗',
-      código: '👔',
-      confirma: '✅',
-      niño: '👶',
-      estaciona: '🅿️',
+      tiempo: 'hugeClock',
+      llegada: 'lucideCar',
+      vestimenta: 'hugeSuit02',
+      confirmar: 'lucideCheckCheck',
+      asistencia: 'lucideClipboard',
+      niños: 'lucideBaby',
+      supervisión: 'lucideEye',
+      celulares: 'lucideSmartphone',
+      teléfonos: 'lucideSmartphone',
+      estacionamiento: 'lucideParking',
+      disfruta: 'lucideSparkles',
+      momento: 'lucideStar',
+      llegar: 'lucideCar',
+      código: 'hugeSuit02',
+      confirma: 'lucideCheckCheck',
+      niño: 'lucideBaby',
+      estaciona: 'lucideParkingCircle',
     };
     const lower = titulo.toLowerCase();
     for (const [key, icon] of Object.entries(iconos)) {
@@ -129,6 +150,6 @@ export class ConsideracionesSectionComponent implements OnInit {
         return icon;
       }
     }
-    return '📌';
+    return 'lucidePin';
   }
 }

@@ -87,7 +87,16 @@ export interface InvitacionCompleta {
   };
 
   confirmacionData?: Confirmacion;
-  hashtag: string;
+  hashtag: {
+    titulo: string; // "HASHTAG"
+    subtitulo: string; // "Comparte tus momentos"
+    hashtag: string; // "#MarianaYAlejandro"
+    mensaje: string; // Mensaje principal
+    icono: string; // "fas fa-hashtag"
+    mostrarIcono: boolean; // true/false
+    resaltarHashtag: boolean; // true/false
+    mostrarCaracteristicas: boolean; // true/false
+  };
   consideracionesData?: Consideraciones;
 
   hospedaje?: {

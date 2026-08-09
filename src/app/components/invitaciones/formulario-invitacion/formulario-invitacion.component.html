@@ -2638,6 +2638,151 @@
           </div>
         </div>
 
+        <!-- ============================================
+     ACORDEÓN: HASHTAG
+     ============================================ -->
+        <div class="acordeon">
+          <!-- Header: clic para expandir/contraer -->
+          <div
+            class="acordeon-header"
+            (click)="acordeonHashtag = !acordeonHashtag"
+          >
+            <span># Hashtag</span>
+            <span class="icono">{{ acordeonHashtag ? "▲" : "▼" }}</span>
+          </div>
+
+          <!-- Cuerpo del acordeón -->
+          <div class="acordeon-body" [class.abierto]="acordeonHashtag">
+            <div class="form-grid">
+              <!-- Título de la sección -->
+              <div class="campo">
+                <label>Título de la sección</label>
+                <input
+                  type="text"
+                  [(ngModel)]="nuevaInvitacion.hashtag.titulo"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="HASHTAG"
+                  maxlength="30"
+                />
+                <small class="char-count"
+                  >{{ (nuevaInvitacion.hashtag.titulo || "").length }}/30</small
+                >
+              </div>
+
+              <!-- Subtítulo -->
+              <div class="campo">
+                <label>Subtítulo (opcional)</label>
+                <input
+                  type="text"
+                  [(ngModel)]="nuevaInvitacion.hashtag.subtitulo"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Comparte tus momentos"
+                  maxlength="40"
+                />
+                <small class="char-count"
+                  >{{
+                    (nuevaInvitacion.hashtag.subtitulo || "").length
+                  }}/40</small
+                >
+              </div>
+
+              <!-- Hashtag personalizado -->
+              <div class="campo">
+                <label>Hashtag personalizado</label>
+                <input
+                  type="text"
+                  [(ngModel)]="nuevaInvitacion.hashtag.hashtag"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="#MarianaYAlejandro"
+                  maxlength="30"
+                />
+                <small class="char-count"
+                  >{{
+                    (nuevaInvitacion.hashtag.hashtag || "").length
+                  }}/30</small
+                >
+              </div>
+
+              <!-- Mensaje principal -->
+              <div class="campo full-width">
+                <label>Mensaje principal</label>
+                <textarea
+                  [(ngModel)]="nuevaInvitacion.hashtag.mensaje"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Usa nuestro hashtag en tus fotos y vídeos..."
+                  rows="3"
+                  maxlength="120"
+                ></textarea>
+                <small class="char-count"
+                  >{{
+                    (nuevaInvitacion.hashtag.mensaje || "").length
+                  }}/120</small
+                >
+              </div>
+
+              <!-- Icono decorativo -->
+              <div class="campo">
+                <label>Icono decorativo</label>
+                <select
+                  [(ngModel)]="nuevaInvitacion.hashtag.icono"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <option value="heroHashtag"># Hashtag</option>
+                  <option value="heroHeart">❤️ Corazón</option>
+                  <option value="heroStar">⭐ Estrella</option>
+                  <option value="lucideFeather">🪶 Pluma</option>
+                  <option value="lucideCrown">👑 Corona</option>
+                  <option value="heroCamera">📷 Cámara</option>
+                  <option value="heroGift">🎁 Regalo</option>
+                  <option value="hugeDiamond02">💎 Diamante</option>
+                </select>
+              </div>
+
+              <!-- Configuración - Toggles -->
+              <div class="campo full-width">
+                <label>Configuración</label>
+                <div class="toggle-group">
+                  <input
+                    type="checkbox"
+                    id="mostrarIcono"
+                    [(ngModel)]="nuevaInvitacion.hashtag.mostrarIcono"
+                    [ngModelOptions]="{ standalone: true }"
+                    checked
+                  />
+                  <label for="mostrarIcono">Mostrar ícono decorativo</label>
+                  <small>Acompaña el título</small>
+                </div>
+
+                <div class="toggle-group">
+                  <input
+                    type="checkbox"
+                    id="resaltarHashtag"
+                    [(ngModel)]="nuevaInvitacion.hashtag.resaltarHashtag"
+                    [ngModelOptions]="{ standalone: true }"
+                    checked
+                  />
+                  <label for="resaltarHashtag">Resaltar hashtag</label>
+                  <small>Estilo destacado</small>
+                </div>
+
+                <div class="toggle-group">
+                  <input
+                    type="checkbox"
+                    id="mostrarCaracteristicas"
+                    [(ngModel)]="nuevaInvitacion.hashtag.mostrarCaracteristicas"
+                    [ngModelOptions]="{ standalone: true }"
+                    checked
+                  />
+                  <label for="mostrarCaracteristicas"
+                    >Mostrar características</label
+                  >
+                  <small>Toma fotos · Comparte · Etiqueta</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- ----------------------------------------------------
      ACORDEÓN: CONFIRMACIÓN DE ASISTENCIA
      - Personalización de la sección
@@ -2996,14 +3141,26 @@
                         ></textarea>
                       </div>
                       <div class="field-group">
-                        <label>🎨 Icono (opcional)</label>
-                        <input
-                          type="text"
-                          [(ngModel)]="item.icono"
-                          [ngModelOptions]="{ standalone: true }"
-                          placeholder="⏰ 🚗 👔 ✅"
-                          class="form-control"
-                        />
+                        <label>🎨 Icono</label>
+                        <div class="icono-selector-grid">
+                          @for (
+                            icono of iconosConsideraciones;
+                            track icono.valor
+                          ) {
+                            <div
+                              class="icono-option"
+                              [class.selected]="item.icono === icono.valor"
+                              (click)="item.icono = icono.valor"
+                              [title]="icono.label"
+                            >
+                              <ng-icon [name]="icono.valor" size="24"></ng-icon>
+                              <span class="icono-label">{{ icono.label }}</span>
+                            </div>
+                          }
+                        </div>
+                        <small class="field-help"
+                          >Haz clic en un icono para seleccionarlo</small
+                        >
                       </div>
                     </div>
                   </div>
@@ -3027,30 +3184,6 @@
                 celebración al máximo.
               </span>
             </div>
-          </div>
-        </div>
-
-        <!-- ----------------------------------------------------
-             ACORDEÓN: HASHTAG
-             - Hashtag personalizado para el evento
-               (ej: #MiBodaFeliz)
-             ---------------------------------------------------- -->
-        <div class="acordeon">
-          <div
-            class="acordeon-header"
-            (click)="acordeonHashtag = !acordeonHashtag"
-          >
-            <span>#️⃣ Hashtag</span>
-            <span class="icono">{{ acordeonHashtag ? "▲" : "▼" }}</span>
-          </div>
-
-          <div class="acordeon-body" [class.abierto]="acordeonHashtag">
-            <input
-              type="text"
-              [(ngModel)]="nuevaInvitacion.hashtag"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="#MiBodaFeliz"
-            />
           </div>
         </div>
       </div>

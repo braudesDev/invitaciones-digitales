@@ -14,6 +14,58 @@
 }
 
 /* ============================================
+   ICONOS - CONFIRMACIÓN
+   ============================================ */
+
+.inline-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+  stroke-width: 2;
+  width: 18px;
+  height: 18px;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+/* Colores de iconos según estado */
+.estado-confirmado .inline-icon {
+  color: var(--accent, #c9a87c);
+}
+
+.estado-pendiente .inline-icon {
+  color: var(--primary, #5c3d2e);
+}
+
+.estado-rechazado .inline-icon {
+  color: var(--text, #666);
+}
+
+.btn-confirmar .inline-icon {
+  color: white;
+}
+
+.btn-rechazar .inline-icon {
+  color: white;
+}
+
+.btn-calendario .inline-icon {
+  color: white;
+}
+
+.respuesta-final.confirmado .inline-icon {
+  color: #065f46;
+}
+
+.respuesta-final.rechazado .inline-icon {
+  color: #991b1b;
+}
+
+.cargando-msg .inline-icon {
+  color: var(--accent, #c9a87c);
+}
+
+/* ============================================
    ENCABEZADO PERSONALIZADO
    ============================================ */
 
@@ -23,7 +75,7 @@
 
 .confirmacion-titulo {
   font-family: inherit;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
   margin: 0 0 0.3rem;
@@ -91,21 +143,18 @@
   border-left: 4px solid transparent;
 }
 
-/* CONFIRMADO */
 .estado-confirmado {
   border-left-color: var(--accent, #c9a87c);
   background: rgba(201, 168, 124, 0.05);
   color: var(--primary, #5c3d2e);
 }
 
-/* RECHAZADO */
 .estado-rechazado {
   border-left-color: var(--text, #666);
   background: rgba(102, 102, 102, 0.05);
   color: var(--text, #666);
 }
 
-/* PENDIENTE */
 .estado-pendiente {
   border-left-color: var(--primary, #5c3d2e);
   background: rgba(92, 61, 46, 0.05);
@@ -151,6 +200,21 @@
 }
 
 /* ============================================
+   CARGANDO
+   ============================================ */
+
+.cargando-msg {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text, #666);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ============================================
    BOTONES DE ACCIÓN
    ============================================ */
 
@@ -164,6 +228,10 @@
 
 .btn-confirmar,
 .btn-rechazar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 14px 24px;
   border: none;
   border-radius: 40px;
@@ -218,6 +286,10 @@
 }
 
 .btn-calendario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   background: var(--primary, #5c3d2e);
   color: #ffffff;
   border: none;
@@ -226,10 +298,6 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
   width: 100%;
   max-width: 500px;
   box-shadow: 0 4px 15px rgba(92, 61, 46, 0.3);
@@ -266,13 +334,11 @@
    ESTILOS POR ESTILO SELECCIONADO
    ================================================================ */
 
-/* ---------- TARJETAS ---------- */
 .estilo-tarjetas .btn-confirmar,
 .estilo-tarjetas .btn-rechazar {
   border-radius: 12px;
 }
 
-/* ---------- MINIMALISTA ---------- */
 .estilo-minimalista .btn-confirmar,
 .estilo-minimalista .btn-rechazar,
 .estilo-minimalista .btn-calendario {
@@ -303,7 +369,6 @@
   box-shadow: none;
 }
 
-/* ---------- LISTA ---------- */
 .estilo-lista .btn-confirmar,
 .estilo-lista .btn-rechazar,
 .estilo-lista .btn-calendario {
@@ -343,7 +408,6 @@
   transform: none;
 }
 
-/* ---------- ELEGANTE ---------- */
 .estilo-elegante .btn-confirmar,
 .estilo-elegante .btn-rechazar,
 .estilo-elegante .btn-calendario {
@@ -382,7 +446,6 @@
   transform: none;
 }
 
-/* ---------- MODERNO ---------- */
 .estilo-moderno .btn-confirmar,
 .estilo-moderno .btn-rechazar,
 .estilo-moderno .btn-calendario {

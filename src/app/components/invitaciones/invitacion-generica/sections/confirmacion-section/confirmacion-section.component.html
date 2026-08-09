@@ -1,7 +1,10 @@
 <!-- src/app/components/invitaciones/invitacion-generica/sections/confirmacion-section/confirmacion-section.component.html -->
 
 @if (cargando) {
-  <div class="cargando-msg">⏳ Cargando tu invitación...</div>
+  <div class="cargando-msg">
+    <ng-icon name="lucideHourglass" size="18" class="inline-icon"></ng-icon>
+    Cargando tu invitación...
+  </div>
 }
 
 @if (!cargando && data && data.mostrarSeccion) {
@@ -9,7 +12,7 @@
     class="confirmacion-section {{ 'estilo-' + data.estilo }}"
     [style.font-family]="fontFamily"
   >
-    <!-- ✅ ENCABEZADO PERSONALIZADO -->
+    <!-- ENCABEZADO PERSONALIZADO -->
     <div class="confirmacion-header">
       <h2 class="confirmacion-titulo">
         {{ data.titulo || "Confirma tu asistencia" }}
@@ -21,19 +24,32 @@
       </div>
     </div>
 
-    <!-- ✅ DESCRIPCIÓN PERSONALIZADA -->
+    <!-- DESCRIPCIÓN PERSONALIZADA -->
     @if (data.descripcion) {
       <p class="confirmacion-descripcion">{{ data.descripcion }}</p>
     }
 
-    <!-- ✅ ESTADO ACTUAL (ESENCIA ORIGINAL) -->
+    <!--  ESTADO ACTUAL (ESENCIA ORIGINAL) -->
     @if (estadoActual === "confirmado") {
       <div class="estado-card">
         <div class="estado-confirmado">
-          <span>✅</span>
+          <span>
+            <ng-icon
+              name="heroCheckBadge"
+              size="18"
+              class="inline-icon"
+            ></ng-icon>
+          </span>
           <div>
             <strong>¡Asistencia confirmada!</strong>
-            <p>Te esperamos con mucha alegría 🎉</p>
+            <p>
+              Te esperamos con mucha alegría
+              <ng-icon
+                name="lucideSparkles"
+                size="18"
+                class="inline-icon"
+              ></ng-icon>
+            </p>
           </div>
         </div>
       </div>
@@ -41,7 +57,13 @@
     @if (estadoActual === "rechazado") {
       <div class="estado-card">
         <div class="estado-rechazado">
-          <span>💔</span>
+          <span>
+            <ng-icon
+              name="lucideHeartCrack"
+              size="18"
+              class="inline-icon"
+            ></ng-icon>
+          </span>
           <div>
             <strong>No podrás asistir</strong>
             <p>Gracias por avisar, en otra ocasión será</p>
@@ -52,7 +74,13 @@
     @if (estadoActual === "pendiente") {
       <div class="estado-card">
         <div class="estado-pendiente">
-          <span>⏳</span>
+          <span>
+            <ng-icon
+              name="lucideHourglass"
+              size="18"
+              class="inline-icon"
+            ></ng-icon>
+          </span>
           <div>
             <strong>Pendiente de confirmar</strong>
             <p>Por favor confirma tu asistencia</p>
@@ -61,7 +89,7 @@
       </div>
     }
 
-    <!-- ✅ BOTONES DE ACCIÓN (ESENCIA ORIGINAL + PERSONALIZACIÓN) -->
+    <!-- BOTONES DE ACCIÓN (ESENCIA ORIGINAL + PERSONALIZACIÓN) -->
     @if (estadoActual === "pendiente") {
       <div class="botones-accion">
         <!-- Confirmar asistencia (solo si está habilitado) -->
@@ -71,7 +99,12 @@
             (click)="confirmarAsistencia()"
             [disabled]="confirmando"
           >
-            ✅ Confirmar asistencia
+            <ng-icon
+              name="lucideCheckCheck"
+              size="18"
+              class="inline-icon"
+            ></ng-icon>
+            Confirmar asistencia
           </button>
         }
 
@@ -82,34 +115,52 @@
             (click)="rechazarAsistencia()"
             [disabled]="confirmando"
           >
-            💔 No podré asistir
+            <ng-icon
+              name="lucideHeartCrack"
+              size="18"
+              class="inline-icon"
+            ></ng-icon>
+            No podré asistir
           </button>
         }
       </div>
     }
 
-    <!-- ✅ MENSAJES DE RESPUESTA (ESENCIA ORIGINAL) -->
+    <!--  MENSAJES DE RESPUESTA (ESENCIA ORIGINAL) -->
     @if (estadoActual === "confirmado") {
       <div class="respuesta-final confirmado">
-        ✅ Ya confirmaste tu asistencia. ¡Te esperamos! 🎉
+        Ya confirmaste tu asistencia. ¡Te esperamos!
+        <ng-icon name="lucideSparkles" size="18" class="inline-icon"></ng-icon>
       </div>
     }
     @if (estadoActual === "rechazado") {
       <div class="respuesta-final rechazado">
-        💔 Has rechazado la invitación. Gracias por avisar.
+        <ng-icon
+          name="lucideHeartCrack"
+          size="18"
+          class="inline-icon"
+        ></ng-icon>
+        Has rechazado la invitación. Gracias por avisar.
       </div>
     }
 
-    <!-- ✅ GUARDAR EN CALENDARIO (ESENCIA ORIGINAL + PERSONALIZACIÓN) -->
+    <!--  GUARDAR EN CALENDARIO (ESENCIA ORIGINAL + PERSONALIZACIÓN) -->
     @if (data.mostrarCalendario !== false) {
       <div class="calendario-accion">
         <button class="btn-calendario" (click)="guardarEnCalendario()">
-          <span>📅</span> Guardar evento en mi calendario
+          <span>
+            <ng-icon
+              name="heroCalendarDays"
+              size="18"
+              class="inline-icon"
+            ></ng-icon>
+          </span>
+          Guardar evento en mi calendario
         </button>
       </div>
     }
 
-    <!-- ✅ PIE (ESENCIA ORIGINAL) -->
+    <!--  PIE (ESENCIA ORIGINAL) -->
     <div class="confirmacion-footer">
       <p class="footer-texto">
         ¡Gracias por ser parte de este día tan especial!

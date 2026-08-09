@@ -25,6 +25,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Galeria } from '../../../../../models/galeria.model';
+import { NgIcon } from '@ng-icons/core';
 
 // ================================================================
 // 1. DECORADOR DEL COMPONENTE
@@ -32,7 +33,7 @@ import { Galeria } from '../../../../../models/galeria.model';
 @Component({
   selector: 'app-galeria-section', // Selector HTML para usar el componente
   standalone: true, // Componente standalone (no necesita NgModule)
-  imports: [CommonModule], // Módulos importados (ngIf, ngFor, etc.)
+  imports: [CommonModule, NgIcon], // Módulos importados (ngIf, ngFor, etc.)
   templateUrl: './galeria-section.component.html', // Template HTML asociado
   styleUrls: ['./galeria-section.component.css'], // Estilos CSS asociados
   changeDetection: ChangeDetectionStrategy.Eager, // Estrategia de detección de cambios

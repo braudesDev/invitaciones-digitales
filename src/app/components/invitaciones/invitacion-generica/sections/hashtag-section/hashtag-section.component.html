@@ -1,1 +1,45 @@
-<p>hashtag-section works!</p>
+<div class="hashtag-container">
+  <!-- HEADER -->
+  <div class="hashtag-header">
+    <h2 class="hashtag-titulo">{{ data.titulo }}</h2>
+    <div class="hashtag-divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">✦</span>
+      <span class="divider-line"></span>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="hashtag-content">
+    <!-- Subtítulo -->
+    @if (data.subtitulo) {
+      <p class="hashtag-subtitulo">{{ data.subtitulo }}</p>
+    }
+
+    <!-- Icono decorativo - USANDO NG-ICON -->
+    @if (data.mostrarIcono) {
+      <div class="hashtag-icono">
+        <ng-icon [name]="data.icono" size="40"></ng-icon>
+      </div>
+    }
+
+    <!-- Hashtag principal -->
+    <div class="hashtag-display" [class.resaltado]="data.resaltarHashtag">
+      {{ data.hashtag }}
+    </div>
+
+    <!-- Mensaje principal -->
+    @if (data.mensaje) {
+      <p class="hashtag-mensaje">{{ data.mensaje }}</p>
+    }
+
+    <!-- Características -->
+    @if (data.mostrarCaracteristicas) {
+      <div class="hashtag-caracteristicas">
+        <span><ng-icon name="heroCamera" size="16"></ng-icon> Toma fotos</span>
+        <span><ng-icon name="heroShare" size="16"></ng-icon> Comparte</span>
+        <span><ng-icon name="heroTag" size="16"></ng-icon> Etiqueta</span>
+      </div>
+    }
+  </div>
+</div>

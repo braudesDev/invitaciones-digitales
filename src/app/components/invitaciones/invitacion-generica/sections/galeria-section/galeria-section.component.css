@@ -50,7 +50,7 @@
 /* Título principal de la galería */
 .galeria-titulo {
   font-family: inherit;
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 400;
   color: var(--primary, #5c3d2e);
   margin: 0 0 0.3rem;
@@ -1134,4 +1134,64 @@
 .galeria-section,
 .galeria-section * {
   font-family: inherit !important;
+}
+
+/* ============================================
+   ICONOS - GALERÍA SECTION
+   ============================================ */
+
+/* Icono principal (cámara) */
+.galeria-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  min-height: 60px;
+}
+
+.galeria-icono ng-icon {
+  color: var(--accent, #c9a87c);
+  stroke-width: 1.5;
+  width: 50px; /* 👈 CAMBIADO de 50px a 32px */
+  height: 50px; /* 👈 CAMBIADO de 50px a 32px */
+  display: block;
+  overflow: visible;
+}
+
+/* Icono "destacada" (estrella) - si existe */
+.galeria-destacada ng-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+  color: #f1c40f;
+  stroke-width: 2;
+  width: 14px;
+  height: 14px;
+}
+
+/* Iconos en botones de control */
+.carrusel-btn ng-icon,
+.btn-prev ng-icon,
+.btn-next ng-icon {
+  display: inline-block;
+  vertical-align: middle;
+  color: white;
+  stroke-width: 2.5;
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .galeria-icono ng-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .galeria-icono ng-icon {
+    width: 36px;
+    height: 36px;
+  }
 }

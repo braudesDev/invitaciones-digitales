@@ -3,7 +3,9 @@
 @if (data && data.mostrarSeccion) {
   <div class="hospedaje-section">
     <div class="hospedaje-header">
-      <span class="hospedaje-icono">🏠</span>
+      <span class="hospedaje-icono">
+        <ng-icon name="hugeAirbnb" />
+      </span>
       <h2 class="hospedaje-titulo">{{ data.titulo || "Hospedaje Airbnb" }}</h2>
       <div class="hospedaje-divider">
         <span class="divider-line"></span>
@@ -19,30 +21,30 @@
     <!-- ============================================ -->
     <!-- ESTILO: TARJETAS -->
     <!-- ============================================ -->
-    @if (data.estilo === 'tarjetas') {
+    @if (data.estilo === "tarjetas") {
       <div class="hospedaje-tarjetas">
         @for (alojamiento of data.alojamientos; track alojamiento) {
-          <div
-            class="hospedaje-tarjeta"
-            >
+          <div class="hospedaje-tarjeta">
             @if (alojamiento.imagen) {
               <img
                 [src]="alojamiento.imagen"
                 alt="Alojamiento"
                 class="tarjeta-imagen"
-                />
+              />
             }
             <div class="tarjeta-contenido">
               <h3 class="tarjeta-titulo">{{ alojamiento.titulo }}</h3>
-              <p class="tarjeta-ubicacion">📍 {{ alojamiento.ubicacion }}</p>
+              <p class="tarjeta-ubicacion">
+                <ng-icon name="heroMapPin" /> {{ alojamiento.ubicacion }}
+              </p>
               @if (alojamiento.distancia) {
                 <p class="tarjeta-distancia">
-                  🕐 {{ alojamiento.distancia }}
+                  <ng-icon name="heroClock" /> {{ alojamiento.distancia }}
                 </p>
               }
               @if (alojamiento.capacidad) {
                 <p class="tarjeta-capacidad">
-                  👥 {{ alojamiento.capacidad }}
+                  <ng-icon name="heroUsers" /> {{ alojamiento.capacidad }}
                 </p>
               }
               <a
@@ -50,7 +52,7 @@
                 target="_blank"
                 class="btn-hospedaje"
                 rel="noopener noreferrer"
-                >
+              >
                 {{ data.textoBoton || "Ver en Airbnb" }}
               </a>
             </div>
@@ -61,12 +63,14 @@
     <!-- ============================================ -->
     <!-- ESTILO: TIMELINE -->
     <!-- ============================================ -->
-    @if (data.estilo === 'timeline') {
+    @if (data.estilo === "timeline") {
       <div class="hospedaje-timeline">
-        @for (alojamiento of data.alojamientos; track alojamiento; let i = $index) {
-          <div
-            class="timeline-item"
-            >
+        @for (
+          alojamiento of data.alojamientos;
+          track alojamiento;
+          let i = $index
+        ) {
+          <div class="timeline-item">
             <div class="timeline-marker">
               <span class="timeline-number">{{ i + 1 }}</span>
             </div>
@@ -78,20 +82,22 @@
                     [src]="alojamiento.imagen"
                     [alt]="alojamiento.titulo"
                     class="timeline-imagen"
-                    />
+                  />
                 </div>
               }
               <div class="timeline-info">
                 <h3 class="timeline-titulo">{{ alojamiento.titulo }}</h3>
-                <p class="timeline-ubicacion">📍 {{ alojamiento.ubicacion }}</p>
+                <p class="timeline-ubicacion">
+                  <ng-icon name="heroMapPin" /> {{ alojamiento.ubicacion }}
+                </p>
                 @if (alojamiento.distancia) {
                   <p class="timeline-distancia">
-                    🕐 {{ alojamiento.distancia }}
+                    <ng-icon name="heroClock" /> {{ alojamiento.distancia }}
                   </p>
                 }
                 @if (alojamiento.capacidad) {
                   <p class="timeline-capacidad">
-                    👥 {{ alojamiento.capacidad }}
+                    <ng-icon name="heroUsers" /> {{ alojamiento.capacidad }}
                   </p>
                 }
                 <a
@@ -99,7 +105,7 @@
                   target="_blank"
                   class="btn-hospedaje"
                   rel="noopener noreferrer"
-                  >
+                >
                   {{ data.textoBoton || "Ver en Airbnb" }}
                 </a>
               </div>
@@ -111,7 +117,7 @@
     <!-- ============================================ -->
     <!-- ESTILO: CATÁLOGO -->
     <!-- ============================================ -->
-    @if (data.estilo === 'catalogo') {
+    @if (data.estilo === "catalogo") {
       <div class="hospedaje-catalogo">
         @for (alojamiento of data.alojamientos; track alojamiento) {
           <div class="catalogo-item">
@@ -121,20 +127,22 @@
                   [src]="alojamiento.imagen"
                   alt="Alojamiento"
                   class="catalogo-imagen"
-                  />
+                />
               }
             </div>
             <div class="catalogo-info">
               <h3 class="catalogo-titulo">{{ alojamiento.titulo }}</h3>
-              <p class="catalogo-ubicacion">📍 {{ alojamiento.ubicacion }}</p>
+              <p class="catalogo-ubicacion">
+                <ng-icon name="heroMapPin" /> {{ alojamiento.ubicacion }}
+              </p>
               @if (alojamiento.distancia) {
                 <p class="catalogo-distancia">
-                  🕐 {{ alojamiento.distancia }}
+                  <ng-icon name="heroClock" /> {{ alojamiento.distancia }}
                 </p>
               }
               @if (alojamiento.capacidad) {
                 <p class="catalogo-capacidad">
-                  👥 {{ alojamiento.capacidad }}
+                  <ng-icon name="heroUsers" /> {{ alojamiento.capacidad }}
                 </p>
               }
               <a
@@ -142,7 +150,7 @@
                 target="_blank"
                 class="btn-hospedaje"
                 rel="noopener noreferrer"
-                >
+              >
                 {{ data.textoBoton || "Ver en Airbnb" }}
               </a>
             </div>
@@ -153,7 +161,7 @@
     <!-- ============================================ -->
     <!-- ESTILO: ÍCONOS -->
     <!-- ============================================ -->
-    @if (data.estilo === 'iconos') {
+    @if (data.estilo === "iconos") {
       <div class="hospedaje-iconos">
         @for (alojamiento of data.alojamientos; track alojamiento) {
           <div class="icono-item">
@@ -164,85 +172,91 @@
                   [src]="alojamiento.imagen"
                   [alt]="alojamiento.titulo"
                   class="icono-imagen"
-                  />
+                />
               }
               @if (!alojamiento.imagen) {
                 <div class="icono-imagen-placeholder">
-                  🏠
+                  <ng-icon name="hugeAirbnb" />
                 </div>
               }
             </div>
             <h4 class="icono-titulo">{{ alojamiento.titulo }}</h4>
-            <p class="icono-ubicacion">{{ alojamiento.ubicacion }}</p>
+            <p class="icono-ubicacion">
+              <ng-icon name="heroMapPin" /> {{ alojamiento.ubicacion }}
+            </p>
             <!-- Detalles adicionales -->
             @if (alojamiento.distancia || alojamiento.capacidad) {
-              <div
-                class="icono-detalles"
-                >
+              <div class="icono-detalles">
                 @if (alojamiento.distancia) {
-                  <span class="icono-detalle"
-                    >🕐 {{ alojamiento.distancia }}</span
-                    >
-                  }
-                  @if (alojamiento.capacidad) {
-                    <span class="icono-detalle"
-                      >👥 {{ alojamiento.capacidad }}</span
-                      >
-                    }
-                  </div>
-                }
-                <a
-                  [href]="alojamiento.enlace"
-                  target="_blank"
-                  class="btn-hospedaje"
-                  rel="noopener noreferrer"
+                  <span class="icono-detalle">
+                    <ng-icon name="heroClock" />
+                    {{ alojamiento.distancia }}</span
                   >
-                  <span>{{ data.textoBoton || "Ver en Airbnb" }}</span>
-                  <span class="btn-icono">→</span>
-                </a>
-              </div>
-            }
-          </div>
-        }
-        <!-- ============================================ -->
-        <!-- ESTILO: MOSAICO -->
-        <!-- ============================================ -->
-        @if (data.estilo === 'mosaico') {
-          <div class="hospedaje-mosaico">
-            @for (alojamiento of data.alojamientos; track alojamiento; let i = $index) {
-              <div
-                class="mosaico-item"
-                [class.mosaico-grande]="i === 0"
-                [class.mosaico-medio]="i === 1 || i === 2"
-                >
-                @if (alojamiento.imagen) {
-                  <img
-                    [src]="alojamiento.imagen"
-                    alt="Alojamiento"
-                    class="mosaico-imagen"
-                    />
                 }
-                <div class="mosaico-overlay">
-                  <h3 class="mosaico-titulo">{{ alojamiento.titulo }}</h3>
-                  <p class="mosaico-ubicacion">{{ alojamiento.ubicacion }}</p>
-                  <a
-                    [href]="alojamiento.enlace"
-                    target="_blank"
-                    class="btn-mosaico"
-                    rel="noopener noreferrer"
-                    >
-                    {{ data.textoBoton || "Ver en Airbnb" }}
-                  </a>
-                </div>
+                @if (alojamiento.capacidad) {
+                  <span class="icono-detalle">
+                    <ng-icon name="heroUsers" />
+                    {{ alojamiento.capacidad }}</span
+                  >
+                }
               </div>
             }
+            <a
+              [href]="alojamiento.enlace"
+              target="_blank"
+              class="btn-hospedaje"
+              rel="noopener noreferrer"
+            >
+              <span>{{ data.textoBoton || "Ver en Airbnb" }}</span>
+              <span class="btn-icono">→</span>
+            </a>
           </div>
-        }
-        <!-- Texto adicional -->
-        @if (data.textoAdicional) {
-          <p class="hospedaje-texto-adicional">
-            {{ data.textoAdicional }}
-          </p>
         }
       </div>
     }
+    <!-- ============================================ -->
+    <!-- ESTILO: MOSAICO -->
+    <!-- ============================================ -->
+    @if (data.estilo === "mosaico") {
+      <div class="hospedaje-mosaico">
+        @for (
+          alojamiento of data.alojamientos;
+          track alojamiento;
+          let i = $index
+        ) {
+          <div
+            class="mosaico-item"
+            [class.mosaico-grande]="i === 0"
+            [class.mosaico-medio]="i === 1 || i === 2"
+          >
+            @if (alojamiento.imagen) {
+              <img
+                [src]="alojamiento.imagen"
+                alt="Alojamiento"
+                class="mosaico-imagen"
+              />
+            }
+            <div class="mosaico-overlay">
+              <h3 class="mosaico-titulo">{{ alojamiento.titulo }}</h3>
+              <p class="mosaico-ubicacion">{{ alojamiento.ubicacion }}</p>
+              <a
+                [href]="alojamiento.enlace"
+                target="_blank"
+                class="btn-mosaico"
+                rel="noopener noreferrer"
+              >
+                {{ data.textoBoton || "Ver en Airbnb" }}
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+    }
+    <!-- Texto adicional -->
+    @if (data.textoAdicional) {
+      <p class="hospedaje-texto-adicional">
+        {{ data.textoAdicional }}
+      </p>
+    }
+  </div>
+}

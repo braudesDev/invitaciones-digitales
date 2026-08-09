@@ -2,6 +2,12 @@
   <div class="ceremonia-container" [style.font-family]="data?.fontFamily">
     <!-- Título de la sección -->
     <h1 class="titulo-ceremonia">Donde Comienza Nuestra Historia</h1>
+    <!--Divisor-->
+    <div class="ceremonia-divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">✦</span>
+      <span class="divider-line"></span>
+    </div>
     <div class="contenedor-tarjetas">
       <!-- Tarjeta 1: Ceremonia -->
       @if (data.lugar || data.direccion || data.hora) {
@@ -13,7 +19,9 @@
               class="imagen-tarjeta"
             />
           } @else {
-            <div class="imagen-placeholder">⛪</div>
+            <div class="placeholder-icon">
+              <ng-icon name="lucideChurch" size="48"></ng-icon>
+            </div>
           }
           <h2 class="titulo-tarjeta">Ceremonia Religiosa</h2>
           @if (data.descripcion) {
@@ -23,7 +31,15 @@
           }
           @if (data.lugar || data.direccion) {
             <address class="direccion-tarjeta">
-              <strong>📍 Ubicación:</strong> {{ data.lugar }}
+              <strong>
+                <ng-icon
+                  name="heroMapPin"
+                  size="16"
+                  class="inline-icon"
+                ></ng-icon>
+                Ubicación:
+              </strong>
+              {{ data.lugar }}
               @if (data.lugar && data.direccion) {
                 <br />
               }
@@ -32,7 +48,15 @@
           }
           @if (data.hora) {
             <p class="horario-tarjeta">
-              <strong>⏰ Horario:</strong> {{ data.hora }}
+              <strong>
+                <ng-icon
+                  name="heroClock"
+                  size="16"
+                  class="inline-icon"
+                ></ng-icon>
+                Horario:
+              </strong>
+              {{ data.hora }}
             </p>
           }
           <a
@@ -44,7 +68,8 @@
             target="_blank"
             class="boton-mapa"
           >
-            🗺️ Cómo llegar
+            <ng-icon name="heroMap" size="16" class="btn-icon"></ng-icon>
+            Cómo llegar
           </a>
         </div>
       }
@@ -59,7 +84,9 @@
               class="imagen-tarjeta"
             />
           } @else {
-            <div class="imagen-placeholder">🎉</div>
+            <div class="placeholder-icon">
+              <ng-icon name="heroSparkles" size="48"></ng-icon>
+            </div>
           }
           <h2 class="titulo-tarjeta">Recepción</h2>
           @if (recepcionData.descripcion) {
@@ -69,7 +96,15 @@
           }
           @if (recepcionData.lugar || recepcionData.direccion) {
             <address class="direccion-tarjeta">
-              <strong>📍 Ubicación:</strong> {{ recepcionData.lugar }}
+              <strong>
+                <ng-icon
+                  name="heroMapPin"
+                  size="16"
+                  class="inline-icon"
+                ></ng-icon>
+                Ubicación:
+              </strong>
+              {{ recepcionData.lugar }}
               @if (recepcionData.lugar && recepcionData.direccion) {
                 <br />
               }
@@ -78,7 +113,15 @@
           }
           @if (recepcionData.hora) {
             <p class="horario-tarjeta">
-              <strong>⏰ Horario:</strong> {{ recepcionData.hora }}
+              <strong>
+                <ng-icon
+                  name="heroClock"
+                  size="16"
+                  class="inline-icon"
+                ></ng-icon>
+                Horario:
+              </strong>
+              {{ recepcionData.hora }}
             </p>
           }
           <a
@@ -92,7 +135,8 @@
             target="_blank"
             class="boton-mapa"
           >
-            🗺️ Cómo llegar
+            <ng-icon name="heroMap" size="16" class="btn-icon"></ng-icon>
+            Cómo llegar
           </a>
         </div>
       }

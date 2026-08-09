@@ -8,11 +8,12 @@ import {
   getEstiloIcon,
   getEstiloDescripcion,
 } from '../../../../../models/dress-code.model';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-dresscode-section',
   standalone: true,
-  imports: [],
+  imports: [NgIcon],
   templateUrl: './dresscode-section.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./dresscode-section.component.css'],

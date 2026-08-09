@@ -1,0 +1,184 @@
+/* ============================================
+   HASHTAG - CON PALETA ORIGINAL
+   ============================================ */
+
+.hashtag-container {
+  padding: 3.5rem 1.5rem;
+  background: var(--secondary, #f5ede4);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hashtag-header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2rem;
+}
+
+.hashtag-titulo {
+  font-family: inherit;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 400;
+  color: var(--primary, #5c3d2e);
+  margin: 0 0 0.8rem;
+  letter-spacing: 2px;
+}
+
+.hashtag-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent, #c9a87c),
+    transparent
+  );
+}
+
+.divider-icon {
+  color: var(--accent, #c9a87c);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* ============================================
+   CONTENIDO
+   ============================================ */
+
+.hashtag-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hashtag-subtitulo {
+  font-family: inherit;
+  font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+  font-weight: 300;
+  color: var(--text, #5a4a3a);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+  opacity: 0.8;
+}
+
+.hashtag-icono {
+  font-size: 2.5rem;
+  color: var(--accent, #c9a87c);
+  margin: 0.25rem 0;
+  opacity: 0.8;
+}
+
+.hashtag-display {
+  font-family: inherit;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  color: var(--primary, #5c3d2e);
+  letter-spacing: 2px;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+/* Hashtag resaltado */
+.hashtag-display.resaltado {
+  font-weight: 700;
+  color: var(--accent, #c9a87c);
+  border-top: 2px solid var(--accent, #c9a87c);
+  border-bottom: 2px solid var(--accent, #c9a87c);
+  padding: 0.75rem 2rem;
+  display: inline-block;
+}
+
+.hashtag-mensaje {
+  font-family: inherit;
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  font-weight: 300;
+  color: var(--text, #5a4a3a);
+  line-height: 1.7;
+  max-width: 550px;
+  margin: 0.25rem auto;
+}
+
+/* ============================================
+   CARACTERÍSTICAS
+   ============================================ */
+
+.hashtag-caracteristicas {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.hashtag-caracteristicas span {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--text, #5a4a3a);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.hashtag-caracteristicas i {
+  color: var(--accent, #c9a87c);
+  margin-right: 0.5rem;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 640px) {
+  .hashtag-container {
+    padding: 2.5rem 1.2rem;
+  }
+
+  .hashtag-caracteristicas {
+    gap: 1rem;
+  }
+
+  .hashtag-caracteristicas span {
+    font-size: 0.65rem;
+  }
+
+  .hashtag-display.resaltado {
+    padding: 0.5rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hashtag-container {
+    padding: 2rem 1rem;
+  }
+
+  .hashtag-caracteristicas {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+}
+
+/* ============================================
+   FORZAR HERENCIA DE FUENTE
+   ============================================ */
+
+.hashtag-container,
+.hashtag-container * {
+  font-family: inherit !important;
+}

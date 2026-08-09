@@ -39,8 +39,12 @@
       @for (item of data.items; track item; let i = $index) {
         <div class="consideracion-item">
           <div class="consideracion-contenido">
-            <div class="consideracion-icono" [style.color]="data.colorIconos">
-              {{ item.icono || getIconoItem(item.titulo) }}
+            <div class="consideracion-icono">
+              @if (item.icono) {
+                <ng-icon [name]="item.icono" size="28"></ng-icon>
+              } @else {
+                <ng-icon [name]="getIconoItem(item.titulo)" size="28"></ng-icon>
+              }
             </div>
             <div class="consideracion-info">
               <h4 class="consideracion-titulo">{{ item.titulo }}</h4>
