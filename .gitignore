@@ -56,3 +56,5 @@ src/environments/environment.*.ts
 !src/environments/environment.example.ts
 
 .firebase/
+
+firebase-debug.log*
