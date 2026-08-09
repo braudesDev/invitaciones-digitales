@@ -1,4 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
@@ -16,11 +21,12 @@ import {
 } from '@angular/fire/firestore';
 import { Auth, authState, signOut } from '@angular/fire/auth';
 import { Router, RouterModule } from '@angular/router';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-anfitrion-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NgIcon],
   templateUrl: './anfitrion-dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./anfitrion-dashboard.component.css'],

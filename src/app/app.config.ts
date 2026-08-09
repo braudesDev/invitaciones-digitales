@@ -29,6 +29,20 @@ import {
   heroStar,
   heroShare,
   heroTag,
+  heroHandRaised,
+  heroTrash,
+  heroExclamationCircle,
+  heroPlusCircle,
+  heroArrowRight,
+  heroHome,
+  heroPencil,
+  heroCheckCircle,
+  heroXCircle,
+  heroUserCircle,
+  heroTicket,
+  heroChatBubbleLeft,
+  heroBolt,
+  heroXMark,
 } from '@ng-icons/heroicons/outline';
 //Lucide icons
 import {
@@ -49,6 +63,9 @@ import {
   lucidePin,
   lucideMail,
   lucideFeather,
+  lucideTarget,
+  lucideTrash2,
+  lucideLink,
 } from '@ng-icons/lucide';
 //Huge Icons
 import {
@@ -58,6 +75,10 @@ import {
   hugeStar,
   hugePhoneOff01,
   hugeDiamond02,
+  hugeQrCode,
+  hugeWhatsapp,
+  hugeUserGroup,
+  hugeUserAdd02,
 } from '@ng-icons/huge-icons';
 
 export const appConfig: ApplicationConfig = {
@@ -91,6 +112,20 @@ export const appConfig: ApplicationConfig = {
       heroStar,
       heroShare,
       heroTag,
+      heroHandRaised,
+      heroTrash,
+      heroExclamationCircle,
+      heroPlusCircle,
+      heroArrowRight,
+      heroHome,
+      heroPencil,
+      heroCheckCircle,
+      heroXCircle,
+      heroUserCircle,
+      heroTicket,
+      heroChatBubbleLeft,
+      heroBolt,
+      heroXMark,
 
       //Lucide Icons
       lucideChurch,
@@ -110,6 +145,9 @@ export const appConfig: ApplicationConfig = {
       lucidePin,
       lucideMail,
       lucideFeather,
+      lucideTarget,
+      lucideTrash2,
+      lucideLink,
 
       //Huge Icons
       hugeBulb,
@@ -118,6 +156,10 @@ export const appConfig: ApplicationConfig = {
       hugeStar,
       hugePhoneOff01,
       hugeDiamond02,
+      hugeQrCode,
+      hugeWhatsapp,
+      hugeUserGroup,
+      hugeUserAdd02,
     }),
   ],
 };
