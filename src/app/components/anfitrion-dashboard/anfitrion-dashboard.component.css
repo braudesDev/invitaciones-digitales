@@ -4,10 +4,77 @@
   padding: 20px;
 }
 
+/* ============================================
+   HEADER
+   ============================================ */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #667eea;
+}
+
+.user-text h2 {
+  margin: 0 0 5px 0;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-text h2 ng-icon {
+  color: #667eea;
+}
+
+.user-greeting {
+  margin: 0;
+  color: #555;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .header-buttons {
   display: flex;
-  gap: 15px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-validar-qr {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 40px;
+  font-weight: 500;
+  transition: transform 0.2s;
+  display: inline-flex;
   align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-validar-qr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .btn-logout {
@@ -29,18 +96,154 @@
   box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
 }
 
-.evento-info {
-  background: #f0f0f0;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+/* ============================================
+   SELECTOR DE EVENTOS
+   ============================================ */
+.evento-selector {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
+.evento-selector label {
+  font-weight: 500;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.selector-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex: 1;
+  min-width: 200px;
+  flex-wrap: wrap;
+}
+
+.selector-wrapper select {
+  flex: 1;
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.selector-wrapper select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.selector-wrapper select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-eliminar-evento {
+  background: #ff4444;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-eliminar-evento:hover {
+  background: #cc0000;
+  transform: scale(1.05);
+}
+
+.no-eventos-msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.btn-crear-evento {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 40px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  transition: transform 0.2s;
+}
+
+.btn-crear-evento:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
+}
+
+/* ============================================
+   NAV CENTRAL
+   ============================================ */
+.nav-central {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0 25px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  justify-content: center;
+}
+
+.nav-item {
+  padding: 10px 20px;
+  background: white;
+  color: #333;
+  text-decoration: none;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
+  border: 1px solid #e0e0e0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-item:hover {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  transform: translateY(-2px);
+  border-color: transparent;
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-color: transparent;
+}
+
+/* ============================================
+   TABS
+   ============================================ */
 .tabs {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
   border-bottom: 2px solid #eee;
+  flex-wrap: wrap;
 }
 
 .tab {
@@ -48,10 +251,18 @@
   cursor: pointer;
   border-radius: 8px 8px 0 0;
   transition: all 0.3s;
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #555;
 }
 
 .tab:hover {
   background: #f5f5f5;
+  color: #333;
 }
 
 .tab.active {
@@ -59,6 +270,9 @@
   color: white;
 }
 
+/* ============================================
+   TABLA
+   ============================================ */
 .table-wrapper {
   overflow-x: auto;
   margin-bottom: 30px;
@@ -71,6 +285,7 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 700px;
 }
 
 .table-invitados th {
@@ -81,9 +296,15 @@
   font-weight: 600;
 }
 
+.table-invitados th ng-icon {
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
 .table-invitados td {
   padding: 12px 15px;
   border-bottom: 1px solid #eee;
+  vertical-align: middle;
 }
 
 .pases-badge {
@@ -106,6 +327,9 @@
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .estado-badge.pendiente {
@@ -129,6 +353,13 @@
   background: #f5f5f5;
   padding: 4px 8px;
   border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .btn-copy {
@@ -136,23 +367,36 @@
   color: white;
   border: none;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-  margin-left: 5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-copy:hover {
+  background: #5a6fd6;
 }
 
 .acciones-cell {
   white-space: nowrap;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
 }
 
 .btn-whatsapp,
 .btn-estado {
   border: none;
   cursor: pointer;
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 8px;
-  margin: 0 3px;
   font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
 }
 
 .btn-whatsapp {
@@ -160,20 +404,59 @@
   color: white;
 }
 
+.btn-whatsapp:hover {
+  background: #1da851;
+  transform: scale(1.05);
+}
+
 .btn-estado {
   background: #4caf50;
   color: white;
+}
+
+.btn-estado:hover {
+  background: #388e3c;
+  transform: scale(1.05);
 }
 
 .btn-estado.rechazar {
   background: #f44336;
 }
 
+.btn-estado.rechazar:hover {
+  background: #c62828;
+  transform: scale(1.05);
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px 20px;
+  color: #718096;
+}
+
+.no-data ng-icon {
+  color: #cbd5e0;
+  margin-bottom: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================
+   FORMULARIO
+   ============================================ */
 .form-nuevo-invitado {
   background: white;
   padding: 25px;
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-nuevo-invitado h3 {
+  margin: 0 0 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .form-grid {
@@ -192,6 +475,9 @@
   margin-bottom: 8px;
   font-weight: 600;
   color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .form-field input,
@@ -201,6 +487,17 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 1rem;
+  font-family: inherit;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
 .btn-agregar {
@@ -213,188 +510,237 @@
   font-size: 1rem;
   font-weight: bold;
   width: 100%;
-}
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.btn-validar-qr {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 40px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: transform 0.2s;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-}
-
-.btn-validar-qr:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-/* Selector de eventos */
-.evento-selector {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.evento-selector label {
-  font-weight: 500;
-  color: #555;
-}
-
-.evento-selector select {
-  padding: 8px 15px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  background: white;
-  font-size: 0.9rem;
-  cursor: pointer;
-  min-width: 200px;
-}
-
-.evento-selector select:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
-.selector-wrapper {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  flex: 1;
-}
-
-.selector-wrapper select {
-  flex: 1;
-}
-
-.btn-eliminar-evento {
-  background: #ff4444;
-  color: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  cursor: pointer;
-  font-size: 18px;
-  transition: all 0.2s;
-}
-
-.btn-eliminar-evento:hover {
-  background: #cc0000;
-  transform: scale(1.05);
-}
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.btn-validar-qr {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 40px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: transform 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 5px;
-}
-
-.btn-validar-qr:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.user-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #667eea;
-}
-
-.user-text h2 {
-  margin: 0 0 5px 0;
-}
-
-.user-greeting {
-  margin: 0;
-  color: #555;
-  font-size: 0.9rem;
-}
-
-.user-greeting strong {
-  color: #667eea;
-}
-
-/* Menú de navegación centralizado */
-.nav-central {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 20px 0 25px;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 16px;
   justify-content: center;
+  gap: 8px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
-.nav-item {
-  padding: 10px 20px;
-  background: white;
-  color: #333;
-  text-decoration: none;
-  border-radius: 40px;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s;
-  border: 1px solid #e0e0e0;
-}
-
-.nav-item:hover {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
+.btn-agregar:hover:not(:disabled) {
   transform: translateY(-2px);
-  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
 }
 
-.nav-item.active {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  border-color: transparent;
+.btn-agregar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* Tablets y pantallas medianas */
+@media (max-width: 1024px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .user-info {
+    justify-content: flex-start;
+  }
+
+  .header-buttons {
+    justify-content: flex-start;
+  }
+}
+
+/* Móviles grandes y tablets pequeñas */
 @media (max-width: 768px) {
+  .anfitrion-dashboard {
+    padding: 12px;
+  }
+
+  .user-text h2 {
+    font-size: 1.2rem;
+  }
+
+  .user-text h2 ng-icon {
+    display: none;
+  }
+
+  .nav-central {
+    gap: 8px;
+    padding: 10px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  .nav-item {
+    padding: 8px 14px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
   }
+
   .form-field.full-width {
     grid-column: span 1;
+  }
+
+  .tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 5px;
+  }
+
+  .tab {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .table-invitados {
+    font-size: 0.85rem;
+    min-width: 600px;
+  }
+
+  .table-invitados th,
+  .table-invitados td {
+    padding: 8px 10px;
+  }
+
+  .acciones-cell {
+    flex-direction: row;
+    gap: 4px;
+  }
+
+  .evento-selector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .selector-wrapper {
+    min-width: unset;
+  }
+
+  .link-preview {
+    max-width: 120px;
+    font-size: 0.7rem;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .anfitrion-dashboard {
+    padding: 8px;
+  }
+
+  .user-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .user-text h2 {
+    font-size: 1rem;
+  }
+
+  .user-greeting {
+    font-size: 0.8rem;
+    justify-content: center;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-validar-qr,
+  .btn-logout {
+    justify-content: center;
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .nav-item {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  .tab {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+
+  .table-invitados {
+    font-size: 0.75rem;
+    min-width: 500px;
+  }
+
+  .table-invitados th,
+  .table-invitados td {
+    padding: 6px 8px;
+  }
+
+  .pases-badge {
+    padding: 2px 8px;
+    font-size: 0.7rem;
+  }
+
+  .btn-whatsapp,
+  .btn-estado {
+    padding: 4px 6px;
+    font-size: 0.8rem;
+  }
+
+  .form-nuevo-invitado {
+    padding: 15px;
+  }
+
+  .form-nuevo-invitado h3 {
+    font-size: 1rem;
+  }
+
+  .form-field input,
+  .form-field textarea {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .btn-agregar {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .no-eventos-msg {
+    font-size: 0.8rem;
+  }
+
+  .btn-crear-evento {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .link-preview {
+    max-width: 80px;
+    font-size: 0.6rem;
+    padding: 2px 4px;
+  }
+
+  .btn-copy {
+    padding: 1px 4px;
+  }
+
+  .btn-copy ng-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .estado-badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
   }
 }

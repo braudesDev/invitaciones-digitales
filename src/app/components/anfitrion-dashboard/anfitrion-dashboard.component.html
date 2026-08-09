@@ -4,22 +4,25 @@
       <!-- Sección de usuario -->
       <div class="user-info">
         @if (userPhotoURL) {
-          <img
-            [src]="userPhotoURL"
-            class="user-avatar"
-            alt="Avatar"
-            />
+          <img [src]="userPhotoURL" class="user-avatar" alt="Avatar" />
         }
         <div class="user-text">
-          <h2>📋 Dashboard del Anfitrión</h2>
+          <h2>
+            <ng-icon name="lucideClipboard" size="22"></ng-icon>
+            Dashboard del Anfitrión
+          </h2>
           <p class="user-greeting">
-            👋 ¡Hola, <strong>{{ userName || userEmail || "Anfitrión" }}</strong
+            <ng-icon name="heroHandRaised" size="18"></ng-icon>
+            ¡Hola, <strong>{{ userName || userEmail || "Anfitrión" }}</strong
             >!
           </p>
         </div>
       </div>
       <div class="evento-selector">
-        <label>🎯 Evento actual: </label>
+        <label>
+          <ng-icon name="lucideTarget" size="16"></ng-icon>
+          Evento actual:
+        </label>
         <div class="selector-wrapper">
           <!-- Si hay eventos, muestra el select con ngModel -->
           @if (misEventos && misEventos.length > 0) {
@@ -27,7 +30,7 @@
               [(ngModel)]="eventoSlug"
               [ngModelOptions]="{ standalone: true }"
               (change)="cambiarEvento()"
-              >
+            >
               @for (evento of misEventos; track evento) {
                 <option [value]="evento.slug">
                   {{ evento.name }}
@@ -38,50 +41,57 @@
               class="btn-eliminar-evento"
               (click)="eliminarEvento(eventoSlug, obtenerNombreEvento())"
               title="Eliminar evento"
-              >
-              🗑️
+            >
+              <ng-icon name="lucideTrash2" size="18"></ng-icon>
             </button>
           } @else {
-            <span class="no-eventos-msg">🎯 No tienes eventos creados</span>
+            <span class="no-eventos-msg">
+              <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
+              No tienes eventos creados
+            </span>
             <a
               routerLink="/anfitrion/crear-invitacion"
               class="btn-crear-evento"
-              >
-              ✨ Crear evento
+            >
+              <ng-icon name="heroPlusCircle" size="16"></ng-icon>
+              Crear evento
             </a>
           }
-
-          <!-- Si no hay eventos, muestra un mensaje -->
         </div>
       </div>
     </div>
     <div class="header-buttons">
       <a href="/validacion" target="_blank" class="btn-validar-qr">
-        📱 Validar QR en entrada
+        <ng-icon name="hugeQrCode" size="18"></ng-icon>
+        Validar QR en entrada
       </a>
       <button class="btn-logout" (click)="logout()" title="Cerrar sesión">
-        🚪 Salir
+        <ng-icon name="heroArrowRight" size="18"></ng-icon>
+        Salir
       </button>
     </div>
   </div>
 
   <!-- 🆕 MENÚ DE NAVEGACIÓN CENTRALIZADO -->
-  <div class="nav-central">
+  <nav class="nav-central">
     <a routerLink="/anfitrion/dashboard" class="nav-item" [class.active]="true">
-      📊 Dashboard
+      <ng-icon name="heroHome" size="18"></ng-icon>
+      Dashboard
     </a>
     <a routerLink="/anfitrion/crear-invitacion" class="nav-item">
-      ✨ Crear invitación
+      <ng-icon name="heroPlusCircle" size="18"></ng-icon>
+      Crear invitación
     </a>
     @if (eventoSlug) {
       <a
         [routerLink]="['/anfitrion/editar-invitacion', eventoSlug]"
         class="nav-item"
-        >
-        📝 Editar evento actual
+      >
+        <ng-icon name="heroPencil" size="18"></ng-icon>
+        Editar evento actual
       </a>
     }
-  </div>
+  </nav>
 
   <!-- Tabs -->
   <div class="tabs">
@@ -89,39 +99,58 @@
       class="tab"
       [class.active]="tabActivo === 'pendiente'"
       (click)="cambiarTab('pendiente')"
-      >
-      ⏳ Pendientes
+    >
+      <ng-icon name="heroClock" size="18"></ng-icon>
+      Pendientes
     </div>
     <div
       class="tab"
       [class.active]="tabActivo === 'confirmado'"
       (click)="cambiarTab('confirmado')"
-      >
-      ✅ Confirmados
+    >
+      <ng-icon name="heroCheckCircle" size="18"></ng-icon>
+      Confirmados
     </div>
     <div
       class="tab"
       [class.active]="tabActivo === 'rechazado'"
       (click)="cambiarTab('rechazado')"
-      >
-      ❌ Rechazados
+    >
+      <ng-icon name="heroXCircle" size="18"></ng-icon>
+      Rechazados
     </div>
   </div>
 
   <!-- Tabla de invitados -->
   <div class="table-wrapper">
     @if (invitados$ | async; as invitados) {
-      <table
-        class="table-invitados"
-        >
+      <table class="table-invitados">
         <thead>
           <tr>
-            <th>👤 Invitado</th>
-            <th>🎫 Pases</th>
-            <th>💬 Mensaje</th>
-            <th>📌 Estado</th>
-            <th>🔗 Link único</th>
-            <th>⚡ Acciones</th>
+            <th>
+              <ng-icon name="heroUserCircle" size="16"></ng-icon>
+              Invitado
+            </th>
+            <th>
+              <ng-icon name="heroTicket" size="16"></ng-icon>
+              Pases
+            </th>
+            <th>
+              <ng-icon name="heroChatBubbleLeft" size="16"></ng-icon>
+              Mensaje
+            </th>
+            <th>
+              <ng-icon name="heroCheckBadge" size="16"></ng-icon>
+              Estado
+            </th>
+            <th>
+              <ng-icon name="lucideLink" size="16"></ng-icon>
+              Link único
+            </th>
+            <th>
+              <ng-icon name="heroBolt" size="16"></ng-icon>
+              Acciones
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -133,110 +162,129 @@
               <td>
                 <span class="pases-badge">{{ inv.pases }}</span>
               </td>
-              <td class="mensaje-cell">{{ inv.mensajePersonalizado || "—" }}</td>
+              <td class="mensaje-cell">
+                {{ inv.mensajePersonalizado || "—" }}
+              </td>
               <td>
                 <span
                   class="estado-badge"
                   [class.pendiente]="inv.estado === 'pendiente'"
                   [class.confirmado]="inv.estado === 'confirmado'"
                   [class.rechazado]="inv.estado === 'rechazado'"
-                  >
-                  {{
-                  inv.estado === "pendiente"
-                  ? "⏳ Pendiente"
-                  : inv.estado === "confirmado"
-                  ? "✅ Confirmado"
-                  : "❌ Rechazado"
-                  }}
+                >
+                  @if (inv.estado === "pendiente") {
+                    <ng-icon name="heroClock" size="14"></ng-icon>
+                    Pendiente
+                  } @else if (inv.estado === "confirmado") {
+                    <ng-icon name="heroCheckCircle" size="14"></ng-icon>
+                    Confirmado
+                  } @else {
+                    <ng-icon name="heroXCircle" size="14"></ng-icon>
+                    Rechazado
+                  }
                 </span>
               </td>
               <td>
                 <code class="link-preview"
                   >{{ origin }}/invitaciones/{{ inv.slug }}</code
+                >
+                <button
+                  class="btn-copy"
+                  (click)="copiarLink(inv.slug)"
+                  title="Copiar link"
+                >
+                  <ng-icon name="lucideClipboard" size="16"></ng-icon>
+                </button>
+              </td>
+              <td class="acciones-cell">
+                <button
+                  class="btn-whatsapp"
+                  (click)="enviarWhatsApp(inv)"
+                  title="Enviar por WhatsApp"
+                >
+                  <ng-icon name="hugeWhatsapp" size="18"></ng-icon>
+                </button>
+                @if (inv.estado !== "confirmado") {
+                  <button
+                    class="btn-estado"
+                    (click)="cambiarEstado(inv, 'confirmado')"
+                    title="Confirmar"
                   >
-                  <button
-                    class="btn-copy"
-                    (click)="copiarLink(inv.slug)"
-                    title="Copiar link"
-                    >
-                    📋
+                    <ng-icon name="heroCheck" size="16"></ng-icon>
                   </button>
-                </td>
-                <td class="acciones-cell">
+                }
+                @if (inv.estado !== "rechazado") {
                   <button
-                    class="btn-whatsapp"
-                    (click)="enviarWhatsApp(inv)"
-                    title="Enviar por WhatsApp"
-                    >
-                    💬
+                    class="btn-estado rechazar"
+                    (click)="cambiarEstado(inv, 'rechazado')"
+                    title="Rechazar"
+                  >
+                    <ng-icon name="heroXMark" size="16"></ng-icon>
                   </button>
-                  @if (inv.estado !== 'confirmado') {
-                    <button
-                      class="btn-estado"
-                      (click)="cambiarEstado(inv, 'confirmado')"
-                      title="Confirmar"
-                      >
-                      ✅
-                    </button>
-                  }
-                  @if (inv.estado !== 'rechazado') {
-                    <button
-                      class="btn-estado rechazar"
-                      (click)="cambiarEstado(inv, 'rechazado')"
-                      title="Rechazar"
-                      >
-                      ❌
-                    </button>
-                  }
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      } @else {
-        <p>Cargando invitados...</p>
-      }
-      @if ((invitados$ | async)?.length === 0) {
-        <div class="no-data">
-          No hay invitados en esta categoría
-        </div>
-      }
-    </div>
-
-    <!-- Formulario agregar invitado -->
-    <div class="form-nuevo-invitado">
-      <h3>➕ Agregar nuevo invitado</h3>
-      <div class="form-grid">
-        <div class="form-field">
-          <label>👤 Nombre completo</label>
-          <input
-            [(ngModel)]="nuevoInvitado.nombre"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="Ej: Iván Rodríguez"
-            />
-        </div>
-        <div class="form-field">
-          <label>🎫 Número de pases</label>
-          <input
-            type="number"
-            [(ngModel)]="nuevoInvitado.pases"
-            [ngModelOptions]="{ standalone: true }"
-            min="1"
-            max="20"
-            />
-        </div>
-        <div class="form-field full-width">
-          <label>💬 Mensaje personalizado (opcional)</label>
-          <textarea
-            [(ngModel)]="nuevoInvitado.mensajePersonalizado"
-            [ngModelOptions]="{ standalone: true }"
-            rows="2"
-            placeholder="Ej: Te esperamos con mucha alegría..."
-          ></textarea>
-        </div>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p>Cargando invitados...</p>
+    }
+    @if ((invitados$ | async)?.length === 0) {
+      <div class="no-data">
+        <ng-icon name="hugeUserGroup" size="48"></ng-icon>
+        <p>No hay invitados en esta categoría</p>
       </div>
-      <button class="btn-agregar" (click)="agregarInvitado()">
-        ✨ Agregar invitado
-      </button>
-    </div>
+    }
   </div>
+
+  <!-- Formulario agregar invitado -->
+  <div class="form-nuevo-invitado">
+    <h3>
+      <ng-icon name="hugeUserAdd02" size="20"></ng-icon>
+      Agregar nuevo invitado
+    </h3>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>
+          <ng-icon name="heroUserCircle" size="16"></ng-icon>
+          Nombre completo
+        </label>
+        <input
+          [(ngModel)]="nuevoInvitado.nombre"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="Ej: Iván Rodríguez"
+        />
+      </div>
+      <div class="form-field">
+        <label>
+          <ng-icon name="heroTicket" size="16"></ng-icon>
+          Número de pases
+        </label>
+        <input
+          type="number"
+          [(ngModel)]="nuevoInvitado.pases"
+          [ngModelOptions]="{ standalone: true }"
+          min="1"
+          max="20"
+        />
+      </div>
+      <div class="form-field full-width">
+        <label>
+          <ng-icon name="heroChatBubbleLeft" size="16"></ng-icon>
+          Mensaje personalizado (opcional)
+        </label>
+        <textarea
+          [(ngModel)]="nuevoInvitado.mensajePersonalizado"
+          [ngModelOptions]="{ standalone: true }"
+          rows="2"
+          placeholder="Ej: Te esperamos con mucha alegría..."
+        ></textarea>
+      </div>
+    </div>
+    <button class="btn-agregar" (click)="agregarInvitado()">
+      <ng-icon name="hugeUserAdd02" size="18"></ng-icon>
+      Agregar invitado
+    </button>
+  </div>
+</div>
