@@ -130,11 +130,11 @@ export class FormularioInvitacionComponent implements OnInit {
   // 3.3 ESTILOS PARA HOSPEDAJE
   // ==============================================================
   estilosHospedaje = [
-    { valor: 'tarjetas', nombre: 'Tarjetas', icon: '🃏' },
-    { valor: 'timeline', nombre: 'Timeline', icon: '📅' },
-    { valor: 'catalogo', nombre: 'Catálogo', icon: '📖' },
-    { valor: 'iconos', nombre: 'Íconos', icon: '🎯' },
-    { valor: 'mosaico', nombre: 'Mosaico', icon: '🧩' },
+    { valor: 'tarjetas', nombre: 'Tarjetas', icon: 'heroSquares2x2' },
+    { valor: 'timeline', nombre: 'Timeline', icon: 'heroClock' },
+    { valor: 'catalogo', nombre: 'Catálogo', icon: 'heroBookOpen' },
+    { valor: 'iconos', nombre: 'Íconos', icon: 'heroTag' },
+    { valor: 'mosaico', nombre: 'Mosaico', icon: 'heroSquaresPlus' },
   ];
 
   // ==============================================================
@@ -1010,10 +1010,10 @@ export class FormularioInvitacionComponent implements OnInit {
    * Lista de estilos disponibles para la historia
    */
   estilosHistoria = [
-    { valor: 'timeline', nombre: 'Línea de tiempo', icon: '📅' },
-    { valor: 'tarjetas', nombre: 'Tarjetas', icon: '🃏' },
-    { valor: 'album', nombre: 'Álbum', icon: '📸' },
-    { valor: 'minimalista', nombre: 'Minimalista', icon: '✨' },
+    { valor: 'timeline', nombre: 'Línea de tiempo', icon: 'heroClock' },
+    { valor: 'tarjetas', nombre: 'Tarjetas', icon: 'heroSquares2x2' },
+    { valor: 'album', nombre: 'Álbum', icon: 'heroPhoto' },
+    { valor: 'minimalista', nombre: 'Minimalista', icon: 'heroSparkles' },
   ];
 
   /**

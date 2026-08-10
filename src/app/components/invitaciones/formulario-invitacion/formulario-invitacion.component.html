@@ -8,7 +8,13 @@
        - Muestra "Crear nueva invitación" si es nuevo
        ============================================================ -->
   <h2 class="title">
-    {{ invitacionId ? "✏️ Editar invitación" : "✨ Crear nueva invitación" }}
+    @if (invitacionId) {
+      <ng-icon name="heroPencil" size="22" class="title-icon"></ng-icon>
+      Editar invitación
+    } @else {
+      <ng-icon name="lucideSparkles" size="22" class="title-icon"></ng-icon>
+      Crear nueva invitación
+    }
   </h2>
 
   <!-- ============================================================
@@ -23,71 +29,66 @@
       [class.active]="tabActivo === 'basico'"
       (click)="tabActivo = 'basico'"
     >
-      📋 Básico
+      <ng-icon name="lucideClipboard" size="18"></ng-icon>
+      Básico
     </button>
     <!-- Tab 2: Ceremonia -->
     <button
       [class.active]="tabActivo === 'ceremonia'"
       (click)="tabActivo = 'ceremonia'"
     >
-      💒 Ceremonia
+      <ng-icon name="lucideChurch" size="18"></ng-icon>
+      Ceremonia
     </button>
     <!-- Tab 3: Extras -->
     <button
       [class.active]="tabActivo === 'extras'"
       (click)="tabActivo = 'extras'"
     >
-      ✨ Extras
+      <ng-icon name="heroSparkles" size="18"></ng-icon>
+      Extras
     </button>
   </div>
 
-  <!-- ============================================================
-       FORMULARIO PRINCIPAL
-       - ngSubmit: Dispara guardarInvitacion() al enviar
-       - #formInvitacion: Referencia para validación
-       ============================================================ -->
   <form (ngSubmit)="guardarInvitacion()" #formInvitacion="ngForm">
     <!-- ==========================================================
-         TAB 1: BÁSICO
-         - Información principal del evento
-         - Paletas de colores premium
-         - Personalización de colores y fuentes
-         ========================================================== -->
+       TAB 1: BÁSICO
+       - Información principal del evento
+       - Paletas de colores premium
+       - Personalización de colores y fuentes
+       ========================================================== -->
     @if (tabActivo === "basico") {
       <div class="tab-content">
         <div class="form-grid">
-          <!-- ----------------------------------------------------
-     IMAGEN PRINCIPAL (HERO IMAGE)
-     - Subida de archivos (PNG, JPG, WEBP máx 5MB)
-     - O pegar URL directamente
-     - Vista previa con opción de cambiar/eliminar
-     ---------------------------------------------------- -->
-          <!-- ----------------------------------------------------
-     IMAGEN PRINCIPAL (HERO IMAGE)
-     ---------------------------------------------------- -->
-          <!-- ----------------------------------------------------
-     IMAGEN PRINCIPAL (HERO IMAGE)
-     - 2 imágenes: móvil y escritorio
-     ---------------------------------------------------- -->
+          <!-- ============================================
+             ACORDEÓN: IMAGEN PRINCIPAL (HERO IMAGE)
+             - 2 imágenes: móvil y escritorio
+             ============================================ -->
           <div class="acordeon full-width">
             <div
               class="acordeon-header"
               (click)="acordeonHeroImage = !acordeonHeroImage"
             >
-              <span>🖼️ Imagen de portada</span>
+              <span>
+                <ng-icon name="heroPhoto" size="18"></ng-icon>
+                Imagen de portada
+              </span>
               <span class="icono">{{ acordeonHeroImage ? "▲" : "▼" }}</span>
             </div>
 
             <div class="acordeon-body" [class.abierto]="acordeonHeroImage">
               <p class="subseccion-descripcion">
-                📸 Sube imágenes de portada para tu invitación. Puedes subir una
+                <ng-icon name="heroCamera" size="16"></ng-icon>
+                Sube imágenes de portada para tu invitación. Puedes subir una
                 para móvil y otra para escritorio.
               </p>
 
-              <!-- ✅ GUÍA RÁPIDA -->
+              <!-- GUÍA RÁPIDA -->
               <div class="guia-imagenes">
                 <div class="guia-card">
-                  <div class="guia-icono">📱</div>
+                  <div class="guia-icono">
+                    <ng-icon name="heroDevicePhoneMobile" size="28"></ng-icon>
+                  </div>
                   <div class="guia-info">
                     <span class="guia-titulo">Imagen para móvil</span>
                     <span class="guia-descripcion"
@@ -97,7 +98,9 @@
                   </div>
                 </div>
                 <div class="guia-card">
-                  <div class="guia-icono">🖥️</div>
+                  <div class="guia-icono">
+                    <ng-icon name="heroComputerDesktop" size="28"></ng-icon>
+                  </div>
                   <div class="guia-info">
                     <span class="guia-titulo">Imagen para escritorio</span>
                     <span class="guia-descripcion"
@@ -108,16 +111,19 @@
                 </div>
               </div>
 
-              <!-- 📱 CAMPO 1: Imagen para móvil -->
+              <!-- CAMPO 1: Imagen para móvil -->
               <div class="field-group full-width">
                 <div class="campo-imagen">
                   <div class="campo-header">
-                    <span class="campo-badge">📱</span>
+                    <span class="campo-badge">
+                      <ng-icon name="heroDevicePhoneMobile" size="20"></ng-icon>
+                    </span>
                     <span class="campo-titulo">Imagen para móvil</span>
                     <span class="campo-opcional">(opcional)</span>
                   </div>
                   <p class="campo-ayuda">
-                    📌 Esta imagen se mostrará en celulares y dispositivos
+                    <ng-icon name="heroInformationCircle" size="14"></ng-icon>
+                    Esta imagen se mostrará en celulares y dispositivos
                     verticales.
                     <br />
                     <span class="ejemplo"
@@ -128,21 +134,24 @@
                     [imageUrl]="nuevaInvitacion.heroImageMovil || ''"
                     (imageChange)="nuevaInvitacion.heroImageMovil = $event"
                     placeholder="Sube una imagen para móvil (vertical)"
-                    label="📱 Imagen para móvil"
+                    label="Imagen para móvil"
                   ></app-image-upload>
                 </div>
               </div>
 
-              <!-- 🖥️ CAMPO 2: Imagen para escritorio -->
+              <!-- CAMPO 2: Imagen para escritorio -->
               <div class="field-group full-width">
                 <div class="campo-imagen">
                   <div class="campo-header">
-                    <span class="campo-badge">🖥️</span>
+                    <span class="campo-badge">
+                      <ng-icon name="heroComputerDesktop" size="20"></ng-icon>
+                    </span>
                     <span class="campo-titulo">Imagen para escritorio</span>
                     <span class="campo-opcional">(opcional)</span>
                   </div>
                   <p class="campo-ayuda">
-                    📌 Esta imagen se mostrará en computadoras y tablets en
+                    <ng-icon name="heroInformationCircle" size="14"></ng-icon>
+                    Esta imagen se mostrará en computadoras y tablets en
                     horizontal.
                     <br />
                     <span class="ejemplo"
@@ -153,22 +162,31 @@
                     [imageUrl]="nuevaInvitacion.heroImageEscritorio || ''"
                     (imageChange)="nuevaInvitacion.heroImageEscritorio = $event"
                     placeholder="Sube una imagen para escritorio (horizontal)"
-                    label="🖥️ Imagen para escritorio"
+                    label="Imagen para escritorio"
                   ></app-image-upload>
                 </div>
               </div>
 
-              <!-- ✅ VISTA PREVIA DE AMBAS IMÁGENES -->
+              <!-- VISTA PREVIA DE AMBAS IMÁGENES -->
               @if (
                 nuevaInvitacion.heroImageMovil ||
                 nuevaInvitacion.heroImageEscritorio
               ) {
                 <div class="preview-ambas">
-                  <p class="preview-label">📸 Imágenes subidas:</p>
+                  <p class="preview-label">
+                    <ng-icon name="heroPhoto" size="16"></ng-icon>
+                    Imágenes subidas:
+                  </p>
                   <div class="preview-grid">
                     @if (nuevaInvitacion.heroImageMovil) {
                       <div class="preview-item">
-                        <span class="preview-tag">📱 Móvil</span>
+                        <span class="preview-tag">
+                          <ng-icon
+                            name="heroDevicePhoneMobile"
+                            size="14"
+                          ></ng-icon>
+                          Móvil
+                        </span>
                         <div class="preview-thumb">
                           <img
                             [src]="nuevaInvitacion.heroImageMovil"
@@ -180,7 +198,13 @@
                     }
                     @if (nuevaInvitacion.heroImageEscritorio) {
                       <div class="preview-item">
-                        <span class="preview-tag">🖥️ Escritorio</span>
+                        <span class="preview-tag">
+                          <ng-icon
+                            name="heroComputerDesktop"
+                            size="14"
+                          ></ng-icon>
+                          Escritorio
+                        </span>
                         <div class="preview-thumb">
                           <img
                             [src]="nuevaInvitacion.heroImageEscritorio"
@@ -192,7 +216,8 @@
                     }
                   </div>
                   <p class="preview-nota">
-                    💡 La imagen correcta se mostrará automáticamente según el
+                    <ng-icon name="hugeBulb" size="14"></ng-icon>
+                    La imagen correcta se mostrará automáticamente según el
                     dispositivo del invitado.
                   </p>
                 </div>
@@ -208,26 +233,29 @@
               class="acordeon-header"
               (click)="acordeonEvento = !acordeonEvento"
             >
-              <span>📋 Información del evento</span>
+              <span>
+                <ng-icon name="lucideClipboard" size="18"></ng-icon>
+                Información del evento
+              </span>
               <span class="icono">{{ acordeonEvento ? "▲" : "▼" }}</span>
             </div>
 
             <div class="acordeon-body" [class.abierto]="acordeonEvento">
               <p class="subseccion-descripcion">
-                📌 Completa los datos básicos de tu evento.
+                <ng-icon name="heroInformationCircle" size="16"></ng-icon>
+                Completa los datos básicos de tu evento.
               </p>
 
               <div class="form-grid">
                 <!-- Nombre del evento -->
                 <div class="campo">
                   <label>
-                    📌 Nombre del evento
+                    <ng-icon name="heroPencil" size="14"></ng-icon>
+                    Nombre del evento
                     <span class="campo-obligatorio">*</span>
                     <span
                       class="help-icon"
-                      data-tooltip="Nombre que identificará tu evento en la invitación.
-
-                  📌 Ejemplo: 'Boda de Mariana y Alejandro', 'XV de Valeria'."
+                      data-tooltip="Nombre que identificará tu evento en la invitación. Ejemplo: 'Boda de Mariana y Alejandro', 'XV de Valeria'."
                       >?</span
                     >
                   </label>
@@ -243,7 +271,8 @@
                 <!-- Tipo de evento -->
                 <div class="campo">
                   <label>
-                    🎭 Tipo de evento
+                    <ng-icon name="heroTag" size="14"></ng-icon>
+                    Tipo de evento
                     <span class="campo-obligatorio">*</span>
                   </label>
                   <select
@@ -251,22 +280,30 @@
                     name="tipo"
                     required
                   >
-                    <option value="boda">💍 Boda</option>
-                    <option value="xv">👗 XV Años</option>
-                    <option value="cumpleaños">🎂 Cumpleaños</option>
+                    <option value="boda">
+                      <ng-icon name="heroHeart" size="14"></ng-icon>
+                      Boda
+                    </option>
+                    <option value="xv">
+                      <ng-icon name="lucideSparkles" size="14"></ng-icon>
+                      XV Años
+                    </option>
+                    <option value="cumpleaños">
+                      <ng-icon name="heroCake" size="14"></ng-icon>
+                      Cumpleaños
+                    </option>
                   </select>
                 </div>
 
                 <!-- Nombres del festejado(s) -->
                 <div class="campo">
                   <label>
-                    👰 Nombres del festejado(s)
+                    <ng-icon name="heroUsers" size="14"></ng-icon>
+                    Nombres del festejado(s)
                     <span class="campo-obligatorio">*</span>
                     <span
                       class="help-icon"
-                      data-tooltip="Nombre(s) de la(s) persona(s) que celebran el evento.
-
-                  📌 Ejemplo: 'Mariana y Alejandro', 'Valeria'."
+                      data-tooltip="Nombre(s) de la(s) persona(s) que celebran el evento. Ejemplo: 'Mariana y Alejandro', 'Valeria'."
                       >?</span
                     >
                   </label>
@@ -282,7 +319,8 @@
                 <!-- Fecha y hora -->
                 <div class="campo">
                   <label>
-                    📅 Fecha y hora
+                    <ng-icon name="heroCalendar" size="14"></ng-icon>
+                    Fecha y hora
                     <span class="campo-obligatorio">*</span>
                   </label>
                   <input
@@ -296,13 +334,12 @@
                 <!-- Lugar -->
                 <div class="campo full-width">
                   <label>
-                    📍 Lugar
+                    <ng-icon name="heroMapPin" size="14"></ng-icon>
+                    Lugar
                     <span class="campo-obligatorio">*</span>
                     <span
                       class="help-icon"
-                      data-tooltip="Lugar donde se realizará el evento principal.
-
-                  📌 Ejemplo: 'Salón de Eventos Los Jardines'."
+                      data-tooltip="Lugar donde se realizará el evento principal. Ejemplo: 'Salón de Eventos Los Jardines'."
                       >?</span
                     >
                   </label>
@@ -320,7 +357,8 @@
                 <!-- ========================================================== -->
                 <div class="campo full-width">
                   <label>
-                    🎬 Animación del título
+                    <ng-icon name="heroPlay" size="14"></ng-icon>
+                    Animación del título
                     <span
                       class="help-icon"
                       data-tooltip="Elige la animación que tendrá el título en la portada."
@@ -337,9 +375,10 @@
                         "
                         (click)="seleccionarAnimacionHero(animacion)"
                       >
-                        <span class="animacion-icon">{{
-                          animacion.nombre.split(" ")[0]
-                        }}</span>
+                        <!-- ✅ USANDO NG-ICON EN VEZ DE EMOJI -->
+                        <span class="animacion-icon">
+                          <ng-icon [name]="animacion.icono" size="24"></ng-icon>
+                        </span>
                         <span class="animacion-nombre">{{
                           animacion.nombre
                         }}</span>
@@ -360,25 +399,32 @@
           </div>
 
           <!-- ==========================================================
-           ACORDEÓN: PERSONALIZACIÓN DE COLORES
-           ========================================================== -->
+     ACORDEÓN: PERSONALIZACIÓN DE COLORES
+     ========================================================== -->
           <div class="acordeon full-width">
             <div
               class="acordeon-header"
               (click)="acordeonColores = !acordeonColores"
             >
-              <span>🎨 Personalización de colores</span>
+              <span>
+                <ng-icon name="lucideSwatchBook" size="18"></ng-icon>
+                Personalización de colores
+              </span>
               <span class="icono">{{ acordeonColores ? "▲" : "▼" }}</span>
             </div>
 
             <div class="acordeon-body" [class.abierto]="acordeonColores">
               <p class="subseccion-descripcion">
-                🎨 Elige los colores que darán estilo a tu invitación.
+                <ng-icon name="heroPaintBrush" size="16"></ng-icon>
+                Elige los colores que darán estilo a tu invitación.
               </p>
 
               <!-- Paletas premium -->
               <div class="campo full-width">
-                <label>🎨 Paletas de colores premium</label>
+                <label>
+                  <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                  Paletas de colores premium
+                </label>
                 <div class="paletas">
                   <!-- Paleta 1: Azul Acero -->
                   <div
@@ -517,6 +563,7 @@
                     <span [style.background]="paletas['jungla'].accent"></span>
                     <span>Jungla</span>
                   </div>
+
                   <!-- Paleta 13: Boda Real -->
                   <div
                     class="paleta"
@@ -638,7 +685,8 @@
                   </div>
                 </div>
                 <p class="ayuda-paletas">
-                  💡 Haz clic en una paleta o elige tus propios colores abajo
+                  <ng-icon name="hugeBulb" size="14"></ng-icon>
+                  Haz clic en una paleta o elige tus propios colores abajo
                 </p>
               </div>
 
@@ -647,12 +695,11 @@
                 <!-- Color principal -->
                 <div class="campo">
                   <label>
-                    🎨 Color principal
+                    <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                    Color principal
                     <span
                       class="help-icon"
-                      data-tooltip="Color principal que dominará el diseño de la invitación.
-
-          📌 Este color se usará en títulos y elementos principales."
+                      data-tooltip="Color principal que dominará el diseño de la invitación. Se usará en títulos y elementos principales."
                       >?</span
                     >
                   </label>
@@ -673,12 +720,11 @@
                 <!-- Color secundario -->
                 <div class="campo">
                   <label>
-                    🎨 Color secundario
+                    <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                    Color secundario
                     <span
                       class="help-icon"
-                      data-tooltip="Color complementario que acompañará al color principal.
-
-          📌 Se usa en fondos y elementos secundarios."
+                      data-tooltip="Color complementario que acompañará al color principal. Se usa en fondos y elementos secundarios."
                       >?</span
                     >
                   </label>
@@ -699,12 +745,11 @@
                 <!-- Color de acento -->
                 <div class="campo">
                   <label>
-                    🎨 Color de acento
+                    <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                    Color de acento
                     <span
                       class="help-icon"
-                      data-tooltip="Color que resalta detalles importantes.
-
-          📌 Se usa en botones, íconos y elementos destacados."
+                      data-tooltip="Color que resalta detalles importantes. Se usa en botones, íconos y elementos destacados."
                       >?</span
                     >
                   </label>
@@ -725,12 +770,11 @@
                 <!-- Color de texto -->
                 <div class="campo">
                   <label>
-                    📝 Color de texto
+                    <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                    Color de texto
                     <span
                       class="help-icon"
-                      data-tooltip="Color de todos los textos de la invitación.
-
-          📌 Asegúrate de que contraste bien con los fondos."
+                      data-tooltip="Color de todos los textos de la invitación. Asegúrate de que contraste bien con los fondos."
                       >?</span
                     >
                   </label>
@@ -758,19 +802,24 @@
               class="acordeon-header"
               (click)="acordeonFuente = !acordeonFuente"
             >
-              <span>✍️ Fuente del texto</span>
+              <span>
+                <ng-icon name="hugeTextFont" size="18"></ng-icon>
+                Fuente del texto
+              </span>
               <span class="icono">{{ acordeonFuente ? "▲" : "▼" }}</span>
             </div>
 
             <div class="acordeon-body" [class.abierto]="acordeonFuente">
               <p class="subseccion-descripcion">
-                ✍️ Elige la tipografía que dará personalidad a tu invitación.
+                <ng-icon name="hugeTextFont" size="16"></ng-icon>
+                Elige la tipografía que dará personalidad a tu invitación.
               </p>
 
               <!-- Vista previa de la fuente seleccionada -->
               <div class="campo full-width">
                 <label>
-                  👁️ Vista previa de la fuente seleccionada
+                  <ng-icon name="heroEye" size="14"></ng-icon>
+                  Vista previa de la fuente seleccionada
                   <span
                     class="help-icon"
                     data-tooltip="Esta es la fuente que se aplicará a toda tu invitación."
@@ -792,7 +841,10 @@
 
               <!-- Grid visual de fuentes -->
               <div class="campo full-width">
-                <label>🎨 Explora todas las fuentes</label>
+                <label>
+                  <ng-icon name="heroSquares2x2" size="14"></ng-icon>
+                  Explora todas las fuentes
+                </label>
                 <p class="sub-label">
                   Haz clic en cualquier fuente para previsualizarla
                 </p>
@@ -805,7 +857,8 @@
                     (click)="setFiltro('todos'); $event.stopPropagation()"
                     type="button"
                   >
-                    📚 Todas
+                    <ng-icon name="heroSquares2x2" size="14"></ng-icon>
+                    Todas
                   </button>
                   <button
                     class="filtro-btn"
@@ -813,7 +866,8 @@
                     (click)="setFiltro('serif'); $event.stopPropagation()"
                     type="button"
                   >
-                    📜 Serif
+                    <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                    Serif
                   </button>
                   <button
                     class="filtro-btn"
@@ -821,7 +875,8 @@
                     (click)="setFiltro('sans-serif'); $event.stopPropagation()"
                     type="button"
                   >
-                    🔤 Sans-Serif
+                    <ng-icon name="heroDocument" size="14"></ng-icon>
+                    Sans-Serif
                   </button>
                   <button
                     class="filtro-btn"
@@ -829,7 +884,8 @@
                     (click)="setFiltro('script'); $event.stopPropagation()"
                     type="button"
                   >
-                    ✍️ Script
+                    <ng-icon name="heroPencil" size="14"></ng-icon>
+                    Script
                   </button>
                   <button
                     class="filtro-btn"
@@ -837,7 +893,8 @@
                     (click)="setFiltro('display'); $event.stopPropagation()"
                     type="button"
                   >
-                    🎯 Display
+                    <ng-icon name="heroBolt" size="14"></ng-icon>
+                    Display
                   </button>
                 </div>
 
@@ -872,46 +929,44 @@
     }
 
     <!-- ==========================================================
-         TAB 2: CEREMONIA
-         - Frase principal y mensaje
-         - Historia (con acordeón)
-         - Detalles de ceremonia y recepción
-         ========================================================== -->
+     TAB 2: CEREMONIA
+     - Frase principal y mensaje
+     - Historia (con acordeón)
+     - Detalles de ceremonia y recepción
+     ========================================================== -->
     @if (tabActivo === "ceremonia") {
       <div class="tab-content">
         <div class="form-grid">
-          <!-- ----------------------------------------------------
-               FRASE Y MENSAJE PRINCIPAL
-               - frasePrincipal: Frase destacada del evento
-               - mensajePrincipal: Texto descriptivo del evento
-               ---------------------------------------------------- -->
           <!-- ============================================ -->
           <!-- ACORDEÓN: FRASE Y MENSAJE PRINCIPAL -->
           <!-- ============================================ -->
-          <div class="acordeon">
+          <div class="acordeon full-width">
             <div
               class="acordeon-header"
               (click)="acordeonFrases = !acordeonFrases"
             >
-              <span>💬 Frase y mensaje principal</span>
+              <span>
+                <ng-icon name="heroChatBubbleLeft" size="18"></ng-icon>
+                Frase y mensaje principal
+              </span>
               <span class="icono">{{ acordeonFrases ? "▲" : "▼" }}</span>
             </div>
 
             <div class="acordeon-body" [class.abierto]="acordeonFrases">
               <p class="subseccion-descripcion">
-                ✨ Personaliza el mensaje que verán tus invitados al abrir la
+                <ng-icon name="heroSparkles" size="16"></ng-icon>
+                Personaliza el mensaje que verán tus invitados al abrir la
                 invitación.
               </p>
 
               <!-- Frase principal -->
               <div class="campo full-width">
                 <label>
-                  💕 Frase principal
+                  <ng-icon name="heroHeart" size="14"></ng-icon>
+                  Frase principal
                   <span
                     class="help-icon"
-                    data-tooltip="Frase corta y llamativa que aparecerá en la portada de la invitación.
-
-          📌 Ejemplo: '¡Nos casamos!', '¡Sí, acepto!', 'El amor nos une'."
+                    data-tooltip="Frase corta y llamativa que aparecerá en la portada de la invitación. Ejemplo: '¡Nos casamos!', '¡Sí, acepto!', 'El amor nos une'."
                     >?</span
                   >
                 </label>
@@ -926,12 +981,11 @@
               <!-- Mensaje principal -->
               <div class="campo full-width">
                 <label>
-                  📖 Mensaje principal
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Mensaje principal
                   <span
                     class="help-icon"
-                    data-tooltip="Mensaje más extenso que describe el evento y da la bienvenida a los invitados.
-
-          📌 Ejemplo: 'Con mucha alegría y amor, los invitamos a ser parte de este día tan especial...'."
+                    data-tooltip="Mensaje más extenso que describe el evento y da la bienvenida a los invitados. Ejemplo: 'Con mucha alegría y amor, los invitamos a ser parte de este día tan especial...'."
                     >?</span
                   >
                 </label>
@@ -945,27 +999,25 @@
             </div>
           </div>
 
-          <!-- ----------------------------------------------------
-               ACORDEÓN: HISTORIA
-               - Sección plegable que contiene:
-                 * Checkbox para mostrar/ocultar sección
-                 * Estilo de visualización (3 opciones)
-                 * Título, descripción
-                 * Lista de momentos (fecha + descripción + imagen)
-               ---------------------------------------------------- -->
+          <!-- ============================================ -->
+          <!-- ACORDEÓN: HISTORIA -->
+          <!-- ============================================ -->
           <div class="acordeon full-width">
-            <!-- Header del acordeón (clic para desplegar/plegar) -->
+            <!-- Header del acordeón -->
             <div
               class="acordeon-header"
               (click)="acordeonHistoria = !acordeonHistoria"
             >
-              <span>📖 Historia</span>
+              <span>
+                <ng-icon name="heroBookOpen" size="18"></ng-icon>
+                Historia
+              </span>
               <span class="icono">{{ acordeonHistoria ? "▲" : "▼" }}</span>
             </div>
 
-            <!-- Cuerpo del acordeón (se muestra cuando .abierto) -->
+            <!-- Cuerpo del acordeón -->
             <div class="acordeon-body" [class.abierto]="acordeonHistoria">
-              <!-- Checkbox: Mostrar sección en la invitación -->
+              <!-- Checkbox: Mostrar sección -->
               <div class="campo">
                 <label>
                   <input
@@ -973,13 +1025,17 @@
                     [(ngModel)]="historiaMostrarSeccion"
                     [ngModelOptions]="{ standalone: true }"
                   />
+                  <ng-icon name="heroEye" size="14"></ng-icon>
                   Mostrar sección en la invitación
                 </label>
               </div>
 
-              <!-- Estilo de la sección (3 opciones visuales) -->
+              <!-- Estilo de la sección -->
               <div class="campo">
-                <label>🎨 Estilo de la sección</label>
+                <label>
+                  <ng-icon name="heroSquares2X2" size="14"></ng-icon>
+                  Estilo de la sección
+                </label>
                 <div class="estilos-historia-grid">
                   @for (estilo of estilosHistoria; track estilo) {
                     <div
@@ -989,9 +1045,9 @@
                       "
                       (click)="seleccionarEstiloHistoria(estilo.valor)"
                     >
-                      <span class="estilo-historia-icon">{{
-                        estilo.icon
-                      }}</span>
+                      <span class="estilo-historia-icon">
+                        <ng-icon [name]="estilo.icon" size="24"></ng-icon>
+                      </span>
                       <span class="estilo-historia-nombre">{{
                         estilo.nombre
                       }}</span>
@@ -1000,9 +1056,12 @@
                 </div>
               </div>
 
-              <!-- Título de la sección con contador de caracteres -->
+              <!-- Título de la sección -->
               <div class="subcampo">
-                <label>Título de la sección</label>
+                <label>
+                  <ng-icon name="heroPencil" size="14"></ng-icon>
+                  Título de la sección
+                </label>
                 <div class="input-with-counter">
                   <input
                     type="text"
@@ -1015,9 +1074,12 @@
                 </div>
               </div>
 
-              <!-- Descripción de la sección con contador -->
+              <!-- Descripción -->
               <div class="subcampo">
-                <label>Descripción (opcional)</label>
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Descripción (opcional)
+                </label>
                 <div class="input-with-counter">
                   <textarea
                     [(ngModel)]="historiaDescripcion"
@@ -1032,14 +1094,17 @@
                 </div>
               </div>
 
-              <!-- Momentos: Lista dinámica de eventos importantes -->
+              <!-- Momentos -->
               <div class="campo">
-                <label>📅 Momentos</label>
+                <label>
+                  <ng-icon name="heroCalendar" size="14"></ng-icon>
+                  Momentos
+                </label>
                 <p class="ayuda-momentos">
-                  💡 Agrega los momentos más importantes de su historia
+                  <ng-icon name="heroLightBulb" size="14"></ng-icon>
+                  Agrega los momentos más importantes de su historia
                 </p>
 
-                <!-- Iterar sobre la lista de momentos -->
                 @for (
                   momento of historiaMomentos;
                   track momento;
@@ -1047,7 +1112,6 @@
                 ) {
                   <div class="momento-item">
                     <div class="momento-card">
-                      <!-- Header del momento con número y botón eliminar -->
                       <div class="momento-header">
                         <span class="momento-numero">#{{ i + 1 }}</span>
                         <button
@@ -1055,10 +1119,9 @@
                           class="btn-eliminar-momento"
                           (click)="eliminarMomento(i)"
                         >
-                          ❌
+                          <ng-icon name="heroTrash" size="16"></ng-icon>
                         </button>
                       </div>
-                      <!-- Campos del momento -->
                       <div class="momento-fields">
                         <div class="field-group">
                           <label>Fecha</label>
@@ -1080,9 +1143,8 @@
                           ></textarea>
                         </div>
                         <div class="field-group full-width">
-                          <!-- Componente de subida de imagen -->
                           <app-image-upload
-                            label="📸 Imagen (opcional)"
+                            label="Imagen (opcional)"
                             [imageUrl]="momento.imagen || ''"
                             (imageChange)="momento.imagen = $event"
                             placeholder="URL de la imagen (opcional)"
@@ -1092,13 +1154,14 @@
                     </div>
                   </div>
                 }
-                <!-- Botón para agregar nuevo momento -->
+
                 <button
                   type="button"
                   class="btn-agregar-momento"
                   (click)="agregarMomento()"
                 >
-                  ➕ Agregar momento
+                  <ng-icon name="heroPlus" size="16"></ng-icon>
+                  Agregar momento
                 </button>
               </div>
             </div>
@@ -1111,20 +1174,25 @@
               class="acordeon-header"
               (click)="acordeonCeremonia = !acordeonCeremonia"
             >
-              <span>⛪ Ceremonia</span>
+              <span>
+                <ng-icon name="lucideChurch" size="18"></ng-icon>
+                Ceremonia
+              </span>
               <span class="icono">{{ acordeonCeremonia ? "▲" : "▼" }}</span>
             </div>
 
             <div class="acordeon-body" [class.abierto]="acordeonCeremonia">
               <p class="subseccion-descripcion">
-                📍 Completa los detalles de dónde se realizará la ceremonia.
+                <ng-icon name="heroMapPin" size="16"></ng-icon>
+                Completa los detalles de dónde se realizará la ceremonia.
               </p>
 
               <div class="subseccion-grid">
                 <!-- Lugar -->
                 <div class="field-group">
                   <label>
-                    🏛️ Lugar
+                    <ng-icon name="heroBuildingOffice" size="14"></ng-icon>
+                    Lugar
                     <span class="campo-obligatorio">*</span>
                     <span
                       class="help-icon"
@@ -1143,7 +1211,8 @@
                 <!-- Dirección -->
                 <div class="field-group">
                   <label>
-                    📍 Dirección
+                    <ng-icon name="heroMapPin" size="14"></ng-icon>
+                    Dirección
                     <span class="campo-obligatorio">*</span>
                     <span
                       class="help-icon"
@@ -1162,7 +1231,8 @@
                 <!-- Hora -->
                 <div class="field-group">
                   <label>
-                    🕐 Hora
+                    <ng-icon name="heroClock" size="14"></ng-icon>
+                    Hora
                     <span class="campo-obligatorio">*</span>
                     <span
                       class="help-icon"
@@ -1177,16 +1247,15 @@
                   />
                 </div>
 
-                <!-- ✅ Imagen del templo -->
+                <!-- Imagen del templo -->
                 <div class="field-group full-width">
                   <label>
-                    📸 Imagen del templo
+                    <ng-icon name="heroPhoto" size="14"></ng-icon>
+                    Imagen del templo
                     <span class="campo-opcional">(opcional)</span>
                     <span
                       class="help-icon"
-                      data-tooltip="💡 Sube una foto del templo para que tus invitados la reconozcan fácilmente.
-
-            📌 Ejemplo: Una foto de la fachada del templo."
+                      data-tooltip="💡 Sube una foto del templo para que tus invitados la reconozcan fácilmente. Ejemplo: Una foto de la fachada del templo."
                       >?</span
                     >
                   </label>
@@ -1202,13 +1271,12 @@
                 <!-- URL de Maps -->
                 <div class="field-group full-width">
                   <label>
-                    🗺️ Enlace de Google Maps
+                    <ng-icon name="heroGlobeAmericas" size="14"></ng-icon>
+                    Enlace de Google Maps
                     <span class="campo-opcional">(opcional)</span>
                     <span
                       class="help-icon"
-                      data-tooltip="💡 Comparte un enlace de Google Maps para que los invitados puedan llegar fácilmente.
-
-            📌 Ejemplo: Abre Google Maps, busca el lugar y copia el enlace 'Compartir'."
+                      data-tooltip="💡 Comparte un enlace de Google Maps para que los invitados puedan llegar fácilmente. Ejemplo: Abre Google Maps, busca el lugar y copia el enlace 'Compartir'."
                       >?</span
                     >
                   </label>
@@ -1231,21 +1299,25 @@
               class="acordeon-header"
               (click)="acordeonRecepcion = !acordeonRecepcion"
             >
-              <span>🎉 Recepción</span>
+              <span>
+                <ng-icon name="heroSparkles" size="18"></ng-icon>
+                Recepción
+              </span>
               <span class="icono">{{ acordeonRecepcion ? "▲" : "▼" }}</span>
             </div>
 
             <div class="acordeon-body" [class.abierto]="acordeonRecepcion">
               <p class="subseccion-descripcion">
-                🥂 Comparte los detalles del lugar donde celebrarán la
-                recepción.
+                <ng-icon name="heroSparkles" size="16"></ng-icon>
+                Comparte los detalles del lugar donde celebrarán la recepción.
               </p>
 
               <div class="subseccion-grid">
                 <!-- Lugar -->
                 <div class="field-group">
                   <label>
-                    🏛️ Lugar
+                    <ng-icon name="heroBuildingOffice" size="14"></ng-icon>
+                    Lugar
                     <span class="campo-obligatorio">*</span>
                     <span
                       class="help-icon"
@@ -1264,7 +1336,8 @@
                 <!-- Dirección -->
                 <div class="field-group">
                   <label>
-                    📍 Dirección
+                    <ng-icon name="heroMapPin" size="14"></ng-icon>
+                    Dirección
                     <span class="campo-obligatorio">*</span>
                     <span
                       class="help-icon"
@@ -1283,7 +1356,8 @@
                 <!-- Hora -->
                 <div class="field-group">
                   <label>
-                    🕐 Hora
+                    <ng-icon name="heroClock" size="14"></ng-icon>
+                    Hora
                     <span class="campo-obligatorio">*</span>
                     <span
                       class="help-icon"
@@ -1301,13 +1375,12 @@
                 <!-- URL de Maps -->
                 <div class="field-group full-width">
                   <label>
-                    🗺️ Enlace de Google Maps
+                    <ng-icon name="heroGlobeAmericas" size="14"></ng-icon>
+                    Enlace de Google Maps
                     <span class="campo-opcional">(opcional)</span>
                     <span
                       class="help-icon"
-                      data-tooltip="💡 Comparte un enlace de Google Maps para que los invitados puedan llegar fácilmente.
-
-            📌 Ejemplo: Abre Google Maps, busca el lugar y copia el enlace 'Compartir'."
+                      data-tooltip="💡 Comparte un enlace de Google Maps para que los invitados puedan llegar fácilmente. Ejemplo: Abre Google Maps, busca el lugar y copia el enlace 'Compartir'."
                       >?</span
                     >
                   </label>
@@ -1319,16 +1392,15 @@
                   />
                 </div>
 
-                <!-- ✅ Imagen del lugar -->
+                <!-- Imagen del lugar -->
                 <div class="field-group full-width">
                   <label>
-                    📸 Imagen del lugar
+                    <ng-icon name="heroPhoto" size="14"></ng-icon>
+                    Imagen del lugar
                     <span class="campo-opcional">(opcional)</span>
                     <span
                       class="help-icon"
-                      data-tooltip="💡 Sube una foto del lugar de la recepción para que tus invitados sepan cómo es.
-
-            📌 Ejemplo: Una foto del salón de eventos o del jardín donde será la fiesta."
+                      data-tooltip="💡 Sube una foto del lugar de la recepción para que tus invitados sepan cómo es. Ejemplo: Una foto del salón de eventos o del jardín donde será la fiesta."
                       >?</span
                     >
                   </label>
@@ -1342,13 +1414,12 @@
                 <!-- Descripción del lugar -->
                 <div class="field-group full-width">
                   <label>
-                    📝 Descripción del lugar
+                    <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                    Descripción del lugar
                     <span class="campo-opcional">(opcional)</span>
                     <span
                       class="help-icon"
-                      data-tooltip="💡 Describe el lugar para que los invitados sepan qué esperar.
-
-            📌 Ejemplo: 'Un salón con vista al jardín, con capacidad para 150 personas.'"
+                      data-tooltip="💡 Describe el lugar para que los invitados sepan qué esperar. Ejemplo: 'Un salón con vista al jardín, con capacidad para 150 personas.'"
                       >?</span
                     >
                   </label>
@@ -1381,19 +1452,19 @@
          ========================================================== -->
     @if (tabActivo === "extras") {
       <div class="tab-content">
-        <!-- ----------------------------------------------------
-             ACORDEÓN: PADRES
-             - Nombres de novia, novio
-             - Padres de la novia (madre, padre)
-             - Padres del novio (madre, padre)
-             ---------------------------------------------------- -->
-        <div class="acordeon">
+        <!-- ============================================ -->
+        <!-- ACORDEÓN: PADRES -->
+        <!-- ============================================ -->
+        <div class="acordeon full-width">
           <!-- Header: clic para expandir/contraer -->
           <div
             class="acordeon-header"
             (click)="acordeonAbierto = !acordeonAbierto"
           >
-            <span>👪 Padres</span>
+            <span>
+              <ng-icon name="heroUsers" size="18"></ng-icon>
+              Padres
+            </span>
             <span class="icono">{{ acordeonAbierto ? "▲" : "▼" }}</span>
           </div>
 
@@ -1402,7 +1473,10 @@
             <div class="form-grid">
               <!-- Novia y Novio -->
               <div class="campo">
-                <label>Nombre de la Novia</label>
+                <label>
+                  <ng-icon name="heroUserCircle" size="14"></ng-icon>
+                  Nombre de la Novia
+                </label>
                 <input
                   type="text"
                   [(ngModel)]="nuevaInvitacion.padres.novia"
@@ -1411,7 +1485,10 @@
                 />
               </div>
               <div class="campo">
-                <label>Nombre del Novio</label>
+                <label>
+                  <ng-icon name="heroUserCircle" size="14"></ng-icon>
+                  Nombre del Novio
+                </label>
                 <input
                   type="text"
                   [(ngModel)]="nuevaInvitacion.padres.novio"
@@ -1419,9 +1496,13 @@
                   placeholder="Nombre del novio"
                 />
               </div>
+
               <!-- Padres de la Novia -->
               <div class="campo">
-                <label>Madre de la Novia</label>
+                <label>
+                  <ng-icon name="heroUserCircle" size="14"></ng-icon>
+                  Madre de la Novia
+                </label>
                 <input
                   type="text"
                   [(ngModel)]="nuevaInvitacion.padres.madreNovia"
@@ -1430,7 +1511,10 @@
                 />
               </div>
               <div class="campo">
-                <label>Padre de la Novia</label>
+                <label>
+                  <ng-icon name="heroUserCircle" size="14"></ng-icon>
+                  Padre de la Novia
+                </label>
                 <input
                   type="text"
                   [(ngModel)]="nuevaInvitacion.padres.padreNovia"
@@ -1438,9 +1522,13 @@
                   placeholder="Padre de la novia"
                 />
               </div>
+
               <!-- Padres del Novio -->
               <div class="campo">
-                <label>Madre del Novio</label>
+                <label>
+                  <ng-icon name="heroUserCircle" size="14"></ng-icon>
+                  Madre del Novio
+                </label>
                 <input
                   type="text"
                   [(ngModel)]="nuevaInvitacion.padres.madreNovio"
@@ -1449,7 +1537,10 @@
                 />
               </div>
               <div class="campo">
-                <label>Padre del Novio</label>
+                <label>
+                  <ng-icon name="heroUserCircle" size="14"></ng-icon>
+                  Padre del Novio
+                </label>
                 <input
                   type="text"
                   [(ngModel)]="nuevaInvitacion.padres.padreNovio"
@@ -1461,27 +1552,27 @@
           </div>
         </div>
 
-        <!-- ----------------------------------------------------
-             ACORDEÓN: PADRINOS
-             - Lista dinámica de padrinos
-             - Cada padrino tiene: nombre + rol
-             - Roles disponibles con iconos y descripciones
-             - Vista previa agrupada por rol
-             ---------------------------------------------------- -->
-        <div class="acordeon">
+        <!-- ============================================ -->
+        <!-- ACORDEÓN: PADRINOS -->
+        <!-- ============================================ -->
+        <div class="acordeon full-width">
           <div
             class="acordeon-header"
             (click)="acordeonPadrinos = !acordeonPadrinos"
           >
-            <span>👑 Padrinos</span>
+            <span>
+              <ng-icon name="lucideCrown" size="18"></ng-icon>
+              Padrinos
+            </span>
             <span class="icono">{{ acordeonPadrinos ? "▲" : "▼" }}</span>
           </div>
 
           <div class="acordeon-body" [class.abierto]="acordeonPadrinos">
             <!-- Vista previa: Muestra padrinos agrupados por rol -->
-            @if (nuevaInvitacion.padrinos.length > 0) {
+
+            @if (getPadrinosAgrupados().length > 0) {
               <div class="padrinos-preview">
-                @for (grupo of getPadrinosAgrupados(); track grupo) {
+                @for (grupo of getPadrinosAgrupados(); track grupo.rolId) {
                   <div class="grupo-preview">
                     <strong>{{ grupo.rol }}:</strong>
                     <span>{{ grupo.nombres.join(", ") }}</span>
@@ -1510,7 +1601,7 @@
                       class="btn-eliminar-padrino"
                       (click)="eliminarPadrino(i); $event.stopPropagation()"
                     >
-                      ❌
+                      <ng-icon name="heroTrash" size="16"></ng-icon>
                     </button>
                   </div>
 
@@ -1518,7 +1609,10 @@
                   <div class="padrino-fields">
                     <!-- Nombre -->
                     <div class="field-group">
-                      <label>Nombre(s)</label>
+                      <label>
+                        <ng-icon name="heroUserCircle" size="14"></ng-icon>
+                        Nombre(s)
+                      </label>
                       <input
                         type="text"
                         [(ngModel)]="padrino.nombre"
@@ -1529,9 +1623,13 @@
                         required
                       />
                     </div>
+
                     <!-- Rol: Selector con icono dinámico -->
                     <div class="field-group">
-                      <label>Rol</label>
+                      <label>
+                        <ng-icon name="heroTag" size="14"></ng-icon>
+                        Rol
+                      </label>
                       <div class="rol-select-container">
                         <!-- Icono del rol seleccionado -->
                         @if (padrino.rol && getRolIcon(padrino.rol)) {
@@ -1574,7 +1672,8 @@
               class="btn-agregar"
               (click)="agregarPadrino(); $event.stopPropagation()"
             >
-              ➕ Agregar padrino
+              <ng-icon name="heroPlus" size="16"></ng-icon>
+              Agregar padrino
             </button>
           </div>
         </div>
@@ -1587,19 +1686,25 @@
                3. Colores reservados (NO usar)
                4. Personalizar mensaje (título, descripción, etc.)
              ---------------------------------------------------- -->
-        <div class="acordeon">
+        <div class="acordeon full-width">
           <div
             class="acordeon-header"
             (click)="acordeonDressCode = !acordeonDressCode"
           >
-            <span>👗 Código de Vestimenta</span>
+            <span>
+              <ng-icon name="hugeSuit02" size="18"></ng-icon>
+              Código de Vestimenta
+            </span>
             <span class="icono">{{ acordeonDressCode ? "▲" : "▼" }}</span>
           </div>
 
           <div class="acordeon-body" [class.abierto]="acordeonDressCode">
             <!-- PASO 1: Estilo de vestimenta -->
             <div class="campo">
-              <label>🎯 1. SELECCIONA EL ESTILO</label>
+              <label>
+                <ng-icon name="lucideTarget" size="14"></ng-icon>
+                1. SELECCIONA EL ESTILO
+              </label>
               <div class="estilos-grid">
                 @for (estilo of estilosDisponibles; track estilo) {
                   <div
@@ -1609,7 +1714,6 @@
                     "
                     (click)="nuevaInvitacion.dressCode.estilo = estilo.valor"
                   >
-                    <!-- Imagen del estilo en lugar de emoji -->
                     <div class="estilo-icon-wrapper">
                       <img
                         [src]="estilo.icon"
@@ -1619,7 +1723,6 @@
                       />
                     </div>
                     <span class="estilo-nombre">{{ estilo.nombre }}</span>
-                    <!-- Muestra descripción cuando está seleccionado -->
                     @if (nuevaInvitacion.dressCode.estilo === estilo.valor) {
                       <span class="estilo-descripcion">
                         {{ estilo.descripcion }}
@@ -1630,11 +1733,15 @@
               </div>
             </div>
 
-            <!-- PASO 2: Colores sugeridos (máx 4) -->
+            <!-- PASO 2: Colores sugeridos -->
             <div class="campo">
-              <label>🎨 2. COLORES SUGERIDOS</label>
+              <label>
+                <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                2. COLORES SUGERIDOS
+              </label>
               <p class="ayuda-colores">
-                💡 Selecciona hasta 4 colores para sugerir a tus invitados
+                <ng-icon name="hugeBulb" size="14"></ng-icon>
+                Selecciona hasta 4 colores para sugerir a tus invitados
               </p>
               <div class="colores-grid">
                 @for (color of coloresDisponibles; track color) {
@@ -1651,12 +1758,12 @@
                   </div>
                 }
               </div>
-              <!-- Muestra los colores seleccionados como chips -->
               @if (nuevaInvitacion.dressCode.colores.length > 0) {
                 <div class="colores-seleccionados">
-                  <span class="colores-label-seleccionados"
-                    >✅ Colores sugeridos:</span
-                  >
+                  <span class="colores-label-seleccionados">
+                    <ng-icon name="heroCheckCircle" size="14"></ng-icon>
+                    Colores sugeridos:
+                  </span>
                   @for (
                     color of nuevaInvitacion.dressCode.colores;
                     track color
@@ -1668,7 +1775,7 @@
                       ></span>
                       {{ color }}
                       <button type="button" (click)="removeColor(color)">
-                        ✕
+                        <ng-icon name="heroXMark" size="12"></ng-icon>
                       </button>
                     </span>
                   }
@@ -1676,11 +1783,15 @@
               }
             </div>
 
-            <!-- PASO 3: Colores reservados (NO usar) -->
+            <!-- PASO 3: Colores reservados -->
             <div class="campo">
-              <label>🚫 3. COLORES RESERVADOS (opcional)</label>
+              <label>
+                <ng-icon name="heroXCircle" size="14"></ng-icon>
+                3. COLORES RESERVADOS (opcional)
+              </label>
               <p class="ayuda-colores">
-                💡 Selecciona los colores que NO deben usar los invitados
+                <ng-icon name="heroCheckCircle" size="14"></ng-icon>
+                Selecciona los colores que NO deben usar los invitados
               </p>
               <div class="colores-grid">
                 @for (color of coloresDisponibles; track color) {
@@ -1697,12 +1808,12 @@
                   </div>
                 }
               </div>
-              <!-- Muestra colores reservados como chips -->
               @if (nuevaInvitacion.dressCode.coloresReservados.length > 0) {
                 <div class="colores-seleccionados">
-                  <span class="colores-label-seleccionados"
-                    >🚫 Colores reservados:</span
-                  >
+                  <span class="colores-label-seleccionados">
+                    <ng-icon name="heroXCircle" size="14"></ng-icon>
+                    Colores reservados:
+                  </span>
                   @for (
                     color of nuevaInvitacion.dressCode.coloresReservados;
                     track color
@@ -1717,7 +1828,7 @@
                         type="button"
                         (click)="removeColorReservado(color)"
                       >
-                        ✕
+                        <ng-icon name="heroXMark" size="12"></ng-icon>
                       </button>
                     </span>
                   }
@@ -1727,9 +1838,11 @@
 
             <!-- PASO 4: Personalizar mensaje -->
             <div class="campo">
-              <label>✏️ 4. PERSONALIZA TU MENSAJE</label>
+              <label>
+                <ng-icon name="heroPencil" size="14"></ng-icon>
+                4. PERSONALIZA TU MENSAJE
+              </label>
 
-              <!-- Título de la sección -->
               <div class="subcampo">
                 <label>Título de la sección</label>
                 <div class="input-with-counter">
@@ -1746,7 +1859,6 @@
                 </div>
               </div>
 
-              <!-- Descripción de la sección -->
               <div class="subcampo">
                 <label>Descripción (opcional)</label>
                 <div class="input-with-counter">
@@ -1765,7 +1877,6 @@
                 </div>
               </div>
 
-              <!-- Texto de sugerencia -->
               <div class="subcampo">
                 <label>Texto de sugerencia</label>
                 <div class="input-with-counter">
@@ -1784,7 +1895,6 @@
                 </div>
               </div>
 
-              <!-- Nota adicional -->
               <div class="subcampo">
                 <label>Nota adicional (opcional)</label>
                 <div class="input-with-counter">
@@ -1806,7 +1916,9 @@
 
             <!-- Tip para el anfitrión -->
             <div class="dresscode-tip">
-              <span class="tip-icon">💡</span>
+              <span class="tip-icon">
+                <ng-icon name="hugeBulb" size="20"></ng-icon>
+              </span>
               <span class="tip-text">
                 Sé claro pero flexible con tu código de vestimenta. Tus
                 invitados apreciarán la guía para elegir el atuendo perfecto
@@ -1824,12 +1936,15 @@
                distancia, capacidad, enlace, imagen)
              - Personalización de mensajes
              ---------------------------------------------------- -->
-        <div class="acordeon">
+        <div class="acordeon full-width">
           <div
             class="acordeon-header"
             (click)="acordeonHospedaje = !acordeonHospedaje"
           >
-            <span>🏠 Hospedaje</span>
+            <span>
+              <ng-icon name="hugeAirbnb" size="18"></ng-icon>
+              Hospedaje
+            </span>
             <span class="icono">{{ acordeonHospedaje ? "▲" : "▼" }}</span>
           </div>
 
@@ -1842,13 +1957,17 @@
                   [(ngModel)]="hospedajeMostrarSeccion"
                   [ngModelOptions]="{ standalone: true }"
                 />
+                <ng-icon name="heroEye" size="14"></ng-icon>
                 Mostrar sección en la invitación
               </label>
             </div>
 
-            <!-- Estilo de la sección (3 opciones visuales) -->
+            <!-- Estilo de la sección -->
             <div class="campo">
-              <label>🎨 ESTILO DE LA SECCIÓN</label>
+              <label>
+                <ng-icon name="heroSquares2X2" size="14"></ng-icon>
+                ESTILO DE LA SECCIÓN
+              </label>
               <div class="estilos-hospedaje-grid">
                 @for (estilo of estilosHospedaje; track estilo) {
                   <div
@@ -1858,7 +1977,9 @@
                     "
                     (click)="seleccionarEstiloHospedaje(estilo.valor)"
                   >
-                    <span class="estilo-hospedaje-icon">{{ estilo.icon }}</span>
+                    <span class="estilo-hospedaje-icon">
+                      <ng-icon [name]="estilo.icon" size="24"></ng-icon>
+                    </span>
                     <span class="estilo-hospedaje-nombre">{{
                       estilo.nombre
                     }}</span>
@@ -1869,11 +1990,17 @@
 
             <!-- OPCIONES DE AIRBNB -->
             <div class="campo">
-              <label>🏠 OPCIONES DE AIRBNB</label>
+              <label>
+                <ng-icon name="hugeAirbnb" size="14"></ng-icon>
+                OPCIONES DE AIRBNB
+              </label>
 
               <!-- Título de la sección -->
               <div class="subcampo">
-                <label>Título de la sección</label>
+                <label>
+                  <ng-icon name="heroPencil" size="14"></ng-icon>
+                  Título de la sección
+                </label>
                 <div class="input-with-counter">
                   <input
                     type="text"
@@ -1888,7 +2015,10 @@
 
               <!-- Descripción de la sección -->
               <div class="subcampo">
-                <label>Descripción</label>
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Descripción
+                </label>
                 <div class="input-with-counter">
                   <textarea
                     [(ngModel)]="hospedajeDescripcion"
@@ -1905,7 +2035,10 @@
 
               <!-- Lista dinámica de alojamientos -->
               <div class="subcampo">
-                <label>Agregar alojamiento de Airbnb</label>
+                <label>
+                  <ng-icon name="heroPlus" size="14"></ng-icon>
+                  Agregar alojamiento de Airbnb
+                </label>
                 @for (
                   alojamiento of hospedajeAlojamientos;
                   track alojamiento;
@@ -1921,7 +2054,7 @@
                           class="btn-eliminar-alojamiento"
                           (click)="eliminarAlojamiento(i)"
                         >
-                          ❌
+                          <ng-icon name="heroTrash" size="16"></ng-icon>
                         </button>
                       </div>
                       <!-- Campos del alojamiento -->
@@ -1937,7 +2070,10 @@
                           />
                         </div>
                         <div class="field-group">
-                          <label>Ubicación</label>
+                          <label>
+                            <ng-icon name="heroMapPin" size="14"></ng-icon>
+                            Ubicación
+                          </label>
                           <input
                             type="text"
                             [(ngModel)]="alojamiento.ubicacion"
@@ -1947,7 +2083,10 @@
                           />
                         </div>
                         <div class="field-group">
-                          <label>Distancia (opcional)</label>
+                          <label>
+                            <ng-icon name="lucideRuler" size="14"></ng-icon>
+                            Distancia (opcional)
+                          </label>
                           <input
                             type="text"
                             [(ngModel)]="alojamiento.distancia"
@@ -1957,7 +2096,10 @@
                           />
                         </div>
                         <div class="field-group">
-                          <label>Capacidad (opcional)</label>
+                          <label>
+                            <ng-icon name="heroUsers" size="14"></ng-icon>
+                            Capacidad (opcional)
+                          </label>
                           <input
                             type="text"
                             [(ngModel)]="alojamiento.capacidad"
@@ -1967,7 +2109,10 @@
                           />
                         </div>
                         <div class="field-group full-width">
-                          <label>Enlace de Airbnb</label>
+                          <label>
+                            <ng-icon name="lucideLink" size="14"></ng-icon>
+                            Enlace de Airbnb
+                          </label>
                           <input
                             type="url"
                             [(ngModel)]="alojamiento.enlace"
@@ -1977,9 +2122,8 @@
                           />
                         </div>
                         <div class="field-group full-width">
-                          <!-- Componente de subida de imagen -->
                           <app-image-upload
-                            label="📸 Imagen (opcional)"
+                            label="Imagen (opcional)"
                             [imageUrl]="alojamiento.imagen || ''"
                             (imageChange)="alojamiento.imagen = $event"
                             placeholder="URL de la imagen (opcional)"
@@ -1995,16 +2139,23 @@
                   class="btn-agregar-alojamiento"
                   (click)="agregarAlojamiento()"
                 >
-                  + Agregar otro alojamiento
+                  <ng-icon name="heroPlus" size="16"></ng-icon>
+                  Agregar otro alojamiento
                 </button>
               </div>
             </div>
 
             <!-- Personalización de mensajes -->
             <div class="campo">
-              <label>✏️ PERSONALIZA TU MENSAJE</label>
+              <label>
+                <ng-icon name="heroPencil" size="14"></ng-icon>
+                PERSONALIZA TU MENSAJE
+              </label>
               <div class="subcampo">
-                <label>Texto del botón</label>
+                <label>
+                  <ng-icon name="heroButton" size="14"></ng-icon>
+                  Texto del botón
+                </label>
                 <div class="input-with-counter">
                   <input
                     type="text"
@@ -2019,7 +2170,10 @@
                 </div>
               </div>
               <div class="subcampo">
-                <label>Texto adicional (opcional)</label>
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Texto adicional (opcional)
+                </label>
                 <div class="input-with-counter">
                   <textarea
                     [(ngModel)]="hospedajeTextoAdicional"
@@ -2037,7 +2191,9 @@
 
             <!-- Tip para el anfitrión -->
             <div class="hospedaje-tip">
-              <span class="tip-icon">💡</span>
+              <span class="tip-icon">
+                <ng-icon name="hugeBulb" size="20"></ng-icon>
+              </span>
               <span class="tip-text">
                 Comparte alojamientos recomendados para que tus invitados tengan
                 una estancia cómoda y cercana al evento.
@@ -2058,17 +2214,20 @@
              - Lista dinámica de fotos (imagen, título, descripción,
                destacada)
              ---------------------------------------------------- -->
-        <div class="acordeon">
+        <div class="acordeon full-width">
           <div
             class="acordeon-header"
             (click)="acordeonGaleria = !acordeonGaleria"
           >
-            <span>📸 Galería</span>
+            <span>
+              <ng-icon name="heroPhoto" size="18"></ng-icon>
+              Galería
+            </span>
             <span class="icono">{{ acordeonGaleria ? "▲" : "▼" }}</span>
           </div>
 
           <div class="acordeon-body" [class.abierto]="acordeonGaleria">
-            <!-- Checkbox: Mostrar sección en la invitación -->
+            <!-- Checkbox: Mostrar sección -->
             <div class="campo">
               <label>
                 <input
@@ -2076,28 +2235,34 @@
                   [(ngModel)]="galeriaMostrarSeccion"
                   [ngModelOptions]="{ standalone: true }"
                 />
+                <ng-icon name="heroEye" size="14"></ng-icon>
                 Mostrar sección en la invitación
               </label>
             </div>
 
-            <!-- ESTILO DE VISUALIZACIÓN (4 opciones) -->
+            <!-- ESTILO DE VISUALIZACIÓN -->
             <div class="campo">
-              <label>🎨 ¿Cómo quieres que se vea la galería?</label>
+              <label>
+                <ng-icon name="heroSquares2x2" size="14"></ng-icon>
+                ¿Cómo quieres que se vea la galería?
+              </label>
               <div class="estilos-galeria-grid">
-                <!-- Opción 1: Grid - Fotos en cuadrícula -->
+                <!-- Grid -->
                 <div
                   class="estilo-galeria-option"
                   [class.selected]="nuevaInvitacion.galeria?.estilo === 'grid'"
                   (click)="seleccionarEstiloGaleria('grid')"
                 >
-                  <span class="estilo-galeria-icon">📐</span>
+                  <span class="estilo-galeria-icon">
+                    <ng-icon name="heroSquares2x2" size="24"></ng-icon>
+                  </span>
                   <span class="estilo-galeria-nombre">Grid</span>
                   <span class="estilo-galeria-desc"
                     >Fotos organizadas en cuadrícula</span
                   >
                 </div>
 
-                <!-- Opción 2: Carrusel - Deslizable horizontalmente -->
+                <!-- Carrusel -->
                 <div
                   class="estilo-galeria-option"
                   [class.selected]="
@@ -2105,14 +2270,16 @@
                   "
                   (click)="seleccionarEstiloGaleria('carousel')"
                 >
-                  <span class="estilo-galeria-icon">🎠</span>
+                  <span class="estilo-galeria-icon">
+                    <ng-icon name="lucideArrowLeftRight" size="24"></ng-icon>
+                  </span>
                   <span class="estilo-galeria-nombre">Carrusel</span>
                   <span class="estilo-galeria-desc"
                     >Pasa las fotos deslizando</span
                   >
                 </div>
 
-                <!-- Opción 3: Presentación - Autoplay con loop -->
+                <!-- Presentación -->
                 <div
                   class="estilo-galeria-option"
                   [class.selected]="
@@ -2120,14 +2287,16 @@
                   "
                   (click)="seleccionarEstiloGaleria('slideshow')"
                 >
-                  <span class="estilo-galeria-icon">🎬</span>
+                  <span class="estilo-galeria-icon">
+                    <ng-icon name="heroPlay" size="24"></ng-icon>
+                  </span>
                   <span class="estilo-galeria-nombre">Presentación</span>
                   <span class="estilo-galeria-desc"
                     >Reproducción automática</span
                   >
                 </div>
 
-                <!-- Opción 4: Masonry - Estilo Pinterest -->
+                <!-- Masonry -->
                 <div
                   class="estilo-galeria-option"
                   [class.selected]="
@@ -2135,7 +2304,9 @@
                   "
                   (click)="seleccionarEstiloGaleria('masonry')"
                 >
-                  <span class="estilo-galeria-icon">🧱</span>
+                  <span class="estilo-galeria-icon">
+                    <ng-icon name="heroSquaresPlus" size="24"></ng-icon>
+                  </span>
                   <span class="estilo-galeria-nombre">Masonry</span>
                   <span class="estilo-galeria-desc"
                     >Estilo Pinterest con columnas</span
@@ -2143,68 +2314,84 @@
                 </div>
               </div>
               <small class="help-text">
-                💡 Elige el estilo que mejor se adapte a tus fotos
+                <ng-icon name="hugeBulb" size="14"></ng-icon>
+                Elige el estilo que mejor se adapte a tus fotos
               </small>
             </div>
 
-            <!-- EFECTO AL VER FOTO EN GRANDE (3 opciones) -->
+            <!-- EFECTO AL VER FOTO EN GRANDE -->
             <div class="campo">
-              <label>🖼️ Efecto al ver las fotos en grande</label>
+              <label>
+                <ng-icon name="heroEye" size="14"></ng-icon>
+                Efecto al ver las fotos en grande
+              </label>
               <div class="efectos-galeria-grid">
-                <!-- Efecto: Suave (fade) -->
+                <!-- Suave (fade) -->
                 <div
                   class="efecto-galeria-option"
                   [class.selected]="nuevaInvitacion.galeria?.efecto === 'fade'"
                   (click)="seleccionarEfectoGaleria('fade')"
                 >
-                  <span class="efecto-galeria-icon">🌫️</span>
+                  <span class="efecto-galeria-icon">
+                    <ng-icon name="lucideCloud" size="24"></ng-icon>
+                  </span>
                   <span class="efecto-galeria-nombre">Suave</span>
                   <span class="efecto-galeria-desc"
                     >Aparece con delicadeza</span
                   >
                 </div>
 
-                <!-- Efecto: Zoom -->
+                <!-- Zoom -->
                 <div
                   class="efecto-galeria-option"
                   [class.selected]="nuevaInvitacion.galeria?.efecto === 'zoom'"
                   (click)="seleccionarEfectoGaleria('zoom')"
                 >
-                  <span class="efecto-galeria-icon">🔍</span>
+                  <span class="efecto-galeria-icon">
+                    <ng-icon name="heroMagnifyingGlass" size="24"></ng-icon>
+                  </span>
                   <span class="efecto-galeria-nombre">Zoom</span>
                   <span class="efecto-galeria-desc"
                     >La foto crece al abrirse</span
                   >
                 </div>
 
-                <!-- Efecto: Deslizar (slide) -->
+                <!-- Deslizar (slide) -->
                 <div
                   class="efecto-galeria-option"
                   [class.selected]="nuevaInvitacion.galeria?.efecto === 'slide'"
                   (click)="seleccionarEfectoGaleria('slide')"
                 >
-                  <span class="efecto-galeria-icon">➡️</span>
+                  <span class="efecto-galeria-icon">
+                    <ng-icon name="heroArrowRight" size="24"></ng-icon>
+                  </span>
                   <span class="efecto-galeria-nombre">Deslizar</span>
                   <span class="efecto-galeria-desc">Entra desde un lado</span>
                 </div>
               </div>
               <small class="help-text">
-                💡 El efecto que se ve cuando alguien hace clic en una foto para
+                <ng-icon name="hugeBulb" size="14"></ng-icon>
+                El efecto que se ve cuando alguien hace clic en una foto para
                 verla en grande
               </small>
             </div>
 
-            <!-- CONFIGURACIÓN DEL CARRUSEL (solo si está seleccionado) -->
+            <!-- CONFIGURACIÓN DEL CARRUSEL -->
             @if (
               nuevaInvitacion.galeria?.estilo === "carousel" ||
               nuevaInvitacion.galeria?.estilo === "slideshow"
             ) {
               <div class="campo configuracion-carrusel">
-                <label>⚙️ Configuración del carrusel</label>
+                <label>
+                  <ng-icon name="heroCog6Tooth" size="14"></ng-icon>
+                  Configuración del carrusel
+                </label>
 
-                <!-- Velocidad de transición (slider) -->
                 <div class="subcampo">
-                  <label>⏱️ Velocidad de transición</label>
+                  <label>
+                    <ng-icon name="heroClock" size="14"></ng-icon>
+                    Velocidad de transición
+                  </label>
                   <div class="velocidad-control">
                     <input
                       type="range"
@@ -2221,9 +2408,14 @@
                   </div>
                 </div>
 
-                <!-- Controles (checkboxes) -->
                 <div class="subcampo">
-                  <label>🎮 Controles</label>
+                  <label>
+                    <ng-icon
+                      name="heroAdjustmentsHorizontal"
+                      size="14"
+                    ></ng-icon>
+                    Controles
+                  </label>
                   <div class="controles-grid">
                     <label>
                       <input
@@ -2231,6 +2423,7 @@
                         [(ngModel)]="galeriaMostrarControles"
                         [ngModelOptions]="{ standalone: true }"
                       />
+                      <ng-icon name="heroChevronLeft" size="14"></ng-icon>
                       Botones siguiente/anterior
                     </label>
                     <label>
@@ -2239,6 +2432,10 @@
                         [(ngModel)]="galeriaMostrarPaginacion"
                         [ngModelOptions]="{ standalone: true }"
                       />
+                      <ng-icon
+                        name="heroEllipsisHorizontal"
+                        size="14"
+                      ></ng-icon>
                       Puntos de navegación
                     </label>
                   </div>
@@ -2246,9 +2443,12 @@
               </div>
             }
 
-            <!-- PERSONALIZACIÓN (título, subtítulo, descripción) -->
+            <!-- PERSONALIZACIÓN -->
             <div class="campo">
-              <label>📝 Personalización</label>
+              <label>
+                <ng-icon name="heroPencil" size="14"></ng-icon>
+                Personalización
+              </label>
 
               <div class="subcampo">
                 <label>Título de la sección</label>
@@ -2295,53 +2495,51 @@
               </div>
             </div>
 
-            <!-- FOTOS: Lista dinámica con imagen, título y descripción -->
+            <!-- FOTOS -->
             <div class="campo">
-              <label>📸 Fotos</label>
+              <label>
+                <ng-icon name="heroPhoto" size="14"></ng-icon>
+                Fotos
+              </label>
               <p class="ayuda-fotos">
-                💡 Agrega las fotos que quieras mostrar en la galería
+                <ng-icon name="hugeBulb" size="14"></ng-icon>
+                Agrega las fotos que quieras mostrar en la galería
               </p>
 
               @for (foto of galeriaFotos; track foto; let i = $index) {
                 <div class="foto-item">
                   <div class="foto-card">
-                    <!-- Header: número, botón destacar, botón eliminar -->
                     <div class="foto-header">
                       <span class="foto-numero">#{{ i + 1 }}</span>
                       <div class="foto-actions">
-                        <!-- Botón destacar (estrella) -->
                         <button
                           type="button"
                           class="btn-destacar-foto"
                           (click)="toggleFotoDestacada(i)"
                           [class.destacada]="foto.destacada"
                         >
-                          ⭐
+                          <ng-icon name="heroStar" size="16"></ng-icon>
                         </button>
-                        <!-- Botón eliminar -->
                         <button
                           type="button"
                           class="btn-eliminar-foto"
                           (click)="eliminarFotoGaleria(i)"
                         >
-                          ❌
+                          <ng-icon name="heroTrash" size="16"></ng-icon>
                         </button>
                       </div>
                     </div>
 
-                    <!-- Campos de la foto -->
                     <div class="foto-fields">
-                      <!-- Componente de subida de imagen -->
                       <div class="field-group full-width">
                         <app-image-upload
-                          label="📸 Imagen"
+                          label="Imagen"
                           [imageUrl]="foto.url || ''"
                           (imageChange)="foto.url = $event"
                           placeholder="URL de la imagen"
                         ></app-image-upload>
                       </div>
 
-                      <!-- Título (opcional) -->
                       <div class="field-group">
                         <label>Título (opcional)</label>
                         <input
@@ -2353,7 +2551,6 @@
                         />
                       </div>
 
-                      <!-- Descripción (opcional) -->
                       <div class="field-group full-width">
                         <label>Descripción (opcional)</label>
                         <textarea
@@ -2369,19 +2566,21 @@
                 </div>
               }
 
-              <!-- Botón para agregar nueva foto -->
               <button
                 type="button"
                 class="btn-agregar-foto"
                 (click)="agregarFotoGaleria()"
               >
-                ➕ Agregar foto
+                <ng-icon name="heroPlus" size="16"></ng-icon>
+                Agregar foto
               </button>
             </div>
 
             <!-- Tip para el usuario -->
             <div class="galeria-tip">
-              <span class="tip-icon">💡</span>
+              <span class="tip-icon">
+                <ng-icon name="hugeBulb" size="20"></ng-icon>
+              </span>
               <span class="tip-text">
                 Recomendamos usar fotos en alta resolución y con buena
                 iluminación para que luzcan increíbles en tu invitación.

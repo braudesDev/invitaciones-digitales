@@ -18,21 +18,47 @@
    se adaptan a pantallas más grandes con media queries.
    ================================================================ */
 
-/* --- 1.1 Contenedor principal del formulario --- */
-.formulario-container {
-  max-width: 1200px; /* Ancho máximo para pantallas grandes */
-  margin: 0 auto; /* Centrado horizontal */
-  padding: 20px 16px; /* Espaciado interno */
-  background: #f8f9fa; /* Fondo gris claro */
-  min-height: 100vh; /* Altura mínima = toda la pantalla */
+/* Estilo para los iconos del título */
+.title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: var(--accent, #c9a87c);
 }
 
-/* --- 1.2 Título principal --- */
+/* Si quieres forzar el color */
+.title-icon ng-icon {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  color: var(--accent, #c9a87c);
+}
+
 .title {
-  text-align: center; /* Centrado */
-  color: #333; /* Color gris oscuro */
-  margin-bottom: 24px; /* Separación inferior */
-  font-size: 1.5rem; /* Tamaño base para móvil */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  color: #333;
+  margin-bottom: 24px;
+  font-size: 1.5rem;
+}
+
+/* Para móviles pequeños */
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.2rem;
+    gap: 6px;
+  }
+
+  .title-icon {
+    width: 22px;
+    height: 22px;
+  }
 }
 
 /* ================================================================
@@ -43,36 +69,668 @@
    ================================================================ */
 
 .tabs {
-  display: flex; /* Distribución horizontal */
-  gap: 8px; /* Espacio entre tabs */
-  margin-bottom: 24px; /* Separación inferior */
-  background: white; /* Fondo blanco */
-  padding: 8px; /* Espaciado interno */
-  border-radius: 60px; /* Bordes redondeados (pill) */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  background: white;
+  padding: 8px;
+  border-radius: 60px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* --- 2.1 Cada botón de tab --- */
 .tabs button {
-  flex: 1; /* Ocupa el espacio disponible */
-  padding: 12px 8px; /* Espaciado interno */
-  background: transparent; /* Fondo transparente por defecto */
-  border: none; /* Sin borde */
-  border-radius: 40px; /* Bordes redondeados */
-  font-size: 14px; /* Tamaño de texto */
-  font-weight: 500; /* Peso medio */
-  cursor: pointer; /* Cursor de mano */
-  transition: all 0.3s; /* Transición suave */
-  color: #666; /* Color gris */
+  flex: 1;
+  padding: 12px 8px;
+  background: transparent;
+  border: none;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-/* --- 2.2 Tab activo (seleccionado) --- */
+.tabs button:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
 .tabs button.active {
-  background: linear-gradient(135deg, #667eea, #764ba2); /* Degradado morado */
-  color: white; /* Texto blanco */
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3); /* Sombra con color del gradiente */
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
+.tabs button ng-icon {
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .tabs {
+    padding: 6px;
+    gap: 4px;
+    border-radius: 40px;
+  }
+
+  .tabs button {
+    padding: 8px 6px;
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .tabs button ng-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ============================================
+   GUÍA DE IMÁGENES
+   ============================================ */
+
+.guia-imagenes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.guia-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 1rem;
+  background: var(--card-bg, #ffffff);
+  border-radius: 12px;
+  border: 2px solid var(--border, #e0d5c8);
+  transition: all 0.3s ease;
+}
+
+.guia-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ✅ ACTUALIZADO: Icono con ng-icon */
+.guia-icono {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--accent, #c9a87c);
+}
+
+.guia-icono ng-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.guia-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.guia-titulo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+}
+
+.guia-descripcion {
+  font-size: 0.8rem;
+  color: var(--text, #666);
+  line-height: 1.4;
+}
+
+.guia-ejemplo {
+  font-size: 0.7rem;
+  color: var(--text, #999);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* ============================================
+   CAMPOS DE IMAGEN
+   ============================================ */
+
+.campo-imagen {
+  background: var(--input-bg, #faf9f8);
+  border-radius: 12px;
+  padding: 1rem;
+  border: 2px solid var(--border, #e0d5c8);
+  transition: all 0.3s ease;
+}
+
+.campo-imagen:hover {
+  border-color: var(--accent, #c9a87c);
+}
+
+.campo-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+  flex-wrap: wrap;
+}
+
+/* ✅ ACTUALIZADO: Badge con ng-icon */
+.campo-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent, #c9a87c);
+}
+
+.campo-badge ng-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.campo-titulo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+}
+
+.campo-opcional {
+  font-size: 0.7rem;
+  color: var(--text, #999);
+  font-weight: 400;
+}
+
+/* ✅ ACTUALIZADO: Texto de ayuda con ng-icon */
+.campo-ayuda {
+  font-size: 0.8rem;
+  color: var(--text, #666);
+  margin: 0 0 0.8rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.campo-ayuda ng-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent, #c9a87c);
+}
+
+.campo-ayuda .ejemplo {
+  font-size: 0.7rem;
+  color: var(--text, #999);
+  font-style: italic;
+}
+
+/* ============================================
+   PREVIEW DE IMÁGENES SUBIDAS
+   ============================================ */
+
+.preview-ambas {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--input-bg, #faf9f8);
+  border-radius: 12px;
+  border: 1px solid var(--border, #e0d5c8);
+}
+
+/* ✅ ACTUALIZADO: Label con ng-icon */
+.preview-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text, #666);
+  margin: 0 0 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.preview-label ng-icon {
+  color: var(--accent, #c9a87c);
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.preview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--card-bg, #ffffff);
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid var(--border, #e0d5c8);
+}
+
+/* ✅ ACTUALIZADO: Tag con ng-icon */
+.preview-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text, #666);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.preview-tag ng-icon {
+  color: var(--accent, #c9a87c);
+}
+
+.preview-thumb {
+  width: 100%;
+  max-height: 120px;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid var(--border, #e0d5c8);
+}
+
+.preview-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-size {
+  font-size: 0.65rem;
+  color: var(--text, #999);
+}
+
+/* ✅ ACTUALIZADO: Nota con ng-icon */
+.preview-nota {
+  font-size: 0.75rem;
+  color: var(--text, #666);
+  font-style: italic;
+  margin: 0.8rem 0 0;
+  text-align: center;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.preview-nota ng-icon {
+  color: var(--accent, #c9a87c);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .guia-imagenes {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .campo-imagen {
+    padding: 0.8rem;
+  }
+
+  .guia-card {
+    padding: 0.8rem;
+  }
+
+  .guia-icono {
+    width: 36px;
+    height: 36px;
+  }
+
+  .guia-icono ng-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .preview-thumb {
+    max-height: 100px;
+  }
+
+  .campo-header {
+    flex-wrap: wrap;
+  }
+}
+
+/* ============================================
+   PREVIEW ORIENTACIÓN
+   ============================================ */
+
+.preview-orientacion {
+  margin-top: 0.8rem;
+  padding: 1rem;
+  background: var(--input-bg, #faf9f8);
+  border-radius: 10px;
+  border: 1px solid var(--border, #e0d5c8);
+}
+
+.preview-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text, #666);
+  margin: 0 0 0.5rem;
+}
+
+.orientacion-badges {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text, #666);
+  background: var(--card-bg, #ffffff);
+  border: 2px solid var(--border, #e0d5c8);
+  transition: all 0.3s ease;
+}
+
+.badge.active {
+  border-color: var(--accent, #c9a87c);
+  background: var(--secondary, #f5ede4);
+  color: var(--primary, #5c3d2e);
+}
+
+.preview-nota {
+  font-size: 0.75rem;
+  color: var(--text, #666);
+  font-style: italic;
+  margin: 0.5rem 0 0;
+  opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .guia-imagenes {
+    grid-template-columns: 1fr;
+    padding: 0.8rem;
+  }
+
+  .guia-card {
+    padding: 0.6rem;
+  }
+}
+
+/* ============================================
+   SELECTOR DE ORIENTACIÓN
+   ============================================ */
+
+.orientacion-selector {
+  display: flex;
+  gap: 0.8rem;
+  margin: 0.5rem 0;
+  flex-wrap: wrap;
+}
+
+.orientacion-btn {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--border, #e0d5c8);
+  border-radius: 12px;
+  background: var(--card-bg, #ffffff);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-family: inherit;
+}
+
+.orientacion-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: var(--accent, #c9a87c);
+}
+
+.orientacion-btn.active {
+  border-color: var(--accent, #b08a4a);
+  background: var(--secondary, #f5ede4);
+  box-shadow: 0 0 0 3px rgba(176, 138, 74, 0.15);
+}
+
+.orientacion-icon {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.orientacion-nombre {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text, #333);
+}
+
+.orientacion-desc {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--text, #666);
+  opacity: 0.6;
+  margin-top: 0.2rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .orientacion-selector {
+    flex-direction: column;
+  }
+
+  .orientacion-btn {
+    min-width: auto;
+    padding: 0.6rem;
+  }
+}
+
+/* ============================================
+   PREVIEW DE IMÁGENES SUBIDAS - CORREGIDO
+   ============================================ */
+
+.preview-ambas {
+  margin-top: 1.5rem;
+  padding: 1.2rem;
+  background: var(--input-bg, #faf9f8);
+  border-radius: 12px;
+  border: 1px solid var(--border, #e0d5c8);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: block;
+}
+
+.preview-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text, #666);
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-label ng-icon {
+  color: var(--accent, #c9a87c);
+}
+
+.preview-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 1.5rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+.preview-item {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card-bg, #ffffff);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border, #e0d5c8);
+  transition: all 0.3s ease;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+.preview-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: var(--accent, #c9a87c);
+}
+
+.preview-tag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text, #666);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.preview-tag ng-icon {
+  color: var(--accent, #c9a87c);
+}
+
+/* ✅ CAMBIO PRINCIPAL: contain en lugar de cover */
+.preview-thumb {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 2px solid var(--border, #e0d5c8);
+  background: #f5f5f5;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-thumb img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important; /* ✅ contain en lugar de cover */
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.preview-thumb:hover img {
+  transform: scale(1.02);
+}
+
+.preview-size {
+  font-size: 0.7rem;
+  color: var(--text, #999);
+  background: #f5f5f5;
+  padding: 2px 12px;
+  border-radius: 12px;
+}
+
+.preview-nota {
+  font-size: 0.8rem;
+  color: var(--text, #666);
+  font-style: italic;
+  margin: 1rem 0 0;
+  text-align: center;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.preview-nota ng-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* Desktop grande */
+@media (min-width: 1200px) {
+  .preview-thumb {
+    height: 600px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .preview-thumb {
+    height: 500px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 991px) {
+  .preview-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .preview-thumb {
+    height: 350px;
+  }
+}
+
+/* Móvil */
+@media (max-width: 480px) {
+  .preview-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .preview-ambas {
+    padding: 0.8rem;
+  }
+
+  .preview-item {
+    padding: 0.8rem;
+  }
+
+  .preview-thumb {
+    height: 400px;
+  }
+}
+
+/* MUY IMPORTANTE: Forzar que el contenedor del acordeón no limite el ancho */
+.acordeon-body.abierto .preview-ambas,
+.acordeon-body .preview-ambas {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.acordeon-body.abierto .preview-grid,
+.acordeon-body .preview-grid {
+  width: 100% !important;
+  max-width: 100% !important;
+}
 /* ================================================================
    3. FORMULARIO - GRID Y CAMPOS
    ================================================================ */
@@ -1550,9 +2208,16 @@
 }
 
 .estilo-historia-icon {
-  font-size: 2rem;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 4px;
+  color: var(--accent, #c9a87c);
+}
+
+.estilo-historia-icon ng-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .estilo-historia-nombre {
@@ -1753,9 +2418,15 @@
 }
 
 .estilo-hospedaje-icon {
-  font-size: 2rem;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 4px;
+  color: var(--accent, #c9a87c);
+}
+.estilo-hospedaje-icon ng-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .estilo-hospedaje-nombre {
@@ -4178,415 +4849,6 @@
 
   .animacion-descripcion {
     font-size: 0.55rem;
-  }
-}
-
-/* ============================================
-   GUÍA DE IMÁGENES
-   ============================================ */
-
-.guia-imagenes {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin: 1rem 0 1.5rem;
-}
-
-.guia-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.8rem;
-  padding: 1rem;
-  background: var(--card-bg, #ffffff);
-  border-radius: 12px;
-  border: 2px solid var(--border, #e0d5c8);
-  transition: all 0.3s ease;
-}
-
-.guia-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
-.guia-icono {
-  font-size: 2rem;
-  flex-shrink: 0;
-}
-
-.guia-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.guia-titulo {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--primary, #5c3d2e);
-}
-
-.guia-descripcion {
-  font-size: 0.8rem;
-  color: var(--text, #666);
-  line-height: 1.4;
-}
-
-.guia-ejemplo {
-  font-size: 0.7rem;
-  color: var(--text, #999);
-  font-weight: 500;
-  margin-top: 2px;
-}
-
-/* ============================================
-   CAMPOS DE IMAGEN
-   ============================================ */
-
-.campo-imagen {
-  background: var(--input-bg, #faf9f8);
-  border-radius: 12px;
-  padding: 1rem;
-  border: 2px solid var(--border, #e0d5c8);
-  transition: all 0.3s ease;
-}
-
-.campo-imagen:hover {
-  border-color: var(--accent, #c9a87c);
-}
-
-.campo-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.3rem;
-}
-
-.campo-badge {
-  font-size: 1.3rem;
-}
-
-.campo-titulo {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--primary, #5c3d2e);
-}
-
-.campo-opcional {
-  font-size: 0.7rem;
-  color: var(--text, #999);
-  font-weight: 400;
-}
-
-.campo-ayuda {
-  font-size: 0.8rem;
-  color: var(--text, #666);
-  margin: 0 0 0.8rem;
-  line-height: 1.5;
-}
-
-.campo-ayuda .ejemplo {
-  font-size: 0.7rem;
-  color: var(--text, #999);
-  font-style: italic;
-}
-
-/* ============================================
-   PREVIEW DE IMÁGENES SUBIDAS
-   ============================================ */
-
-.preview-ambas {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  background: var(--input-bg, #faf9f8);
-  border-radius: 12px;
-  border: 1px solid var(--border, #e0d5c8);
-}
-
-.preview-label {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text, #666);
-  margin: 0 0 0.8rem;
-}
-
-.preview-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.preview-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-  background: var(--card-bg, #ffffff);
-  padding: 0.8rem;
-  border-radius: 10px;
-  border: 1px solid var(--border, #e0d5c8);
-}
-
-.preview-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text, #666);
-}
-
-.preview-thumb {
-  width: 100%;
-  max-height: 120px;
-  overflow: hidden;
-  border-radius: 6px;
-  border: 1px solid var(--border, #e0d5c8);
-}
-
-.preview-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.preview-size {
-  font-size: 0.65rem;
-  color: var(--text, #999);
-}
-
-.preview-nota {
-  font-size: 0.75rem;
-  color: var(--text, #666);
-  font-style: italic;
-  margin: 0.8rem 0 0;
-  text-align: center;
-  opacity: 0.7;
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-@media (max-width: 768px) {
-  .guia-imagenes {
-    grid-template-columns: 1fr;
-  }
-
-  .preview-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .campo-imagen {
-    padding: 0.8rem;
-  }
-
-  .guia-card {
-    padding: 0.8rem;
-  }
-
-  .preview-thumb {
-    max-height: 100px;
-  }
-}
-
-/* ============================================
-   PREVIEW ORIENTACIÓN
-   ============================================ */
-
-.preview-orientacion {
-  margin-top: 0.8rem;
-  padding: 1rem;
-  background: var(--input-bg, #faf9f8);
-  border-radius: 10px;
-  border: 1px solid var(--border, #e0d5c8);
-}
-
-.preview-label {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text, #666);
-  margin: 0 0 0.5rem;
-}
-
-.orientacion-badges {
-  display: flex;
-  gap: 0.8rem;
-}
-
-.badge {
-  padding: 4px 14px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--text, #666);
-  background: var(--card-bg, #ffffff);
-  border: 2px solid var(--border, #e0d5c8);
-  transition: all 0.3s ease;
-}
-
-.badge.active {
-  border-color: var(--accent, #c9a87c);
-  background: var(--secondary, #f5ede4);
-  color: var(--primary, #5c3d2e);
-}
-
-.preview-nota {
-  font-size: 0.75rem;
-  color: var(--text, #666);
-  font-style: italic;
-  margin: 0.5rem 0 0;
-  opacity: 0.8;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .guia-imagenes {
-    grid-template-columns: 1fr;
-    padding: 0.8rem;
-  }
-
-  .guia-card {
-    padding: 0.6rem;
-  }
-}
-
-/* ============================================
-   SELECTOR DE ORIENTACIÓN
-   ============================================ */
-
-.orientacion-selector {
-  display: flex;
-  gap: 0.8rem;
-  margin: 0.5rem 0;
-  flex-wrap: wrap;
-}
-
-.orientacion-btn {
-  flex: 1;
-  min-width: 100px;
-  padding: 0.8rem 1rem;
-  border: 2px solid var(--border, #e0d5c8);
-  border-radius: 12px;
-  background: var(--card-bg, #ffffff);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  font-family: inherit;
-}
-
-.orientacion-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  border-color: var(--accent, #c9a87c);
-}
-
-.orientacion-btn.active {
-  border-color: var(--accent, #b08a4a);
-  background: var(--secondary, #f5ede4);
-  box-shadow: 0 0 0 3px rgba(176, 138, 74, 0.15);
-}
-
-.orientacion-icon {
-  display: block;
-  font-size: 1.8rem;
-  margin-bottom: 0.3rem;
-}
-
-.orientacion-nombre {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text, #333);
-}
-
-.orientacion-desc {
-  display: block;
-  font-size: 0.65rem;
-  color: var(--text, #666);
-  opacity: 0.6;
-  margin-top: 0.2rem;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .orientacion-selector {
-    flex-direction: column;
-  }
-
-  .orientacion-btn {
-    min-width: auto;
-    padding: 0.6rem;
-  }
-}
-
-/* ============================================
-   PREVIEW DE IMÁGENES SUBIDAS
-   ============================================ */
-
-.preview-imagenes {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: var(--input-bg, #faf9f8);
-  border-radius: 12px;
-  border: 1px solid var(--border, #e0d5c8);
-}
-
-.preview-label {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text, #666);
-  margin: 0 0 0.8rem;
-}
-
-.imagenes-subidas {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.imagen-subida {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-  background: var(--card-bg, #ffffff);
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: 1px solid var(--border, #e0d5c8);
-}
-
-.imagen-tag {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--text, #666);
-}
-
-.miniatura {
-  width: 120px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid var(--border, #e0d5c8);
-}
-
-.preview-nota {
-  font-size: 0.75rem;
-  color: var(--text, #666);
-  font-style: italic;
-  margin: 0.8rem 0 0;
-  opacity: 0.7;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .imagenes-subidas {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .miniatura {
-    width: 100%;
-    max-width: 200px;
-    height: 120px;
   }
 }
 

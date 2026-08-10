@@ -43,6 +43,28 @@ import {
   heroChatBubbleLeft,
   heroBolt,
   heroXMark,
+  heroPhoto,
+  heroDevicePhoneMobile,
+  heroComputerDesktop,
+  heroInformationCircle,
+  heroCake,
+  heroPlay,
+  heroMagnifyingGlass,
+  heroPaintBrush,
+  heroEye,
+  heroSquares2x2,
+  heroDocumentText,
+  heroDocument,
+  heroPlus,
+  heroBuildingOffice,
+  heroGlobeAmericas,
+  heroLightBulb,
+  heroSquaresPlus,
+  heroArrowLongRight,
+  heroCog6Tooth,
+  heroAdjustmentsHorizontal,
+  heroChevronLeft,
+  heroEllipsisHorizontal,
 } from '@ng-icons/heroicons/outline';
 //Lucide icons
 import {
@@ -66,6 +88,10 @@ import {
   lucideTarget,
   lucideTrash2,
   lucideLink,
+  lucideCloud,
+  lucideSwatchBook,
+  lucideRuler,
+  lucideArrowLeftRight,
 } from '@ng-icons/lucide';
 //Huge Icons
 import {
@@ -79,6 +105,8 @@ import {
   hugeWhatsapp,
   hugeUserGroup,
   hugeUserAdd02,
+  hugeRainbow,
+  hugeTextFont,
 } from '@ng-icons/huge-icons';
 
 export const appConfig: ApplicationConfig = {
@@ -125,7 +153,29 @@ export const appConfig: ApplicationConfig = {
       heroTicket,
       heroChatBubbleLeft,
       heroBolt,
+      heroPhoto,
       heroXMark,
+      heroDevicePhoneMobile,
+      heroComputerDesktop,
+      heroInformationCircle,
+      heroCake,
+      heroPlay,
+      heroMagnifyingGlass,
+      heroPaintBrush,
+      heroEye,
+      heroSquares2x2,
+      heroDocumentText,
+      heroDocument,
+      heroPlus,
+      heroBuildingOffice,
+      heroGlobeAmericas,
+      heroLightBulb,
+      heroSquaresPlus,
+      heroArrowLongRight,
+      heroCog6Tooth,
+      heroAdjustmentsHorizontal,
+      heroChevronLeft,
+      heroEllipsisHorizontal,
 
       //Lucide Icons
       lucideChurch,
@@ -148,6 +198,10 @@ export const appConfig: ApplicationConfig = {
       lucideTarget,
       lucideTrash2,
       lucideLink,
+      lucideCloud,
+      lucideSwatchBook,
+      lucideRuler,
+      lucideArrowLeftRight,
 
       //Huge Icons
       hugeBulb,
@@ -160,6 +214,8 @@ export const appConfig: ApplicationConfig = {
       hugeWhatsapp,
       hugeUserGroup,
       hugeUserAdd02,
+      hugeRainbow,
+      hugeTextFont,
     }),
   ],
 };
