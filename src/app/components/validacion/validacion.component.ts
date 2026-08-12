@@ -1,16 +1,21 @@
-import { Component, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-validacion',
   standalone: true,
-  imports: [FormsModule, ZXingScannerModule],
+  imports: [FormsModule, ZXingScannerModule, NgIcon],
   templateUrl: './validacion.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./validacion.component.css']
+  styleUrls: ['./validacion.component.css'],
 })
 export class ValidacionComponent implements AfterViewInit {
   modoEscaneo = true;
@@ -21,6 +26,7 @@ export class ValidacionComponent implements AfterViewInit {
   registrando = false;
   scannerEnabled = true;
   camaraDisponible = false;
+  mostrarBotonPrueba: boolean = true;
 
   constructor(private firestore: Firestore) {}
 
@@ -31,7 +37,9 @@ export class ValidacionComponent implements AfterViewInit {
   async verificarCamara() {
     try {
       const devices = await navigator.mediaDevices.enumerateDevices();
-      const videoDevices = devices.filter(device => device.kind === 'videoinput');
+      const videoDevices = devices.filter(
+        (device) => device.kind === 'videoinput',
+      );
       this.camaraDisponible = videoDevices.length > 0;
       if (!this.camaraDisponible) {
         this.error = 'No se encontró cámara en este dispositivo';
@@ -52,7 +60,6 @@ export class ValidacionComponent implements AfterViewInit {
   }
 
   onScanError(error: any) {
-    // Solo mostrar error si es grave
     if (error && error.message && error.message.includes('NotAllowedError')) {
       this.error = 'Permiso denegado para usar la cámara';
       this.modoEscaneo = false;
@@ -70,7 +77,7 @@ export class ValidacionComponent implements AfterViewInit {
 
   async validarQR() {
     if (!this.qrTexto.trim()) {
-      this.error = '📱 Escanea o pega un código QR';
+      this.error = 'Escanea o pega un código QR';
       return;
     }
 
@@ -83,20 +90,20 @@ export class ValidacionComponent implements AfterViewInit {
       try {
         datos = JSON.parse(this.qrTexto);
       } catch (e) {
-        this.error = '❌ QR inválido. Asegúrate de escanear el QR correctamente.';
+        this.error = 'QR inválido. Asegúrate de escanear el QR correctamente.';
         this.validando = false;
         return;
       }
 
       if (datos.tipo !== 'validacion-invitacion' && !datos.invitadoId) {
-        this.error = '❌ Este QR no es una invitación válida';
+        this.error = 'Este QR no es una invitación válida';
         this.validando = false;
         return;
       }
 
       await this.buscarInvitado(datos);
     } catch (error) {
-      this.error = '❌ Error al procesar el QR';
+      this.error = 'Error al procesar el QR';
     } finally {
       this.validando = false;
     }
@@ -111,12 +118,12 @@ export class ValidacionComponent implements AfterViewInit {
       if (!invitadoSnap.exists()) {
         this.resultadoValidacion = {
           acceso: false,
-          mensaje: '❌ INVITACIÓN NO VÁLIDA',
+          mensaje: 'INVITACIÓN NO VÁLIDA',
           invitado: datos.invitado || 'Desconocido',
           pases: datos.pases || 1,
           evento: datos.evento || 'Evento',
           confirmado: false,
-          yaIngreso: false
+          yaIngreso: false,
         };
         return;
       }
@@ -129,46 +136,49 @@ export class ValidacionComponent implements AfterViewInit {
       this.resultadoValidacion = {
         id: invitadoId,
         acceso: accesoValido,
-        mensaje: accesoValido 
-          ? '✅ ACCESO CONCEDIDO' 
-          : yaIngreso 
-            ? '⛔ ACCESO DENEGADO - YA INGRESÓ'
-            : '⛔ ACCESO DENEGADO - NO CONFIRMÓ',
+        mensaje: accesoValido
+          ? 'ACCESO CONCEDIDO'
+          : yaIngreso
+            ? 'ACCESO DENEGADO - YA INGRESÓ'
+            : 'ACCESO DENEGADO - NO CONFIRMÓ',
         invitado: datos.invitado || invitadoData['nombre'],
         pases: datos.pases || invitadoData['pases'],
         evento: datos.evento || 'Evento',
         lugar: datos.lugar || 'No especificado',
         confirmado: estaConfirmado,
-        yaIngreso: yaIngreso
+        yaIngreso: yaIngreso,
       };
     } catch (error) {
-      this.error = '❌ Error al conectar con la base de datos';
+      this.error = 'Error al conectar con la base de datos';
     }
   }
 
   async marcarIngreso() {
-    if (!this.resultadoValidacion?.id || !this.resultadoValidacion.acceso) return;
+    if (!this.resultadoValidacion?.id || !this.resultadoValidacion.acceso)
+      return;
 
     this.registrando = true;
     try {
-      const invitadoRef = doc(this.firestore, `invitados/${this.resultadoValidacion.id}`);
-      await updateDoc(invitadoRef, { 
-        ingreso: true, 
-        ingresoHora: new Date().toISOString()
+      const invitadoRef = doc(
+        this.firestore,
+        `invitados/${this.resultadoValidacion.id}`,
+      );
+      await updateDoc(invitadoRef, {
+        ingreso: true,
+        ingresoHora: new Date().toISOString(),
       });
 
       this.resultadoValidacion.yaIngreso = true;
       this.resultadoValidacion.acceso = false;
-      this.resultadoValidacion.mensaje = '✅ INGRESO REGISTRADO';
+      this.resultadoValidacion.mensaje = 'INGRESO REGISTRADO';
 
-      alert(`🎉 ${this.resultadoValidacion.invitado} ha ingresado. Bienvenido!`);
-      // Reiniciar escáner para el siguiente
+      alert(`${this.resultadoValidacion.invitado} ha ingresado. Bienvenido!`);
       setTimeout(() => {
         this.scannerEnabled = true;
         this.limpiar();
       }, 2000);
     } catch (error) {
-      alert('❌ Error al registrar ingreso');
+      alert('Error al registrar ingreso');
     } finally {
       this.registrando = false;
     }
@@ -193,7 +203,7 @@ export class ValidacionComponent implements AfterViewInit {
       invitado: 'Invitado Prueba',
       pases: 2,
       evento: 'Evento de Prueba',
-      confirmado: true
+      confirmado: true,
     });
     this.validarQR();
   }

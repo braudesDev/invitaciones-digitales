@@ -68,6 +68,9 @@ import {
   heroListBullet,
   heroCube,
   heroBanknotes,
+  heroArrowPath,
+  heroExclamationTriangle,
+  heroUser,
 } from '@ng-icons/heroicons/outline';
 //Lucide icons
 import {
@@ -120,6 +123,8 @@ import {
   phosphorFlower,
   phosphorFlowerLotus,
 } from '@ng-icons/phosphor-icons/regular';
+import { phosphorDoorOpen } from '@ng-icons/phosphor-icons/regular';
+import { phosphorHandWaving } from '@ng-icons/phosphor-icons/regular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -191,6 +196,9 @@ export const appConfig: ApplicationConfig = {
       heroListBullet,
       heroCube,
       heroBanknotes,
+      heroArrowPath,
+      heroExclamationTriangle,
+      heroUser,
 
       //Lucide Icons
       lucideChurch,
@@ -239,6 +247,8 @@ export const appConfig: ApplicationConfig = {
       phosphorFlowerTulip,
       phosphorFlower,
       phosphorFlowerLotus,
+      phosphorDoorOpen,
+      phosphorHandWaving,
     }),
   ],
 };
