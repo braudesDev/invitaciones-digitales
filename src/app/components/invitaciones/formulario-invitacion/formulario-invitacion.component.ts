@@ -1671,6 +1671,50 @@ export class FormularioInvitacionComponent implements OnInit {
     }
   }
 
+  // formulario-invitacion.component.ts
+
+  // ==============================================================
+  // 3.4 ICONOS PARA REGALOS
+  // ==============================================================
+  iconosRegalos = [
+    { valor: 'heroBuildingOffice', label: 'Tienda departamental' },
+    { valor: 'heroCube', label: 'Amazon/Online' },
+    { valor: 'heroBanknotes', label: 'Dinero en efectivo' },
+    { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
+    { valor: 'heroGift', label: 'Regalo físico' },
+    { valor: 'heroHeart', label: 'Donación' },
+    { valor: 'heroStar', label: 'Experiencia' },
+    { valor: 'lucideShoppingBag', label: 'Lista de deseos' },
+  ];
+
+  getIconosPorTipoEvento(tipo: string) {
+    if (tipo === 'boda') {
+      return [
+        { valor: 'heroBuildingOffice', label: 'Liverpool / Sears' },
+        { valor: 'heroCube', label: 'Amazon' },
+        { valor: 'heroBanknotes', label: 'Sobres (efectivo)' },
+        { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
+        { valor: 'heroGift', label: 'Regalo físico' },
+        { valor: 'heroHeart', label: 'Donación a nuestra luna de miel' },
+        { valor: 'heroStar', label: 'Experiencia (viaje, cena)' },
+        { valor: 'lucideShoppingBag', label: 'Lista de deseos' },
+      ];
+    } else if (tipo === 'xv') {
+      return [
+        { valor: 'heroBuildingOffice', label: 'Liverpool / Sears' },
+        { valor: 'heroCube', label: 'Amazon' },
+        { valor: 'heroBanknotes', label: 'Sobres (efectivo)' },
+        { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
+        { valor: 'heroGift', label: 'Regalo físico' },
+        { valor: 'heroHeart', label: 'Donación' },
+        { valor: 'heroStar', label: 'Experiencia (viaje, cena)' },
+        { valor: 'lucideShoppingBag', label: 'Lista de deseos' },
+      ];
+    }
+    // Por defecto
+    return this.iconosRegalos;
+  }
+
   eliminarOpcionRegalo(index: number) {
     if (this.nuevaInvitacion.regalos.opciones) {
       this.nuevaInvitacion.regalos.opciones.splice(index, 1);
@@ -1859,8 +1903,6 @@ export class FormularioInvitacionComponent implements OnInit {
    */
   seleccionarAnimacionHero(animacion: AnimacionHero) {
     this.nuevaInvitacion.animacionHero = animacion.valor;
-    console.log('🎬 Animación seleccionada:', animacion.nombre);
-    console.log('🎬 Valor guardado:', this.nuevaInvitacion.animacionHero);
   }
 
   // ✅ ICONOS DISPONIBLES PARA CONSIDERACIONES (en el formulario)

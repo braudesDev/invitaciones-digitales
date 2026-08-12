@@ -121,18 +121,19 @@
   border: 2px solid var(--border, #e0d5c8);
   transition: all 0.3s ease;
   color: var(--color-iconos, var(--accent, #c9a87c));
-  margin-top: -2px;
+  /* ✅ ELIMINAR margin-top: -2px; */
 }
 
 .consideracion-icono ng-icon {
-  display: block;
-  stroke-width: 1.5;
+  display: flex; /* ✅ CAMBIAR de block a flex */
+  align-items: center;
+  justify-content: center;
   width: 28px;
   height: 28px;
-  overflow: visible;
-  flex-shrink: 0;
   color: inherit;
-  margin-top: -5px;
+  /* ✅ ELIMINAR margin-top: -5px; */
+  /* ✅ ELIMINAR overflow: visible; */
+  /* ✅ ELIMINAR flex-shrink: 0; (ya lo tiene el padre) */
 }
 
 .consideracion-item:hover .consideracion-icono {

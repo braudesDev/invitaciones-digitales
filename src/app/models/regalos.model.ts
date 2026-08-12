@@ -17,11 +17,11 @@ export interface OpcionRegalo {
 }
 
 export const ESTILOS_REGALOS = [
-  { valor: 'tarjetas', nombre: 'Tarjetas', icon: '🃏' },
-  { valor: 'timeline', nombre: 'Timeline', icon: '📅' },
-  { valor: 'catalogo', nombre: 'Catálogo', icon: '📖' },
-  { valor: 'iconos', nombre: 'Íconos', icon: '🎯' },
-  { valor: 'mosaico', nombre: 'Mosaico', icon: '🧩' },
+  { valor: 'tarjetas', nombre: 'Tarjetas', icon: 'heroSquares2x2' },
+  { valor: 'timeline', nombre: 'Timeline', icon: 'heroClock' },
+  { valor: 'catalogo', nombre: 'Catálogo', icon: 'heroBookOpen' },
+  { valor: 'iconos', nombre: 'Íconos', icon: 'heroTag' },
+  { valor: 'mosaico', nombre: 'Mosaico', icon: 'heroSquaresPlus' },
 ];
 
 // 👇 AYUDA PARA EL USUARIO - EJEMPLOS DE OPCIONES

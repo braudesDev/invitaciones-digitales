@@ -32,6 +32,7 @@
     "@lucide/angular": "^1.30.0",
     "@ng-icons/huge-icons": "^35.0.1",
     "@ng-icons/lucide": "^35.0.1",
+    "@ng-icons/phosphor-icons": "^35.0.1",
     "@zxing/browser": "^0.2.0",
     "@zxing/library": "^0.21.3",
     "@zxing/ngx-scanner": "^20.0.0",

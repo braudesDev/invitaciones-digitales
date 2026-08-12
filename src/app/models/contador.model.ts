@@ -20,9 +20,11 @@ export interface Contador {
 }
 
 // Estilos disponibles
+// src/app/models/contador.model.ts
+
 export const ESTILOS_CONTADOR = [
-  { valor: 'clasico', nombre: 'Clásico elegante', icon: '✨' },
-  { valor: 'minimalista', nombre: 'Minimalista', icon: '⬜' },
-  { valor: 'floral', nombre: 'Floral', icon: '🌸' },
-  { valor: 'romantico', nombre: 'Romántico', icon: '💕' },
+  { valor: 'clasico', nombre: 'Clásico elegante', icon: 'heroSparkles' },
+  { valor: 'minimalista', nombre: 'Minimalista', icon: 'heroSquares2x2' },
+  { valor: 'floral', nombre: 'Floral', icon: 'phosphorFlowerTulip' },
+  { valor: 'romantico', nombre: 'Romántico', icon: 'heroHeart' },
 ];

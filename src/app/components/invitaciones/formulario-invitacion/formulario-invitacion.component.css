@@ -1414,16 +1414,20 @@
 }
 
 .btn-guardar {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 14px 32px;
   font-size: 16px;
   font-weight: 600;
   border-radius: 40px;
+  border: none;
   cursor: pointer;
   transition: all 0.2s;
-  width: 100%; /* Ancho completo en móvil */
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  width: 100%;
 }
 
 /* --- 10.1 Hover del botón guardar (cuando está habilitado) --- */
@@ -1436,6 +1440,18 @@
 .btn-guardar:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.btn-guardar ng-icon {
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+  .btn-guardar {
+    width: auto;
+    padding: 14px 40px;
+  }
 }
 
 /* ================================================================
@@ -3085,9 +3101,16 @@
 }
 
 .estilo-contador-icon {
-  font-size: 1.8rem;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 4px;
+  color: var(--accent, #c9a87c);
+}
+
+.estilo-contador-icon ng-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .estilo-contador-nombre {
@@ -3183,7 +3206,6 @@
   }
 }
 
-/**/
 /* ================================================================
    FORMULARIO - REGALOS (Mesa de Regalos)
    ================================================================
@@ -3242,9 +3264,16 @@
 }
 
 .estilo-regalos-icon {
-  font-size: 2rem;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 4px;
+  color: var(--accent, #c9a87c);
+}
+
+.estilo-regalos-icon ng-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .estilo-regalos-nombre {
@@ -3662,6 +3691,138 @@
   padding-bottom: 0;
 }
 
+/* ============================================
+   ICONOS HASHTAG - SELECTOR VISUAL
+   ============================================ */
+
+.iconos-hashtag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.icono-hashtag-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 6px;
+  border: 2px solid var(--border, #e0d5c8);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--card-bg, #ffffff);
+  min-height: 65px;
+  color: var(--text, #333);
+  gap: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.icono-hashtag-option:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent, #c9a87c);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.icono-hashtag-option.selected {
+  border-color: var(--accent, #b08a4a);
+  background: var(--secondary, #f5ede4);
+  box-shadow: 0 0 0 3px rgba(176, 138, 74, 0.15);
+}
+
+.icono-hashtag-option ng-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.icono-label {
+  font-size: 0.5rem;
+  color: var(--text, #666);
+  text-align: center;
+  line-height: 1.1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* Tablets y móviles grandes */
+@media (max-width: 768px) {
+  .iconos-hashtag-grid {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 6px;
+  }
+
+  .icono-hashtag-option {
+    min-height: 60px;
+    padding: 8px 4px;
+  }
+
+  .icono-hashtag-option ng-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .icono-label {
+    font-size: 0.45rem;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .iconos-hashtag-grid {
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 4px;
+  }
+
+  .icono-hashtag-option {
+    min-height: 50px;
+    padding: 6px 2px;
+    border-radius: 8px;
+  }
+
+  .icono-hashtag-option ng-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .icono-label {
+    font-size: 0.4rem;
+  }
+}
+
+/* Móviles muy pequeños (menos de 360px) */
+@media (max-width: 360px) {
+  .iconos-hashtag-grid {
+    grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+    gap: 4px;
+  }
+
+  .icono-hashtag-option {
+    min-height: 44px;
+    padding: 4px 2px;
+    border-radius: 6px;
+  }
+
+  .icono-hashtag-option ng-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .icono-label {
+    display: none; /* Oculta la etiqueta en pantallas muy pequeñas */
+  }
+}
+
 /* ================================================================
    FORMULARIO - CONSIDERACIONES
    ================================================================
@@ -3720,9 +3881,16 @@
 }
 
 .estilo-consideraciones-icon {
-  font-size: 2rem;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 4px;
+  color: var(--accent, #c9a87c);
+}
+
+.estilo-consideraciones-icon ng-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .estilo-consideraciones-nombre {
@@ -3899,6 +4067,79 @@
 
   .icono-label {
     font-size: 0.4rem;
+  }
+}
+
+.iconos-regalos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.icono-regalo-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 6px;
+  border: 2px solid var(--border, #e0d5c8);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--card-bg, #ffffff);
+  min-height: 70px;
+  color: var(--text, #333);
+  gap: 4px;
+}
+
+.icono-regalo-option:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent, #c9a87c);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.icono-regalo-option.selected {
+  border-color: var(--accent, #b08a4a);
+  background: var(--secondary, #f5ede4);
+  box-shadow: 0 0 0 3px rgba(176, 138, 74, 0.15);
+}
+
+.icono-regalo-option ng-icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+}
+
+.icono-label {
+  font-size: 0.55rem;
+  color: var(--text, #666);
+  text-align: center;
+  line-height: 1.1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .iconos-regalos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  }
+
+  .icono-regalo-option {
+    min-height: 60px;
+    padding: 8px 4px;
+  }
+
+  .icono-regalo-option ng-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .icono-label {
+    font-size: 0.5rem;
   }
 }
 
@@ -4246,9 +4487,16 @@
 }
 
 .estilo-confirmacion-icon {
-  font-size: 2rem;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 4px;
+  color: var(--accent, #c9a87c);
+}
+
+.estilo-confirmacion-icon ng-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .estilo-confirmacion-nombre {
