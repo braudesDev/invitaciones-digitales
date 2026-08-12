@@ -4,7 +4,9 @@
 
 .hero-section {
   position: relative;
-  min-height: 100vh;
+  height: 100dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,6 +25,7 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  pointer-events: none;
 }
 
 .pattern-overlay {
@@ -40,6 +43,7 @@
       transparent 60%
     );
   z-index: 1;
+  pointer-events: none;
 }
 
 .gradient-overlay {
@@ -53,6 +57,7 @@
     rgba(0, 0, 0, 0.5) 100%
   );
   z-index: 1;
+  pointer-events: none;
 }
 
 /* Efecto de luz decorativa */
@@ -79,20 +84,23 @@
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 900px;
+  max-width: 100%;
+  width: 100%;
   padding: 3rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.8rem;
-  min-height: 100vh;
   justify-content: center;
+  gap: 0.8rem;
+  height: 100dvh;
+  min-height: 100dvh;
+  box-sizing: border-box;
 }
 
 /* El scroll se queda abajo */
 .hero-scroll {
   position: absolute;
-  bottom: 50px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -185,24 +193,49 @@
 }
 
 /* ============================================
-   TÍTULO PRINCIPAL - BASE
+   TÍTULO PRINCIPAL - BASE (CORREGIDO)
    ============================================ */
 
 .hero-title {
-  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-size: clamp(3.5rem, 8vw, 6rem);
   font-weight: 300;
   letter-spacing: 6px;
-  line-height: 1.1;
+  line-height: 1.2;
   margin: 0;
   opacity: 0;
   animation: fadeInUp 1s ease 0.7s forwards;
   text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   color: var(--color-texto, #ffffff);
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  padding: 0 20px;
+  box-sizing: border-box;
+  text-align: center;
+  display: block;
 }
 
 /* ================================================================
-   ANIMACIONES DEL TÍTULO - VERSIÓN COMPLETA
+   ANIMACIONES DEL TÍTULO
    ================================================================ */
+
+.shimmer,
+.gradient,
+.neon,
+.float,
+.glitch,
+.typing,
+.scale,
+.fade {
+  display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  padding: 0 5px;
+  box-sizing: border-box;
+  white-space: normal; /* ✅ Todas permiten salto de línea */
+}
 
 .shimmer,
 .gradient,
@@ -346,6 +379,9 @@
   }
 }
 
+/* ============================================
+   TYPING - CORREGIDO
+   ============================================ */
 .typing {
   overflow: hidden;
   white-space: nowrap;
@@ -354,9 +390,11 @@
   display: inline-block;
   color: var(--color-texto, #ffffff);
   animation:
-    typing 3s steps(30, end) forwards,
+    typing 4s steps(60, end) forwards,
     blink 0.8s step-end infinite;
   opacity: 1;
+  max-width: 100%;
+  padding-right: 5px;
 }
 
 @keyframes typing {
@@ -378,6 +416,166 @@
   }
 }
 
+/* ============================================
+   SHIMMER
+   ============================================ */
+.shimmer {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #c9a87c 30%,
+    #ffffff 50%,
+    #c9a87c 70%,
+    #ffffff 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  animation:
+    shimmer 3s ease-in-out infinite,
+    fadeInUp 1s ease 0.7s forwards;
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ============================================
+   GRADIENT
+   ============================================ */
+.gradient {
+  background: linear-gradient(
+    135deg,
+    #c9a87c 0%,
+    #ffffff 25%,
+    #5c3d2e 50%,
+    #ffffff 75%,
+    #c9a87c 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  animation:
+    gradientMove 4s ease-in-out infinite,
+    fadeInUp 1s ease 0.7s forwards;
+}
+
+@keyframes gradientMove {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ============================================
+   NEON
+   ============================================ */
+.neon {
+  color: #ffffff;
+  text-shadow:
+    0 0 5px #c9a87c,
+    0 0 10px #c9a87c,
+    0 0 20px #c9a87c,
+    0 0 40px #c9a87c,
+    0 0 80px #c9a87c;
+  animation:
+    neonPulse 2s ease-in-out infinite,
+    fadeInUp 1s ease 0.7s forwards;
+}
+
+@keyframes neonPulse {
+  0%,
+  100% {
+    text-shadow:
+      0 0 5px #c9a87c,
+      0 0 10px #c9a87c,
+      0 0 20px #c9a87c,
+      0 0 40px #c9a87c,
+      0 0 80px #c9a87c;
+  }
+  50% {
+    text-shadow:
+      0 0 10px #c9a87c,
+      0 0 20px #c9a87c,
+      0 0 40px #c9a87c,
+      0 0 80px #c9a87c,
+      0 0 120px #c9a87c;
+  }
+}
+
+/* ============================================
+   FLOAT - CORREGIDO
+   ============================================ */
+.float {
+  opacity: 0;
+  animation:
+    fadeInUp 1s ease 0s forwards,
+    float 3s ease-in-out 1s infinite; /* ✅ float empieza después de fadeInUp */
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ============================================
+   GLITCH - CORREGIDO (con fadeInUp solo al inicio)
+   ============================================ */
+.glitch {
+  opacity: 0;
+  animation: glitch 2s ease-in-out infinite;
+  animation-delay: 0.7s; /* ✅ Espera a que termine fadeInUp */
+}
+
+.glitch {
+  opacity: 0;
+  animation:
+    fadeInUp 1s ease 0s forwards,
+    glitch 2s ease-in-out 1s infinite; /* ✅ Glitch empieza después de fadeInUp */
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(2px, -2px);
+  }
+  60% {
+    transform: translate(-1px, 1px);
+  }
+  80% {
+    transform: translate(1px, -1px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* ============================================
+   SCALE
+   ============================================ */
 .scale {
   animation: scaleIn 1.5s ease forwards;
   color: var(--color-texto, #ffffff);
@@ -394,6 +592,9 @@
   }
 }
 
+/* ============================================
+   FADE
+   ============================================ */
 .fade {
   animation: fadeIn 1.5s ease forwards;
   color: var(--color-texto, #ffffff);
@@ -411,19 +612,231 @@
 }
 
 /* ============================================
-   FECHA - FORMATO ELEGANTE
+   RESPONSIVE - TODAS LAS ANIMACIONES
+   ============================================ */
+
+/* iPad / Tablet (≤992px) */
+@media (max-width: 992px) {
+  .hero-title {
+    font-size: 3.5rem;
+    letter-spacing: 4px;
+    padding: 0 15px;
+  }
+
+  .shimmer,
+  .gradient,
+  .neon,
+  .float,
+  .glitch,
+  .typing,
+  .scale,
+  .fade {
+    font-size: 3.5rem;
+  }
+
+  /* ✅ Typing se adapta a tablet (más rápido, menos pasos) */
+  .typing {
+    white-space: nowrap;
+    border-right: 2px solid #c9a87c;
+    animation:
+      typing 3s steps(40, end) forwards,
+      blink 0.8s step-end infinite;
+  }
+}
+
+/* Móvil grande (≤768px) */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+    letter-spacing: 3px;
+    padding: 0 15px;
+  }
+
+  .shimmer,
+  .gradient,
+  .neon,
+  .float,
+  .glitch,
+  .typing,
+  .scale,
+  .fade {
+    font-size: 3rem;
+  }
+
+  .typing {
+    white-space: nowrap;
+    border-right: 2px solid #c9a87c;
+    animation:
+      typing 2.8s steps(35, end) forwards,
+      blink 0.8s step-end infinite;
+  }
+}
+
+/* Móvil (≤480px) */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    padding: 0 10px;
+    line-height: 1.3;
+  }
+
+  .shimmer,
+  .gradient,
+  .neon,
+  .float,
+  .glitch,
+  .typing,
+  .scale,
+  .fade {
+    font-size: 2.5rem;
+  }
+
+  .typing {
+    white-space: nowrap;
+    border-right: 2px solid #c9a87c;
+    animation:
+      typing 2.5s steps(30, end) forwards,
+      blink 0.8s step-end infinite;
+  }
+}
+
+/* Móvil muy pequeño (≤360px) */
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 2rem;
+    letter-spacing: 1px;
+    padding: 0 8px;
+  }
+
+  .shimmer,
+  .gradient,
+  .neon,
+  .float,
+  .glitch,
+  .typing,
+  .scale,
+  .fade {
+    font-size: 2rem;
+  }
+
+  .typing {
+    white-space: nowrap;
+    border-right: 1.5px solid #c9a87c;
+    animation:
+      typing 2s steps(20, end) forwards,
+      blink 0.8s step-end infinite;
+  }
+}
+
+/* ✅ En pantallas donde el texto no quepa, permite salto de línea */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3.2rem;
+    letter-spacing: 3px;
+    padding: 0 15px;
+    white-space: normal; /* ✅ Permite salto de línea */
+  }
+
+  .typing {
+    font-size: 3.2rem;
+    white-space: normal; /* ✅ Permite salto de línea en móvil */
+    border-right: none; /* ✅ Quita el cursor en móvil */
+    display: block;
+    animation: none; /* ✅ Desactiva typing en móvil */
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.7s forwards;
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    padding: 0 10px;
+    line-height: 1.3;
+    white-space: normal;
+  }
+
+  .typing {
+    font-size: 2.5rem;
+    white-space: normal;
+    border-right: none;
+    display: block;
+    animation: none;
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.7s forwards;
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 2rem;
+    letter-spacing: 1px;
+    padding: 0 8px;
+  }
+
+  .typing {
+    font-size: 2rem;
+  }
+}
+
+/* ============================================
+   SCALE
+   ============================================ */
+.scale {
+  animation: scaleIn 1.5s ease forwards;
+  color: var(--color-texto, #ffffff);
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   FADE
+   ============================================ */
+.fade {
+  animation: fadeIn 1.5s ease forwards;
+  color: var(--color-texto, #ffffff);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   FECHA
    ============================================ */
 
 .hero-date {
   display: flex;
   align-items: baseline;
-  gap: 8px; /* Aumentado de 6px a 8px */
+  gap: 8px;
   margin: 0.3rem 0;
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.5s forwards;
   color: var(--color-texto, #ffffff);
-  flex-wrap: wrap; /* Permite que los elementos se envuelvan en móvil */
-  justify-content: center; /* Centra en móvil */
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .hero-date .date-day {
@@ -460,11 +873,11 @@
   opacity: 0.8;
   display: flex;
   align-items: center;
-  gap: 8px; /* Espacio entre icono y texto */
+  gap: 8px;
 }
 
 /* ============================================
-   SCROLL INDICADOR - CON FLECHA ANIMADA
+   SCROLL INDICADOR
    ============================================ */
 
 .hero-scroll:hover {
@@ -496,7 +909,6 @@
   animation: bounceArrow 2s ease-in-out infinite;
 }
 
-/* Línea decorativa a la derecha de la flecha */
 .scroll-arrow-wrapper::after {
   content: "";
   display: block;
@@ -506,7 +918,6 @@
   margin-left: 0.5rem;
 }
 
-/* Animación de rebote para la flecha */
 @keyframes bounceArrow {
   0%,
   100% {
@@ -563,44 +974,47 @@
   }
 
   .hero-title {
-    font-size: 3.5rem;
+    font-size: 3rem;
     letter-spacing: 3px;
+    padding: 0 15px;
   }
 
-  .hero-title,
-  .hero-date,
-  .hero-location {
-    transform: translateY(-60px);
+  .typing {
+    font-size: 3rem;
+    white-space: nowrap;
+    animation:
+      typing 3s steps(30, end) forwards,
+      blink 0.8s step-end infinite;
   }
 
   .hero-date .date-day {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
   }
 
   .hero-date .date-month {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .hero-date .date-year {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .hero-location {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
   }
 
   .hero-scroll {
-    margin-top: 1.5rem;
+    bottom: 30px;
   }
 
   .scroll-text {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     letter-spacing: 3px;
   }
 
   .scroll-arrow {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
   }
 
   .scroll-arrow-wrapper::after {
@@ -615,14 +1029,25 @@
   }
 
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     letter-spacing: 2px;
+    padding: 0 10px;
+    line-height: 1.3;
   }
 
-  .hero-title,
-  .hero-date,
-  .hero-location {
-    transform: translateY(-40px);
+  /* ✅ TYPING CORREGIDO EN MÓVIL */
+  .typing {
+    font-size: 2.2rem;
+    white-space: nowrap;
+    border-right: 2px solid #c9a87c;
+    display: inline-block;
+    animation:
+      typing 2.5s steps(20, end) forwards,
+      blink 0.8s step-end infinite;
+    width: 0;
+    max-width: 100%;
+    padding-right: 5px;
+    opacity: 1;
   }
 
   .hero-date .date-day {
@@ -642,7 +1067,7 @@
   }
 
   .hero-scroll {
-    margin-top: 1.5rem;
+    bottom: 20px;
   }
 
   .scroll-text {
@@ -660,36 +1085,54 @@
   }
 }
 
-/* ============================================
-   AJUSTE DE POSICIÓN - TÍTULO, FECHA Y LUGAR
-   ============================================ */
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    padding: 0 8px;
+  }
 
-/* En desktop, subir ligeramente */
-.hero-title,
-.hero-date,
-.hero-location {
-  transform: translateY(-30px);
+  .typing {
+    font-size: 1.8rem;
+    animation:
+      typing 2s steps(15, end) forwards,
+      blink 0.8s step-end infinite;
+  }
+
+  .hero-date .date-day {
+    font-size: 1.5rem;
+  }
+
+  .hero-date .date-month {
+    font-size: 0.9rem;
+  }
+
+  .hero-date .date-year {
+    font-size: 0.9rem;
+  }
+
+  .hero-location {
+    font-size: 0.8rem;
+  }
 }
 
 /* ============================================
-   ICONOS NG ICONS - HERO (MEJORADO)
+   ICONOS NG ICONS
    ============================================ */
 
-/* Iconos inline (fecha y lugar) - Más grandes y con padding */
 .inline-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   vertical-align: middle;
-  margin-right: 8px; /* Aumentado de 6px */
+  margin-right: 8px;
   stroke-width: 2;
-  width: 24px; /* Aumentado de 18px */
-  height: 24px; /* Aumentado de 18px */
-  flex-shrink: 0; /* Evita que se encoja */
-  padding: 2px; /* Pequeño padding para mejor visibilidad */
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  padding: 2px;
 }
 
-/* Icono del divisor (corazón) - Más grande */
 .divider-icon {
   display: inline-flex;
   align-items: center;
@@ -697,12 +1140,11 @@
   vertical-align: middle;
   flex-shrink: 0;
   stroke-width: 1.5;
-  width: 24px; /* Aumentado de 20px */
-  height: 24px; /* Aumentado de 20px */
+  width: 24px;
+  height: 24px;
   padding: 2px;
 }
 
-/* Iconos de fecha específicos */
 .date-icon {
   display: inline-flex;
   align-items: center;
@@ -713,14 +1155,13 @@
   flex-shrink: 0;
 }
 
-/* Flecha del scroll - Más grande */
 .scroll-arrow {
   display: block;
   margin: 0 auto;
   animation: bounceArrow 2s ease-in-out infinite;
   stroke-width: 2;
-  width: 32px; /* Aumentado de 28px */
-  height: 32px; /* Aumentado de 28px */
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
 }
 
@@ -728,24 +1169,21 @@
    COLORES DE LOS ICONOS
    ============================================ */
 
-/* Fecha y lugar - heredan el color del texto */
 .hero-date ng-icon,
 .hero-location ng-icon {
   color: var(--color-texto, #ffffff);
 }
 
-/* Corazón del divisor - usa color de acento */
 .hero-divider ng-icon {
   color: var(--accent, #c9a87c);
 }
 
-/* Flecha del scroll - blanco con opacidad */
 .scroll-arrow {
-  color: rgba(255, 255, 255, 0.7); /* Más visible */
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* ============================================
-   RESPONSIVE - ICONOS (MEJORADO)
+   RESPONSIVE - ICONOS
    ============================================ */
 
 @media (max-width: 768px) {
@@ -761,8 +1199,8 @@
   }
 
   .scroll-arrow {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
   }
 
   .date-icon {
@@ -772,12 +1210,10 @@
 
   .hero-date {
     gap: 6px;
-    flex-wrap: wrap;
-    justify-content: center;
   }
 
   .hero-location {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     gap: 6px;
   }
 }
@@ -795,8 +1231,8 @@
   }
 
   .scroll-arrow {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
   }
 
   .date-icon {
@@ -806,42 +1242,18 @@
 
   .hero-date {
     gap: 4px;
-    flex-wrap: wrap;
-    justify-content: center;
   }
 
   .hero-location {
-    font-size: 1rem;
+    font-size: 0.9rem;
     gap: 4px;
   }
 }
 
 /* ============================================
-   AJUSTE DE POSICIÓN - TÍTULO, FECHA Y LUGAR
+   FORZAR TAMAÑO MÍNIMO DE ICONOS
    ============================================ */
 
-/* En desktop, subir ligeramente */
-.hero-title,
-.hero-date,
-.hero-location {
-  transform: translateY(-30px);
-}
-
-/* Asegurar que los iconos tengan espacio suficiente */
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 900px;
-  padding: 3rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  min-height: 100vh;
-  justify-content: center;
-}
-
-/* Forzar el tamaño mínimo de los iconos */
 ng-icon {
   min-width: 20px;
   min-height: 20px;
