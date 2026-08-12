@@ -8,10 +8,12 @@ export interface Confirmacion {
   mostrarCalendario: boolean;
 }
 
+// src/app/models/confirmacion.model.ts
+
 export const ESTILOS_CONFIRMACION = [
-  { valor: 'tarjetas', nombre: 'Tarjetas', icon: '🃏' },
-  { valor: 'minimalista', nombre: 'Minimalista', icon: '✨' },
-  { valor: 'lista', nombre: 'Lista', icon: '📋' },
-  { valor: 'elegante', nombre: 'Elegante', icon: '💎' },
-  { valor: 'moderno', nombre: 'Moderno', icon: '🌟' },
+  { valor: 'tarjetas', nombre: 'Tarjetas', icon: 'heroSquares2x2' },
+  { valor: 'minimalista', nombre: 'Minimalista', icon: 'heroSparkles' },
+  { valor: 'lista', nombre: 'Lista', icon: 'heroListBullet' },
+  { valor: 'elegante', nombre: 'Elegante', icon: 'hugeDiamond02' },
+  { valor: 'moderno', nombre: 'Moderno', icon: 'heroStar' },
 ];

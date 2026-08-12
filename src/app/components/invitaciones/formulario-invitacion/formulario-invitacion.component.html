@@ -2589,15 +2589,18 @@
           </div>
         </div>
 
-        <!-- ----------------------------------------------------
-     ACORDEÓN: REGALOS (Mesa de regalos)
-     ---------------------------------------------------- -->
-        <div class="acordeon">
+        <!-- ============================================ -->
+        <!-- ACORDEÓN: REGALOS (Mesa de regalos) -->
+        <!-- ============================================ -->
+        <div class="acordeon full-width">
           <div
             class="acordeon-header"
             (click)="acordeonRegalos = !acordeonRegalos"
           >
-            <span>🎁 Mesa de regalos</span>
+            <span>
+              <ng-icon name="heroGift" size="18"></ng-icon>
+              Mesa de regalos
+            </span>
             <span class="icono">{{ acordeonRegalos ? "▲" : "▼" }}</span>
           </div>
 
@@ -2610,13 +2613,17 @@
                   [(ngModel)]="nuevaInvitacion.regalos.mostrarSeccion"
                   [ngModelOptions]="{ standalone: true }"
                 />
+                <ng-icon name="heroEye" size="14"></ng-icon>
                 Mostrar sección en la invitación
               </label>
             </div>
 
             <!-- 1. ESTILO DE LA SECCIÓN -->
             <div class="campo">
-              <label>🎨 1. ESTILO DE LA SECCIÓN</label>
+              <label>
+                <ng-icon name="heroSquares2x2" size="14"></ng-icon>
+                1. ESTILO DE LA SECCIÓN
+              </label>
               <div class="estilos-regalos-grid">
                 @for (estilo of estilosRegalos; track estilo) {
                   <div
@@ -2626,40 +2633,59 @@
                     "
                     (click)="seleccionarEstiloRegalos(estilo.valor)"
                   >
-                    <span class="estilo-regalos-icon">{{ estilo.icon }}</span>
+                    <span class="estilo-regalos-icon">
+                      <ng-icon [name]="estilo.icon" size="24"></ng-icon>
+                    </span>
                     <span class="estilo-regalos-nombre">{{
                       estilo.nombre
                     }}</span>
                   </div>
                 }
               </div>
-              <small class="help-text"
-                >Elige cómo se mostrará tu mesa de regalos en la
-                invitación.</small
-              >
+              <small class="help-text">
+                Elige cómo se mostrará tu mesa de regalos en la invitación.
+              </small>
             </div>
 
             <!-- 2. OPCIONES DE REGALOS -->
             <div class="campo">
-              <label>📋 2. OPCIONES DE REGALOS</label>
+              <label>
+                <ng-icon name="heroListBullet" size="14"></ng-icon>
+                2. OPCIONES DE REGALOS
+              </label>
 
-              <!-- Ayuda: Explicación de qué son las opciones -->
+              <!-- Ayuda -->
               <div class="ayuda-opciones">
                 <p class="ayuda-texto">
-                  💡 Agrega las tiendas o formas en las que tus invitados pueden
+                  <ng-icon name="hugeBulb" size="14"></ng-icon>
+                  Agrega las tiendas o formas en las que tus invitados pueden
                   tener un detalle contigo.
                 </p>
                 <div class="ayuda-ejemplos">
-                  <span class="ejemplo-tag">🏬 Liverpool</span>
-                  <span class="ejemplo-tag">📦 Amazon</span>
-                  <span class="ejemplo-tag">💵 Lluvia de sobres</span>
-                  <span class="ejemplo-tag">🏦 Transferencia</span>
+                  <span class="ejemplo-tag">
+                    <ng-icon name="heroBuildingOffice" size="12"></ng-icon>
+                    Liverpool
+                  </span>
+                  <span class="ejemplo-tag">
+                    <ng-icon name="heroCube" size="12"></ng-icon>
+                    Amazon
+                  </span>
+                  <span class="ejemplo-tag">
+                    <ng-icon name="heroBanknotes" size="12"></ng-icon>
+                    Lluvia de sobres
+                  </span>
+                  <span class="ejemplo-tag">
+                    <ng-icon name="lucideBanknoteArrowUp" size="12"></ng-icon>
+                    Transferencia
+                  </span>
                 </div>
               </div>
 
               @if (nuevaInvitacion.regalos.opciones?.length === 0) {
                 <div class="empty-state">
-                  <span class="empty-icon">🎁</span>
+                  <span class="empty-icon">
+                    <ng-icon name="heroGift" size="48"></ng-icon>
+                  </span>
                   <p>No hay opciones de regalos agregadas</p>
                   <small>Agrega las tiendas o formas de regalar</small>
                 </div>
@@ -2679,7 +2705,7 @@
                         class="btn-eliminar-opcion"
                         (click)="eliminarOpcionRegalo(i)"
                       >
-                        ❌
+                        <ng-icon name="lucideTrash2" size="16"></ng-icon>
                       </button>
                     </div>
                     <div class="opcion-fields">
@@ -2714,9 +2740,12 @@
                         >
                       </div>
 
-                      <!-- URL (opcional) -->
+                      <!-- URL -->
                       <div class="field-group full-width">
-                        <label>🔗 Enlace (opcional)</label>
+                        <label>
+                          <ng-icon name="lucideLink" size="14"></ng-icon>
+                          Enlace (opcional)
+                        </label>
                         <input
                           type="url"
                           [(ngModel)]="opcion.url"
@@ -2730,19 +2759,27 @@
                         </small>
                       </div>
 
-                      <!-- Icono (opcional) -->
+                      <!-- Icono -->
                       <div class="field-group">
-                        <label>🎨 Icono (opcional)</label>
-                        <input
-                          type="text"
-                          [(ngModel)]="opcion.icono"
-                          [ngModelOptions]="{ standalone: true }"
-                          placeholder="🏬 📦 💵 🏦"
-                          class="form-control"
-                        />
+                        <label>
+                          <ng-icon name="heroPhoto" size="14"></ng-icon>
+                          Icono (opcional)
+                        </label>
+                        <div class="iconos-regalos-grid">
+                          @for (icono of iconosRegalos; track icono.valor) {
+                            <div
+                              class="icono-regalo-option"
+                              [class.selected]="opcion.icono === icono.valor"
+                              (click)="opcion.icono = icono.valor"
+                              [title]="icono.label"
+                            >
+                              <ng-icon [name]="icono.valor" size="28"></ng-icon>
+                              <span class="icono-label">{{ icono.label }}</span>
+                            </div>
+                          }
+                        </div>
                         <small class="field-help"
-                          >Puedes usar un emoji para representar la
-                          opción</small
+                          >Haz clic en un icono para seleccionarlo</small
                         >
                       </div>
                     </div>
@@ -2755,13 +2792,17 @@
                 class="btn-agregar-opcion"
                 (click)="agregarOpcionRegalo()"
               >
-                ➕ Agregar opción
+                <ng-icon name="heroPlus" size="16"></ng-icon>
+                Agregar opción
               </button>
             </div>
 
             <!-- 3. PERSONALIZA TU MENSAJE -->
             <div class="campo">
-              <label>✏️ 3. PERSONALIZA TU MENSAJE</label>
+              <label>
+                <ng-icon name="heroPencil" size="14"></ng-icon>
+                3. PERSONALIZA TU MENSAJE
+              </label>
 
               <div class="subcampo">
                 <label>Título de la sección</label>
@@ -2828,7 +2869,9 @@
 
             <!-- Tip para el anfitrión -->
             <div class="regalos-tip">
-              <span class="tip-icon">💡</span>
+              <span class="tip-icon">
+                <ng-icon name="hugeBulb" size="20"></ng-icon>
+              </span>
               <span class="tip-text">
                 Comparte las opciones para que tus invitados puedan tener un
                 detalle contigo en este día especial.
@@ -2837,16 +2880,19 @@
           </div>
         </div>
 
-        <!-- ============================================
-     ACORDEÓN: HASHTAG
-     ============================================ -->
-        <div class="acordeon">
+        <!-- ============================================ -->
+        <!-- ACORDEÓN: HASHTAG -->
+        <!-- ============================================ -->
+        <div class="acordeon full-width">
           <!-- Header: clic para expandir/contraer -->
           <div
             class="acordeon-header"
             (click)="acordeonHashtag = !acordeonHashtag"
           >
-            <span># Hashtag</span>
+            <span>
+              <ng-icon name="heroHashtag" size="18"></ng-icon>
+              Hashtag
+            </span>
             <span class="icono">{{ acordeonHashtag ? "▲" : "▼" }}</span>
           </div>
 
@@ -2855,91 +2901,193 @@
             <div class="form-grid">
               <!-- Título de la sección -->
               <div class="campo">
-                <label>Título de la sección</label>
-                <input
-                  type="text"
-                  [(ngModel)]="nuevaInvitacion.hashtag.titulo"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="HASHTAG"
-                  maxlength="30"
-                />
-                <small class="char-count"
-                  >{{ (nuevaInvitacion.hashtag.titulo || "").length }}/30</small
-                >
+                <label>
+                  <ng-icon name="heroPencil" size="14"></ng-icon>
+                  Título de la sección
+                </label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.hashtag.titulo"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="HASHTAG"
+                    maxlength="30"
+                  />
+                  <span class="contador">
+                    {{ (nuevaInvitacion.hashtag.titulo || "").length }}/30
+                  </span>
+                </div>
               </div>
 
               <!-- Subtítulo -->
               <div class="campo">
-                <label>Subtítulo (opcional)</label>
-                <input
-                  type="text"
-                  [(ngModel)]="nuevaInvitacion.hashtag.subtitulo"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Comparte tus momentos"
-                  maxlength="40"
-                />
-                <small class="char-count"
-                  >{{
-                    (nuevaInvitacion.hashtag.subtitulo || "").length
-                  }}/40</small
-                >
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Subtítulo (opcional)
+                </label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.hashtag.subtitulo"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Comparte tus momentos"
+                    maxlength="40"
+                  />
+                  <span class="contador">
+                    {{ (nuevaInvitacion.hashtag.subtitulo || "").length }}/40
+                  </span>
+                </div>
               </div>
 
               <!-- Hashtag personalizado -->
               <div class="campo">
-                <label>Hashtag personalizado</label>
-                <input
-                  type="text"
-                  [(ngModel)]="nuevaInvitacion.hashtag.hashtag"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="#MarianaYAlejandro"
-                  maxlength="30"
-                />
-                <small class="char-count"
-                  >{{
-                    (nuevaInvitacion.hashtag.hashtag || "").length
-                  }}/30</small
-                >
+                <label>
+                  <ng-icon name="heroHashtag" size="14"></ng-icon>
+                  Hashtag personalizado
+                </label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.hashtag.hashtag"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="#MarianaYAlejandro"
+                    maxlength="30"
+                  />
+                  <span class="contador">
+                    {{ (nuevaInvitacion.hashtag.hashtag || "").length }}/30
+                  </span>
+                </div>
               </div>
 
               <!-- Mensaje principal -->
               <div class="campo full-width">
-                <label>Mensaje principal</label>
-                <textarea
-                  [(ngModel)]="nuevaInvitacion.hashtag.mensaje"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Usa nuestro hashtag en tus fotos y vídeos..."
-                  rows="3"
-                  maxlength="120"
-                ></textarea>
-                <small class="char-count"
-                  >{{
-                    (nuevaInvitacion.hashtag.mensaje || "").length
-                  }}/120</small
-                >
+                <label>
+                  <ng-icon name="heroChatBubbleLeft" size="14"></ng-icon>
+                  Mensaje principal
+                </label>
+                <div class="input-with-counter">
+                  <textarea
+                    [(ngModel)]="nuevaInvitacion.hashtag.mensaje"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Usa nuestro hashtag en tus fotos y vídeos..."
+                    rows="3"
+                    maxlength="120"
+                  ></textarea>
+                  <span class="contador">
+                    {{ (nuevaInvitacion.hashtag.mensaje || "").length }}/120
+                  </span>
+                </div>
               </div>
 
-              <!-- Icono decorativo -->
+              <!-- Icono decorativo - SELECTOR VISUAL -->
               <div class="campo">
-                <label>Icono decorativo</label>
-                <select
-                  [(ngModel)]="nuevaInvitacion.hashtag.icono"
-                  [ngModelOptions]="{ standalone: true }"
+                <label>
+                  <ng-icon name="heroPhoto" size="14"></ng-icon>
+                  Icono decorativo
+                </label>
+
+                <div class="iconos-hashtag-grid">
+                  <div
+                    class="icono-hashtag-option"
+                    [class.selected]="
+                      nuevaInvitacion.hashtag.icono === 'heroHashtag'
+                    "
+                    (click)="nuevaInvitacion.hashtag.icono = 'heroHashtag'"
+                    title="Hashtag"
+                  >
+                    <ng-icon name="heroHashtag" size="24"></ng-icon>
+                    <span class="icono-label">Hashtag</span>
+                  </div>
+                  <div
+                    class="icono-hashtag-option"
+                    [class.selected]="
+                      nuevaInvitacion.hashtag.icono === 'heroHeart'
+                    "
+                    (click)="nuevaInvitacion.hashtag.icono = 'heroHeart'"
+                    title="Corazón"
+                  >
+                    <ng-icon name="heroHeart" size="24"></ng-icon>
+                    <span class="icono-label">Corazón</span>
+                  </div>
+                  <div
+                    class="icono-hashtag-option"
+                    [class.selected]="
+                      nuevaInvitacion.hashtag.icono === 'heroStar'
+                    "
+                    (click)="nuevaInvitacion.hashtag.icono = 'heroStar'"
+                    title="Estrella"
+                  >
+                    <ng-icon name="heroStar" size="24"></ng-icon>
+                    <span class="icono-label">Estrella</span>
+                  </div>
+                  <div
+                    class="icono-hashtag-option"
+                    [class.selected]="
+                      nuevaInvitacion.hashtag.icono === 'lucideFeather'
+                    "
+                    (click)="nuevaInvitacion.hashtag.icono = 'lucideFeather'"
+                    title="Pluma"
+                  >
+                    <ng-icon name="lucideFeather" size="24"></ng-icon>
+                    <span class="icono-label">Pluma</span>
+                  </div>
+                  <div
+                    class="icono-hashtag-option"
+                    [class.selected]="
+                      nuevaInvitacion.hashtag.icono === 'lucideCrown'
+                    "
+                    (click)="nuevaInvitacion.hashtag.icono = 'lucideCrown'"
+                    title="Corona"
+                  >
+                    <ng-icon name="lucideCrown" size="24"></ng-icon>
+                    <span class="icono-label">Corona</span>
+                  </div>
+                  <div
+                    class="icono-hashtag-option"
+                    [class.selected]="
+                      nuevaInvitacion.hashtag.icono === 'heroCamera'
+                    "
+                    (click)="nuevaInvitacion.hashtag.icono = 'heroCamera'"
+                    title="Cámara"
+                  >
+                    <ng-icon name="heroCamera" size="24"></ng-icon>
+                    <span class="icono-label">Cámara</span>
+                  </div>
+                  <div
+                    class="icono-hashtag-option"
+                    [class.selected]="
+                      nuevaInvitacion.hashtag.icono === 'heroGift'
+                    "
+                    (click)="nuevaInvitacion.hashtag.icono = 'heroGift'"
+                    title="Regalo"
+                  >
+                    <ng-icon name="heroGift" size="24"></ng-icon>
+                    <span class="icono-label">Regalo</span>
+                  </div>
+                  <div
+                    class="icono-hashtag-option"
+                    [class.selected]="
+                      nuevaInvitacion.hashtag.icono === 'hugeDiamond02'
+                    "
+                    (click)="nuevaInvitacion.hashtag.icono = 'hugeDiamond02'"
+                    title="Diamante"
+                  >
+                    <ng-icon name="hugeDiamond02" size="24"></ng-icon>
+                    <span class="icono-label">Diamante</span>
+                  </div>
+                </div>
+                <small class="help-text"
+                  >Haz clic en un icono para seleccionarlo</small
                 >
-                  <option value="heroHashtag"># Hashtag</option>
-                  <option value="heroHeart">❤️ Corazón</option>
-                  <option value="heroStar">⭐ Estrella</option>
-                  <option value="lucideFeather">🪶 Pluma</option>
-                  <option value="lucideCrown">👑 Corona</option>
-                  <option value="heroCamera">📷 Cámara</option>
-                  <option value="heroGift">🎁 Regalo</option>
-                  <option value="hugeDiamond02">💎 Diamante</option>
-                </select>
               </div>
 
               <!-- Configuración - Toggles -->
               <div class="campo full-width">
-                <label>Configuración</label>
+                <label>
+                  <ng-icon name="heroCog6Tooth" size="14"></ng-icon>
+                  Configuración
+                </label>
+
                 <div class="toggle-group">
                   <input
                     type="checkbox"
@@ -2948,7 +3096,10 @@
                     [ngModelOptions]="{ standalone: true }"
                     checked
                   />
-                  <label for="mostrarIcono">Mostrar ícono decorativo</label>
+                  <label for="mostrarIcono">
+                    <ng-icon name="heroEye" size="14"></ng-icon>
+                    Mostrar ícono decorativo
+                  </label>
                   <small>Acompaña el título</small>
                 </div>
 
@@ -2960,7 +3111,10 @@
                     [ngModelOptions]="{ standalone: true }"
                     checked
                   />
-                  <label for="resaltarHashtag">Resaltar hashtag</label>
+                  <label for="resaltarHashtag">
+                    <ng-icon name="heroBolt" size="14"></ng-icon>
+                    Resaltar hashtag
+                  </label>
                   <small>Estilo destacado</small>
                 </div>
 
@@ -2972,9 +3126,10 @@
                     [ngModelOptions]="{ standalone: true }"
                     checked
                   />
-                  <label for="mostrarCaracteristicas"
-                    >Mostrar características</label
-                  >
+                  <label for="mostrarCaracteristicas">
+                    <ng-icon name="heroListBullet" size="14"></ng-icon>
+                    Mostrar características
+                  </label>
                   <small>Toma fotos · Comparte · Etiqueta</small>
                 </div>
               </div>
@@ -2982,196 +3137,18 @@
           </div>
         </div>
 
-        <!-- ----------------------------------------------------
-     ACORDEÓN: CONFIRMACIÓN DE ASISTENCIA
-     - Personalización de la sección
-     - Teléfono y WhatsApp de contacto
-     ---------------------------------------------------- -->
-        <div class="acordeon">
-          <div
-            class="acordeon-header"
-            (click)="acordeonConfirmacion = !acordeonConfirmacion"
-          >
-            <span>✅ Confirmar asistencia</span>
-            <span class="icono">{{ acordeonConfirmacion ? "▲" : "▼" }}</span>
-          </div>
-
-          <div class="acordeon-body" [class.abierto]="acordeonConfirmacion">
-            <!-- ==========================================================
-         MOSTRAR SECCIÓN
-         ========================================================== -->
-            <div class="campo">
-              <label>
-                <input
-                  type="checkbox"
-                  [(ngModel)]="confirmacionData.mostrarSeccion"
-                  [ngModelOptions]="{ standalone: true }"
-                />
-                Mostrar sección en la invitación
-              </label>
-            </div>
-
-            <!-- ==========================================================
-         1. ESTILO DE LA SECCIÓN
-         ========================================================== -->
-            <div class="campo">
-              <label>🎨 1. ESTILO DE LA SECCIÓN</label>
-              <div class="estilos-confirmacion-grid">
-                @for (estilo of estilosConfirmacion; track estilo) {
-                  <div
-                    class="estilo-confirmacion-option"
-                    [class.selected]="confirmacionData.estilo === estilo.valor"
-                    (click)="seleccionarEstiloConfirmacion(estilo.valor)"
-                  >
-                    <span class="estilo-confirmacion-icon">{{
-                      estilo.icon
-                    }}</span>
-                    <span class="estilo-confirmacion-nombre">{{
-                      estilo.nombre
-                    }}</span>
-                  </div>
-                }
-              </div>
-              <small class="help-text"
-                >Elige cómo se mostrará esta sección en tu invitación.</small
-              >
-            </div>
-
-            <!-- ==========================================================
-         2. PERSONALIZA TU MENSAJE
-         ========================================================== -->
-            <div class="campo">
-              <label>✏️ 2. PERSONALIZA TU MENSAJE</label>
-
-              <div class="subcampo">
-                <label>Título de la sección</label>
-                <div class="input-with-counter">
-                  <input
-                    type="text"
-                    [(ngModel)]="confirmacionData.titulo"
-                    [ngModelOptions]="{ standalone: true }"
-                    placeholder="Confirma tu asistencia"
-                    maxlength="30"
-                  />
-                  <span class="contador"
-                    >{{ confirmacionData.titulo?.length || 0 }}/30</span
-                  >
-                </div>
-              </div>
-
-              <div class="subcampo">
-                <label>Descripción (opcional)</label>
-                <div class="input-with-counter">
-                  <textarea
-                    [(ngModel)]="confirmacionData.descripcion"
-                    [ngModelOptions]="{ standalone: true }"
-                    placeholder="Nos encantaría compartir este momento contigo. Por favor confirma tu asistencia."
-                    rows="3"
-                    maxlength="120"
-                  ></textarea>
-                  <span class="contador"
-                    >{{ confirmacionData.descripcion?.length || 0 }}/120</span
-                  >
-                </div>
-              </div>
-            </div>
-
-            <!-- ==========================================================
-         3. ACCIONES QUE VERÁN TUS INVITADOS
-         ========================================================== -->
-            <div class="campo">
-              <label>⚙️ 3. ACCIONES QUE VERÁN TUS INVITADOS</label>
-
-              <div class="acciones-confirmacion-grid">
-                <div class="accion-checkbox">
-                  <label>
-                    <input
-                      type="checkbox"
-                      [(ngModel)]="confirmacionData.mostrarConfirmar"
-                      [ngModelOptions]="{ standalone: true }"
-                    />
-                    <span>✅ Confirmar asistencia</span>
-                  </label>
-                  <small class="accion-desc"
-                    >Tus invitados podrán confirmar que asistirán al
-                    evento.</small
-                  >
-                </div>
-
-                <div class="accion-checkbox">
-                  <label>
-                    <input
-                      type="checkbox"
-                      [(ngModel)]="confirmacionData.mostrarRechazar"
-                      [ngModelOptions]="{ standalone: true }"
-                    />
-                    <span>💔 No podré asistir</span>
-                  </label>
-                  <small class="accion-desc"
-                    >Tus invitados podrán indicar que no podrán asistir.</small
-                  >
-                </div>
-
-                <div class="accion-checkbox">
-                  <label>
-                    <input
-                      type="checkbox"
-                      [(ngModel)]="confirmacionData.mostrarCalendario"
-                      [ngModelOptions]="{ standalone: true }"
-                    />
-                    <span>📅 Guardar evento en mi calendario</span>
-                  </label>
-                  <small class="accion-desc"
-                    >Tus invitados podrán agregar el evento a su
-                    calendario.</small
-                  >
-                </div>
-              </div>
-            </div>
-
-            <!-- ==========================================================
-         4. DATOS DE CONTACTO (EXISTENTE)
-         ========================================================== -->
-            <div class="campo">
-              <label>📞 4. DATOS DE CONTACTO</label>
-              <div class="form-grid">
-                <input
-                  type="tel"
-                  [(ngModel)]="nuevaInvitacion.confirmacion.telefono"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Teléfono"
-                />
-                <input
-                  type="text"
-                  [(ngModel)]="nuevaInvitacion.confirmacion.whatsapp"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="WhatsApp"
-                />
-              </div>
-              <small class="help-text"
-                >Estos datos se mostrarán para que los invitados puedan
-                contactarte.</small
-              >
-            </div>
-
-            <!-- Tip -->
-            <div class="confirmacion-tip">
-              <span class="tip-icon">💡</span>
-              <span class="tip-text">
-                Mantén esta sección visible para que tus invitados puedan
-                confirmar su asistencia fácilmente.
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Acordeón: Consideraciones -->
-        <div class="acordeon">
+        <!-- ============================================ -->
+        <!-- ACORDEÓN: CONSIDERACIONES -->
+        <!-- ============================================ -->
+        <div class="acordeon full-width">
           <div
             class="acordeon-header"
             (click)="acordeonConsideraciones = !acordeonConsideraciones"
           >
-            <span>📋 Consideraciones</span>
+            <span>
+              <ng-icon name="lucideClipboard" size="18"></ng-icon>
+              Consideraciones
+            </span>
             <span class="icono">{{ acordeonConsideraciones ? "▲" : "▼" }}</span>
           </div>
 
@@ -3184,13 +3161,17 @@
                   [(ngModel)]="consideracionesData.mostrarSeccion"
                   [ngModelOptions]="{ standalone: true }"
                 />
+                <ng-icon name="heroEye" size="14"></ng-icon>
                 Mostrar sección en la invitación
               </label>
             </div>
 
             <!-- 1. ESTILO DE LA SECCIÓN -->
             <div class="campo">
-              <label>🎨 1. ESTILO DE LA SECCIÓN</label>
+              <label>
+                <ng-icon name="heroSquares2x2" size="14"></ng-icon>
+                1. ESTILO DE LA SECCIÓN
+              </label>
               <div class="estilos-consideraciones-grid">
                 @for (estilo of estilosConsideraciones; track estilo) {
                   <div
@@ -3200,9 +3181,9 @@
                     "
                     (click)="seleccionarEstiloConsideraciones(estilo.valor)"
                   >
-                    <span class="estilo-consideraciones-icon">{{
-                      estilo.icon
-                    }}</span>
+                    <span class="estilo-consideraciones-icon">
+                      <ng-icon [name]="estilo.icon" size="24"></ng-icon>
+                    </span>
                     <span class="estilo-consideraciones-nombre">{{
                       estilo.nombre
                     }}</span>
@@ -3216,10 +3197,16 @@
 
             <!-- 2. PERSONALIZA TU SECCIÓN -->
             <div class="campo">
-              <label>✏️ 2. PERSONALIZA TU SECCIÓN</label>
+              <label>
+                <ng-icon name="heroPencil" size="14"></ng-icon>
+                2. PERSONALIZA TU SECCIÓN
+              </label>
 
               <div class="subcampo">
-                <label>Título de la sección</label>
+                <label>
+                  <ng-icon name="heroPencil" size="14"></ng-icon>
+                  Título de la sección
+                </label>
                 <div class="input-with-counter">
                   <input
                     type="text"
@@ -3235,7 +3222,10 @@
               </div>
 
               <div class="subcampo">
-                <label>Subtítulo (opcional)</label>
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Subtítulo (opcional)
+                </label>
                 <div class="input-with-counter">
                   <input
                     type="text"
@@ -3251,7 +3241,10 @@
               </div>
 
               <div class="subcampo">
-                <label>Mensaje introductorio (opcional)</label>
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Mensaje introductorio (opcional)
+                </label>
                 <div class="input-with-counter">
                   <textarea
                     [(ngModel)]="consideracionesData.mensajeIntro"
@@ -3269,7 +3262,10 @@
               </div>
 
               <div class="subcampo">
-                <label>🎨 Color principal de los íconos</label>
+                <label>
+                  <ng-icon name="heroSwatch" size="14"></ng-icon>
+                  Color principal de los íconos
+                </label>
                 <div class="color-input">
                   <input
                     type="color"
@@ -3288,11 +3284,16 @@
 
             <!-- 3. LISTA DE CONSIDERACIONES -->
             <div class="campo">
-              <label>📋 3. LISTA DE CONSIDERACIONES</label>
+              <label>
+                <ng-icon name="heroListBullet" size="14"></ng-icon>
+                3. LISTA DE CONSIDERACIONES
+              </label>
 
               @if (consideracionesData.items?.length === 0) {
                 <div class="empty-state">
-                  <span class="empty-icon">📋</span>
+                  <span class="empty-icon">
+                    <ng-icon name="heroClipboard" size="48"></ng-icon>
+                  </span>
                   <p>No hay consideraciones agregadas</p>
                   <small
                     >Agrega recomendaciones importantes para tus
@@ -3315,7 +3316,7 @@
                         class="btn-eliminar-consideracion"
                         (click)="eliminarItemConsideracion(i)"
                       >
-                        ❌
+                        <ng-icon name="heroTrash" size="16"></ng-icon>
                       </button>
                     </div>
                     <div class="consideracion-fields">
@@ -3340,7 +3341,10 @@
                         ></textarea>
                       </div>
                       <div class="field-group">
-                        <label>🎨 Icono</label>
+                        <label>
+                          <ng-icon name="heroPhoto" size="14"></ng-icon>
+                          Icono
+                        </label>
                         <div class="icono-selector-grid">
                           @for (
                             icono of iconosConsideraciones;
@@ -3371,13 +3375,16 @@
                 class="btn-agregar-consideracion"
                 (click)="agregarItemConsideracion()"
               >
-                ➕ Agregar consideración
+                <ng-icon name="heroPlus" size="16"></ng-icon>
+                Agregar consideración
               </button>
             </div>
 
             <!-- Tip -->
             <div class="consideraciones-tip">
-              <span class="tip-icon">💡</span>
+              <span class="tip-icon">
+                <ng-icon name="hugeBulb" size="20"></ng-icon>
+              </span>
               <span class="tip-text">
                 Las consideraciones claras ayudan a que todos disfruten la
                 celebración al máximo.
@@ -3385,17 +3392,233 @@
             </div>
           </div>
         </div>
+
+        <!-- ============================================ -->
+        <!-- ACORDEÓN: CONFIRMACIÓN DE ASISTENCIA -->
+        <!-- ============================================ -->
+        <div class="acordeon full-width">
+          <div
+            class="acordeon-header"
+            (click)="acordeonConfirmacion = !acordeonConfirmacion"
+          >
+            <span>
+              <ng-icon name="heroCheckCircle" size="18"></ng-icon>
+              Confirmar asistencia
+            </span>
+            <span class="icono">{{ acordeonConfirmacion ? "▲" : "▼" }}</span>
+          </div>
+
+          <div class="acordeon-body" [class.abierto]="acordeonConfirmacion">
+            <!-- MOSTRAR SECCIÓN -->
+            <div class="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  [(ngModel)]="confirmacionData.mostrarSeccion"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                <ng-icon name="heroEye" size="14"></ng-icon>
+                Mostrar sección en la invitación
+              </label>
+            </div>
+
+            <!-- 1. ESTILO DE LA SECCIÓN -->
+            <div class="campo">
+              <label>
+                <ng-icon name="heroSquares2x2" size="14"></ng-icon>
+                1. ESTILO DE LA SECCIÓN
+              </label>
+              <div class="estilos-confirmacion-grid">
+                @for (estilo of estilosConfirmacion; track estilo) {
+                  <div
+                    class="estilo-confirmacion-option"
+                    [class.selected]="confirmacionData.estilo === estilo.valor"
+                    (click)="seleccionarEstiloConfirmacion(estilo.valor)"
+                  >
+                    <span class="estilo-confirmacion-icon">
+                      <ng-icon [name]="estilo.icon" size="24"></ng-icon>
+                    </span>
+                    <span class="estilo-confirmacion-nombre">{{
+                      estilo.nombre
+                    }}</span>
+                  </div>
+                }
+              </div>
+              <small class="help-text">
+                Elige cómo se mostrará esta sección en tu invitación.
+              </small>
+            </div>
+
+            <!-- 2. PERSONALIZA TU MENSAJE -->
+            <div class="campo">
+              <label>
+                <ng-icon name="heroPencil" size="14"></ng-icon>
+                2. PERSONALIZA TU MENSAJE
+              </label>
+
+              <div class="subcampo">
+                <label>
+                  <ng-icon name="heroPencil" size="14"></ng-icon>
+                  Título de la sección
+                </label>
+                <div class="input-with-counter">
+                  <input
+                    type="text"
+                    [(ngModel)]="confirmacionData.titulo"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Confirma tu asistencia"
+                    maxlength="30"
+                  />
+                  <span class="contador"
+                    >{{ confirmacionData.titulo?.length || 0 }}/30</span
+                  >
+                </div>
+              </div>
+
+              <div class="subcampo">
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Descripción (opcional)
+                </label>
+                <div class="input-with-counter">
+                  <textarea
+                    [(ngModel)]="confirmacionData.descripcion"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Nos encantaría compartir este momento contigo. Por favor confirma tu asistencia."
+                    rows="3"
+                    maxlength="120"
+                  ></textarea>
+                  <span class="contador"
+                    >{{ confirmacionData.descripcion?.length || 0 }}/120</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. ACCIONES QUE VERÁN TUS INVITADOS -->
+            <div class="campo">
+              <label>
+                <ng-icon name="heroCog6Tooth" size="14"></ng-icon>
+                3. ACCIONES QUE VERÁN TUS INVITADOS
+              </label>
+
+              <div class="acciones-confirmacion-grid">
+                <div class="accion-checkbox">
+                  <label>
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="confirmacionData.mostrarConfirmar"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <ng-icon name="heroCheck" size="14"></ng-icon>
+                    Confirmar asistencia
+                  </label>
+                  <small class="accion-desc"
+                    >Tus invitados podrán confirmar que asistirán al
+                    evento.</small
+                  >
+                </div>
+
+                <div class="accion-checkbox">
+                  <label>
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="confirmacionData.mostrarRechazar"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <ng-icon name="heroXMark" size="14"></ng-icon>
+                    No podré asistir
+                  </label>
+                  <small class="accion-desc"
+                    >Tus invitados podrán indicar que no podrán asistir.</small
+                  >
+                </div>
+
+                <div class="accion-checkbox">
+                  <label>
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="confirmacionData.mostrarCalendario"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <ng-icon name="heroCalendar" size="14"></ng-icon>
+                    Guardar evento en mi calendario
+                  </label>
+                  <small class="accion-desc"
+                    >Tus invitados podrán agregar el evento a su
+                    calendario.</small
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. DATOS DE CONTACTO -->
+            <div class="campo">
+              <label>
+                <ng-icon name="lucideSmartphone" size="14"></ng-icon>
+                4. DATOS DE CONTACTO
+              </label>
+              <div class="form-grid">
+                <div class="campo">
+                  <label>
+                    <ng-icon name="lucideSmartphone" size="14"></ng-icon>
+                    Teléfono
+                  </label>
+                  <input
+                    type="tel"
+                    [(ngModel)]="nuevaInvitacion.confirmacion.telefono"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Teléfono"
+                  />
+                </div>
+                <div class="campo">
+                  <label>
+                    <ng-icon name="hugeWhatsapp" size="14"></ng-icon>
+                    WhatsApp
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.confirmacion.whatsapp"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="WhatsApp"
+                  />
+                </div>
+              </div>
+              <small class="help-text"
+                >Estos datos se mostrarán para que los invitados puedan
+                contactarte.</small
+              >
+            </div>
+
+            <!-- Tip -->
+            <div class="confirmacion-tip">
+              <span class="tip-icon">
+                <ng-icon name="hugeBulb" size="20"></ng-icon>
+              </span>
+              <span class="tip-text">
+                Mantén esta sección visible para que tus invitados puedan
+                confirmar su asistencia fácilmente.
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Acordeón: Contador -->
-      <div class="acordeon">
+      <!-- ============================================ -->
+      <!-- ACORDEÓN: CONTADOR -->
+      <!-- ============================================ -->
+      <div class="acordeon full-width">
         <div
           class="acordeon-header"
           (click)="acordeonContador = !acordeonContador"
         >
-          <span>⏳ Cuenta regresiva</span>
+          <span>
+            <ng-icon name="heroClock" size="18"></ng-icon>
+            Cuenta regresiva
+          </span>
           <span class="icono">{{ acordeonContador ? "▲" : "▼" }}</span>
         </div>
+
         <div class="acordeon-body" [class.abierto]="acordeonContador">
           <!-- Mostrar sección -->
           <div class="campo">
@@ -3405,15 +3628,22 @@
                 [(ngModel)]="contadorData.mostrarSeccion"
                 [ngModelOptions]="{ standalone: true }"
               />
+              <ng-icon name="heroEye" size="14"></ng-icon>
               Mostrar sección en la invitación
             </label>
           </div>
 
           <!-- 1. FECHA DEL GRAN DÍA -->
           <div class="campo">
-            <label>📅 1. FECHA DE TU GRAN DÍA</label>
+            <label>
+              <ng-icon name="heroCalendar" size="14"></ng-icon>
+              1. FECHA DE TU GRAN DÍA
+            </label>
             <div class="subcampo">
-              <label>Fecha del gran día</label>
+              <label>
+                <ng-icon name="heroCalendar" size="14"></ng-icon>
+                Fecha del gran día
+              </label>
               <input
                 type="date"
                 [(ngModel)]="contadorData.fechaEvento"
@@ -3426,7 +3656,10 @@
 
           <!-- 2. ESTILO DEL CONTADOR -->
           <div class="campo">
-            <label>🎨 2. ESTILO DEL CONTADOR</label>
+            <label>
+              <ng-icon name="heroSquares2X2" size="14"></ng-icon>
+              2. ESTILO DEL CONTADOR
+            </label>
             <div class="estilos-contador-grid">
               @for (estilo of estilosContador; track estilo) {
                 <div
@@ -3434,7 +3667,9 @@
                   [class.selected]="contadorData.estilo === estilo.valor"
                   (click)="seleccionarEstiloContador(estilo.valor)"
                 >
-                  <span class="estilo-contador-icon">{{ estilo.icon }}</span>
+                  <span class="estilo-contador-icon">
+                    <ng-icon [name]="estilo.icon" size="24"></ng-icon>
+                  </span>
                   <span class="estilo-contador-nombre">{{
                     estilo.nombre
                   }}</span>
@@ -3446,10 +3681,16 @@
 
           <!-- 3. PERSONALIZA LOS TEXTOS -->
           <div class="campo">
-            <label>✏️ 3. PERSONALIZA LOS TEXTOS</label>
+            <label>
+              <ng-icon name="heroPencil" size="14"></ng-icon>
+              3. PERSONALIZA LOS TEXTOS
+            </label>
 
             <div class="subcampo">
-              <label>Título de la sección</label>
+              <label>
+                <ng-icon name="heroPencil" size="14"></ng-icon>
+                Título de la sección
+              </label>
               <div class="input-with-counter">
                 <input
                   type="text"
@@ -3465,7 +3706,10 @@
             </div>
 
             <div class="subcampo">
-              <label>Mensaje debajo del contador (opcional)</label>
+              <label>
+                <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                Mensaje debajo del contador (opcional)
+              </label>
               <div class="input-with-counter">
                 <textarea
                   [(ngModel)]="contadorData.mensaje"
@@ -3483,10 +3727,16 @@
 
           <!-- 4. PERSONALIZA LOS COLORES -->
           <div class="campo">
-            <label>🎨 4. PERSONALIZA LOS COLORES</label>
+            <label>
+              <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+              4. PERSONALIZA LOS COLORES
+            </label>
 
             <div class="subcampo">
-              <label>Color principal</label>
+              <label>
+                <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                Color principal
+              </label>
               <div class="color-input">
                 <input
                   type="color"
@@ -3504,7 +3754,10 @@
 
             <div class="colores-contador-grid">
               <div class="subcampo">
-                <label>Días</label>
+                <label>
+                  <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                  Días
+                </label>
                 <div class="color-input">
                   <input
                     type="color"
@@ -3520,7 +3773,10 @@
                 </div>
               </div>
               <div class="subcampo">
-                <label>Horas</label>
+                <label>
+                  <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                  Horas
+                </label>
                 <div class="color-input">
                   <input
                     type="color"
@@ -3536,7 +3792,10 @@
                 </div>
               </div>
               <div class="subcampo">
-                <label>Minutos</label>
+                <label>
+                  <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                  Minutos
+                </label>
                 <div class="color-input">
                   <input
                     type="color"
@@ -3552,7 +3811,10 @@
                 </div>
               </div>
               <div class="subcampo">
-                <label>Segundos</label>
+                <label>
+                  <ng-icon name="lucideSwatchBook" size="14"></ng-icon>
+                  Segundos
+                </label>
                 <div class="color-input">
                   <input
                     type="color"
@@ -3572,11 +3834,17 @@
 
           <!-- 5. ETIQUETAS DEL CONTADOR -->
           <div class="campo">
-            <label>📝 5. ETIQUETAS DEL CONTADOR</label>
+            <label>
+              <ng-icon name="heroDocumentText" size="14"></ng-icon>
+              5. ETIQUETAS DEL CONTADOR
+            </label>
 
             <div class="etiquetas-contador-grid">
               <div class="subcampo">
-                <label>Días</label>
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Días
+                </label>
                 <div class="input-with-counter">
                   <input
                     type="text"
@@ -3591,7 +3859,10 @@
                 </div>
               </div>
               <div class="subcampo">
-                <label>Horas</label>
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Horas
+                </label>
                 <div class="input-with-counter">
                   <input
                     type="text"
@@ -3606,7 +3877,10 @@
                 </div>
               </div>
               <div class="subcampo">
-                <label>Minutos</label>
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Minutos
+                </label>
                 <div class="input-with-counter">
                   <input
                     type="text"
@@ -3621,7 +3895,10 @@
                 </div>
               </div>
               <div class="subcampo">
-                <label>Segundos</label>
+                <label>
+                  <ng-icon name="heroDocumentText" size="14"></ng-icon>
+                  Segundos
+                </label>
                 <div class="input-with-counter">
                   <input
                     type="text"
@@ -3640,7 +3917,9 @@
 
           <!-- Tip -->
           <div class="contador-tip">
-            <span class="tip-icon">💡</span>
+            <span class="tip-icon">
+              <ng-icon name="hugeBulb" size="20"></ng-icon>
+            </span>
             <span class="tip-text">
               El contador se actualizará automáticamente según la fecha que
               elijas.
@@ -3651,17 +3930,18 @@
     }
 
     <!-- ============================================================
-         BOTÓN DE GUARDAR
-         - Deshabilitado si faltan campos requeridos
-           (name y fecha son obligatorios)
-         ============================================================ -->
+     BOTÓN DE GUARDAR
+     - Deshabilitado si faltan campos requeridos
+       (name y fecha son obligatorios)
+     ============================================================ -->
     <div class="acciones">
       <button
         type="submit"
         class="btn-guardar"
         [disabled]="!nuevaInvitacion.name || !nuevaInvitacion.fecha"
       >
-        💾 Guardar invitación
+        <ng-icon name="heroCheck" size="18"></ng-icon>
+        Guardar invitación
       </button>
     </div>
   </form>

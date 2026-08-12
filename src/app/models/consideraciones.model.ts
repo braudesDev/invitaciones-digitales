@@ -15,10 +15,12 @@ export interface ItemConsideracion {
 }
 
 // Estilos disponibles
+// src/app/models/consideraciones.model.ts
+
 export const ESTILOS_CONSIDERACIONES = [
-  { valor: 'iconos', nombre: 'Iconos en lista', icon: '🎯' },
-  { valor: 'tarjetas', nombre: 'Tarjetas', icon: '🃏' },
-  { valor: 'minimalista', nombre: 'Minimalista', icon: '✨' },
-  { valor: 'clasico', nombre: 'Clásico', icon: '📜' },
-  { valor: 'elegante', nombre: 'Elegante', icon: '💎' },
+  { valor: 'iconos', nombre: 'Iconos en lista', icon: 'heroTag' },
+  { valor: 'tarjetas', nombre: 'Tarjetas', icon: 'heroSquares2x2' },
+  { valor: 'minimalista', nombre: 'Minimalista', icon: 'heroSparkles' },
+  { valor: 'clasico', nombre: 'Clásico', icon: 'heroDocumentText' },
+  { valor: 'elegante', nombre: 'Elegante', icon: 'hugeDiamond02' },
 ];

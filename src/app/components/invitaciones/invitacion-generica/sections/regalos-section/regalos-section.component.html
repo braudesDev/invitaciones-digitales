@@ -28,8 +28,13 @@
       @for (opcion of data.opciones; track opcion; let i = $index) {
         <div class="opcion-item-vista">
           <div class="opcion-contenido">
+            <!-- ✅ ICONO CON NG-ICON -->
             <div class="opcion-icono">
-              {{ opcion.icono || getIconoOpcion(opcion.nombre) }}
+              @if (opcion.icono) {
+                <ng-icon [name]="opcion.icono" size="28"></ng-icon>
+              } @else {
+                <ng-icon name="heroGift" size="28"></ng-icon>
+              }
             </div>
             <div class="opcion-info">
               <h4 class="opcion-nombre">{{ opcion.nombre }}</h4>
@@ -39,7 +44,8 @@
             </div>
             @if (opcion.url) {
               <a [href]="opcion.url" target="_blank" class="opcion-enlace">
-                🔗 Ver más
+                <ng-icon name="heroArrowTopRightOnSquare" size="14"></ng-icon>
+                Ver más
               </a>
             }
           </div>
@@ -47,13 +53,14 @@
       }
     </div>
 
-    <!-- Botón -->
+    <!-- Botón
     @if (data.textoBoton) {
       <div class="regalos-footer">
         <button class="btn-regalos">
+          <ng-icon name="heroGift" size="16"></ng-icon>
           {{ data.textoBoton }}
         </button>
       </div>
-    }
+    } -->
   </div>
 }

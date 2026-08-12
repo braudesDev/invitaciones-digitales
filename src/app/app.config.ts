@@ -65,6 +65,9 @@ import {
   heroAdjustmentsHorizontal,
   heroChevronLeft,
   heroEllipsisHorizontal,
+  heroListBullet,
+  heroCube,
+  heroBanknotes,
 } from '@ng-icons/heroicons/outline';
 //Lucide icons
 import {
@@ -92,6 +95,9 @@ import {
   lucideSwatchBook,
   lucideRuler,
   lucideArrowLeftRight,
+  lucideBanknoteArrowUp,
+  lucideShoppingBag,
+  lucideFlower2,
 } from '@ng-icons/lucide';
 //Huge Icons
 import {
@@ -108,6 +114,12 @@ import {
   hugeRainbow,
   hugeTextFont,
 } from '@ng-icons/huge-icons';
+// Phosphor Icons
+import {
+  phosphorFlowerTulip,
+  phosphorFlower,
+  phosphorFlowerLotus,
+} from '@ng-icons/phosphor-icons/regular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -176,6 +188,9 @@ export const appConfig: ApplicationConfig = {
       heroAdjustmentsHorizontal,
       heroChevronLeft,
       heroEllipsisHorizontal,
+      heroListBullet,
+      heroCube,
+      heroBanknotes,
 
       //Lucide Icons
       lucideChurch,
@@ -202,6 +217,9 @@ export const appConfig: ApplicationConfig = {
       lucideSwatchBook,
       lucideRuler,
       lucideArrowLeftRight,
+      lucideBanknoteArrowUp,
+      lucideShoppingBag,
+      lucideFlower2,
 
       //Huge Icons
       hugeBulb,
@@ -216,6 +234,11 @@ export const appConfig: ApplicationConfig = {
       hugeUserAdd02,
       hugeRainbow,
       hugeTextFont,
+
+      //Phosphor Icons
+      phosphorFlowerTulip,
+      phosphorFlower,
+      phosphorFlowerLotus,
     }),
   ],
 };
