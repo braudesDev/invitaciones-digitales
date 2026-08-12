@@ -9,19 +9,20 @@ import {
   where,
   collectionData,
 } from '@angular/fire/firestore';
-import { map, switchMap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { map, switchMap, first } from 'rxjs/operators';
+import { Observable, of, firstValueFrom } from 'rxjs';
 import {
   InvitacionesService,
   Invitacion,
 } from '../../services/invitaciones.service';
 import { InvitadosService } from '../../services/invitados.service';
 import { InvitacionGenericaComponent } from './invitacion-generica/invitacion-generica.component';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-invitaciones',
   standalone: true,
-  imports: [CommonModule, InvitacionGenericaComponent],
+  imports: [CommonModule, InvitacionGenericaComponent, NgIcon],
   templateUrl: './invitaciones.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./invitaciones.component.css'],
@@ -39,7 +40,7 @@ export class InvitacionesComponent implements OnInit {
     private firestore: Firestore,
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug');
 
     if (!slug) {
@@ -47,57 +48,51 @@ export class InvitacionesComponent implements OnInit {
       return;
     }
 
-    // 🔍 PASO 1: Buscar al INVITADO por su slug
-    this.invitacion$ = this.invitadosService.getInvitadoPorSlug(slug).pipe(
-      switchMap((invitadoData) => {
-        if (!invitadoData) {
-          console.log('❌ No se encontró invitado con slug:', slug);
-          return of(undefined);
-        }
+    try {
+      // ✅ Usar firstValueFrom para esperar el resultado
+      const invitadoData = await firstValueFrom(
+        this.invitadosService.getInvitadoPorSlug(slug),
+      );
 
-        console.log('✅ Invitado encontrado:', invitadoData);
+      if (!invitadoData) {
+        console.log('❌ No se encontró invitado con slug:', slug);
+        this.cargando = false;
+        return;
+      }
 
-        // 📋 PASO 2: Buscar la INVITACIÓN (evento) usando eventoSlug
-        const eventoRef = collection(this.firestore, 'invitaciones');
-        const eventoQuery = query(
-          eventoRef,
-          where('slug', '==', invitadoData.eventoSlug),
-        );
+      const eventoRef = collection(this.firestore, 'invitaciones');
+      const eventoQuery = query(
+        eventoRef,
+        where('slug', '==', invitadoData.eventoSlug),
+      );
 
-        return collectionData<any>(eventoQuery, { idField: 'id' }).pipe(
-          map((docs) => {
-            const eventoDoc = docs[0];
-            if (!eventoDoc) {
-              console.log(
-                '❌ No se encontró evento con slug:',
-                invitadoData.eventoSlug,
-              );
-              return undefined;
-            }
+      const docs = await firstValueFrom(
+        collectionData<any>(eventoQuery, { idField: 'id' }),
+      );
 
-            console.log('✅ Evento encontrado:', eventoDoc);
+      const eventoDoc = docs[0];
+      if (!eventoDoc) {
+        this.cargando = false;
+        return;
+      }
 
-            // 🎯 PASO 3: COMBINAR datos del evento + datos del invitado
-            const invitacionCompleta: Invitacion = {
-              ...eventoDoc,
-              id: eventoDoc.id ?? '',
-              fecha: eventoDoc.fecha ? new Date(eventoDoc.fecha) : new Date(),
+      const invitacionCompleta: Invitacion = {
+        ...eventoDoc,
+        id: eventoDoc.id ?? '',
+        fecha: eventoDoc.fecha ? new Date(eventoDoc.fecha) : new Date(),
+        invitado: invitadoData.nombre,
+        pases: invitadoData.pases,
+        mensajePersonalizado: invitadoData.mensajePersonalizado,
+      };
 
-              // 👇 Sobrescribir con datos del invitado
-              invitado: invitadoData.nombre,
-              pases: invitadoData.pases,
-              mensajePersonalizado: invitadoData.mensajePersonalizado,
-            };
+      this.setMetaTags(invitacionCompleta, invitadoData.nombre);
 
-            console.log('📦 Invitación combinada:', invitacionCompleta);
-            this.setMetaTags(invitacionCompleta, invitadoData.nombre);
-            return invitacionCompleta;
-          }),
-        );
-      }),
-    );
-
-    this.cargando = false;
+      // ✅ Asignar el resultado
+      this.invitacion$ = of(invitacionCompleta);
+      this.cargando = false;
+    } catch (error) {
+      this.cargando = false;
+    }
   }
 
   private setMetaTags(inv: Invitacion, nombreInvitado?: string) {

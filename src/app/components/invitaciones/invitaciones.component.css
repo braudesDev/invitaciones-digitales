@@ -1,0 +1,106 @@
+/* ============================================
+   CARGANDO - LOADER
+   ============================================ */
+
+.cargando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f0eb 0%, #e8dfd6 100%);
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(201, 168, 124, 0.2);
+  border-top-color: #c9a87c;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loader-container p {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  color: #5c3d2e;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.loader-container p ng-icon {
+  color: #c9a87c;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   NO ENCONTRADA - ERROR 404
+   ============================================ */
+
+.no-encontrada {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f0eb 0%, #e8dfd6 100%);
+  padding: 2rem;
+  text-align: center;
+}
+
+.no-encontrada ng-icon {
+  color: #c9a87c;
+  margin-bottom: 1rem;
+}
+
+.no-encontrada h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #5c3d2e;
+  margin: 0 0 0.5rem;
+}
+
+.no-encontrada p {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  color: #8a7a6e;
+  margin: 0;
+  max-width: 400px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 480px) {
+  .loader {
+    width: 36px;
+    height: 36px;
+  }
+
+  .loader-container p {
+    font-size: 1rem;
+  }
+
+  .no-encontrada h2 {
+    font-size: 2rem;
+  }
+
+  .no-encontrada p {
+    font-size: 0.9rem;
+  }
+}

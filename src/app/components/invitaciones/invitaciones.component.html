@@ -1,22 +1,29 @@
 <!-- Mostrar mientras carga -->
 @if (cargando) {
-  <div class="cargando">Cargando invitación...</div>
-}
-
-<!-- Si no se encontró -->
-@if (!cargando && !(invitacion$ | async)) {
-  <div class="no-encontrada">
-    <p>Invitación no encontrada 😢</p>
+  <div class="cargando">
+    <div class="loader-container">
+      <div class="loader"></div>
+      <p>
+        <ng-icon name="heroArrowPath" size="20" class="spin"></ng-icon>
+        Cargando invitación...
+      </p>
+    </div>
   </div>
 }
 
-<!-- Si se encontró una invitación -->
-@if (!cargando && (invitacion$ | async); as invitacion) {
-  <!-- Invitación genérica desde Firestore -->
-  @if (invitacion.slug !== 'xv-nathalia') {
-    <app-invitacion-generica
-      [data]="invitacion"
-      >
-    </app-invitacion-generica>
+<!-- Si se encontró o no -->
+@if (!cargando) {
+  @if (invitacion$ | async; as invitacion) {
+    <!-- Si se encontró -->
+    @if (invitacion.slug !== "xv-nathalia") {
+      <app-invitacion-generica [data]="invitacion"></app-invitacion-generica>
+    }
+  } @else {
+    <!-- Si no se encontró -->
+    <div class="no-encontrada">
+      <ng-icon name="heroXCircle" size="48"></ng-icon>
+      <h2>Invitación no encontrada</h2>
+      <p>La invitación que buscas no existe o ha sido removida.</p>
+    </div>
   }
 }
