@@ -76,6 +76,12 @@ export class GaleriaSectionComponent
   /** Previene múltiples transiciones simultáneas */
   private isTransitioning = false;
 
+  /** Flag para evitar que el scroll actualice el índice mientras se usan las flechas */
+  private actualizandoPorFlecha = false;
+
+  /** Controla si estamos navegando en el modal */
+  private navegandoEnModal = false;
+
   // ==============================================================
   // 4. VARIABLES PARA SWIPE TÁCTIL
   // ==============================================================
@@ -351,6 +357,9 @@ export class GaleriaSectionComponent
    * @param event - Evento de scroll del contenedor
    */
   onScroll(event: Event) {
+    //  Ignorar si el modal está abierto o navegando con flecha
+    if (this.modalAbierto || this.actualizandoPorFlecha) return;
+
     const container = event.target as HTMLElement;
     const scrollLeft = container.scrollLeft;
 
@@ -375,7 +384,9 @@ export class GaleriaSectionComponent
     const container = this.galeriaContainer?.nativeElement;
     const total = this.totalFotos;
 
-    if (total === 0) return;
+    if (total === 0 || this.modalAbierto) return;
+
+    this.actualizandoPorFlecha = true;
 
     // Calcular el índice anterior (con loop)
     const anteriorIndice = (this.indiceActual - 1 + total) % total;
@@ -404,6 +415,10 @@ export class GaleriaSectionComponent
       setTimeout(() => {
         this.isTransitioning = false;
       }, 400);
+
+      setTimeout(() => {
+        this.actualizandoPorFlecha = false;
+      }, 400);
     }
   }
 
@@ -415,7 +430,9 @@ export class GaleriaSectionComponent
     const container = this.galeriaContainer?.nativeElement;
     const total = this.totalFotos;
 
-    if (total === 0) return;
+    if (total === 0 || this.modalAbierto) return;
+
+    this.actualizandoPorFlecha = true;
 
     // Calcular el siguiente índice (con loop)
     const siguienteIndice = (this.indiceActual + 1) % total;
@@ -443,6 +460,9 @@ export class GaleriaSectionComponent
 
       setTimeout(() => {
         this.isTransitioning = false;
+      }, 400);
+      setTimeout(() => {
+        this.actualizandoPorFlecha = false;
       }, 400);
     }
   }
@@ -529,7 +549,7 @@ export class GaleriaSectionComponent
   }
 
   // ==============================================================
-  // 10. MÉTODOS DEL MODAL
+  // 10. MÉTODOS DEL MODAL (CORREGIDOS)
   // ==============================================================
 
   /**
@@ -537,40 +557,49 @@ export class GaleriaSectionComponent
    * @param index - Índice de la foto a mostrar
    */
   abrirModal(index: number) {
-    this.indiceActual = index;
-    this.fotoActual = this.fotos[index];
+    if (this.fotos.length === 0) return;
+
+    this.actualizandoPorFlecha = true;
+
+    // ✅ Asegurar que el índice esté dentro del rango
+    this.indiceActual = Math.max(0, Math.min(index, this.fotos.length - 1));
+    this.fotoActual = this.fotos[this.indiceActual];
     this.modalAbierto = true;
 
-    // Resetear la animación aplicando la clase correspondiente
+    // Resetear la animación
     const img = document.querySelector('.modal-imagen');
     if (img) {
-      // Quitar clases de animación anteriores
       img.classList.remove(
         'efecto-slide',
         'efecto-fade',
         'efecto-zoom',
         'efecto-flip',
       );
-      // Forzar reflow para reiniciar la animación
       void (img as HTMLElement).offsetWidth;
-      // Agregar la clase del efecto actual
       img.classList.add('efecto-' + this.efectoClase);
     }
 
-    // Pausar autoplay al abrir el modal
+    // Pausar autoplay
     if (this.autoplayInterval) {
       clearInterval(this.autoplayInterval);
       this.autoplayInterval = null;
     }
+
+    setTimeout(() => {
+      this.actualizandoPorFlecha = false;
+    }, 300);
   }
 
   /**
    * Cierra el modal de fotos en grande
-   * Reanuda el autoplay si estaba activo
    */
   cerrarModal() {
     this.modalAbierto = false;
-    // Reanudar autoplay al cerrar el modal
+    // ✅ AGREGAR ESTA LÍNEA - Reactivar scroll del carrusel
+    this.actualizandoPorFlecha = false;
+    // ✅ AGREGAR ESTA LÍNEA - Resetear flag de navegación
+    this.navegandoEnModal = false;
+
     if (this.autoplayActivo && !this.autoplayInterval) {
       this.iniciarAutoplay();
     }
@@ -581,11 +610,25 @@ export class GaleriaSectionComponent
    * Con loop al principio
    */
   anterior() {
-    if (this.fotos.length === 0) return;
-    this.indiceActual =
+    // ✅ AGREGAR ESTA LÍNEA - Prevenir múltiples clicks
+    if (this.fotos.length === 0 || this.navegandoEnModal) return;
+
+    // ✅ AGREGAR ESTA LÍNEA - Activar flag de navegación
+    this.navegandoEnModal = true;
+
+    const nuevoIndice =
       (this.indiceActual - 1 + this.fotos.length) % this.fotos.length;
-    this.fotoActual = this.fotos[this.indiceActual];
-    this.reproducirAnimacion();
+
+    if (nuevoIndice !== this.indiceActual) {
+      this.indiceActual = nuevoIndice;
+      this.fotoActual = this.fotos[this.indiceActual];
+      this.reproducirAnimacion();
+    }
+
+    // ✅ AGREGAR ESTE setTimeout - Desbloquear después de la transición
+    setTimeout(() => {
+      this.navegandoEnModal = false;
+    }, 300);
   }
 
   /**
@@ -593,30 +636,51 @@ export class GaleriaSectionComponent
    * Con loop al final
    */
   siguiente() {
-    if (this.fotos.length === 0) return;
-    this.indiceActual = (this.indiceActual + 1) % this.fotos.length;
-    this.fotoActual = this.fotos[this.indiceActual];
-    this.reproducirAnimacion();
+    // ✅ AGREGAR ESTA LÍNEA - Prevenir múltiples clicks
+    if (this.fotos.length === 0 || this.navegandoEnModal) return;
+
+    // ✅ AGREGAR ESTA LÍNEA - Activar flag de navegación
+    this.navegandoEnModal = true;
+
+    const nuevoIndice = (this.indiceActual + 1) % this.fotos.length;
+
+    if (nuevoIndice !== this.indiceActual) {
+      this.indiceActual = nuevoIndice;
+      this.fotoActual = this.fotos[this.indiceActual];
+      this.reproducirAnimacion();
+    }
+
+    // ✅ AGREGAR ESTE setTimeout - Desbloquear después de la transición
+    setTimeout(() => {
+      this.navegandoEnModal = false;
+    }, 300);
   }
 
   /**
-   * Reproduce la animación de transición al cambiar de foto en el modal
-   * Reinicia la animación aplicando la clase correspondiente
+   * Reproduce la animación de transición al cambiar de foto en el modal (MEJORADO)
    */
   private reproducirAnimacion() {
     const img = document.querySelector('.modal-imagen');
     if (img) {
-      // Quitar clases de animación anteriores
+      // ✅ Quitar clases de animación anteriores
       img.classList.remove(
         'efecto-slide',
         'efecto-fade',
         'efecto-zoom',
         'efecto-flip',
       );
-      // Forzar reflow para reiniciar la animación
+
+      // ✅ Forzar reflow
       void (img as HTMLElement).offsetWidth;
-      // Agregar la clase del efecto actual
+
+      // ✅ Agregar la clase del efecto actual
       img.classList.add('efecto-' + this.efectoClase);
+
+      // ✅ También actualizar el atributo src para forzar recarga
+      const imgElement = img as HTMLImageElement;
+      if (imgElement.src !== this.fotoActual) {
+        imgElement.src = this.fotoActual;
+      }
     }
   }
 }
