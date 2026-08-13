@@ -22,6 +22,7 @@ import {
 import { Auth, authState, signOut } from '@angular/fire/auth';
 import { Router, RouterModule } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
+import { OgImageService } from '../../services/og-image.service'; // 👈 Agregar al inicio
 
 @Component({
   selector: 'app-anfitrion-dashboard',
@@ -55,6 +56,7 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
     private firestore: Firestore,
     private auth: Auth,
     private router: Router,
+    private ogImageService: OgImageService,
   ) {}
 
   async cargarUsuario() {
@@ -118,14 +120,26 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
         where('anfitrionId', '==', user.uid),
       );
       const snapshot = await getDocs(q);
-      this.misEventos = snapshot.docs.map((doc) => ({
-        slug: doc.id,
-        name: doc.data()['name'],
-      }));
-      console.log(
-        '📋 Eventos encontrados para este usuario:',
-        this.misEventos.length,
-      );
+
+      // ✅ GUARDAR TODOS LOS DATOS DEL EVENTO
+      this.misEventos = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          slug: doc.id,
+          name: data['name'],
+          heroImage: data['heroImage'] || '',
+          heroImageMovil: data['heroImageMovil'] || '',
+          heroImageEscritorio: data['heroImageEscritorio'] || '',
+          tipo: data['tipo'] || '',
+        };
+      });
+
+      console.log('📋 Eventos encontrados:', this.misEventos);
+      console.log('📸 Imágenes del primer evento:', {
+        heroImage: this.misEventos[0]?.heroImage,
+        heroImageMovil: this.misEventos[0]?.heroImageMovil,
+        heroImageEscritorio: this.misEventos[0]?.heroImageEscritorio,
+      });
 
       if (this.misEventos.length > 0) {
         this.eventoSlug = this.misEventos[0].slug;
@@ -251,9 +265,71 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
     this.cargarInvitados();
   }
 
+  // ================================================================
+  // MÉTODO PARA OBTENER LA IMAGEN OPTIMIZADA PARA WHATSAPP
+  // ================================================================
+  private getImagenWhatsApp(evento: any): string {
+    if (!evento) return '';
+
+    // 📱 Detectar si es móvil
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    // 🖼️ Elegir la imagen según dispositivo
+    let imagenUrl = '';
+    if (isMobile && evento.heroImageMovil) {
+      imagenUrl = evento.heroImageMovil;
+    } else if (evento.heroImageEscritorio) {
+      imagenUrl = evento.heroImageEscritorio;
+    } else if (evento.heroImage) {
+      imagenUrl = evento.heroImage;
+    }
+
+    if (!imagenUrl) return '';
+
+    // ✅ Si es Cloudinary, aplicar transformación para WhatsApp
+    if (imagenUrl.includes('cloudinary.com')) {
+      const parts = imagenUrl.split('/upload/');
+      if (parts.length === 2) {
+        // Transformación: 1200x630, formato automático, calidad automática
+        return `${parts[0]}/upload/f_auto,q_auto,w_1200,h_630,c_fill/${parts[1]}`;
+      }
+    }
+
+    return imagenUrl;
+  }
+
+  // ================================================================
+  // ENVIAR POR WHATSAPP CON CLOUDINARY
+  // ================================================================
   enviarWhatsApp(inv: Invitado) {
     const urlInvitacion = `${window.location.origin}/invitaciones/${inv.slug}`;
-    const mensaje = `🎟️ *¡Invitación Especial!*\n\nHola *${inv.nombre}*, te esperamos con *${inv.pases} pases*.\n\n📲 Abre tu invitación aquí:\n${urlInvitacion}\n\n✨ ¡Confirma tu asistencia!`;
+    const urlConCache = `${urlInvitacion}?t=${Date.now()}`;
+
+    const evento = this.misEventos.find((e) => e.slug === inv.eventoSlug);
+
+    // 🖼️ Generar la imagen usando el servicio (opcional)
+    let imagenGenerada = '';
+    if (evento) {
+      imagenGenerada = this.ogImageService.generateImage(evento, inv.nombre);
+      console.log('🖼️ Imagen generada:', imagenGenerada);
+    }
+
+    // 🎯 Emoji según tipo de evento
+    const emojiEvento =
+      evento?.tipo === 'boda' ? '💍' : evento?.tipo === 'xv' ? '👗' : '🎉';
+
+    // 📝 Mensaje
+    const mensaje = [
+      `*INVITACIÓN ESPECIAL*`,
+      ``,
+      `Hola *${inv.nombre}*,`,
+      `Te esperamos con *${inv.pases} pase${inv.pases > 1 ? 's' : ''}*${evento ? ` ${emojiEvento} *${evento.name}*` : ''}.`,
+      ``,
+      `📲 ${urlConCache}`,
+      ``,
+      `✅ Confirma tu asistencia`,
+    ].join('\n');
+
     const whatsappURL = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensaje)}`;
     window.open(whatsappURL, '_blank');
   }
