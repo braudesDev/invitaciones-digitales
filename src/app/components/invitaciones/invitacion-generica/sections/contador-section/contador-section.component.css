@@ -92,6 +92,7 @@
 .contador-numeros {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 2rem;
   max-width: 600px;
   margin: 0 auto;
@@ -119,6 +120,14 @@
   font-family: var(--font-family, "Playfair Display", Georgia, serif);
 }
 
+/* Separadores entre items */
+.contador-separador {
+  display: inline-block;
+  font-size: 0.6rem;
+  opacity: 0.3;
+  margin: 0 0.2rem;
+}
+
 /* Mensaje */
 .contador-mensaje {
   font-size: 1rem;
@@ -134,7 +143,7 @@
    ESTILOS DEL CONTADOR
    ============================================ */
 
-/* Clásico elegante */
+/* ---------- Clásico elegante ---------- */
 .estilo-clasico .contador-valor {
   font-size: 4rem;
   background: linear-gradient(
@@ -154,7 +163,46 @@
   font-family: var(--font-family, "Playfair Display", Georgia, serif);
 }
 
-/* Minimalista */
+/* Iconos Clásico - Diamantes y estrellas */
+.estilo-clasico .contador-item::before {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+  opacity: 0.6;
+  animation: brillo-lento 4s ease-in-out infinite;
+}
+
+.estilo-clasico .contador-item:nth-child(1)::before {
+  content: "💎";
+  color: #b8a9c9;
+}
+
+.estilo-clasico .contador-item:nth-child(2)::before {
+  content: "✨";
+  color: #e8c87a;
+}
+
+.estilo-clasico .contador-item:nth-child(3)::before {
+  content: "🌟";
+  color: #d4af37;
+}
+
+.estilo-clasico .contador-item:nth-child(4)::before {
+  content: "💫";
+  color: #c9b8a9;
+}
+
+.estilo-clasico .contador-separador {
+  color: var(--accent, #c9a87c);
+  opacity: 0.4;
+  animation: brillo-lento 3s ease-in-out infinite;
+}
+
+.estilo-clasico .contador-separador::before {
+  content: "✦";
+}
+
+/* ---------- Minimalista ---------- */
 .estilo-minimalista .contador-valor {
   font-weight: 300;
   font-size: 3.5rem;
@@ -173,32 +221,53 @@
   min-width: 60px;
 }
 
-/* Floral */
+/* Iconos Minimalista - Puntos sutiles */
+.estilo-minimalista .contador-item::before {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+  opacity: 0.3;
+  animation: pulso-suave 3s ease-in-out infinite;
+}
+
+.estilo-minimalista .contador-item:nth-child(1)::before {
+  content: "·";
+  color: var(--primary, #5c3d2e);
+  font-size: 1.5rem;
+}
+
+.estilo-minimalista .contador-item:nth-child(2)::before {
+  content: "·";
+  color: var(--primary, #5c3d2e);
+  font-size: 1.2rem;
+}
+
+.estilo-minimalista .contador-item:nth-child(3)::before {
+  content: "·";
+  color: var(--primary, #5c3d2e);
+  font-size: 1.5rem;
+}
+
+.estilo-minimalista .contador-item:nth-child(4)::before {
+  content: "·";
+  color: var(--primary, #5c3d2e);
+  font-size: 1.2rem;
+}
+
+.estilo-minimalista .contador-separador {
+  color: var(--accent, #c9a87c);
+  opacity: 0.2;
+  font-size: 0.5rem;
+  animation: pulso-suave 4s ease-in-out infinite;
+}
+
+.estilo-minimalista .contador-separador::before {
+  content: "│";
+}
+
+/* ---------- Floral ---------- */
 .estilo-floral .contador-item {
   position: relative;
-}
-
-.estilo-floral .contador-item::before {
-  content: "🌸";
-  display: block;
-  font-size: 1.5rem;
-  margin-bottom: 0.3rem;
-}
-
-.estilo-floral .contador-item:first-child::before {
-  content: "🌹";
-}
-
-.estilo-floral .contador-item:nth-child(2)::before {
-  content: "🌷";
-}
-
-.estilo-floral .contador-item:nth-child(3)::before {
-  content: "🌻";
-}
-
-.estilo-floral .contador-item:last-child::before {
-  content: "🌺";
 }
 
 .estilo-floral .contador-valor {
@@ -206,7 +275,51 @@
   font-family: var(--font-family, "Playfair Display", Georgia, serif);
 }
 
-/* Romántico */
+/* Iconos Floral - Flores coloridas */
+.estilo-floral .contador-item::before {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+  filter: drop-shadow(0 0 4px rgba(201, 168, 124, 0.3));
+  animation: flor-brillo 3s ease-in-out infinite;
+}
+
+.estilo-floral .contador-item:nth-child(1)::before {
+  content: "🌹";
+  color: #e74c3c;
+}
+
+.estilo-floral .contador-item:nth-child(2)::before {
+  content: "🌷";
+  color: #ff6b81;
+}
+
+.estilo-floral .contador-item:nth-child(3)::before {
+  content: "🌻";
+  color: #f1c40f;
+}
+
+.estilo-floral .contador-item:nth-child(4)::before {
+  content: "🌸";
+  color: #ff9ff3;
+}
+
+.estilo-floral .contador-separador {
+  font-size: 0.8rem;
+  color: var(--accent, #c9a87c);
+  opacity: 0.5;
+  animation: flor-brillo 4s ease-in-out infinite;
+}
+
+.estilo-floral .contador-separador:nth-child(odd)::before {
+  content: "🌿";
+}
+
+.estilo-floral .contador-separador:nth-child(even)::before {
+  content: "🍃";
+}
+
+/* ---------- Romántico ---------- */
 .estilo-romantico .contador-valor {
   font-size: 4rem;
   color: var(--accent, #c9a87c);
@@ -228,23 +341,171 @@
   backdrop-filter: blur(4px);
 }
 
+/* Iconos Romántico - Corazones */
+.estilo-romantico .contador-item::before {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+  animation: flotar-suave 3s ease-in-out infinite;
+}
+
+.estilo-romantico .contador-item:nth-child(1)::before {
+  content: "❤️";
+  color: #e74c3c;
+}
+
+.estilo-romantico .contador-item:nth-child(2)::before {
+  content: "💕";
+  color: #ff6b81;
+}
+
+.estilo-romantico .contador-item:nth-child(3)::before {
+  content: "💗";
+  color: #ff9ff3;
+}
+
+.estilo-romantico .contador-item:nth-child(4)::before {
+  content: "💖";
+  color: #ff4757;
+}
+
+.estilo-romantico .contador-separador {
+  font-size: 0.6rem;
+  color: #ff6b81;
+  opacity: 0.4;
+  animation: flotar-suave 4s ease-in-out infinite;
+}
+
+.estilo-romantico .contador-separador::before {
+  content: "✦";
+}
+
+/* ============================================
+   DECORACIONES ADICIONALES
+   ============================================ */
+
+/* 🎯 Icono decorativo en el título del contador */
+.contador-icono-titulo {
+  display: inline-block;
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  animation: flotar-suave 3s ease-in-out infinite;
+}
+
+.estilo-clasico .contador-icono-titulo::before {
+  content: "✦";
+  color: var(--accent, #c9a87c);
+}
+
+.estilo-floral .contador-icono-titulo::before {
+  content: "🌸";
+}
+
+.estilo-romantico .contador-icono-titulo::before {
+  content: "💕";
+}
+
+.estilo-minimalista .contador-icono-titulo::before {
+  content: "·";
+  font-size: 2rem;
+  color: var(--primary, #5c3d2e);
+}
+
+/* 🎀 Icono decorativo al final */
+.contador-icono-footer {
+  display: inline-block;
+  margin: 0.5rem 0.3rem;
+  font-size: 0.8rem;
+  opacity: 0.5;
+  animation: brillo-lento 4s ease-in-out infinite;
+}
+
+.estilo-clasico .contador-icono-footer::before {
+  content: "✦✦✦";
+}
+
+.estilo-floral .contador-icono-footer::before {
+  content: "🌿🌸🌿";
+}
+
+.estilo-romantico .contador-icono-footer::before {
+  content: "💕💖💕";
+}
+
+.estilo-minimalista .contador-icono-footer::before {
+  content: "···";
+}
+
+/* ============================================
+   ANIMACIONES PARA ICONOS
+   ============================================ */
+
+/* 🌸 Brillo floral */
+@keyframes flor-brillo {
+  0% {
+    transform: scale(1) rotate(-5deg);
+    filter: drop-shadow(0 0 2px rgba(201, 168, 124, 0.2));
+  }
+  50% {
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 0 8px rgba(201, 168, 124, 0.5));
+  }
+  100% {
+    transform: scale(1) rotate(-5deg);
+    filter: drop-shadow(0 0 2px rgba(201, 168, 124, 0.2));
+  }
+}
+
+/* ✨ Brillo lento */
+@keyframes brillo-lento {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+}
+
+/* 🌊 Flotar suave */
+@keyframes flotar-suave {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 💫 Pulso suave */
+@keyframes pulso-suave {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.9);
+  }
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
 
 @media (max-width: 768px) {
-  .estilos-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .colores-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .etiquetas-grid {
-    grid-template-columns: 1fr;
-  }
-
   .contador-numeros {
     gap: 1rem;
   }
@@ -266,11 +527,40 @@
   }
 
   .estilo-floral .contador-item::before {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+  }
+
+  .estilo-clasico .contador-item::before,
+  .estilo-romantico .contador-item::before {
+    font-size: 1rem;
+  }
+
+  .estilo-minimalista .contador-item::before {
+    font-size: 0.6rem;
+  }
+
+  .contador-icono-titulo {
+    font-size: 1rem;
   }
 
   .estilo-romantico .contador-item {
     padding: 0.5rem 0.8rem;
+  }
+
+  .estilo-clasico .contador-valor {
+    font-size: 3.2rem !important;
+  }
+
+  .estilo-floral .contador-valor {
+    font-size: 3rem !important;
+  }
+
+  .estilo-romantico .contador-valor {
+    font-size: 3rem !important;
+  }
+
+  .estilo-minimalista .contador-valor {
+    font-size: 2.8rem !important;
   }
 }
 
@@ -302,10 +592,40 @@
   }
 
   .estilo-floral .contador-item::before {
-    font-size: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .estilo-clasico .contador-item::before,
+  .estilo-romantico .contador-item::before {
+    font-size: 0.8rem;
+  }
+
+  .estilo-floral .contador-valor {
+    font-size: 2.5rem !important;
   }
 
   .estilo-romantico .contador-valor {
-    font-size: 2.8rem !important;
+    font-size: 2.5rem !important;
+  }
+
+  .estilo-minimalista .contador-valor {
+    font-size: 2.2rem !important;
+  }
+
+  .contador-icono-titulo {
+    font-size: 0.8rem;
+  }
+
+  .estilo-floral .contador-separador,
+  .estilo-romantico .contador-separador {
+    font-size: 0.5rem;
+  }
+
+  .estilo-clasico .contador-separador {
+    font-size: 0.4rem;
+  }
+
+  .estilo-minimalista .contador-separador {
+    font-size: 0.3rem;
   }
 }

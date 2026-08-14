@@ -13,6 +13,7 @@ import {
   Contador,
   ESTILOS_CONTADOR,
 } from '../../../../../models/contador.model';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-contador-section',

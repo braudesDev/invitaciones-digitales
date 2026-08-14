@@ -1677,41 +1677,45 @@ export class FormularioInvitacionComponent implements OnInit {
   // 3.4 ICONOS PARA REGALOS
   // ==============================================================
   iconosRegalos = [
+    // 📦 Regalos físicos
     { valor: 'heroBuildingOffice', label: 'Tienda departamental' },
-    { valor: 'heroCube', label: 'Amazon/Online' },
-    { valor: 'heroBanknotes', label: 'Dinero en efectivo' },
-    { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
+    { valor: 'heroCube', label: 'Amazon / Online' },
     { valor: 'heroGift', label: 'Regalo físico' },
+    { valor: 'lucideShoppingBag', label: 'Lista de deseos' },
+
+    // 💰 Regalos en efectivo
+    { valor: 'heroBanknotes', label: 'Efectivo / Sobres' },
+    { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
+
+    // 🎁 Otros
     { valor: 'heroHeart', label: 'Donación' },
     { valor: 'heroStar', label: 'Experiencia' },
-    { valor: 'lucideShoppingBag', label: 'Lista de deseos' },
   ];
 
   getIconosPorTipoEvento(tipo: string) {
     if (tipo === 'boda') {
       return [
+        { valor: 'heroBanknotes', label: 'Lluvia de sobres' },
         { valor: 'heroBuildingOffice', label: 'Liverpool / Sears' },
         { valor: 'heroCube', label: 'Amazon' },
-        { valor: 'heroBanknotes', label: 'Sobres (efectivo)' },
-        { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
         { valor: 'heroGift', label: 'Regalo físico' },
-        { valor: 'heroHeart', label: 'Donación a nuestra luna de miel' },
+        { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
+        { valor: 'heroHeart', label: 'Luna de miel' },
         { valor: 'heroStar', label: 'Experiencia (viaje, cena)' },
         { valor: 'lucideShoppingBag', label: 'Lista de deseos' },
       ];
     } else if (tipo === 'xv') {
       return [
+        { valor: 'heroBanknotes', label: 'Efectivo' },
         { valor: 'heroBuildingOffice', label: 'Liverpool / Sears' },
         { valor: 'heroCube', label: 'Amazon' },
-        { valor: 'heroBanknotes', label: 'Sobres (efectivo)' },
-        { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
         { valor: 'heroGift', label: 'Regalo físico' },
+        { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
         { valor: 'heroHeart', label: 'Donación' },
         { valor: 'heroStar', label: 'Experiencia (viaje, cena)' },
         { valor: 'lucideShoppingBag', label: 'Lista de deseos' },
       ];
     }
-    // Por defecto
     return this.iconosRegalos;
   }
 
