@@ -71,6 +71,7 @@ import {
   heroArrowPath,
   heroExclamationTriangle,
   heroUser,
+  heroDocumentDuplicate,
 } from '@ng-icons/heroicons/outline';
 //Lucide icons
 import {
@@ -199,6 +200,7 @@ export const appConfig: ApplicationConfig = {
       heroArrowPath,
       heroExclamationTriangle,
       heroUser,
+      heroDocumentDuplicate,
 
       //Lucide Icons
       lucideChurch,

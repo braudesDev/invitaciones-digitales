@@ -632,3 +632,157 @@
 .regalos-section * {
   font-family: inherit !important;
 }
+
+/* ============================================
+   CUENTA BANCARIA (CLABE / NÚMERO DE CUENTA)
+   ============================================ */
+
+.opcion-cuenta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding: 3px 0;
+  flex-wrap: wrap;
+}
+
+.cuenta-label {
+  color: var(--text, #666);
+  opacity: 0.6;
+  font-weight: 600;
+  font-size: 0.6rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.cuenta-numero {
+  color: var(--primary, #5c3d2e);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  font-family: "Courier New", "Consolas", monospace;
+  word-break: break-all;
+  background: rgba(201, 168, 124, 0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ============================================
+   BOTÓN COPIAR
+   ============================================ */
+
+.opcion-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.opcion-boton-copiar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 40px;
+  background: var(--primary, #5c3d2e);
+  color: white;
+  border: none;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  font-family: inherit;
+  box-shadow: 0 1px 4px rgba(92, 61, 46, 0.15);
+}
+
+.opcion-boton-copiar:hover {
+  background: var(--accent, #c9a87c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(92, 61, 46, 0.2);
+}
+
+.opcion-boton-copiar:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(92, 61, 46, 0.1);
+}
+
+.opcion-boton-copiar.copiado {
+  background: #27ae60;
+}
+
+.opcion-boton-copiar ng-icon {
+  width: 12px;
+  height: 12px;
+}
+
+/* ============================================
+   RESPONSIVE - ACTUALIZADO CON BOTÓN COPIAR
+   ============================================ */
+
+@media (max-width: 768px) {
+  .opcion-boton-copiar {
+    font-size: 0.6rem;
+    padding: 3px 10px;
+  }
+
+  .opcion-boton-copiar ng-icon {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .opcion-acciones {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 2px;
+  }
+
+  .opcion-boton-copiar {
+    padding: 2px 8px;
+    font-size: 0.55rem;
+    min-width: 40px;
+    border-radius: 30px;
+  }
+
+  .opcion-boton-copiar ng-icon {
+    width: 8px;
+    height: 8px;
+  }
+
+  .opcion-cuenta {
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+
+  .cuenta-numero {
+    font-size: 0.7rem;
+    padding: 1px 6px;
+  }
+
+  .cuenta-label {
+    font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .opcion-acciones {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .opcion-boton-copiar {
+    padding: 2px 6px;
+    font-size: 0.5rem;
+    min-width: 30px;
+  }
+
+  .cuenta-numero {
+    font-size: 0.6rem;
+  }
+}

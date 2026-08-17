@@ -3410,6 +3410,236 @@
   font-style: italic;
 }
 
+/* ================================================================
+   CAMPOS DE TRANSFERENCIA BANCARIA - MESA DE REGALOS
+   ================================================================ */
+
+/* Contenedor principal de los campos de transferencia */
+.campos-transferencia {
+  background: var(--bg-light, #f8f5f0);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 10px 0 14px;
+  border: 1px solid rgba(201, 168, 124, 0.15);
+  transition: all 0.3s ease;
+}
+
+.campos-transferencia:hover {
+  border-color: rgba(201, 168, 124, 0.3);
+  box-shadow: 0 2px 8px rgba(201, 168, 124, 0.05);
+}
+
+/* Grid de 2 columnas para CLABE y Tipo de cuenta */
+.transferencia-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Checkbox para mostrar botón copiar */
+.campo-checkbox {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(201, 168, 124, 0.1);
+}
+
+.campo-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--primary, #5c3d2e);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.campo-checkbox label:hover {
+  color: var(--accent, #c9a87c);
+}
+
+.campo-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  accent-color: var(--accent, #c9a87c);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.campo-checkbox ng-icon {
+  color: var(--accent, #c9a87c);
+  opacity: 0.7;
+}
+
+.campo-checkbox .field-help {
+  display: block;
+  margin-top: 4px;
+  margin-left: 32px;
+  font-size: 0.75rem;
+  color: var(--text-muted, #999);
+  font-weight: 400;
+}
+
+/* --- Estilos de los inputs dentro de campos-transferencia --- */
+.campos-transferencia .field-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary, #5c3d2e);
+  margin-bottom: 4px;
+}
+
+.campos-transferencia .field-group label ng-icon {
+  color: var(--accent, #c9a87c);
+  opacity: 0.7;
+}
+
+.campos-transferencia .form-control {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid #e8e0d8;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: white;
+  transition: all 0.3s ease;
+  color: var(--text, #333);
+}
+
+.campos-transferencia .form-control:focus {
+  outline: none;
+  border-color: var(--accent, #c9a87c);
+  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
+}
+
+.campos-transferencia .form-control::placeholder {
+  color: #bbb;
+  font-size: 0.85rem;
+}
+
+.campos-transferencia select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.campos-transferencia .field-help {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.7rem;
+  color: var(--text-muted, #999);
+  font-weight: 400;
+}
+
+/* Estilo para el contenedor de cada campo dentro del grid */
+.campos-transferencia .field-group {
+  margin-bottom: 0;
+}
+
+/* Estilo para el campo de checkbox */
+.campos-transferencia .campo-checkbox .field-help {
+  margin-left: 0;
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL
+   ============================================ */
+
+/* Tablet y móvil */
+@media (max-width: 768px) {
+  .transferencia-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .campos-transferencia {
+    padding: 14px;
+    margin: 8px 0 12px;
+  }
+
+  .campos-transferencia .field-group label {
+    font-size: 0.8rem;
+  }
+
+  .campos-transferencia .form-control {
+    padding: 7px 10px;
+    font-size: 0.85rem;
+  }
+
+  .campo-checkbox {
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+
+  .campo-checkbox label {
+    font-size: 0.85rem;
+  }
+}
+
+/* Móvil pequeño */
+@media (max-width: 480px) {
+  .campos-transferencia {
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .transferencia-grid {
+    gap: 8px;
+  }
+
+  .campos-transferencia .form-control {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+  }
+
+  .campo-checkbox label {
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+
+  .campo-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+  }
+
+  .campos-transferencia .field-help {
+    font-size: 0.65rem;
+  }
+}
+
+/* ============================================
+   ANIMACIÓN DE APARICIÓN
+   ============================================ */
+
+.campos-transferencia {
+  animation: fadeSlideDown 0.3s ease forwards;
+}
+
+@keyframes fadeSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 18px;
+    margin: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+    padding: 16px 18px;
+    margin: 10px 0 14px;
+  }
+}
+
 /* ============================================
    INPUTS Y FORMULARIOS
    ============================================ */

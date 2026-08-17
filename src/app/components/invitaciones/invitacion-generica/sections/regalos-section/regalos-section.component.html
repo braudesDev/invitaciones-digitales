@@ -36,31 +36,56 @@
                 <ng-icon name="heroGift" size="28"></ng-icon>
               }
             </div>
+
+            <!-- ✅ INFO -->
             <div class="opcion-info">
               <h4 class="opcion-nombre">{{ opcion.nombre }}</h4>
               @if (opcion.subtitulo) {
                 <p class="opcion-subtitulo">{{ opcion.subtitulo }}</p>
               }
+
+              <!-- ✅ ✅ ✅ NUEVO: MOSTRAR CUENTA BANCARIA -->
+              @if (opcion.cuenta) {
+                <div class="opcion-cuenta">
+                  <span class="cuenta-label">
+                    @if (opcion.tipoCuenta === "clabe") {
+                      CLABE:
+                    } @else if (opcion.tipoCuenta === "tarjeta") {
+                      Tarjeta:
+                    } @else {
+                      Cuenta:
+                    }
+                  </span>
+                  <span class="cuenta-numero">{{ opcion.cuenta }}</span>
+                </div>
+              }
             </div>
-            @if (opcion.url) {
-              <a [href]="opcion.url" target="_blank" class="opcion-enlace">
-                <ng-icon name="heroArrowTopRightOnSquare" size="14"></ng-icon>
-                Ver más
-              </a>
-            }
+
+            <!-- ✅ ✅ ✅ NUEVO: ACCIONES (botón copiar + ver más) -->
+            <div class="opcion-acciones">
+              <!-- Botón Copiar (si tiene cuenta) -->
+              @if (opcion.cuenta && opcion.mostrarCopiar !== false) {
+                <button
+                  class="opcion-boton-copiar"
+                  (click)="copiarCuenta(opcion.cuenta, $event)"
+                  title="Copiar número de cuenta"
+                >
+                  <ng-icon name="heroDocumentDuplicate" size="14"></ng-icon>
+                  Copiar
+                </button>
+              }
+
+              <!-- Enlace Ver más (si tiene URL) -->
+              @if (opcion.url) {
+                <a [href]="opcion.url" target="_blank" class="opcion-enlace">
+                  <ng-icon name="heroArrowTopRightOnSquare" size="14"></ng-icon>
+                  Ver más
+                </a>
+              }
+            </div>
           </div>
         </div>
       }
     </div>
-
-    <!-- Botón
-    @if (data.textoBoton) {
-      <div class="regalos-footer">
-        <button class="btn-regalos">
-          <ng-icon name="heroGift" size="16"></ng-icon>
-          {{ data.textoBoton }}
-        </button>
-      </div>
-    } -->
   </div>
 }

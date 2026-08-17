@@ -1641,18 +1641,83 @@ export class FormularioInvitacionComponent implements OnInit {
     return ESTILOS_REGALOS;
   }
 
+  // ==============================================================
+  // 3.4 ICONOS PARA REGALOS - CON TRANSFERENCIAS
+  // ==============================================================
+
+  // ✅ Nueva opción de regalo (para el formulario)
+  nuevaOpcionRegalo = {
+    nombre: '',
+    subtitulo: '',
+    icono: '',
+    url: '',
+  };
+
+  // ✅ Propiedades para cuenta bancaria
+  cuentaBancaria: string = '';
+  tipoCuenta: 'clabe' | 'cuenta' | 'tarjeta' = 'clabe';
+  mostrarCopiar: boolean = true;
+
+  // ✅ Iconos disponibles
+  iconosRegalos = [
+    { valor: 'heroBuildingOffice', label: 'Tienda departamental' },
+    { valor: 'heroCube', label: 'Amazon / Online' },
+    { valor: 'heroGift', label: 'Regalo físico' },
+    { valor: 'lucideShoppingBag', label: 'Lista de deseos' },
+    { valor: 'heroBanknotes', label: 'Efectivo / Sobres' },
+    { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
+    { valor: 'heroHeart', label: 'Donación' },
+    { valor: 'heroStar', label: 'Experiencia' },
+  ];
+
+  // ✅ Método para agregar opción de regalo
   agregarOpcionRegalo() {
     if (!this.nuevaInvitacion.regalos.opciones) {
       this.nuevaInvitacion.regalos.opciones = [];
     }
-    this.nuevaInvitacion.regalos.opciones.push({
-      nombre: '',
-      subtitulo: '',
-      icono: '🎁',
-      url: '',
-    });
+
+    const esTransferencia =
+      this.nuevaOpcionRegalo.icono === 'lucideBanknoteArrowUp' ||
+      this.nuevaOpcionRegalo.icono === 'heroBanknotes';
+
+    const nuevaOpcion: any = {
+      nombre: this.nuevaOpcionRegalo.nombre,
+      subtitulo: this.nuevaOpcionRegalo.subtitulo,
+      icono: this.nuevaOpcionRegalo.icono,
+      url: this.nuevaOpcionRegalo.url || '',
+    };
+
+    if (esTransferencia && this.cuentaBancaria) {
+      nuevaOpcion.cuenta = this.cuentaBancaria;
+      nuevaOpcion.tipoCuenta = this.tipoCuenta;
+      nuevaOpcion.mostrarCopiar = this.mostrarCopiar;
+    }
+
+    this.nuevaInvitacion.regalos.opciones.push(nuevaOpcion);
+
+    // Resetear campos
+    this.nuevaOpcionRegalo = { nombre: '', subtitulo: '', icono: '', url: '' };
+    this.cuentaBancaria = '';
+    this.tipoCuenta = 'clabe';
+    this.mostrarCopiar = true;
   }
 
+  // ✅ Eliminar opción de regalo
+  eliminarOpcionRegalo(index: number) {
+    if (this.nuevaInvitacion.regalos.opciones) {
+      this.nuevaInvitacion.regalos.opciones.splice(index, 1);
+    }
+  }
+
+  // ✅ Verificar si es transferencia
+  esTransferencia(): boolean {
+    return (
+      this.nuevaOpcionRegalo.icono === 'lucideBanknoteArrowUp' ||
+      this.nuevaOpcionRegalo.icono === 'heroBanknotes'
+    );
+  }
+
+  // ✅ Seleccionar estilo de regalos
   seleccionarEstiloRegalos(estilo: string) {
     const estilosPermitidos = [
       'tarjetas',
@@ -1676,21 +1741,6 @@ export class FormularioInvitacionComponent implements OnInit {
   // ==============================================================
   // 3.4 ICONOS PARA REGALOS
   // ==============================================================
-  iconosRegalos = [
-    // 📦 Regalos físicos
-    { valor: 'heroBuildingOffice', label: 'Tienda departamental' },
-    { valor: 'heroCube', label: 'Amazon / Online' },
-    { valor: 'heroGift', label: 'Regalo físico' },
-    { valor: 'lucideShoppingBag', label: 'Lista de deseos' },
-
-    // 💰 Regalos en efectivo
-    { valor: 'heroBanknotes', label: 'Efectivo / Sobres' },
-    { valor: 'lucideBanknoteArrowUp', label: 'Transferencia' },
-
-    // 🎁 Otros
-    { valor: 'heroHeart', label: 'Donación' },
-    { valor: 'heroStar', label: 'Experiencia' },
-  ];
 
   getIconosPorTipoEvento(tipo: string) {
     if (tipo === 'boda') {
@@ -1719,11 +1769,6 @@ export class FormularioInvitacionComponent implements OnInit {
     return this.iconosRegalos;
   }
 
-  eliminarOpcionRegalo(index: number) {
-    if (this.nuevaInvitacion.regalos.opciones) {
-      this.nuevaInvitacion.regalos.opciones.splice(index, 1);
-    }
-  }
   // Getter para estilos
   get estilosConsideraciones() {
     return ESTILOS_CONSIDERACIONES;
@@ -1746,7 +1791,7 @@ export class FormularioInvitacionComponent implements OnInit {
     return this.nuevaInvitacion.consideracionesData;
   }
 
-  // Método para seleccionar estilo
+  //CONSIDERACIONES: Método para seleccionar estilo
   seleccionarEstiloConsideraciones(estilo: string) {
     const estilosPermitidos = [
       'iconos',
