@@ -2759,6 +2759,85 @@
                         </small>
                       </div>
 
+                      <!-- ✅ NUEVO: CAMPOS PARA TRANSFERENCIA BANCARIA -->
+                      <!-- Solo se muestran si el icono seleccionado es de transferencia -->
+                      @if (
+                        opcion.icono === "lucideBanknoteArrowUp" ||
+                        opcion.icono === "heroBanknotes"
+                      ) {
+                        <div
+                          class="field-group full-width campos-transferencia"
+                        >
+                          <div class="transferencia-grid">
+                            <!-- CLABE / Cuenta -->
+                            <div class="field-group">
+                              <label>
+                                <ng-icon
+                                  name="lucideBanknoteArrowUp"
+                                  size="14"
+                                ></ng-icon>
+                                CLABE / Número de cuenta
+                              </label>
+                              <input
+                                type="text"
+                                [(ngModel)]="opcion.cuenta"
+                                [ngModelOptions]="{ standalone: true }"
+                                placeholder="Ej: 123456789012345678"
+                                class="form-control"
+                              />
+                              <small class="field-help">
+                                Ingresa la CLABE (18 dígitos) o número de cuenta
+                                para transferencias
+                              </small>
+                            </div>
+
+                            <!-- Tipo de cuenta -->
+                            <div class="field-group">
+                              <label>Tipo de cuenta</label>
+                              <select
+                                [(ngModel)]="opcion.tipoCuenta"
+                                [ngModelOptions]="{ standalone: true }"
+                                class="form-control"
+                              >
+                                <option value="clabe">
+                                  CLABE (18 dígitos)
+                                </option>
+                                <option value="cuenta">
+                                  Cuenta (10-11 dígitos)
+                                </option>
+                                <option value="tarjeta">
+                                  Tarjeta (16 dígitos)
+                                </option>
+                              </select>
+                              <small class="field-help"
+                                >Selecciona el tipo de cuenta que
+                                ingresaste</small
+                              >
+                            </div>
+                          </div>
+
+                          <!-- Mostrar botón copiar -->
+                          <div class="campo-checkbox">
+                            <label>
+                              <input
+                                type="checkbox"
+                                [(ngModel)]="opcion.mostrarCopiar"
+                                [ngModelOptions]="{ standalone: true }"
+                              />
+                              <ng-icon
+                                name="heroDocumentDuplicate"
+                                size="14"
+                              ></ng-icon>
+                              Mostrar botón "Copiar cuenta" en la invitación
+                            </label>
+                            <small class="field-help">
+                              Los invitados podrán copiar la CLABE/cuenta con un
+                              solo clic
+                            </small>
+                          </div>
+                        </div>
+                      }
+
                       <!-- Icono -->
                       <div class="field-group">
                         <label>
