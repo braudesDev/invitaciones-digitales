@@ -30,6 +30,17 @@
       ></app-hero-section>
     }
 
+    <!-- ✅ CORREGIDO: Usar 'data' en lugar de 'invitacion' -->
+    <!-- ✅ Puedes pasar los colores sin preocuparte por undefined -->
+    @if (data.audio?.habilitado) {
+      <app-audio-player
+        [audioConfig]="data.audio"
+        [primaryColor]="data.primaryColor || '#5c3d2e'"
+        [accentColor]="data.accentColor || '#c9a87c'"
+        [textColor]="data.textColor || '#ffffff'"
+      ></app-audio-player>
+    }
+
     <!-- ======================================== -->
     <!-- 2. NOS CASAMOS - Mensaje principal       -->
     <!-- ======================================== -->

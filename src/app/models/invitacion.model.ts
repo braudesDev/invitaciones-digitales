@@ -5,6 +5,7 @@ import { Regalos } from './regalos.model';
 import { Confirmacion } from './confirmacion.model';
 import { Consideraciones } from './consideraciones.model';
 import { Contador } from './contador.model';
+import { AudioConfig } from './audio.model';
 
 // ================================================================
 // INTERFAZ: Invitación Completa
@@ -144,4 +145,6 @@ export interface InvitacionCompleta {
 
   heroImageMovil?: string; // Imagen para móvil (vertical)
   heroImageEscritorio?: string; // Imagen para escritorio (horizontal)
+
+  audio?: AudioConfig;
 }

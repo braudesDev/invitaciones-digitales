@@ -10,7 +10,6 @@ import { HeroSectionComponent } from './sections/hero-section/hero-section.compo
 import { NosCasamosSectionComponent } from './sections/nos-casamos-section/nos-casamos-section.component';
 import { InvitacionValidaSectionComponent } from './sections/invitacion-valida-section/invitacion-valida-section.component';
 import { CeremoniaSectionComponent } from './sections/ceremonia-section/ceremonia-section.component';
-// Importa los demás componentes que crearás
 import { PadresSectionComponent } from './sections/padres-section/padres-section.component';
 import { PadrinosSectionComponent } from './sections/padrinos-section/padrinos-section.component';
 import { DamasSectionComponent } from './sections/damas-section/damas-section.component';
@@ -34,6 +33,7 @@ import { Contador } from '../../../models/contador.model';
 import { Regalos } from '../../../models/regalos.model';
 import { Consideraciones } from '../../../models/consideraciones.model';
 import { Confirmacion } from '../../../models/confirmacion.model';
+import { AudioPlayerComponent } from './shared/audio-player/audio-player.component';
 
 @Component({
   selector: 'app-invitacion-generica',
@@ -58,6 +58,7 @@ import { Confirmacion } from '../../../models/confirmacion.model';
     FooterSectionComponent,
     GaleriaSectionComponent,
     HospedajeSectionComponent,
+    AudioPlayerComponent, // ✅ YA ESTÁ
   ],
   templateUrl: './invitacion-generica.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -65,9 +66,18 @@ import { Confirmacion } from '../../../models/confirmacion.model';
 })
 export class InvitacionGenericaComponent implements OnInit {
   @Input() data!: Invitacion;
+
   constructor() {}
 
   ngOnInit() {}
+
+  // ✅ AGREGAR LOGS PARA DEPURAR AUDIO
+  ngAfterViewInit() {
+    console.log('📋 InvitacionGenericaComponent - data completo:', this.data);
+    console.log('🎵 data.audio:', this.data?.audio);
+    console.log('🎵 data.audio.habilitado:', this.data?.audio?.habilitado);
+    console.log('🎵 data.audio.canciones:', this.data?.audio?.canciones);
+  }
 
   get fechaFormateada(): string {
     if (!this.data?.fecha) return '';
@@ -83,7 +93,6 @@ export class InvitacionGenericaComponent implements OnInit {
     });
   }
 
-  // 👇 AGREGAR ESTE GETTER
   get padrinosFormateados(): PadrinoAsignado[] {
     if (!this.data?.padrinos || this.data.padrinos.length === 0) {
       return [];
@@ -91,7 +100,6 @@ export class InvitacionGenericaComponent implements OnInit {
 
     const primerElemento = this.data.padrinos[0];
 
-    // Si es string, convertir a objeto PadrinoAsignado
     if (typeof primerElemento === 'string') {
       const resultado = (this.data.padrinos as string[]).map(
         (nombre: string) => ({
@@ -100,25 +108,20 @@ export class InvitacionGenericaComponent implements OnInit {
           observaciones: '',
         }),
       );
-
       return resultado;
     }
 
-    // Si ya es objeto con 'nombre', devolverlo
     if (
       typeof primerElemento === 'object' &&
       primerElemento !== null &&
       'nombre' in primerElemento
     ) {
       const resultado = this.data.padrinos as unknown as PadrinoAsignado[];
-
       return resultado;
     }
 
     return [];
   }
-
-  // invitacion-generica.component.ts
 
   get dressCodeFormateado(): DressCode {
     const dc = this.data?.dressCode || {};
@@ -132,13 +135,9 @@ export class InvitacionGenericaComponent implements OnInit {
       notaAdicional: dc.notaAdicional || '',
       fontFamily: this.data?.fontFamily || "'Playfair Display', Georgia, serif",
     };
-
     return resultado;
   }
 
-  // invitacion-generica.component.ts
-
-  // Historia formateada con valores por defecto
   get historiaFormateada(): Historia {
     const h = this.data?.historia || {};
     return {
@@ -150,8 +149,6 @@ export class InvitacionGenericaComponent implements OnInit {
       fontFamily: this.data?.fontFamily || "'Playfair Display', Georgia, serif",
     };
   }
-
-  // invitacion-generica.component.ts
 
   get hospedajeFormateado(): Hospedaje {
     const h = this.data?.hospedaje || {};
@@ -171,7 +168,7 @@ export class InvitacionGenericaComponent implements OnInit {
     return {
       mostrarSeccion: (g as any).mostrarSeccion ?? true,
       titulo: (g as any).titulo || 'Nuestros Momentos',
-      subtitulo: (g as any).subtitulo || '', // 👈 AGREGAR
+      subtitulo: (g as any).subtitulo || '',
       descripcion: (g as any).descripcion || '',
       fotos: (g as any).fotos || [],
       estilo: (g as any).estilo || 'grid',
@@ -209,7 +206,6 @@ export class InvitacionGenericaComponent implements OnInit {
   get contadorFormateado(): Contador {
     const c = this.data?.contador || {};
 
-    // Si viene como string, convertirlo (por si acaso)
     let contadorData = c;
     if (typeof c === 'string') {
       try {
@@ -219,13 +215,11 @@ export class InvitacionGenericaComponent implements OnInit {
       }
     }
 
-    // Mapear fechaObjetivo a fechaEvento si existe
     const fechaEvento =
       (contadorData as any).fechaEvento ||
       (contadorData as any).fechaObjetivo ||
       '';
 
-    // Asegurar que colores y etiquetas tengan estructura correcta
     const colores = (contadorData as any).colores || {};
     const etiquetas = (contadorData as any).etiquetas || {};
 
@@ -252,14 +246,10 @@ export class InvitacionGenericaComponent implements OnInit {
       },
     };
   }
-  /**
-   * Getter que formatea los datos de regalos al nuevo formato
-   * Migra automáticamente desde el formato antiguo si es necesario
-   */
+
   get regalosFormateado(): Regalos {
     const r = this.data?.regalos || {};
 
-    // Si es el formato antiguo (tiene 'texto' y 'links'), migrar datos
     if (r && 'texto' in r && 'links' in r) {
       const antiguo = r as any;
       const opciones =
@@ -282,7 +272,6 @@ export class InvitacionGenericaComponent implements OnInit {
       };
     }
 
-    // Si ya es el nuevo formato o no existe, devolverlo con valores por defecto
     return {
       mostrarSeccion: (r as any).mostrarSeccion ?? true,
       estilo: (r as any).estilo || 'tarjetas',
@@ -296,12 +285,8 @@ export class InvitacionGenericaComponent implements OnInit {
   }
 
   get consideracionesFormateado(): Consideraciones {
-    // 👇 LOG PARA VER QUÉ LLEGA
-
-    // ✅ PRIMERO: Buscar en consideracionesData (formato nuevo)
     const c = this.data?.consideracionesData;
 
-    // Si existe consideracionesData y tiene items, usarlo
     if (c && (c as any).items && (c as any).items.length > 0) {
       return {
         mostrarSeccion: (c as any).mostrarSeccion ?? true,
@@ -316,10 +301,8 @@ export class InvitacionGenericaComponent implements OnInit {
       };
     }
 
-    // Si consideracionesData no tiene items, buscar en consideraciones (formato antiguo)
     const antiguo = (this.data as any)?.consideraciones;
 
-    // Si es string y no está vacío, convertirlo a items
     if (typeof antiguo === 'string' && antiguo.trim() !== '') {
       return {
         mostrarSeccion: true,
@@ -333,8 +316,6 @@ export class InvitacionGenericaComponent implements OnInit {
         ],
       };
     }
-
-    // Si no hay datos, devolver valores por defecto
 
     return {
       mostrarSeccion: true,
@@ -362,5 +343,4 @@ export class InvitacionGenericaComponent implements OnInit {
       mostrarCalendario: (c as any).mostrarCalendario ?? true,
     };
   }
-  // Getter que devuelve la fuente del data
 }

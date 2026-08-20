@@ -225,6 +225,112 @@
             </div>
           </div>
 
+          <!-- Acordeón de Música -->
+          <div class="acordeon full-width">
+            <div
+              class="acordeon-header"
+              (click)="acordeonMusica = !acordeonMusica"
+            >
+              <span>
+                <ng-icon name="heroMusicalNote" size="18"></ng-icon>
+                Música de fondo
+              </span>
+              <span class="icono">{{ acordeonMusica ? "▲" : "▼" }}</span>
+            </div>
+
+            <div class="acordeon-body" [class.abierto]="acordeonMusica">
+              <div class="campo">
+                <label>
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="audio.habilitado"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                  <ng-icon name="heroMusicalNote" size="14"></ng-icon>
+                  Habilitar música de fondo
+                </label>
+              </div>
+
+              @if (audio.habilitado) {
+                <div class="campo">
+                  <label>Subir canciones (máximo 3)</label>
+
+                  @for (
+                    cancion of audio.canciones;
+                    track cancion;
+                    let i = $index
+                  ) {
+                    <div class="cancion-item">
+                      <div class="cancion-info">
+                        <span class="cancion-numero">#{{ i + 1 }}</span>
+                        <input
+                          type="text"
+                          [(ngModel)]="cancion.nombre"
+                          [ngModelOptions]="{ standalone: true }"
+                          placeholder="Nombre de la canción"
+                        />
+                        <input
+                          type="text"
+                          [(ngModel)]="cancion.artista"
+                          [ngModelOptions]="{ standalone: true }"
+                          placeholder="Artista"
+                        />
+                      </div>
+                      <div class="cancion-upload">
+                        <input
+                          type="file"
+                          accept="audio/mp3,audio/wav,audio/ogg"
+                          (change)="subirCancion($event, i)"
+                        />
+                        <button type="button" (click)="eliminarCancion(i)">
+                          ✕
+                        </button>
+                      </div>
+                    </div>
+                  }
+
+                  @if (audio.canciones.length < 3) {
+                    <button
+                      type="button"
+                      class="btn-agregar"
+                      (click)="agregarCancion()"
+                    >
+                      <ng-icon name="heroPlus" size="16"></ng-icon>
+                      Agregar canción
+                    </button>
+                  }
+
+                  <div class="campo">
+                    <label>Volumen</label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      [(ngModel)]="audio.volumen"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <small>{{ (audio.volumen || 0) * 100 }}%</small>
+                  </div>
+
+                  <div class="campo">
+                    <label>
+                      <input
+                        type="checkbox"
+                        [(ngModel)]="audio.autoPlay"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      Reproducir automáticamente al abrir la invitación
+                    </label>
+                    <small
+                      >Nota: Algunos navegadores bloquean el autoplay</small
+                    >
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
           <!-- ==========================================================
            ACORDEÓN: INFORMACIÓN DEL EVENTO
            ========================================================== -->

@@ -72,6 +72,9 @@ import {
   heroExclamationTriangle,
   heroUser,
   heroDocumentDuplicate,
+  heroPause,
+  heroSpeakerWave,
+  heroSpeakerXMark,
 } from '@ng-icons/heroicons/outline';
 //Lucide icons
 import {
@@ -201,6 +204,9 @@ export const appConfig: ApplicationConfig = {
       heroExclamationTriangle,
       heroUser,
       heroDocumentDuplicate,
+      heroPause,
+      heroSpeakerWave,
+      heroSpeakerXMark,
 
       //Lucide Icons
       lucideChurch,

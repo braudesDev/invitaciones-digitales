@@ -10,6 +10,7 @@ import {
   HostListener,
 } from '@angular/core';
 import { NgIcon } from '@ng-icons/core'; // 👈 IMPORTAR
+import { InvitacionCompleta } from '../../../../../models/invitacion.model';
 
 @Component({
   selector: 'app-hero-section',
@@ -23,6 +24,7 @@ import { NgIcon } from '@ng-icons/core'; // 👈 IMPORTAR
   styleUrls: ['./hero-section.component.css'],
 })
 export class HeroSectionComponent implements OnInit, OnChanges {
+  @Input() invitacion!: InvitacionCompleta;
   @Input() nombres!: string;
   @Input() fecha!: string;
   @Input() lugar!: string;
@@ -39,6 +41,8 @@ export class HeroSectionComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.actualizarImagenSegunDispositivo();
+    console.log('🎵 Audio habilitado:', this.invitacion?.audio?.habilitado);
+    console.log('🎵 Canciones:', this.invitacion?.audio?.canciones);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

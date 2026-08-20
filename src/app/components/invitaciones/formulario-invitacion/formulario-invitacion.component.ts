@@ -54,6 +54,7 @@ import {
 } from '../../../models/animaciones.model';
 // formulario-invitacion.component.ts
 import { NgIcon } from '@ng-icons/core'; // 👈 AGREGAR
+import { AudioConfig } from '../../../models/audio.model';
 
 // ================================================================
 // 3. COMPONENTE PRINCIPAL
@@ -305,6 +306,19 @@ export class FormularioInvitacionComponent implements OnInit {
   acordeonFuente = false; // Sección de fuentes
   filtroFuente = ''; // Filtro de búsqueda de fuentes
   imagenSubiendo = false; // Estado de subida de imagen
+  acordeonMusica: boolean = false;
+
+  get audio(): AudioConfig {
+    if (!this.nuevaInvitacion.audio) {
+      this.nuevaInvitacion.audio = {
+        habilitado: false,
+        canciones: [],
+        volumen: 0.7,
+        autoPlay: false,
+      };
+    }
+    return this.nuevaInvitacion.audio;
+  }
 
   // ==============================================================
   // 3.6 CONSTRUCTOR
@@ -851,6 +865,12 @@ export class FormularioInvitacionComponent implements OnInit {
             minutos: 'MINUTOS',
             segundos: 'SEGUNDOS',
           },
+        },
+        audio: {
+          habilitado: false,
+          canciones: [],
+          volumen: 0.7,
+          autoPlay: false,
         },
       };
       this.tabActivo = 'basico'; // Vuelve a la pestaña básica
@@ -1974,4 +1994,109 @@ export class FormularioInvitacionComponent implements OnInit {
     { valor: 'lucideMail', label: 'Correo' },
     { valor: 'heroCamera', label: 'Fotografía' },
   ];
+
+  // ✅ Subir archivo de audio a Cloudinary
+  async subirCancion(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) return;
+
+    // 🔍 LOG 1: Ver qué archivo es
+    console.log('📁 Archivo seleccionado:');
+    console.log('  Nombre:', file.name);
+    console.log('  Tipo:', file.type);
+    console.log('  Tamaño:', file.size, 'bytes');
+
+    // Validar tipo de archivo
+    if (!file.type.startsWith('audio/')) {
+      alert('⚠️ Por favor selecciona un archivo de audio (MP3, WAV, OGG)');
+      console.log('❌ Tipo de archivo no válido:', file.type);
+      return;
+    }
+
+    // Validar tamaño (máximo 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('⚠️ El archivo es demasiado grande. Máximo 10MB.');
+      return;
+    }
+
+    try {
+      // 🔍 LOG 2: Preparando subida
+      console.log('⬆️ Preparando subida a Cloudinary...');
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'invitaciones-app');
+      formData.append('resource_type', 'auto');
+
+      const cloudName = 'drsyb53ae';
+
+      // 🔍 LOG 3: Enviando petición
+      console.log('📤 Enviando petición a Cloudinary...');
+
+      const response = await this.http
+        .post<{
+          secure_url: string;
+        }>(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, formData)
+        .toPromise();
+
+      // 🔍 LOG 4: Respuesta recibida
+      console.log('✅ Respuesta de Cloudinary:', response);
+
+      if (response && response.secure_url) {
+        const url = response.secure_url;
+        console.log('🎵 Canción subida a Cloudinary:', url);
+
+        if (this.nuevaInvitacion.audio?.canciones[index]) {
+          this.nuevaInvitacion.audio.canciones[index].url = url;
+          this.nuevaInvitacion.audio.canciones[index].nombre =
+            file.name.replace(/\.[^/.]+$/, '');
+          console.log(
+            '✅ URL guardada en el objeto:',
+            this.nuevaInvitacion.audio.canciones[index],
+          );
+        }
+
+        alert('✅ Canción subida correctamente');
+      } else {
+        console.log('❌ No se recibió secure_url de Cloudinary');
+      }
+    } catch (error) {
+      // 🔍 LOG 5: Error
+      console.error('❌ Error al subir el archivo:', error);
+      if (error instanceof Error) {
+        console.error('  Mensaje:', error.message);
+      }
+      alert('❌ Error al subir el archivo. Intenta de nuevo.');
+    }
+  }
+
+  // ✅ Agregar una canción vacía
+  agregarCancion() {
+    if (!this.nuevaInvitacion.audio) {
+      this.nuevaInvitacion.audio = {
+        habilitado: false,
+        canciones: [],
+        volumen: 0.7,
+        autoPlay: false,
+      };
+    }
+
+    if (this.nuevaInvitacion.audio.canciones.length < 3) {
+      this.nuevaInvitacion.audio.canciones.push({
+        id: Date.now().toString(),
+        nombre: '',
+        artista: '',
+        url: '',
+        duracion: '',
+      });
+    }
+  }
+  // ✅ Eliminar una canción (AGREGAR ESTO)
+  eliminarCancion(index: number) {
+    if (this.nuevaInvitacion.audio?.canciones) {
+      this.nuevaInvitacion.audio.canciones.splice(index, 1);
+    }
+  }
 }

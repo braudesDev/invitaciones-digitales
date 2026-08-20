@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 import { Consideraciones } from '../models/consideraciones.model';
 import { Confirmacion } from '../models/confirmacion.model';
+import { AudioConfig } from '../models/audio.model';
 
 export interface Invitacion {
   id: string;
@@ -173,6 +174,7 @@ export interface Invitacion {
   };
   confirmacionData?: Confirmacion;
   animacionHero?: string; // Animación seleccionada para el Hero Section
+  audio?: AudioConfig; // ✅ Solo agregar esta línea
 }
 
 @Injectable({
