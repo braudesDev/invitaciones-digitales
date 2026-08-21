@@ -1,8 +1,15 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { AudioConfig } from '../../../../../models/audio.model';
-import { HexToRgbPipe } from '../../../../../pipes/hex-to-rgb-pipe'; // ✅ IMPORTAR
+import { HexToRgbPipe } from '../../../../../pipes/hex-to-rgb-pipe';
 
 @Component({
   selector: 'app-audio-player',
@@ -11,7 +18,7 @@ import { HexToRgbPipe } from '../../../../../pipes/hex-to-rgb-pipe'; // ✅ IMPO
   templateUrl: './audio-player.component.html',
   styleUrls: ['./audio-player.component.css'],
 })
-export class AudioPlayerComponent implements OnInit, OnDestroy {
+export class AudioPlayerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() audioConfig?: AudioConfig;
   @Input() primaryColor: string = '#5c3d2e';
   @Input() accentColor: string = '#c9a87c';
@@ -25,7 +32,51 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   volumen: number = 0.7;
   visible: boolean = false;
 
+  // ✅ Escuchar cambios en audioConfig (ej: cuando Firestore se actualiza)
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['audioConfig']) {
+      const newConfig = changes['audioConfig'].currentValue;
+      console.log('🎵 AudioConfig actualizado:', newConfig);
+
+      if (newConfig?.habilitado && newConfig?.canciones?.length > 0) {
+        // ✅ Actualizar volumen desde Firestore
+        if (
+          newConfig.volumen !== undefined &&
+          newConfig.volumen !== this.volumen
+        ) {
+          this.volumen = newConfig.volumen;
+          if (this.audio) {
+            this.audio.volume = this.volumen;
+          }
+          console.log('🔊 Volumen sincronizado desde Firestore:', this.volumen);
+        }
+
+        // Si el audio ya existe, actualizar src si cambió
+        if (this.audio) {
+          const nuevaUrl = newConfig.canciones[0]?.url;
+          if (nuevaUrl && this.audio.src !== nuevaUrl) {
+            this.audio.src = nuevaUrl;
+            if (this.isPlaying) {
+              this.audio.play();
+            }
+          }
+        } else {
+          // Si no existe audio, inicializar
+          this.inicializarAudio();
+        }
+      } else {
+        // Si se deshabilitó el audio, limpiar
+        this.limpiarAudio();
+      }
+    }
+  }
+
   ngOnInit() {
+    // ✅ Usar el volumen de Firestore o el default
+    if (this.audioConfig?.volumen !== undefined) {
+      this.volumen = this.audioConfig.volumen;
+    }
+
     if (
       this.audioConfig?.habilitado &&
       this.audioConfig?.canciones?.length > 0
@@ -35,20 +86,34 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.limpiarAudio();
+  }
+
+  private limpiarAudio() {
     if (this.audio) {
       this.audio.pause();
       this.audio.src = '';
       this.audio = null;
     }
+    this.isPlaying = false;
+    this.visible = false;
   }
 
   private inicializarAudio() {
     const url = this.audioConfig?.canciones[0]?.url;
     if (!url) return;
 
-    this.audio = new Audio(url);
+    // ✅ Si ya existe audio, no recrearlo
+    if (this.audio) {
+      if (this.audio.src === url) return;
+      this.audio.src = url;
+    } else {
+      this.audio = new Audio(url);
+    }
+
+    // ✅ Usar el volumen de Firestore
     this.audio.volume = this.volumen;
-    this.audio.loop = false; // Lo manejamos manualmente
+    this.audio.loop = false;
 
     // ✅ Cuando termina una canción, pasa a la siguiente
     this.audio.addEventListener('ended', () => {
@@ -90,7 +155,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   reproducir() {
     if (this.audio) {
       this.audio.play().catch(() => {
-        // El navegador puede bloquear el autoplay
         console.warn('No se pudo reproducir automáticamente');
       });
       this.isPlaying = true;
@@ -123,5 +187,13 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
         this.audio.muted = false;
       }
     }
+
+    // ✅ Opcional: Emitir cambio al padre si quieres guardar en Firestore
+    console.log('🔊 Volumen cambiado a:', this.volumen);
+  }
+
+  // ✅ Getter para usar en el template (valor actual)
+  get volumenActual(): number {
+    return this.volumen;
   }
 }

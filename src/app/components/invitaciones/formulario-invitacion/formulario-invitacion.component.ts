@@ -2093,10 +2093,54 @@ export class FormularioInvitacionComponent implements OnInit {
       });
     }
   }
+
+  // ✅ Método para manejar el click en el input file (móvil)
+  onFileInputClick(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    // ✅ En móviles, a veces el click no abre el selector, forzamos
+    // con un pequeño retraso para asegurar que el navegador lo maneje
+    setTimeout(() => {
+      input.click();
+    }, 100);
+  }
+
+  // ✅ También agregar un método para cuando el input está oculto
+  // pero queremos abrirlo programáticamente
+  abrirSelectorArchivo(index: number) {
+    // Buscar el input correspondiente
+    const inputs = document.querySelectorAll('.file-input-mobile');
+    if (inputs && inputs[index]) {
+      (inputs[index] as HTMLInputElement).click();
+    }
+  }
   // ✅ Eliminar una canción (AGREGAR ESTO)
   eliminarCancion(index: number) {
     if (this.nuevaInvitacion.audio?.canciones) {
       this.nuevaInvitacion.audio.canciones.splice(index, 1);
     }
+  }
+
+  // ✅ Método para actualizar el volumen
+  actualizarVolumen(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const valor = parseFloat(input.value);
+
+    // ✅ Asegurar que audio existe
+    if (!this.nuevaInvitacion.audio) {
+      this.nuevaInvitacion.audio = {
+        habilitado: false,
+        canciones: [],
+        volumen: 0.7,
+        autoPlay: false,
+      };
+    }
+
+    // ✅ Actualizar el volumen
+    this.nuevaInvitacion.audio.volumen = valor;
+
+    // ✅ Forzar actualización de la vista
+    this.nuevaInvitacion = { ...this.nuevaInvitacion };
+
+    console.log('🔊 Volumen actualizado a:', valor);
   }
 }

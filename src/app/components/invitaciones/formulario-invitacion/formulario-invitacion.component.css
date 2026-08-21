@@ -731,6 +731,199 @@
   width: 100% !important;
   max-width: 100% !important;
 }
+
+/* ================================================================
+   FORMULARIO DE INVITACIÓN - ESTILOS
+   ================================================================ */
+
+/* ... todos tus estilos existentes ... */
+
+/* ============================================
+   CANCIÓN ITEM - MEJORADO (AGREGAR AL FINAL)
+   ============================================ */
+
+.cancion-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.cancion-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.cancion-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.cancion-numero {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--accent, #c9a87c);
+  opacity: 0.5;
+  min-width: 24px;
+}
+
+.cancion-info input {
+  flex: 1;
+  min-width: 100px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text, #333);
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.cancion-info input:focus {
+  outline: none;
+  border-color: rgba(var(--accent-rgb, 201, 168, 124), 0.3);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================
+   FILE INPUT - COMPATIBLE CON MÓVILES
+   ============================================ */
+
+.cancion-upload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.file-input-mobile {
+  position: relative;
+  display: inline-block;
+  padding: 6px 16px;
+  background: transparent;
+  color: var(--accent, #c9a87c);
+  border: 1.5px dashed rgba(var(--accent-rgb, 201, 168, 124), 0.3);
+  border-radius: 40px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 70px;
+  min-height: 36px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  font-family: inherit;
+  text-align: center;
+}
+
+.file-input-mobile:hover {
+  border-color: rgba(var(--accent-rgb, 201, 168, 124), 0.6);
+  background: rgba(var(--accent-rgb, 201, 168, 124), 0.05);
+}
+
+.file-input-mobile:active {
+  transform: scale(0.95);
+}
+
+.file-input-mobile::file-selector-button {
+  display: none;
+}
+
+.file-input-mobile::-webkit-file-upload-button {
+  display: none;
+}
+
+.file-input-mobile::-moz-file-upload-button {
+  display: none;
+}
+
+.btn-eliminar-cancion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(239, 68, 68, 0.2);
+  background: transparent;
+  color: rgba(239, 68, 68, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  padding: 0;
+}
+
+.btn-eliminar-cancion:hover {
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.btn-eliminar-cancion:active {
+  transform: scale(0.9);
+}
+
+.btn-eliminar-cancion ng-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL
+   ============================================ */
+
+@media (max-width: 768px) {
+  .file-input-mobile {
+    padding: 5px 14px;
+    font-size: 0.65rem;
+    min-height: 34px;
+    min-width: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cancion-item {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+  }
+
+  .cancion-info {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .cancion-info input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .cancion-upload {
+    justify-content: stretch;
+  }
+
+  .file-input-mobile {
+    width: 100%;
+    max-width: none;
+    flex: 1;
+  }
+
+  .btn-eliminar-cancion {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
 /* ================================================================
    3. FORMULARIO - GRID Y CAMPOS
    ================================================================ */
