@@ -76,6 +76,11 @@ export interface InvitacionCompleta {
     madreNovio: string;
     novio?: string;
     novia?: string;
+    // ✅ NUEVOS CAMPOS: indicar si fallecieron
+    madreNoviaFallecida?: boolean;
+    padreNoviaFallecido?: boolean;
+    madreNovioFallecida?: boolean;
+    padreNovioFallecido?: boolean;
   };
 
   padrinos: PadrinoAsignado[];

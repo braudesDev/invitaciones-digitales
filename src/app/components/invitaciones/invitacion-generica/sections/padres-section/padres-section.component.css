@@ -2,7 +2,7 @@
    PADRES - REDISEÑO CON PALETA ORIGINAL
    ============================================ */
 
-/* 1. Ocultar avatares y el emoji superior 👪 */
+/* Ocultar avatares y el emoji superior 👪 */
 .avatar-container,
 .padres-icono {
   display: none !important;
@@ -31,40 +31,7 @@
   letter-spacing: 2px;
 }
 
-/* 2. Tarjetas con tus variables de color */
-.padres-card {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(4px);
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
-  padding: 2.2rem 1.8rem;
-  width: 300px;
-  max-width: 100%;
-  text-align: center;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  border: 1px solid var(--accent, #c9a87c);
-}
-
-.padres-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
-}
-
-/* Titulo de la tarjeta con color de acento (#c9a87c) */
-.card-titulo {
-  font-family: inherit;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--accent, #c9a87c);
-  margin: 0 0 1.2rem 0;
-  letter-spacing: 1.5px;
-  border-bottom: 1px solid rgba(201, 168, 124, 0.3);
-  padding-bottom: 0.6rem;
-}
-
-/*Divison de titulo y cards*/
+/* Divider */
 .padres-divider {
   display: flex;
   align-items: center;
@@ -91,7 +58,63 @@
   opacity: 0.7;
 }
 
-/* 3. Lista de nombres y roles sin bordes toscos */
+/* ============================================
+   GRID - CARDS CENTRADAS
+   ============================================ */
+
+.padres-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+
+.padres-card {
+  flex: 1;
+  min-width: 260px;
+  max-width: 340px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  padding: 2.2rem 1.8rem;
+  text-align: center;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border: 1px solid var(--accent, #c9a87c);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.padres-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+.card-titulo {
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent, #c9a87c);
+  margin: 0 0 1.2rem 0;
+  letter-spacing: 1.5px;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.3);
+  padding-bottom: 0.6rem;
+}
+
+/* ============================================
+   LISTA DE NOMBRES
+   ============================================ */
+
 .padres-lista {
   display: flex;
   flex-direction: column;
@@ -104,7 +127,7 @@
   align-items: center;
   gap: 4px;
   padding: 0;
-  border-bottom: none; /* Eliminamos la línea divisoria por cada padre */
+  border-bottom: none;
 }
 
 .padre-info {
@@ -132,69 +155,19 @@
 }
 
 /* ============================================
-   GRID CENTRADO Y EN FILA (UNO AL LADO DEL OTRO)
+   NOMBRES DE FALLECIDOS
    ============================================ */
 
-.padres-grid {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: row; /* Fuerza que se pongan una al lado de la otra */
-  justify-content: center; /* Centra horizontalmente las dos tarjetas */
-  align-items: stretch; /* Hace que ambas tarjetas tengan la misma altura */
-  gap: 2rem; /* Espacio elegante entre la tarjeta de Novia y Novio */
-  max-width: 900px; /* Contiene el ancho máximo para que no se separen demasiado */
-  margin: 0 auto; /* Centra todo el bloque en la pantalla */
+.padre-nombre.fallecido {
+  color: #999;
+  font-style: italic;
 }
 
-.padres-card {
-  flex: 1; /* Hace que ambas tarjetas midan exactamente lo mismo */
-  min-width: 260px; /* Evita que se encojan demasiado */
-  max-width: 340px; /* Ancho ideal para que no se vean gigantes */
-
-  /* Manteniendo los estilos limpios anteriores */
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(4px);
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
-  padding: 2.2rem 1.8rem;
-  text-align: center;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  border: 1px solid var(--accent, #c9a87c);
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Centra verticalmente el contenido dentro de la tarjeta */
-}
-
-/* ============================================
-   RESPONSIVE (Solo se apilan en celulares pequeños)
-   ============================================ */
-
-@media (max-width: 640px) {
-  .padres-grid {
-    flex-direction: column; /* En celulares se colocan una arriba de la otra */
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .padres-card {
-    width: 100%;
-    max-width: 320px;
-  }
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .padres-card {
-    padding: 1.5rem 1.2rem;
-  }
-
-  .padre-nombre {
-    font-size: 1.05rem;
-  }
+/* Cruz roja al final del nombre */
+.cruz-fallecido {
+  color: #999;
+  font-weight: bold;
+  margin-left: 4px;
 }
 
 /* ============================================
@@ -204,4 +177,32 @@
 .padres-container,
 .padres-container * {
   font-family: inherit !important;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 640px) {
+  .padres-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .padres-card {
+    width: 100%;
+    max-width: 320px;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  .padres-card {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .padre-nombre {
+    font-size: 1.05rem;
+  }
 }

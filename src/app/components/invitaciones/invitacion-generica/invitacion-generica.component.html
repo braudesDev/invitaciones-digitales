@@ -16,12 +16,16 @@
     <!-- 1. HERO - Portada principal              -->
     <!-- ======================================== -->
 
-    @if (data.heroImage) {
+    <!-- ======================================== -->
+    <!-- 1. HERO - Portada principal              -->
+    <!-- ======================================== -->
+
+    @if (data.heroImage || data.heroImageMovil || data.heroImageEscritorio) {
       <app-hero-section
         [nombres]="data.nombres || ''"
         [fecha]="fechaFormateada"
         [lugar]="data.lugar || ''"
-        [heroImage]="data.heroImage"
+        [heroImage]="data.heroImage || ''"
         [heroImageMovil]="data.heroImageMovil || ''"
         [heroImageEscritorio]="data.heroImageEscritorio || ''"
         [fuente]="data.fontFamily ?? 'Playfair Display, serif'"
@@ -31,7 +35,7 @@
     }
 
     <!-- ✅ CORREGIDO: Usar 'data' en lugar de 'invitacion' -->
-    <!-- ✅ Puedes pasar los colores sin preocuparte por undefined -->
+
     @if (data.audio?.habilitado) {
       <app-audio-player
         [audioConfig]="data.audio"
@@ -196,7 +200,7 @@
     <!-- ======================================== -->
     <!-- 19. FOOTER - Cierre                      -->
     <!-- ======================================== -->
-    <app-footer-section></app-footer-section>
+    <app-footer-section [data]="data"></app-footer-section>
   </div>
 }
 

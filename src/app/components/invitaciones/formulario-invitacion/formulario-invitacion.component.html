@@ -1564,26 +1564,28 @@
          ========================================================== -->
     @if (tabActivo === "extras") {
       <div class="tab-content">
+        <!-- formulario-invitacion.component.html -->
+
         <!-- ============================================ -->
-        <!-- ACORDEÓN: PADRES -->
+        <!-- ACORDEÓN: PADRES                            -->
         <!-- ============================================ -->
         <div class="acordeon full-width">
-          <!-- Header: clic para expandir/contraer -->
           <div
             class="acordeon-header"
-            (click)="acordeonAbierto = !acordeonAbierto"
+            (click)="acordeonPadres = !acordeonPadres"
           >
             <span>
               <ng-icon name="heroUsers" size="18"></ng-icon>
               Padres
             </span>
-            <span class="icono">{{ acordeonAbierto ? "▲" : "▼" }}</span>
+            <span class="icono">{{ acordeonPadres ? "▲" : "▼" }}</span>
           </div>
 
-          <!-- Cuerpo del acordeón -->
-          <div class="acordeon-body" [class.abierto]="acordeonAbierto">
+          <div class="acordeon-body" [class.abierto]="acordeonPadres">
+            <!-- ========================================== -->
+            <!-- NOMBRES DE NOVIA Y NOVIO                  -->
+            <!-- ========================================== -->
             <div class="form-grid">
-              <!-- Novia y Novio -->
               <div class="campo">
                 <label>
                   <ng-icon name="heroUserCircle" size="14"></ng-icon>
@@ -1608,57 +1610,111 @@
                   placeholder="Nombre del novio"
                 />
               </div>
+            </div>
 
-              <!-- Padres de la Novia -->
+            <!-- ========================================== -->
+            <!-- PADRES DE LA NOVIA                        -->
+            <!-- ========================================== -->
+            <div class="form-grid">
+              <!-- Madre de la Novia -->
               <div class="campo">
                 <label>
                   <ng-icon name="heroUserCircle" size="14"></ng-icon>
                   Madre de la Novia
                 </label>
-                <input
-                  type="text"
-                  [(ngModel)]="nuevaInvitacion.padres.madreNovia"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Madre de la novia"
-                />
+                <div class="campo-con-checkbox">
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.padres.madreNovia"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Madre de la novia"
+                  />
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="nuevaInvitacion.padres.madreNoviaFallecida"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    ✝ Fallecida
+                  </label>
+                </div>
               </div>
+
+              <!-- Padre de la Novia -->
               <div class="campo">
                 <label>
                   <ng-icon name="heroUserCircle" size="14"></ng-icon>
                   Padre de la Novia
                 </label>
-                <input
-                  type="text"
-                  [(ngModel)]="nuevaInvitacion.padres.padreNovia"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Padre de la novia"
-                />
+                <div class="campo-con-checkbox">
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.padres.padreNovia"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Padre de la novia"
+                  />
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="nuevaInvitacion.padres.padreNoviaFallecido"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    ✝ Fallecido
+                  </label>
+                </div>
               </div>
+            </div>
 
-              <!-- Padres del Novio -->
+            <!-- ========================================== -->
+            <!-- PADRES DEL NOVIO                          -->
+            <!-- ========================================== -->
+            <div class="form-grid">
+              <!-- Madre del Novio -->
               <div class="campo">
                 <label>
                   <ng-icon name="heroUserCircle" size="14"></ng-icon>
                   Madre del Novio
                 </label>
-                <input
-                  type="text"
-                  [(ngModel)]="nuevaInvitacion.padres.madreNovio"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Madre del novio"
-                />
+                <div class="campo-con-checkbox">
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.padres.madreNovio"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Madre del novio"
+                  />
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="nuevaInvitacion.padres.madreNovioFallecida"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    ✝ Fallecida
+                  </label>
+                </div>
               </div>
+
+              <!-- Padre del Novio -->
               <div class="campo">
                 <label>
                   <ng-icon name="heroUserCircle" size="14"></ng-icon>
                   Padre del Novio
                 </label>
-                <input
-                  type="text"
-                  [(ngModel)]="nuevaInvitacion.padres.padreNovio"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Padre del novio"
-                />
+                <div class="campo-con-checkbox">
+                  <input
+                    type="text"
+                    [(ngModel)]="nuevaInvitacion.padres.padreNovio"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Padre del novio"
+                  />
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="nuevaInvitacion.padres.padreNovioFallecido"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    ✝ Fallecido
+                  </label>
+                </div>
               </div>
             </div>
           </div>

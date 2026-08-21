@@ -286,7 +286,7 @@ export class FormularioInvitacionComponent implements OnInit {
   // ==============================================================
   // Controlan la apertura/cierre de cada sección plegable
   // ==============================================================
-  acordeonAbierto = false; // Sección de padres
+  acordeonPadres = false; // ✅ AGREGAR ESTA LÍNEA
   acordeonPadrinos = false; // Sección de padrinos
   acordeonRegalos = false; // Sección de regalos
   acordeonGaleria = false; // Sección de galería
@@ -804,6 +804,10 @@ export class FormularioInvitacionComponent implements OnInit {
           madreNovio: '',
           novio: '',
           novia: '',
+          madreNoviaFallecida: false,
+          padreNoviaFallecido: false,
+          madreNovioFallecida: false,
+          padreNovioFallecido: false,
         },
         padrinos: [],
         regalos: {

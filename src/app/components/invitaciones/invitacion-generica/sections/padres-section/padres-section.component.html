@@ -1,3 +1,5 @@
+<!-- src/app/components/invitaciones/invitacion-generica/sections/padres-section/padres-section.component.html -->
+
 @if (data) {
   <div class="padres-container" [style.font-family]="data.fontFamily">
     <div class="padres-header">
@@ -8,8 +10,11 @@
         <span class="divider-line"></span>
       </div>
     </div>
+
     <div class="padres-grid">
-      <!-- NOVIA -->
+      <!-- ========================================== -->
+      <!-- PADRES DE LA NOVIA                         -->
+      <!-- ========================================== -->
       @if (data.madreNovia || data.padreNovia) {
         <div class="padres-card">
           <h3 class="card-titulo">Padres de {{ data.novia || "la Novia" }}</h3>
@@ -19,7 +24,15 @@
               <div class="padre-item">
                 <div class="padre-info">
                   <span class="padre-rol">Madre</span>
-                  <span class="padre-nombre">{{ data.madreNovia }}</span>
+                  <span
+                    class="padre-nombre"
+                    [class.fallecido]="data.madreNoviaFallecida"
+                  >
+                    {{ data.madreNovia }}
+                    @if (data.madreNoviaFallecida) {
+                      <span class="cruz-fallecido"> ✝</span>
+                    }
+                  </span>
                 </div>
               </div>
             }
@@ -28,14 +41,25 @@
               <div class="padre-item">
                 <div class="padre-info">
                   <span class="padre-rol">Padre</span>
-                  <span class="padre-nombre">{{ data.padreNovia }}</span>
+                  <span
+                    class="padre-nombre"
+                    [class.fallecido]="data.padreNoviaFallecido"
+                  >
+                    {{ data.padreNovia }}
+                    @if (data.padreNoviaFallecido) {
+                      <span class="cruz-fallecido"> ✝</span>
+                    }
+                  </span>
                 </div>
               </div>
             }
           </div>
         </div>
       }
-      <!-- NOVIO -->
+
+      <!-- ========================================== -->
+      <!-- PADRES DEL NOVIO                          -->
+      <!-- ========================================== -->
       @if (data.madreNovio || data.padreNovio) {
         <div class="padres-card">
           <h3 class="card-titulo">Padres de {{ data.novio || "el Novio" }}</h3>
@@ -45,7 +69,15 @@
               <div class="padre-item">
                 <div class="padre-info">
                   <span class="padre-rol">Madre</span>
-                  <span class="padre-nombre">{{ data.madreNovio }}</span>
+                  <span
+                    class="padre-nombre"
+                    [class.fallecido]="data.madreNovioFallecida"
+                  >
+                    {{ data.madreNovio }}
+                    @if (data.madreNovioFallecida) {
+                      <span class="cruz-fallecido"> ✝</span>
+                    }
+                  </span>
                 </div>
               </div>
             }
@@ -54,7 +86,15 @@
               <div class="padre-item">
                 <div class="padre-info">
                   <span class="padre-rol">Padre</span>
-                  <span class="padre-nombre">{{ data.padreNovio }}</span>
+                  <span
+                    class="padre-nombre"
+                    [class.fallecido]="data.padreNovioFallecido"
+                  >
+                    {{ data.padreNovio }}
+                    @if (data.padreNovioFallecido) {
+                      <span class="cruz-fallecido"> ✝</span>
+                    }
+                  </span>
                 </div>
               </div>
             }

@@ -73,6 +73,11 @@ export class InvitacionGenericaComponent implements OnInit {
 
   // ✅ AGREGAR LOGS PARA DEPURAR AUDIO
   ngAfterViewInit() {
+    // ✅ AGREGAR LOGS PARA EL HERO
+    console.log('🖼️ HERO IMAGES:');
+    console.log('  heroImage:', this.data?.heroImage);
+    console.log('  heroImageMovil:', this.data?.heroImageMovil);
+    console.log('  heroImageEscritorio:', this.data?.heroImageEscritorio);
     console.log('📋 InvitacionGenericaComponent - data completo:', this.data);
     console.log('🎵 data.audio:', this.data?.audio);
     console.log('🎵 data.audio.habilitado:', this.data?.audio?.habilitado);

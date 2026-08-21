@@ -5631,3 +5631,48 @@
     margin-left: 0;
   }
 }
+
+/* ========================================== */
+/* ESTILOS PARA CHECKBOX DE FALLECIMIENTO    */
+/* ========================================== */
+
+.campo-con-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo-con-checkbox input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.campo-con-checkbox input[type="text"]:focus {
+  border-color: #5c3d2e;
+  outline: none;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #666;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #5c3d2e;
+  cursor: pointer;
+}
+
+.checkbox-label:hover {
+  color: #333;
+}
