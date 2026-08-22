@@ -175,6 +175,8 @@ export interface Invitacion {
   confirmacionData?: Confirmacion;
   animacionHero?: string; // Animación seleccionada para el Hero Section
   audio?: AudioConfig; // ✅ Solo agregar esta línea
+  estiloAOS?: 'clasico' | 'moderno' | 'romantico' | 'minimalista' | 'dinamico';
+  animacionesAOS?: boolean; // true por defecto
 }
 
 @Injectable({

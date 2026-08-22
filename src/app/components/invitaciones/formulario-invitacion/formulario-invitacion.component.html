@@ -4174,6 +4174,109 @@
           </div>
         </div>
       </div>
+
+      <!-- ============================================ -->
+      <!-- ACORDEÓN: ANIMACIONES AOS                    -->
+      <!-- ============================================ -->
+      <div class="acordeon full-width">
+        <div
+          class="acordeon-header"
+          (click)="acordeonAnimaciones = !acordeonAnimaciones"
+        >
+          <span>
+            <ng-icon name="heroSparkles" size="18"></ng-icon>
+            Animaciones al hacer scroll
+          </span>
+          <span class="icono">{{ acordeonAnimaciones ? "▲" : "▼" }}</span>
+        </div>
+
+        <div class="acordeon-body" [class.abierto]="acordeonAnimaciones">
+          <!-- Toggle activar/desactivar -->
+          <div class="campo">
+            <label class="toggle-label">
+              <input
+                type="checkbox"
+                [(ngModel)]="nuevaInvitacion.animacionesAOS"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <span class="toggle-text">
+                <ng-icon name="heroSparkles" size="14"></ng-icon>
+                Activar animaciones al hacer scroll
+              </span>
+            </label>
+            <p class="help-text">
+              <ng-icon name="hugeBulb" size="14"></ng-icon>
+              Las secciones aparecerán con animaciones suaves mientras el
+              usuario hace scroll por la invitación.
+            </p>
+          </div>
+
+          <!-- Selector de estilos AOS (solo si está activado) -->
+          @if (nuevaInvitacion.animacionesAOS) {
+            <div class="estilos-aos-container">
+              <label class="subtitulo">Estilo de animación:</label>
+              <p class="help-text" style="margin-bottom: 12px">
+                Elige el estilo que mejor combine con la personalidad de tu
+                evento
+              </p>
+
+              <div class="estilos-aos-grid">
+                @for (estilo of estilosAOS; track estilo.valor) {
+                  <div
+                    class="estilo-aos-option"
+                    [class.selected]="
+                      nuevaInvitacion.estiloAOS === estilo.valor
+                    "
+                    (click)="seleccionarEstiloAOS(estilo.valor)"
+                  >
+                    @if (nuevaInvitacion.estiloAOS === estilo.valor) {
+                      <div class="estilo-aos-check">✓</div>
+                    }
+                    <div class="estilo-aos-icon">
+                      <ng-icon [name]="estilo.icon" size="24"></ng-icon>
+                    </div>
+                    <div class="estilo-aos-nombre">{{ estilo.nombre }}</div>
+                    <div class="estilo-aos-desc">{{ estilo.descripcion }}</div>
+                    <div class="estilo-aos-preview">{{ estilo.preview }}</div>
+                  </div>
+                }
+              </div>
+
+              <!-- Resumen del estilo seleccionado (VERSIÓN SIMPLIFICADA) -->
+              @if (nuevaInvitacion.estiloAOS) {
+                <div class="estilo-resumen">
+                  <div class="resumen-badge">
+                    <span class="badge-icon">🎯</span>
+                    <span class="badge-text">
+                      <strong>Estilo seleccionado:</strong>
+                      {{ getEstiloAOSNombre(nuevaInvitacion.estiloAOS) }}
+                    </span>
+                  </div>
+                  <p class="resumen-descripcion">
+                    {{ getEstiloAOSDescripcion(nuevaInvitacion.estiloAOS) }}
+                  </p>
+                </div>
+              }
+            </div>
+          }
+
+          <!-- Mensaje informativo -->
+          <small
+            class="help-text"
+            style="
+              display: block;
+              margin-top: 16px;
+              padding-top: 12px;
+              border-top: 1px solid rgba(0, 0, 0, 0.06);
+            "
+          >
+            <ng-icon name="heroInformationCircle" size="14"></ng-icon>
+            Las animaciones solo se activan si esta opción está marcada.
+            Recomendado para dar un toque más dinámico y elegante a la
+            invitación.
+          </small>
+        </div>
+      </div>
     }
 
     <!-- ============================================================

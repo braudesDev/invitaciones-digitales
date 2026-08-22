@@ -14,9 +14,7 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -30,16 +28,14 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/swiper/swiper-bundle.css"
+              "node_modules/swiper/swiper-bundle.css",
+              "node_modules/aos/dist/aos.css"
             ],
             "scripts": [
               "node_modules/aos/dist/aos.js",
               "node_modules/swiper/swiper-bundle.min.js"
             ],
-            "allowedCommonJsDependencies": [
-              "sweetalert2",
-              "aos"
-            ]
+            "allowedCommonJsDependencies": ["sweetalert2", "aos"]
           },
           "configurations": {
             "production": {
@@ -71,10 +67,7 @@
                 "node_modules/swiper/swiper-bundle.css",
                 "node_modules/@angularforge/gallery/styles.css"
               ],
-              "polyfills": [
-                "zone.js",
-                "zone.js/testing"
-              ]
+              "polyfills": ["zone.js", "zone.js/testing"]
             }
           },
           "defaultConfiguration": "production"

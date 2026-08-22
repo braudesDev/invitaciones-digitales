@@ -3,6 +3,9 @@ import {
   OnInit,
   Input,
   ChangeDetectionStrategy,
+  AfterViewInit,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Invitacion } from '../../../services/invitaciones.service';
@@ -34,6 +37,7 @@ import { Regalos } from '../../../models/regalos.model';
 import { Consideraciones } from '../../../models/consideraciones.model';
 import { Confirmacion } from '../../../models/confirmacion.model';
 import { AudioPlayerComponent } from './shared/audio-player/audio-player.component';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-invitacion-generica',
@@ -64,24 +68,61 @@ import { AudioPlayerComponent } from './shared/audio-player/audio-player.compone
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./invitacion-generica.component.css'],
 })
-export class InvitacionGenericaComponent implements OnInit {
+export class InvitacionGenericaComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   @Input() data!: Invitacion;
 
   constructor() {}
 
   ngOnInit() {}
 
-  // ✅ AGREGAR LOGS PARA DEPURAR AUDIO
+  // ✅ MÉTODO PARA INICIALIZAR AOS
   ngAfterViewInit() {
-    // ✅ AGREGAR LOGS PARA EL HERO
-    console.log('🖼️ HERO IMAGES:');
-    console.log('  heroImage:', this.data?.heroImage);
-    console.log('  heroImageMovil:', this.data?.heroImageMovil);
-    console.log('  heroImageEscritorio:', this.data?.heroImageEscritorio);
-    console.log('📋 InvitacionGenericaComponent - data completo:', this.data);
-    console.log('🎵 data.audio:', this.data?.audio);
-    console.log('🎵 data.audio.habilitado:', this.data?.audio?.habilitado);
-    console.log('🎵 data.audio.canciones:', this.data?.audio?.canciones);
+    this.inicializarAOS();
+  }
+
+  // ✅ MÉTODO PARA REACCIONAR A CAMBIOS EN data
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['data'] && !changes['data'].firstChange) {
+      this.inicializarAOS();
+    }
+  }
+
+  // ✅ MÉTODO PARA CONTROLAR AOS
+  private inicializarAOS() {
+    // ✅ Verificar si las animaciones están activadas
+    const animacionesActivadas = this.data?.animacionesAOS !== false;
+
+    if (animacionesActivadas) {
+      AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: false,
+        offset: 80,
+        delay: 100,
+        mirror: true,
+      });
+
+      setTimeout(() => {
+        AOS.refresh();
+        console.log('🎬 Animaciones AOS activadas');
+      }, 200);
+    } else {
+      this.desactivarAOS();
+      console.log('🎬 Animaciones AOS desactivadas');
+    }
+  }
+
+  // ✅ MÉTODO PARA DESACTIVAR AOS
+  private desactivarAOS() {
+    document.querySelectorAll('[data-aos]').forEach((el) => {
+      el.removeAttribute('data-aos');
+      el.removeAttribute('data-aos-duration');
+      el.removeAttribute('data-aos-delay');
+      el.removeAttribute('data-aos-once');
+    });
+    AOS.refresh();
   }
 
   get fechaFormateada(): string {
@@ -347,5 +388,78 @@ export class InvitacionGenericaComponent implements OnInit {
       mostrarRechazar: (c as any).mostrarRechazar ?? true,
       mostrarCalendario: (c as any).mostrarCalendario ?? true,
     };
+  }
+
+  // ✅ Configuración de AOS
+  // ✅ CORREGIDO - Usar notación de corchetes
+  public getAOSConfig(estilo?: string) {
+    const configs: Record<string, any> = {
+      clasico: {
+        default: 'fade-up',
+        galeria: 'zoom-in',
+        laterales: 'fade-right',
+        duracion: 800,
+        delay: 100,
+        easing: 'ease-in-out',
+      },
+      moderno: {
+        default: 'fade-down',
+        galeria: 'zoom-out',
+        laterales: 'zoom-in-left',
+        duracion: 700,
+        delay: 80,
+        easing: 'ease-out',
+      },
+      romantico: {
+        default: 'fade-right',
+        galeria: 'zoom-in',
+        laterales: 'fade-left',
+        duracion: 900,
+        delay: 120,
+        easing: 'ease-in-out',
+      },
+      minimalista: {
+        default: 'fade',
+        galeria: 'fade',
+        laterales: 'fade',
+        duracion: 500,
+        delay: 50,
+        easing: 'linear',
+      },
+      dinamico: {
+        default: 'zoom-in-up',
+        galeria: 'zoom-in',
+        laterales: 'fade-right',
+        duracion: 800,
+        delay: 100,
+        easing: 'ease-in-out',
+      },
+    };
+
+    // ✅ Usar corchetes en lugar de punto
+    return configs[estilo || 'clasico'] || configs['clasico'];
+  }
+
+  // ✅ Animación por sección
+  public getAOSAnimation(seccion: string, estilo: string): string {
+    const config = this.getAOSConfig(estilo);
+    const animaciones: Record<string, string> = {
+      'nos-casamos': config.default,
+      contador: config.default,
+      ceremonia: config.default,
+      // ... todas las secciones
+    };
+    return animaciones[seccion] || config.default;
+  }
+
+  // ✅ Delay por sección (efecto cascada)
+  public getAOSDelay(seccion: string): string {
+    const delays: Record<string, string> = {
+      'nos-casamos': '0',
+      contador: '100',
+      ceremonia: '200',
+      // ... todas las secciones
+    };
+    return delays[seccion] || '100';
   }
 }
