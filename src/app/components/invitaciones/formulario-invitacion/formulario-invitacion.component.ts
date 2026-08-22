@@ -139,6 +139,68 @@ export class FormularioInvitacionComponent implements OnInit {
   ];
 
   // ==============================================================
+  // 3.4 ESTILOS DE ANIMACIONES AOS
+  // ==============================================================
+
+  estilosAOS = [
+    {
+      valor: 'clasico',
+      nombre: 'Clásico',
+      descripcion: 'Animación suave y elegante',
+      icon: 'heroSparkles',
+      preview: '⬆️ ➡️ ⬅️ 🔍',
+    },
+    {
+      valor: 'moderno',
+      nombre: 'Moderno',
+      descripcion: 'Dinámico y refinado',
+      icon: 'heroBolt',
+      preview: '⬆️ 🔍 ⬇️',
+    },
+    {
+      valor: 'romantico',
+      nombre: 'Romántico',
+      descripcion: 'Suave y cálido',
+      icon: 'heroHeart',
+      preview: '⬆️ 🔍 ↗️ ↖️',
+    },
+    {
+      valor: 'minimalista',
+      nombre: 'Minimalista',
+      descripcion: 'Sutil y discreto',
+      icon: 'heroAdjustmentsHorizontal',
+      preview: '⬆️ (sutil)',
+    },
+    {
+      valor: 'dinamico',
+      nombre: 'Dinámico',
+      descripcion: 'Con más movimiento',
+      icon: 'heroArrowTrendingUp',
+      preview: '⬆️ 🔍 ➡️ ⬅️',
+    },
+  ];
+
+  seleccionarEstiloAOS(estilo: string) {
+    this.nuevaInvitacion.estiloAOS = estilo as any;
+    // Forzar actualización de la vista
+    this.nuevaInvitacion = { ...this.nuevaInvitacion };
+  }
+
+  toggleAnimacionesAOS() {
+    this.nuevaInvitacion.animacionesAOS = !this.nuevaInvitacion.animacionesAOS;
+  }
+
+  getEstiloAOSNombre(estilo: string): string {
+    const encontrado = this.estilosAOS.find((e) => e.valor === estilo);
+    return encontrado?.nombre || estilo;
+  }
+
+  getEstiloAOSDescripcion(estilo: string): string {
+    const encontrado = this.estilosAOS.find((e) => e.valor === estilo);
+    return encontrado?.descripcion || '';
+  }
+
+  // ==============================================================
   // 3.4 OBJETO PRINCIPAL: NUEVA INVITACIÓN
   // ==============================================================
   // Contiene todos los datos de la invitación que se está creando/editando
@@ -279,6 +341,8 @@ export class FormularioInvitacionComponent implements OnInit {
       opciones: [],
       textoBoton: 'Ver mesa de regalos',
     },
+    estiloAOS: 'clasico',
+    animacionesAOS: true,
   };
 
   // ==============================================================
@@ -416,6 +480,19 @@ export class FormularioInvitacionComponent implements OnInit {
             opciones: opciones,
             textoBoton: 'Ver mesa de regalos',
           };
+        }
+
+        // ================================================================
+        // # MIGRACIÓN DE ANIMACIONES AOS (AGREGAR ESTO)
+        // ================================================================
+        // --- Asegurar que estiloAOS tenga un valor por defecto ---
+        if (!data.estiloAOS) {
+          data.estiloAOS = 'clasico';
+        }
+
+        // --- Asegurar que animacionesAOS tenga un valor por defecto ---
+        if (data.animacionesAOS === undefined) {
+          data.animacionesAOS = true; // Activado por defecto
         }
 
         // ================================================================
@@ -876,6 +953,9 @@ export class FormularioInvitacionComponent implements OnInit {
           volumen: 0.7,
           autoPlay: false,
         },
+        // === ANIMACIONES AOS ===
+        estiloAOS: 'clasico',
+        animacionesAOS: true,
       };
       this.tabActivo = 'basico'; // Vuelve a la pestaña básica
     } catch (err) {
@@ -2147,4 +2227,7 @@ export class FormularioInvitacionComponent implements OnInit {
 
     console.log('🔊 Volumen actualizado a:', valor);
   }
+
+  //Animaciones
+  acordeonAnimaciones: boolean = false;
 }

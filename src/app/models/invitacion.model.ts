@@ -152,4 +152,7 @@ export interface InvitacionCompleta {
   heroImageEscritorio?: string; // Imagen para escritorio (horizontal)
 
   audio?: AudioConfig;
+
+  estiloAOS?: 'clasico' | 'moderno' | 'romantico' | 'minimalista' | 'dinamico';
+  animacionesAOS?: boolean; // true por defecto
 }

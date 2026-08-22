@@ -181,3 +181,52 @@ app-footer-section {
     padding: 4rem 1rem;
   }
 }
+
+@import "aos/dist/aos.css";
+
+/* ================================================================
+   FIX: AOS WRAPPERS - EVITAR DESBORDAMIENTO
+   ================================================================ */
+
+/* ✅ Los divs que contienen data-aos no deben afectar el layout */
+[data-aos] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  /* ✅ Asegurar que no tengan padding/margin extra */
+  padding: 0 !important;
+  margin: 0 !important;
+  /* ✅ Forzar que no se desborden */
+  box-sizing: border-box !important;
+}
+
+/* ✅ Asegurar que los hijos respeten el ancho */
+[data-aos] > * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* ✅ Si algún AOS está causando overflow horizontal */
+.invitacion-container {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* ✅ Forzar que ningún elemento se salga */
+.invitacion-container * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* ✅ Específico para móvil */
+@media (max-width: 480px) {
+  [data-aos] {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+}

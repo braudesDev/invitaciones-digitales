@@ -15,11 +15,6 @@
     <!-- ======================================== -->
     <!-- 1. HERO - Portada principal              -->
     <!-- ======================================== -->
-
-    <!-- ======================================== -->
-    <!-- 1. HERO - Portada principal              -->
-    <!-- ======================================== -->
-
     @if (data.heroImage || data.heroImageMovil || data.heroImageEscritorio) {
       <app-hero-section
         [nombres]="data.nombres || ''"
@@ -34,8 +29,9 @@
       ></app-hero-section>
     }
 
-    <!-- ✅ CORREGIDO: Usar 'data' en lugar de 'invitacion' -->
-
+    <!-- ======================================== -->
+    <!-- 2. AUDIO - Reproductor de música         -->
+    <!-- ======================================== -->
     @if (data.audio?.habilitado) {
       <app-audio-player
         [audioConfig]="data.audio"
@@ -46,161 +42,524 @@
     }
 
     <!-- ======================================== -->
-    <!-- 2. NOS CASAMOS - Mensaje principal       -->
+    <!-- 3. NOS CASAMOS - Mensaje principal       -->
     <!-- ======================================== -->
     @if (data.frasePrincipal || data.mensajePrincipal) {
-      <app-nos-casamos-section
-        [frase]="data.frasePrincipal || ''"
-        [mensaje]="data.mensajePrincipal || ''"
-        [fontFamily]="data.fontFamily ?? 'Playfair Display, serif'"
-        [primaryColor]="data.primaryColor ?? '#7A8B7D'"
-        [secondaryColor]="data.secondaryColor ?? '#CBB89D'"
-        [accentColor]="data.accentColor ?? '#B08A4A'"
-        [textColor]="data.textColor ?? '#3F4A42'"
-      ></app-nos-casamos-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('nos-casamos', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('nos-casamos') : null
+        "
+      >
+        <app-nos-casamos-section
+          [frase]="data.frasePrincipal || ''"
+          [mensaje]="data.mensajePrincipal || ''"
+          [fontFamily]="data.fontFamily ?? 'Playfair Display, serif'"
+          [primaryColor]="data.primaryColor ?? '#7A8B7D'"
+          [secondaryColor]="data.secondaryColor ?? '#CBB89D'"
+          [accentColor]="data.accentColor ?? '#B08A4A'"
+          [textColor]="data.textColor ?? '#3F4A42'"
+        ></app-nos-casamos-section>
+      </div>
     }
 
     <!-- ======================================== -->
-    <!-- 3. CONTADOR - Cuenta regresiva           -->
+    <!-- 4. CONTADOR - Cuenta regresiva           -->
     <!-- ======================================== -->
     @if (data.contador) {
-      <app-contador-section
-        [data]="contadorFormateado"
-        modo="vista"
-      ></app-contador-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('contador', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('contador') : null
+        "
+      >
+        <app-contador-section
+          [data]="contadorFormateado"
+          modo="vista"
+        ></app-contador-section>
+      </div>
     }
 
     <!-- ======================================== -->
-    <!-- 4. CEREMONIA y recepcion - Dónde y cuándo            -->
+    <!-- 5. CEREMONIA y recepcion                 -->
     <!-- ======================================== -->
     @if (data.ceremonia) {
-      <app-ceremonia-section
-        [data]="data.ceremonia"
-        [recepcionData]="data.recepcion"
-        [fechaEvento]="data.fecha"
-      ></app-ceremonia-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('ceremonia', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('ceremonia') : null
+        "
+      >
+        <app-ceremonia-section
+          [data]="data.ceremonia"
+          [recepcionData]="data.recepcion"
+          [fechaEvento]="data.fecha"
+        ></app-ceremonia-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 6. INVITACIÓN VÁLIDA - QR, pases         -->
     <!-- ======================================== -->
     @if (data) {
-      <app-invitacion-valida-section
-        [invitado]="data.invitado ?? 'Invitado especial'"
-        [pases]="data.pases ?? 1"
-        [mensajePersonalizado]="data.mensajePersonalizado"
-        [eventoData]="data"
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('invitacion-valida', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false
+            ? getAOSDelay('invitacion-valida')
+            : null
+        "
       >
-      </app-invitacion-valida-section>
+        <app-invitacion-valida-section
+          [invitado]="data.invitado ?? 'Invitado especial'"
+          [pases]="data.pases ?? 1"
+          [mensajePersonalizado]="data.mensajePersonalizado"
+          [eventoData]="data"
+        >
+        </app-invitacion-valida-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 7. HISTORIA - Conexión emocional         -->
     <!-- ======================================== -->
     @if (data.historia && data.historia.mostrarSeccion) {
-      <app-historia-section [data]="historiaFormateada"></app-historia-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('historia', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('historia') : null
+        "
+      >
+        <app-historia-section
+          [data]="historiaFormateada"
+        ></app-historia-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 8. GALERÍA - Visual                       -->
     <!-- ======================================== -->
     @if (data.galeria) {
-      <app-galeria-section [data]="galeriaFormateada"></app-galeria-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('galeria', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('galeria') : null
+        "
+      >
+        <app-galeria-section [data]="galeriaFormateada"></app-galeria-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 9. ITINERARIO - Logística del día        -->
     <!-- ======================================== -->
     @if (data.itinerario) {
-      <app-itinerario-section [data]="data.itinerario"></app-itinerario-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('itinerario', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('itinerario') : null
+        "
+      >
+        <app-itinerario-section
+          [data]="data.itinerario"
+        ></app-itinerario-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 10. DRESS CODE - Instrucciones           -->
     <!-- ======================================== -->
     @if (data.dressCode) {
-      <app-dresscode-section
-        [data]="dressCodeFormateado"
-      ></app-dresscode-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('dress-code', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('dress-code') : null
+        "
+      >
+        <app-dresscode-section
+          [data]="dressCodeFormateado"
+        ></app-dresscode-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 11. PADRES - Honrar a los padres         -->
     <!-- ======================================== -->
     @if (data.padres) {
-      <app-padres-section [data]="data.padres"></app-padres-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('padres', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('padres') : null
+        "
+      >
+        <app-padres-section [data]="data.padres"></app-padres-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 12. PADRINOS - Agradecimiento            -->
     <!-- ======================================== -->
     @if (data.padrinos) {
-      <app-padrinos-section
-        [data]="padrinosFormateados"
-        [titulo]="'Nuestros Padrinos'"
-        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
-      ></app-padrinos-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('padrinos', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('padrinos') : null
+        "
+      >
+        <app-padrinos-section
+          [data]="padrinosFormateados"
+          [titulo]="'Nuestros Padrinos'"
+          [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
+        ></app-padrinos-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 13. DAMAS - Opcional                     -->
     <!-- ======================================== -->
     @if (data.damas) {
-      <app-damas-section [data]="data.damas"></app-damas-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('damas', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('damas') : null
+        "
+      >
+        <app-damas-section [data]="data.damas"></app-damas-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 14. HOSPEDAJE - Para invitados de fuera  -->
     <!-- ======================================== -->
     @if (data.hospedaje) {
-      <app-hospedaje-section
-        [data]="hospedajeFormateado"
-      ></app-hospedaje-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('hospedaje', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('hospedaje') : null
+        "
+      >
+        <app-hospedaje-section
+          [data]="hospedajeFormateado"
+        ></app-hospedaje-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 15. REGALOS - Información de regalos     -->
     <!-- ======================================== -->
     @if (data.regalos) {
-      <app-regalos-section
-        [data]="regalosFormateado"
-        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
-      ></app-regalos-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('regalos', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('regalos') : null
+        "
+      >
+        <app-regalos-section
+          [data]="regalosFormateado"
+          [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
+        ></app-regalos-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 16. HASHTAG - Compartir en redes         -->
     <!-- ======================================== -->
     @if (data.hashtag) {
-      <app-hashtag-section [data]="data.hashtag"></app-hashtag-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('hashtag', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('hashtag') : null
+        "
+      >
+        <app-hashtag-section [data]="data.hashtag"></app-hashtag-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 17. CONSIDERACIONES - Notas importantes  -->
     <!-- ======================================== -->
     @if (data.consideracionesData) {
-      <app-consideraciones-section
-        [data]="consideracionesFormateado"
-        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
-      ></app-consideraciones-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('consideraciones', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('consideraciones') : null
+        "
+      >
+        <app-consideraciones-section
+          [data]="consideracionesFormateado"
+          [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
+        ></app-consideraciones-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 18. CONFIRMACIÓN - Confirmar asistencia  -->
     <!-- ======================================== -->
     @if (data.confirmacionData) {
-      <app-confirmacion-section
-        [data]="confirmacionFormateado"
-        [eventoData]="data"
-        modo="vista"
-        [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
-      ></app-confirmacion-section>
+      <div
+        [attr.data-aos]="
+          data.animacionesAOS !== false
+            ? getAOSAnimation('confirmacion', data.estiloAOS || 'clasico')
+            : null
+        "
+        [attr.data-aos-duration]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+            : null
+        "
+        [attr.data-aos-easing]="
+          data.animacionesAOS !== false
+            ? getAOSConfig(data.estiloAOS || 'clasico').easing
+            : null
+        "
+        [attr.data-aos-delay]="
+          data.animacionesAOS !== false ? getAOSDelay('confirmacion') : null
+        "
+      >
+        <app-confirmacion-section
+          [data]="confirmacionFormateado"
+          [eventoData]="data"
+          modo="vista"
+          [fontFamily]="data.fontFamily || 'Playfair Display, Georgia, serif'"
+        ></app-confirmacion-section>
+      </div>
     }
 
     <!-- ======================================== -->
     <!-- 19. FOOTER - Cierre                      -->
     <!-- ======================================== -->
-    <app-footer-section [data]="data"></app-footer-section>
+    <div
+      [attr.data-aos]="
+        data.animacionesAOS !== false
+          ? getAOSAnimation('footer', data.estiloAOS || 'clasico')
+          : null
+      "
+      [attr.data-aos-duration]="
+        data.animacionesAOS !== false
+          ? getAOSConfig(data.estiloAOS || 'clasico').duracion
+          : null
+      "
+      [attr.data-aos-easing]="
+        data.animacionesAOS !== false
+          ? getAOSConfig(data.estiloAOS || 'clasico').easing
+          : null
+      "
+      [attr.data-aos-delay]="
+        data.animacionesAOS !== false ? getAOSDelay('footer') : null
+      "
+    >
+      <app-footer-section [data]="data"></app-footer-section>
+    </div>
   </div>
 }
 
