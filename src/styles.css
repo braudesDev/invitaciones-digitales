@@ -1,7 +1,13 @@
 /* ===========================
-   GOOGLE FONTS
+   ✅ IMPORTS (SIEMPRE AL PRINCIPIO)
 =========================== */
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap");
+@import "aos/dist/aos.css";
+
+/* ===========================
+   GOOGLE FONTS
+=========================== */
+/* (ya está arriba) */
 
 /* ===========================
    VARIABLES GLOBALES (FIJAS)
@@ -182,7 +188,7 @@ app-footer-section {
   }
 }
 
-@import "aos/dist/aos.css";
+/* ❌ ELIMINADO: @import "aos/dist/aos.css"; (movido al principio) */
 
 /* ================================================================
    FIX: AOS WRAPPERS - EVITAR DESBORDAMIENTO
@@ -228,5 +234,296 @@ app-footer-section {
     width: 100% !important;
     max-width: 100% !important;
     overflow: hidden !important;
+  }
+}
+
+/* ============================================
+   SOLUCIÓN DEFINITIVA - FORZAR MODAL SOBRE AOS
+   ============================================ */
+
+/* ✅ Forzar que el modal IGNORE transformaciones (pero NO las animaciones) */
+.galeria-modal,
+.galeria-modal * {
+  transform-style: flat !important;
+  perspective: none !important;
+  will-change: auto !important;
+  /* ❌ ELIMINAR animation: none !important; */
+  /* ❌ ELIMINAR transition: none !important; */
+}
+
+/* ✅ Forzar que el modal esté SIEMPRE visible cuando tiene .active */
+.galeria-modal.active {
+  display: flex !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 999999 !important;
+  background: rgba(0, 0, 0, 0.95) !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ✅ Forzar que el contenido del modal NO herede nada */
+.galeria-modal-content {
+  position: relative !important;
+  z-index: 1000000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  max-width: 90vw !important;
+  max-height: 90vh !important;
+}
+
+/* ✅ La imagen dentro del modal */
+.galeria-modal-content img {
+  max-width: 85vw !important;
+  max-height: 85vh !important;
+  object-fit: contain !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ============================================
+   ✅ AGREGAR ESTO DEBAJO - ESTILOS DE BOTONES
+   ============================================ */
+
+/* ✅ Botón de cierre (X) */
+.galeria-modal-close {
+  position: absolute !important;
+  top: 20px !important;
+  right: 30px !important;
+  color: white !important;
+  font-size: 2.5rem !important;
+  cursor: pointer !important;
+  z-index: 100000 !important;
+  opacity: 0.7 !important;
+  transform: none !important;
+  animation: none !important;
+  transition: all 0.3s ease !important;
+  font-family: Arial, sans-serif !important;
+  line-height: 1 !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  width: 50px !important;
+  height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.galeria-modal-close:hover {
+  opacity: 1 !important;
+  transform: scale(1.2) !important;
+  color: #ff6b6b !important;
+}
+
+/* ✅ Botones de navegación */
+.galeria-modal-prev,
+.galeria-modal-next {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(4px) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  font-size: 1.8rem !important;
+  cursor: pointer !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  width: 56px !important;
+  height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 100000 !important;
+  transition: all 0.3s ease !important;
+  font-family: Arial, sans-serif !important;
+  user-select: none !important;
+}
+
+.galeria-modal-prev {
+  left: 30px !important;
+}
+
+.galeria-modal-next {
+  right: 30px !important;
+}
+
+.galeria-modal-prev:hover,
+.galeria-modal-next:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-50%) scale(1.1) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* ✅ Contador de fotos */
+.galeria-modal-counter {
+  position: absolute !important;
+  bottom: 30px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 0.9rem !important;
+  font-family: inherit !important;
+  z-index: 100000 !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  padding: 8px 16px !important;
+  border-radius: 20px !important;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .galeria-modal-prev,
+  .galeria-modal-next {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1.3rem !important;
+  }
+
+  .galeria-modal-prev {
+    left: 15px !important;
+  }
+
+  .galeria-modal-next {
+    right: 15px !important;
+  }
+
+  .galeria-modal-close {
+    top: 15px !important;
+    right: 20px !important;
+    font-size: 2rem !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .galeria-modal-prev,
+  .galeria-modal-next {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 1rem !important;
+  }
+
+  .galeria-modal-prev {
+    left: 10px !important;
+  }
+
+  .galeria-modal-next {
+    right: 10px !important;
+  }
+
+  .galeria-modal-close {
+    font-size: 1.6rem !important;
+    width: 32px !important;
+    height: 32px !important;
+    top: 10px !important;
+    right: 15px !important;
+  }
+
+  .galeria-modal-counter {
+    font-size: 0.7rem !important;
+    padding: 4px 12px !important;
+    bottom: 15px !important;
+  }
+}
+
+/* ============================================
+   INDICADOR DE DESLIZAR (swipe)
+   ============================================ */
+.swipe-indicator {
+  position: absolute !important;
+  bottom: 80px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  font-size: 0.85rem !important;
+  font-family: inherit !important;
+  z-index: 100000 !important;
+  animation: swipePulse 2s ease-in-out infinite !important;
+  text-align: center !important;
+  letter-spacing: 1px !important;
+}
+
+/* ✅ Animación de pulso para el indicador */
+@keyframes swipePulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1.05);
+  }
+}
+
+/* ✅ En móviles siempre visible, en desktop solo si hay touch */
+@media (min-width: 769px) {
+  .swipe-indicator {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .swipe-indicator {
+    display: block !important;
+  }
+}
+/* ============================================
+   EFECTOS CON KEYFRAMES MÁS SUAVES
+   ============================================ */
+
+/* ✅ Efecto ZOOM */
+.efecto-zoom {
+  animation: modalZoomIn 0.3s ease-out forwards !important;
+}
+
+@keyframes modalZoomIn {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ✅ Efecto FADE */
+.efecto-fade {
+  animation: modalFadeIn 0.3s ease-out forwards !important;
+}
+
+@keyframes modalFadeIn {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ✅ Efecto SLIDE */
+.efecto-slide {
+  animation: modalSlideIn 0.3s ease-out forwards !important;
+}
+
+@keyframes modalSlideIn {
+  0% {
+    transform: translateX(20px);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
   }
 }

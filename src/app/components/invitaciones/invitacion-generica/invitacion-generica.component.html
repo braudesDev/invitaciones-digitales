@@ -230,7 +230,10 @@
           data.animacionesAOS !== false ? getAOSDelay('galeria') : null
         "
       >
-        <app-galeria-section [data]="galeriaFormateada"></app-galeria-section>
+        <app-galeria-section
+          [data]="galeriaFormateada"
+          (abrirModalEvent)="abrirModalGaleria($event)"
+        ></app-galeria-section>
       </div>
     }
 
@@ -559,6 +562,58 @@
       "
     >
       <app-footer-section [data]="data"></app-footer-section>
+    </div>
+  </div>
+}
+
+<!-- ======================================== -->
+<!-- ✅ MODAL - CON SWIPE TÁCTIL              -->
+<!-- ======================================== -->
+@if (modalAbierto) {
+  <div
+    class="galeria-modal"
+    [class.active]="modalAbierto"
+    (click)="cerrarModalGaleria()"
+    (touchstart)="onTouchStartModal($event)"
+    (touchmove)="onTouchMoveModal($event)"
+    (touchend)="onTouchEndModal($event)"
+  >
+    <div class="galeria-modal-content" (click)="$event.stopPropagation()">
+      <!-- ✅ X con stopPropagation -->
+      <span
+        class="galeria-modal-close"
+        (click)="cerrarModalGaleria(); $event.stopPropagation()"
+        >&times;</span
+      >
+
+      <div class="galeria-modal-imagen-wrapper">
+        <img
+          [src]="fotoActual"
+          [alt]="'Foto ' + (indiceActual + 1)"
+          class="modal-imagen"
+          [ngClass]="'efecto-' + efectoModal"
+        />
+      </div>
+
+      <!-- ✅ Botón anterior con stopPropagation -->
+      <button
+        class="galeria-modal-prev"
+        (click)="anteriorGaleria(); $event.stopPropagation()"
+      >
+        ❮
+      </button>
+
+      <!-- ✅ Botón siguiente con stopPropagation -->
+      <button
+        class="galeria-modal-next"
+        (click)="siguienteGaleria(); $event.stopPropagation()"
+      >
+        ❯
+      </button>
+
+      <div class="galeria-modal-counter">
+        {{ indiceActual + 1 }} / {{ totalFotos }}
+      </div>
     </div>
   </div>
 }

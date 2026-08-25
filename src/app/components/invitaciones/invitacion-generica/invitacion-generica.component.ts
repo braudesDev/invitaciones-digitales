@@ -73,6 +73,204 @@ export class InvitacionGenericaComponent
 {
   @Input() data!: Invitacion;
 
+  // ==============================================================
+  // ✅ PROPIEDADES DEL MODAL - AGREGAR ESTO
+  // ==============================================================
+
+  modalAbierto = false;
+  fotoActual = '';
+  indiceActual = 0;
+  totalFotos = 0;
+  navegando = false;
+  fotosGaleria: string[] = [];
+  efectoModal: string = 'slide';
+
+  // ==============================================================
+  // ✅ MÉTODOS DEL MODAL - CON LOOP INFINITO Y FLAG
+  // ==============================================================
+
+  abrirModalGaleria(event: {
+    foto: string;
+    indice: number;
+    total: number;
+    efecto: string;
+  }) {
+    console.log('🟢 1. Padre recibió evento:', event);
+
+    this.efectoModal = event.efecto || 'slide';
+
+    // Guardar el array completo de URLs de fotos
+    this.fotosGaleria = this.galeriaFormateada.fotos.map(
+      (f: any) => f.url || f,
+    );
+
+    this.fotoActual = event.foto;
+    this.indiceActual = event.indice;
+    this.totalFotos = event.total;
+    this.modalAbierto = true;
+    document.body.style.overflow = 'hidden';
+    this.navegando = false;
+
+    console.log('🟢 2. fotosGaleria:', this.fotosGaleria);
+    console.log('🟢 3. indiceActual:', this.indiceActual);
+    console.log('🟢 4. fotoActual:', this.fotoActual);
+  }
+
+  cerrarModalGaleria() {
+    console.log('❌ Cerrando modal');
+    this.modalAbierto = false;
+    document.body.style.overflow = '';
+    this.navegando = false;
+    this.fotosGaleria = [];
+  }
+
+  siguienteGaleria() {
+    // ✅ Evitar ejecución múltiple
+    if (this.navegando) {
+      console.log('⏳ Ya navegando, ignorando...');
+      return;
+    }
+
+    console.log('➡️ Click en Siguiente - indice actual:', this.indiceActual);
+
+    if (this.totalFotos === 0 || this.fotosGaleria.length === 0) {
+      console.log('⚠️ No hay fotos para navegar');
+      return;
+    }
+
+    this.navegando = true; // ✅ Bloquear
+
+    if (this.indiceActual >= this.totalFotos - 1) {
+      this.indiceActual = 0;
+    } else {
+      this.indiceActual++;
+    }
+
+    this.fotoActual = this.fotosGaleria[this.indiceActual] || '';
+    console.log(
+      '➡️ Siguiente - nuevo indice:',
+      this.indiceActual,
+      'foto:',
+      this.fotoActual,
+    );
+
+    // ✅ REINICIAR ANIMACIÓN
+    this.reiniciarAnimacionImagen();
+
+    // ✅ Desbloquear después de un tiempo
+    setTimeout(() => {
+      this.navegando = false;
+    }, 300);
+  }
+
+  anteriorGaleria() {
+    // ✅ Evitar ejecución múltiple
+    if (this.navegando) {
+      console.log('⏳ Ya navegando, ignorando...');
+      return;
+    }
+
+    console.log('⬅️ Click en Anterior - indice actual:', this.indiceActual);
+
+    if (this.totalFotos === 0 || this.fotosGaleria.length === 0) {
+      console.log('⚠️ No hay fotos para navegar');
+      return;
+    }
+
+    this.navegando = true; // ✅ Bloquear
+
+    if (this.indiceActual <= 0) {
+      this.indiceActual = this.totalFotos - 1;
+    } else {
+      this.indiceActual--;
+    }
+
+    this.fotoActual = this.fotosGaleria[this.indiceActual] || '';
+    console.log(
+      '⬅️ Anterior - nuevo indice:',
+      this.indiceActual,
+      'foto:',
+      this.fotoActual,
+    );
+
+    // ✅ REINICIAR ANIMACIÓN
+    this.reiniciarAnimacionImagen();
+
+    // ✅ Desbloquear después de un tiempo
+    setTimeout(() => {
+      this.navegando = false;
+    }, 300);
+  }
+
+  reiniciarAnimacionImagen() {
+    const img = document.querySelector('.modal-imagen');
+    if (!img) return;
+
+    // ✅ Quitar y volver a poner la clase para reiniciar la animación
+    const efecto = 'efecto-' + this.efectoModal;
+    img.classList.remove(efecto);
+
+    // ✅ Forzar reflow
+    void (img as HTMLElement).offsetWidth;
+
+    // ✅ Volver a agregar la clase
+    img.classList.add(efecto);
+  }
+  // ==============================================================
+  // SWIPE TÁCTIL PARA EL MODAL
+  // ==============================================================
+
+  /** Posición X donde comenzó el toque en el modal */
+  touchStartXModal: number = 0;
+
+  /** Posición X donde terminó el toque en el modal */
+  touchEndXModal: number = 0;
+
+  /** Indica si el usuario está haciendo swipe en el modal */
+  isSwipingModal: boolean = false;
+
+  /**
+   * Evento cuando el usuario comienza a tocar la pantalla en el modal
+   */
+  onTouchStartModal(event: TouchEvent) {
+    this.touchStartXModal = event.changedTouches[0].screenX;
+    this.isSwipingModal = true;
+  }
+
+  /**
+   * Evento cuando el usuario mueve el dedo en el modal
+   */
+  onTouchMoveModal(event: TouchEvent) {
+    if (!this.isSwipingModal) return;
+    this.touchEndXModal = event.changedTouches[0].screenX;
+  }
+
+  /**
+   * Evento cuando el usuario levanta el dedo del modal
+   * Detecta si fue un swipe y navega
+   */
+  onTouchEndModal(event: TouchEvent) {
+    if (!this.isSwipingModal) return;
+    this.isSwipingModal = false;
+
+    const diffX = this.touchStartXModal - this.touchEndXModal;
+    const minSwipeDistance = 50;
+
+    console.log('👆 Swipe detectado:', diffX);
+
+    if (Math.abs(diffX) > minSwipeDistance) {
+      if (diffX > 0) {
+        // Swipe hacia la izquierda → siguiente foto
+        console.log('➡️ Siguiente foto por swipe');
+        this.siguienteGaleria();
+      } else {
+        // Swipe hacia la derecha → foto anterior
+        console.log('⬅️ Anterior foto por swipe');
+        this.anteriorGaleria();
+      }
+    }
+  }
+
   constructor() {}
 
   ngOnInit() {}
