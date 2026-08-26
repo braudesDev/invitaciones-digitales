@@ -50,6 +50,14 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
   userPhotoURL: string = '';
   origin = window.location.origin;
 
+  // 🆕 Propiedades de paginación
+  paginaActual: number = 1;
+  itemsPorPagina: number = 5;
+  invitadosFiltrados: Invitado[] = [];
+  totalPaginas: number = 0;
+  invitadosCompletos: Invitado[] = [];
+  Math = Math;
+
   private authSubscription!: Subscription;
 
   constructor(
@@ -108,6 +116,7 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
 
   cambiarTab(tab: 'pendiente' | 'confirmado' | 'rechazado') {
     this.tabActivo = tab;
+    this.paginaActual = 1; // Resetear a la pagina 1 al cambiar de tab
     this.cargarInvitados();
   }
 
@@ -230,14 +239,35 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
 
   cargarInvitados() {
     if (!this.eventoSlug) return;
+
     this.invitados$ = this.invitadosService.getInvitadosPorEvento(
       this.eventoSlug,
       this.tabActivo,
     );
+
+    // 👇 SUSCRIBIRSE PARA APLICAR PAGINACIÓN
+    this.invitados$.subscribe({
+      next: (invitados) => {
+        this.invitadosCompletos = invitados;
+        this.totalPaginas = Math.ceil(
+          this.invitadosCompletos.length / this.itemsPorPagina,
+        );
+
+        // Si la página actual es mayor que el total, resetear a 1
+        if (this.paginaActual > this.totalPaginas && this.totalPaginas > 0) {
+          this.paginaActual = 1;
+        }
+
+        this.aplicarPaginacion();
+      },
+      error: (error) => {
+        console.error('Error al cargar invitados:', error);
+      },
+    });
   }
 
   cambiarEvento() {
-    console.log('🔄 Cambiando a evento:', this.eventoSlug);
+    this.paginaActual = 1; // Resetear a pag 1 al cambiar de evento
     this.cargarInvitados();
   }
 
@@ -456,6 +486,35 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/']);
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
+    }
+  }
+
+  // ================================================================
+  // 📄 PAGINACIÓN
+  // ================================================================
+  aplicarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+    const fin = inicio + this.itemsPorPagina;
+    this.invitadosFiltrados = this.invitadosCompletos.slice(inicio, fin);
+  }
+
+  irPagina(pagina: number) {
+    if (pagina < 1 || pagina > this.totalPaginas) return;
+    this.paginaActual = pagina;
+    this.aplicarPaginacion();
+  }
+
+  paginaSiguiente() {
+    if (this.paginaActual < this.totalPaginas) {
+      this.paginaActual++;
+      this.aplicarPaginacion();
+    }
+  }
+
+  paginaAnterior() {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.aplicarPaginacion();
     }
   }
 }
