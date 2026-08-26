@@ -222,6 +222,15 @@
                     <ng-icon name="heroXMark" size="16"></ng-icon>
                   </button>
                 }
+
+                <!-- 🆕 Botón ELIMINAR - SIEMPRE visible (FUERA de cualquier @if) -->
+                <button
+                  class="btn-eliminar"
+                  (click)="eliminarInvitado(inv)"
+                  title="Eliminar invitado"
+                >
+                  <ng-icon name="lucideTrash2" size="18"></ng-icon>
+                </button>
               </td>
             </tr>
           }

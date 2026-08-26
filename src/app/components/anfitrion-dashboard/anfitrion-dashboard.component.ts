@@ -23,6 +23,7 @@ import { Auth, authState, signOut } from '@angular/fire/auth';
 import { Router, RouterModule } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
 import { OgImageService } from '../../services/og-image.service'; // 👈 Agregar al inicio
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-anfitrion-dashboard',
@@ -154,14 +155,35 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
   }
 
   // Agrega este método después de cargarMisEventos()
+  // ================================================================
+  // 🗑️ ELIMINAR EVENTO CON SWEETALERT2
+  // ================================================================
   async eliminarEvento(eventoSlug: string, eventoName: string) {
-    const confirmar = confirm(
-      `¿Estás seguro de que quieres eliminar la invitación "${eventoName}"?\n\nEsta acción eliminará TODOS los invitados asociados a este evento. No se puede deshacer.`,
-    );
+    // 1. Confirmación con SweetAlert2
+    const result = await Swal.fire({
+      title: `¿Eliminar "${eventoName}"?`,
+      text: `Esta acción eliminará TODOS los invitados asociados a este evento. No se puede deshacer.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
 
-    if (!confirmar) return;
+    if (!result.isConfirmed) return;
 
     try {
+      // Mostrar loading
+      Swal.fire({
+        title: 'Eliminando...',
+        text: 'Por favor espera',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
       // 1. Eliminar todos los invitados de este evento
       const invitadosQuery = query(
         collection(this.firestore, 'invitados'),
@@ -181,10 +203,23 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
       // 3. Recargar la lista de eventos
       await this.cargarMisEventos();
 
-      alert(`✅ Invitación "${eventoName}" eliminada correctamente`);
+      // Éxito
+      Swal.fire({
+        icon: 'success',
+        title: '¡Eliminado!',
+        text: `Invitación "${eventoName}" eliminada correctamente`,
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } catch (error) {
       console.error('Error al eliminar evento:', error);
-      alert('❌ Error al eliminar la invitación');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo eliminar la invitación',
+        confirmButtonColor: '#e53e3e',
+        confirmButtonText: 'Entendido',
+      });
     }
   }
 
@@ -216,8 +251,32 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
 
   copiarLink(slug: string) {
     const link = `${window.location.origin}/invitaciones/${slug}`;
-    navigator.clipboard.writeText(link);
-    alert('✅ Link copiado al portapapeles');
+
+    navigator.clipboard
+      .writeText(link)
+      .then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Copiado!',
+          text: 'Link de invitación copiado al portapapeles',
+          timer: 1800,
+          showConfirmButton: false,
+          position: 'top-end',
+          toast: true,
+          background: '#1a202c',
+          color: '#ffffff',
+          iconColor: '#48bb78',
+        });
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al copiar',
+          text: 'Intenta copiar el link manualmente',
+          confirmButtonColor: '#e53e3e',
+          confirmButtonText: 'Entendido',
+        });
+      });
   }
 
   async agregarInvitado() {
@@ -263,6 +322,59 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
   ) {
     await this.invitadosService.actualizarInvitado(inv.id!, { estado });
     this.cargarInvitados();
+  }
+
+  // ================================================================
+  // 🗑️ ELIMINAR INVITADO
+  // ================================================================
+  async eliminarInvitado(inv: Invitado) {
+    // ⚠️ Verificar ID ANTES de mostrar el diálogo
+    if (!inv.id) {
+      Swal.fire('Error', 'El invitado no tiene un ID válido', 'error');
+      return;
+    }
+
+    const result = await Swal.fire({
+      title: `¿Eliminar a ${inv.nombre}?`,
+      text: 'Esta acción eliminará al invitado y su invitación. No se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (result.isConfirmed) {
+      try {
+        // Mostrar loading
+        Swal.fire({
+          title: 'Eliminando...',
+          text: 'Por favor espera',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+
+        // Eliminar usando el servicio
+        await this.invitadosService.eliminarInvitado(inv.id);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Eliminado',
+          text: `${inv.nombre} fue eliminado correctamente`,
+          timer: 2000,
+          showConfirmButton: false,
+        });
+
+        // Recargar la lista
+        this.cargarInvitados();
+      } catch (error) {
+        console.error('Error al eliminar invitado:', error);
+        Swal.fire('Error', 'No se pudo eliminar al invitado', 'error');
+      }
+    }
   }
 
   // ================================================================

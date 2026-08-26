@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Invitado } from '../models/invitado.model';
 import { Auth } from '@angular/fire/auth';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
