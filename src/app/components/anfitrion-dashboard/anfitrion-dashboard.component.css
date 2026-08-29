@@ -880,3 +880,35 @@ se puede mejorar el css
     font-size: 12px;
   }
 }
+
+/* ===== BOTÓN EDITAR ===== */
+.btn-editar {
+  background: none;
+  border: none;
+  color: #4299e1;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-editar:hover {
+  background: #ebf8ff;
+  transform: scale(1.1);
+}
+
+.btn-editar:active {
+  transform: scale(0.9);
+}
+
+/* Actualizar el orden de los botones */
+.acciones-cell {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 200px; /* Aumentar para acomodar el nuevo botón */
+}

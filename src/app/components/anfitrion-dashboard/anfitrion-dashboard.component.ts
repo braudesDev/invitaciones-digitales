@@ -517,4 +517,91 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
       this.aplicarPaginacion();
     }
   }
+
+  // ================================================================
+  // ✏️ EDITAR PASES DE UN INVITADO
+  // ================================================================
+  async editarPases(inv: Invitado) {
+    if (!inv.id) {
+      Swal.fire('Error', 'El invitado no tiene un ID válido', 'error');
+      return;
+    }
+
+    const { value: nuevoPases } = await Swal.fire({
+      title: `Editar pases para ${inv.nombre}`,
+      text: '¿Cuántas personas asistirán?',
+      icon: 'question',
+      input: 'number',
+      inputLabel: 'Número de pases',
+      inputValue: inv.pases,
+      inputAttributes: {
+        min: '1',
+        max: '20',
+        step: '1',
+      },
+      showCancelButton: true,
+      confirmButtonColor: '#4299e1',
+      cancelButtonColor: '#e53e3e',
+      confirmButtonText: 'Actualizar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value || parseInt(value) < 1) {
+          return 'Debes ingresar al menos 1 pase';
+        }
+        if (parseInt(value) > 20) {
+          return 'Máximo 20 pases permitidos';
+        }
+        return null;
+      },
+    });
+
+    if (nuevoPases) {
+      try {
+        // Mostrar loading
+        Swal.fire({
+          title: 'Actualizando...',
+          text: 'Por favor espera',
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading(),
+        });
+
+        // Actualizar en Firebase
+        await this.invitadosService.actualizarInvitado(inv.id, {
+          pases: parseInt(nuevoPases),
+        });
+
+        // Mostrar éxito con los detalles del cambio
+        Swal.fire({
+          icon: 'success',
+          title: '¡Pases actualizados!',
+          html: `
+          <div style="text-align: center;">
+            <p style="font-size: 16px; margin-bottom: 8px;">
+              <strong>${inv.nombre}</strong> ahora tiene 
+              <strong style="color: #4299e1; font-size: 24px;">${nuevoPases}</strong> 
+              pase${parseInt(nuevoPases) > 1 ? 's' : ''}
+            </p>
+            <p style="color: #718096; font-size: 14px;">
+              ✅ Cambio reflejado en la invitación
+            </p>
+          </div>
+        `,
+          timer: 3000,
+          showConfirmButton: false,
+        });
+
+        // Recargar la lista
+        this.cargarInvitados();
+      } catch (error: any) {
+        console.error('Error al actualizar pases:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message || 'No se pudo actualizar los pases',
+          confirmButtonColor: '#e53e3e',
+          confirmButtonText: 'Entendido',
+        });
+      }
+    }
+  }
 }
