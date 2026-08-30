@@ -77,6 +77,7 @@ import {
   heroSpeakerWave,
   heroSpeakerXMark,
   heroPencilSquare,
+  heroUserGroup,
 } from '@ng-icons/heroicons/outline';
 //Lucide icons
 import {
@@ -211,6 +212,7 @@ export const appConfig: ApplicationConfig = {
       heroSpeakerWave,
       heroSpeakerXMark,
       heroPencilSquare,
+      heroUserGroup,
 
       //Lucide Icons
       lucideChurch,

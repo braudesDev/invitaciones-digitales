@@ -3,11 +3,13 @@ import {
   OnInit,
   OnDestroy,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 import { InvitadosService } from '../../services/invitados.service';
+import { InvitacionesService } from '../../services/invitaciones.service';
 import { Invitado } from '../../models/invitado.model';
 import {
   Firestore,
@@ -22,7 +24,7 @@ import {
 import { Auth, authState, signOut } from '@angular/fire/auth';
 import { Router, RouterModule } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
-import { OgImageService } from '../../services/og-image.service'; // 👈 Agregar al inicio
+import { OgImageService } from '../../services/og-image.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -30,7 +32,7 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, NgIcon],
   templateUrl: './anfitrion-dashboard.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.Default, // 👈 CORREGIDO: Usar Default
   styleUrls: ['./anfitrion-dashboard.component.css'],
 })
 export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
@@ -50,13 +52,19 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
   userPhotoURL: string = '';
   origin = window.location.origin;
 
-  // 🆕 Propiedades de paginación
+  // Paginación
   paginaActual: number = 1;
   itemsPorPagina: number = 5;
   invitadosFiltrados: Invitado[] = [];
   totalPaginas: number = 0;
   invitadosCompletos: Invitado[] = [];
   Math = Math;
+
+  // Propiedades colaboradores
+  colaboradores: any[] = [];
+  emailColaborador: string = '';
+  esAnfitrion: boolean = false;
+  esColaborador: boolean = false;
 
   private authSubscription!: Subscription;
 
@@ -66,6 +74,8 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
     private auth: Auth,
     private router: Router,
     private ogImageService: OgImageService,
+    private invitacionesService: InvitacionesService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   async cargarUsuario() {
@@ -98,9 +108,7 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
       if (user) {
         this.cargarUsuario();
         this.cargarMisEventos();
-        // 👈 No llamar a cargarInvitados() aquí
       } else {
-        // Usuario cerró sesión, limpiar datos
         this.misEventos = [];
         this.eventoSlug = '';
         this.invitados$ = undefined;
@@ -116,59 +124,11 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
 
   cambiarTab(tab: 'pendiente' | 'confirmado' | 'rechazado') {
     this.tabActivo = tab;
-    this.paginaActual = 1; // Resetear a la pagina 1 al cambiar de tab
+    this.paginaActual = 1;
     this.cargarInvitados();
   }
 
-  async cargarMisEventos() {
-    const user = this.auth.currentUser;
-    console.log('👤 Usuario en cargarMisEventos:', user?.email, user?.uid);
-
-    if (user) {
-      const q = query(
-        collection(this.firestore, 'invitaciones'),
-        where('anfitrionId', '==', user.uid),
-      );
-      const snapshot = await getDocs(q);
-
-      // ✅ GUARDAR TODOS LOS DATOS DEL EVENTO
-      this.misEventos = snapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          slug: doc.id,
-          name: data['name'],
-          heroImage: data['heroImage'] || '',
-          heroImageMovil: data['heroImageMovil'] || '',
-          heroImageEscritorio: data['heroImageEscritorio'] || '',
-          tipo: data['tipo'] || '',
-        };
-      });
-
-      console.log('📋 Eventos encontrados:', this.misEventos);
-      console.log('📸 Imágenes del primer evento:', {
-        heroImage: this.misEventos[0]?.heroImage,
-        heroImageMovil: this.misEventos[0]?.heroImageMovil,
-        heroImageEscritorio: this.misEventos[0]?.heroImageEscritorio,
-      });
-
-      if (this.misEventos.length > 0) {
-        this.eventoSlug = this.misEventos[0].slug;
-        this.cargarInvitados();
-      } else {
-        this.eventoSlug = '';
-        this.invitados$ = undefined;
-      }
-    } else {
-      console.log('⚠️ No hay usuario logueado');
-    }
-  }
-
-  // Agrega este método después de cargarMisEventos()
-  // ================================================================
-  // 🗑️ ELIMINAR EVENTO CON SWEETALERT2
-  // ================================================================
   async eliminarEvento(eventoSlug: string, eventoName: string) {
-    // 1. Confirmación con SweetAlert2
     const result = await Swal.fire({
       title: `¿Eliminar "${eventoName}"?`,
       text: `Esta acción eliminará TODOS los invitados asociados a este evento. No se puede deshacer.`,
@@ -183,17 +143,13 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
     if (!result.isConfirmed) return;
 
     try {
-      // Mostrar loading
       Swal.fire({
         title: 'Eliminando...',
         text: 'Por favor espera',
         allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
+        didOpen: () => Swal.showLoading(),
       });
 
-      // 1. Eliminar todos los invitados de este evento
       const invitadosQuery = query(
         collection(this.firestore, 'invitados'),
         where('eventoSlug', '==', eventoSlug),
@@ -205,14 +161,11 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
       );
       await Promise.all(deletePromises);
 
-      // 2. Eliminar el evento
       const eventoRef = doc(this.firestore, `invitaciones/${eventoSlug}`);
       await deleteDoc(eventoRef);
 
-      // 3. Recargar la lista de eventos
       await this.cargarMisEventos();
 
-      // Éxito
       Swal.fire({
         icon: 'success',
         title: '¡Eliminado!',
@@ -245,7 +198,6 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
       this.tabActivo,
     );
 
-    // 👇 SUSCRIBIRSE PARA APLICAR PAGINACIÓN
     this.invitados$.subscribe({
       next: (invitados) => {
         this.invitadosCompletos = invitados;
@@ -253,12 +205,12 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
           this.invitadosCompletos.length / this.itemsPorPagina,
         );
 
-        // Si la página actual es mayor que el total, resetear a 1
         if (this.paginaActual > this.totalPaginas && this.totalPaginas > 0) {
           this.paginaActual = 1;
         }
 
         this.aplicarPaginacion();
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Error al cargar invitados:', error);
@@ -266,9 +218,11 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  cambiarEvento() {
-    this.paginaActual = 1; // Resetear a pag 1 al cambiar de evento
+  // 👈 CORREGIDO: Ahora es async para esperar la verificación de roles
+  async cambiarEvento() {
+    this.paginaActual = 1;
     this.cargarInvitados();
+    await this.verificarRoles();
   }
 
   generarSlug(nombre: string): string {
@@ -354,11 +308,7 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
     this.cargarInvitados();
   }
 
-  // ================================================================
-  // 🗑️ ELIMINAR INVITADO
-  // ================================================================
   async eliminarInvitado(inv: Invitado) {
-    // ⚠️ Verificar ID ANTES de mostrar el diálogo
     if (!inv.id) {
       Swal.fire('Error', 'El invitado no tiene un ID válido', 'error');
       return;
@@ -377,17 +327,13 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
 
     if (result.isConfirmed) {
       try {
-        // Mostrar loading
         Swal.fire({
           title: 'Eliminando...',
           text: 'Por favor espera',
           allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          },
+          didOpen: () => Swal.showLoading(),
         });
 
-        // Eliminar usando el servicio
         await this.invitadosService.eliminarInvitado(inv.id);
 
         Swal.fire({
@@ -398,7 +344,6 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
           showConfirmButton: false,
         });
 
-        // Recargar la lista
         this.cargarInvitados();
       } catch (error) {
         console.error('Error al eliminar invitado:', error);
@@ -407,60 +352,15 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ================================================================
-  // MÉTODO PARA OBTENER LA IMAGEN OPTIMIZADA PARA WHATSAPP
-  // ================================================================
-  private getImagenWhatsApp(evento: any): string {
-    if (!evento) return '';
-
-    // 📱 Detectar si es móvil
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    // 🖼️ Elegir la imagen según dispositivo
-    let imagenUrl = '';
-    if (isMobile && evento.heroImageMovil) {
-      imagenUrl = evento.heroImageMovil;
-    } else if (evento.heroImageEscritorio) {
-      imagenUrl = evento.heroImageEscritorio;
-    } else if (evento.heroImage) {
-      imagenUrl = evento.heroImage;
-    }
-
-    if (!imagenUrl) return '';
-
-    // ✅ Si es Cloudinary, aplicar transformación para WhatsApp
-    if (imagenUrl.includes('cloudinary.com')) {
-      const parts = imagenUrl.split('/upload/');
-      if (parts.length === 2) {
-        // Transformación: 1200x630, formato automático, calidad automática
-        return `${parts[0]}/upload/f_auto,q_auto,w_1200,h_630,c_fill/${parts[1]}`;
-      }
-    }
-
-    return imagenUrl;
-  }
-
-  // ================================================================
-  // ENVIAR POR WHATSAPP CON CLOUDINARY
-  // ================================================================
   enviarWhatsApp(inv: Invitado) {
     const urlInvitacion = `${window.location.origin}/invitaciones/${inv.slug}`;
     const urlConCache = `${urlInvitacion}?t=${Date.now()}`;
 
     const evento = this.misEventos.find((e) => e.slug === inv.eventoSlug);
 
-    // 🖼️ Generar la imagen usando el servicio (opcional)
-    let imagenGenerada = '';
-    if (evento) {
-      imagenGenerada = this.ogImageService.generateImage(evento, inv.nombre);
-      console.log('🖼️ Imagen generada:', imagenGenerada);
-    }
-
-    // 🎯 Emoji según tipo de evento
     const emojiEvento =
       evento?.tipo === 'boda' ? '💍' : evento?.tipo === 'xv' ? '👗' : '🎉';
 
-    // 📝 Mensaje
     const mensaje = [
       `*INVITACIÓN ESPECIAL*`,
       ``,
@@ -489,9 +389,6 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ================================================================
-  // 📄 PAGINACIÓN
-  // ================================================================
   aplicarPaginacion() {
     const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
     const fin = inicio + this.itemsPorPagina;
@@ -518,9 +415,6 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ================================================================
-  // ✏️ EDITAR PASES DE UN INVITADO
-  // ================================================================
   async editarPases(inv: Invitado) {
     if (!inv.id) {
       Swal.fire('Error', 'El invitado no tiene un ID válido', 'error');
@@ -557,7 +451,6 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
 
     if (nuevoPases) {
       try {
-        // Mostrar loading
         Swal.fire({
           title: 'Actualizando...',
           text: 'Por favor espera',
@@ -565,12 +458,10 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
           didOpen: () => Swal.showLoading(),
         });
 
-        // Actualizar en Firebase
         await this.invitadosService.actualizarInvitado(inv.id, {
           pases: parseInt(nuevoPases),
         });
 
-        // Mostrar éxito con los detalles del cambio
         Swal.fire({
           icon: 'success',
           title: '¡Pases actualizados!',
@@ -581,16 +472,12 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
               <strong style="color: #4299e1; font-size: 24px;">${nuevoPases}</strong> 
               pase${parseInt(nuevoPases) > 1 ? 's' : ''}
             </p>
-            <p style="color: #718096; font-size: 14px;">
-              ✅ Cambio reflejado en la invitación
-            </p>
           </div>
         `,
           timer: 3000,
           showConfirmButton: false,
         });
 
-        // Recargar la lista
         this.cargarInvitados();
       } catch (error: any) {
         console.error('Error al actualizar pases:', error);
@@ -601,6 +488,208 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
           confirmButtonColor: '#e53e3e',
           confirmButtonText: 'Entendido',
         });
+      }
+    }
+  }
+
+  // Verificar roles al cargar el evento
+  async verificarRoles() {
+    if (!this.eventoSlug) {
+      console.warn('⚠️ verificarRoles: eventoSlug vacío');
+      this.esAnfitrion = false;
+      this.esColaborador = false;
+      this.cdr.detectChanges();
+      return;
+    }
+
+    console.log('🔍 Verificando roles para evento:', this.eventoSlug);
+
+    try {
+      const eventoRef = doc(this.firestore, `invitaciones/${this.eventoSlug}`);
+      const eventoSnap = await getDoc(eventoRef);
+
+      if (!eventoSnap.exists()) {
+        console.error('❌ El evento no existe en Firestore:', this.eventoSlug);
+        this.esAnfitrion = false;
+        this.esColaborador = false;
+        this.cdr.detectChanges();
+        return;
+      }
+
+      const data = eventoSnap.data();
+      const user = this.auth.currentUser;
+
+      // 👈 EVALUACIÓN DIRECTA DE ROLES
+      this.esAnfitrion = data['anfitrionId'] === user?.uid;
+      this.esColaborador = (data['colaboradores'] || []).includes(user?.uid);
+
+      console.log('👑 esAnfitrion:', this.esAnfitrion);
+      console.log('🤝 esColaborador:', this.esColaborador);
+
+      if (this.esAnfitrion) {
+        await this.cargarColaboradores();
+      } else {
+        this.colaboradores = [];
+      }
+
+      this.cdr.detectChanges();
+    } catch (error) {
+      console.error('Error al verificar roles:', error);
+      this.esAnfitrion = false;
+      this.esColaborador = false;
+      this.cdr.detectChanges();
+    }
+  }
+
+  async cargarColaboradores() {
+    try {
+      this.colaboradores = await this.invitacionesService.obtenerColaboradores(
+        this.eventoSlug,
+      );
+    } catch (error) {
+      console.error('Error al cargar colaboradores:', error);
+    }
+  }
+
+  async invitarColaborador() {
+    if (!this.emailColaborador) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Email requerido',
+        text: 'Ingresa el email del colaborador',
+        confirmButtonColor: '#ed8936',
+        confirmButtonText: 'Entendido',
+      });
+      return;
+    }
+
+    try {
+      const result = await Swal.fire({
+        title: 'Invitar colaborador',
+        html: `
+        <p>¿Invitar a <strong>${this.emailColaborador}</strong> como colaborador?</p>
+        <p style="color: #718096; font-size: 14px;">
+          Podrá ver y editar invitados, enviar WhatsApp y más
+        </p>
+      `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#4299e1',
+        cancelButtonColor: '#718096',
+        confirmButtonText: '✅ Invitar',
+        cancelButtonText: 'Cancelar',
+      });
+
+      if (result.isConfirmed) {
+        const response = await this.invitacionesService.invitarColaborador(
+          this.eventoSlug,
+          this.emailColaborador,
+        );
+
+        await Swal.fire({
+          icon: 'success',
+          title: '¡Colaborador invitado!',
+          text: response.message,
+          timer: 2500,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end',
+        });
+
+        this.emailColaborador = '';
+        await this.cargarColaboradores();
+      }
+    } catch (error: any) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message || 'No se pudo invitar al colaborador',
+        confirmButtonColor: '#e53e3e',
+        confirmButtonText: 'Entendido',
+      });
+    }
+  }
+
+  async quitarColaborador(colaborador: any) {
+    const result = await Swal.fire({
+      title: `¿Quitar a ${colaborador.nombre || colaborador.email}?`,
+      text: 'Dejará de tener acceso a este evento',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e53e3e',
+      cancelButtonColor: '#718096',
+      confirmButtonText: 'Sí, quitar',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await this.invitacionesService.quitarColaborador(
+          this.eventoSlug,
+          colaborador.uid,
+        );
+
+        await Swal.fire({
+          icon: 'success',
+          title: 'Colaborador removido',
+          timer: 2000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end',
+        });
+
+        await this.cargarColaboradores();
+      } catch (error: any) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message || 'No se pudo quitar al colaborador',
+          confirmButtonColor: '#e53e3e',
+          confirmButtonText: 'Entendido',
+        });
+      }
+    }
+  }
+
+  async cargarMisEventos() {
+    const user = this.auth.currentUser;
+    if (user) {
+      // 1. Eventos donde es Anfitrión
+      const q1 = query(
+        collection(this.firestore, 'invitaciones'),
+        where('anfitrionId', '==', user.uid),
+      );
+      const snapshot1 = await getDocs(q1);
+      const eventosAnfitrion = snapshot1.docs.map((doc) => ({
+        slug: doc.id,
+        ...doc.data(),
+        rol: 'anfitrion',
+      }));
+
+      // 2. Eventos donde es Colaborador
+      const q2 = query(
+        collection(this.firestore, 'invitaciones'),
+        where('colaboradores', 'array-contains', user.uid),
+      );
+      const snapshot2 = await getDocs(q2);
+      const eventosColaborador = snapshot2.docs.map((doc) => ({
+        slug: doc.id,
+        ...doc.data(),
+        rol: 'colaborador',
+      }));
+
+      // Evitar duplicados si por algún motivo está en ambos
+      const mapaEventos = new Map();
+      [...eventosAnfitrion, ...eventosColaborador].forEach((evt) => {
+        mapaEventos.set(evt.slug, evt);
+      });
+
+      this.misEventos = Array.from(mapaEventos.values());
+
+      if (this.misEventos.length > 0) {
+        this.eventoSlug = this.misEventos[0].slug;
+        this.cargarInvitados();
+        await this.verificarRoles();
       }
     }
   }
