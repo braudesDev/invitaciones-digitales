@@ -154,7 +154,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (inv of invitados; track inv) {
+          @for (inv of invitadosFiltrados; track inv) {
             <tr>
               <td>
                 <strong>{{ inv.nombre }}</strong>
@@ -223,6 +223,15 @@
                   </button>
                 }
 
+                <!-- 🆕 Botón EDITAR PASES -->
+                <button
+                  class="btn-editar"
+                  (click)="editarPases(inv)"
+                  title="Editar número de pases"
+                >
+                  <ng-icon name="heroPencilSquare" size="16"></ng-icon>
+                </button>
+
                 <!-- 🆕 Botón ELIMINAR - SIEMPRE visible (FUERA de cualquier @if) -->
                 <button
                   class="btn-eliminar"
@@ -236,6 +245,59 @@
           }
         </tbody>
       </table>
+      <!-- 🆕 CONTROLES DE PAGINACIÓN -->
+      @if (totalPaginas > 1) {
+        <div class="pagination-container">
+          <div class="pagination-info">
+            Mostrando
+            <strong>{{ (paginaActual - 1) * itemsPorPagina + 1 }}</strong>
+            -
+            <strong>{{
+              Math.min(paginaActual * itemsPorPagina, invitadosCompletos.length)
+            }}</strong>
+            de
+            <strong>{{ invitadosCompletos.length }}</strong>
+            invitados
+          </div>
+
+          <div class="pagination-controls">
+            <button
+              class="btn-pagination"
+              (click)="paginaAnterior()"
+              [disabled]="paginaActual === 1"
+            >
+              <ng-icon name="heroChevronLeft" size="16"></ng-icon>
+              Anterior
+            </button>
+
+            @for (pagina of [].constructor(totalPaginas); track $index) {
+              <button
+                class="btn-pagination"
+                [class.active]="paginaActual === $index + 1"
+                (click)="irPagina($index + 1)"
+              >
+                {{ $index + 1 }}
+              </button>
+            }
+
+            <button
+              class="btn-pagination"
+              (click)="paginaSiguiente()"
+              [disabled]="paginaActual === totalPaginas"
+            >
+              Siguiente
+              <ng-icon name="heroChevronRight" size="16"></ng-icon>
+            </button>
+          </div>
+        </div>
+      }
+
+      @if (invitadosCompletos.length === 0) {
+        <div class="no-data">
+          <ng-icon name="hugeUserGroup" size="48"></ng-icon>
+          <p>No hay invitados en esta categoría</p>
+        </div>
+      }
     } @else {
       <p>Cargando invitados...</p>
     }

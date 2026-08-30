@@ -64,6 +64,7 @@ import {
   heroCog6Tooth,
   heroAdjustmentsHorizontal,
   heroChevronLeft,
+  heroChevronRight,
   heroEllipsisHorizontal,
   heroListBullet,
   heroCube,
@@ -75,6 +76,7 @@ import {
   heroPause,
   heroSpeakerWave,
   heroSpeakerXMark,
+  heroPencilSquare,
 } from '@ng-icons/heroicons/outline';
 //Lucide icons
 import {
@@ -196,6 +198,7 @@ export const appConfig: ApplicationConfig = {
       heroCog6Tooth,
       heroAdjustmentsHorizontal,
       heroChevronLeft,
+      heroChevronRight,
       heroEllipsisHorizontal,
       heroListBullet,
       heroCube,
@@ -207,6 +210,7 @@ export const appConfig: ApplicationConfig = {
       heroPause,
       heroSpeakerWave,
       heroSpeakerXMark,
+      heroPencilSquare,
 
       //Lucide Icons
       lucideChurch,

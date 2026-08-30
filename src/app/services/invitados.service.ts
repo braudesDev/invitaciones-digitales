@@ -123,19 +123,25 @@ export class InvitadosService {
   }
 
   // 🔹 Actualizar invitado
+  // 🔹 Actualizar invitado / Confirmar asistencia
   async actualizarInvitado(id: string, data: Partial<Invitado>) {
     const ref = doc(this.firestore, `invitados/${id}`);
-    const docSnap = await getDoc(ref);
 
+    // Si solo se está actualizando el estado, enviamos únicamente la llave 'estado'
+    const keys = Object.keys(data);
+    if (keys.length === 1 && data.estado) {
+      return updateDoc(ref, { estado: data.estado });
+    }
+
+    // Verificación para anfitriones/colaboradores
+    const docSnap = await getDoc(ref);
     if (!docSnap.exists()) throw new Error('Invitado no encontrado');
 
     const invitadoData = docSnap.data();
     const user = this.auth.currentUser;
-
-    const soloEstado = Object.keys(data).length === 1 && data.estado;
     const esDueño = user && invitadoData['anfitrionId'] === user.uid;
 
-    if (!esDueño && !soloEstado) {
+    if (!esDueño) {
       throw new Error('No tienes permiso para modificar este invitado');
     }
 

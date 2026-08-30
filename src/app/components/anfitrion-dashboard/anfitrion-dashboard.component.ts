@@ -50,6 +50,14 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
   userPhotoURL: string = '';
   origin = window.location.origin;
 
+  // 🆕 Propiedades de paginación
+  paginaActual: number = 1;
+  itemsPorPagina: number = 5;
+  invitadosFiltrados: Invitado[] = [];
+  totalPaginas: number = 0;
+  invitadosCompletos: Invitado[] = [];
+  Math = Math;
+
   private authSubscription!: Subscription;
 
   constructor(
@@ -108,6 +116,7 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
 
   cambiarTab(tab: 'pendiente' | 'confirmado' | 'rechazado') {
     this.tabActivo = tab;
+    this.paginaActual = 1; // Resetear a la pagina 1 al cambiar de tab
     this.cargarInvitados();
   }
 
@@ -230,14 +239,35 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
 
   cargarInvitados() {
     if (!this.eventoSlug) return;
+
     this.invitados$ = this.invitadosService.getInvitadosPorEvento(
       this.eventoSlug,
       this.tabActivo,
     );
+
+    // 👇 SUSCRIBIRSE PARA APLICAR PAGINACIÓN
+    this.invitados$.subscribe({
+      next: (invitados) => {
+        this.invitadosCompletos = invitados;
+        this.totalPaginas = Math.ceil(
+          this.invitadosCompletos.length / this.itemsPorPagina,
+        );
+
+        // Si la página actual es mayor que el total, resetear a 1
+        if (this.paginaActual > this.totalPaginas && this.totalPaginas > 0) {
+          this.paginaActual = 1;
+        }
+
+        this.aplicarPaginacion();
+      },
+      error: (error) => {
+        console.error('Error al cargar invitados:', error);
+      },
+    });
   }
 
   cambiarEvento() {
-    console.log('🔄 Cambiando a evento:', this.eventoSlug);
+    this.paginaActual = 1; // Resetear a pag 1 al cambiar de evento
     this.cargarInvitados();
   }
 
@@ -456,6 +486,122 @@ export class AnfitrionDashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/']);
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
+    }
+  }
+
+  // ================================================================
+  // 📄 PAGINACIÓN
+  // ================================================================
+  aplicarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+    const fin = inicio + this.itemsPorPagina;
+    this.invitadosFiltrados = this.invitadosCompletos.slice(inicio, fin);
+  }
+
+  irPagina(pagina: number) {
+    if (pagina < 1 || pagina > this.totalPaginas) return;
+    this.paginaActual = pagina;
+    this.aplicarPaginacion();
+  }
+
+  paginaSiguiente() {
+    if (this.paginaActual < this.totalPaginas) {
+      this.paginaActual++;
+      this.aplicarPaginacion();
+    }
+  }
+
+  paginaAnterior() {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.aplicarPaginacion();
+    }
+  }
+
+  // ================================================================
+  // ✏️ EDITAR PASES DE UN INVITADO
+  // ================================================================
+  async editarPases(inv: Invitado) {
+    if (!inv.id) {
+      Swal.fire('Error', 'El invitado no tiene un ID válido', 'error');
+      return;
+    }
+
+    const { value: nuevoPases } = await Swal.fire({
+      title: `Editar pases para ${inv.nombre}`,
+      text: '¿Cuántas personas asistirán?',
+      icon: 'question',
+      input: 'number',
+      inputLabel: 'Número de pases',
+      inputValue: inv.pases,
+      inputAttributes: {
+        min: '1',
+        max: '20',
+        step: '1',
+      },
+      showCancelButton: true,
+      confirmButtonColor: '#4299e1',
+      cancelButtonColor: '#e53e3e',
+      confirmButtonText: 'Actualizar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value || parseInt(value) < 1) {
+          return 'Debes ingresar al menos 1 pase';
+        }
+        if (parseInt(value) > 20) {
+          return 'Máximo 20 pases permitidos';
+        }
+        return null;
+      },
+    });
+
+    if (nuevoPases) {
+      try {
+        // Mostrar loading
+        Swal.fire({
+          title: 'Actualizando...',
+          text: 'Por favor espera',
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading(),
+        });
+
+        // Actualizar en Firebase
+        await this.invitadosService.actualizarInvitado(inv.id, {
+          pases: parseInt(nuevoPases),
+        });
+
+        // Mostrar éxito con los detalles del cambio
+        Swal.fire({
+          icon: 'success',
+          title: '¡Pases actualizados!',
+          html: `
+          <div style="text-align: center;">
+            <p style="font-size: 16px; margin-bottom: 8px;">
+              <strong>${inv.nombre}</strong> ahora tiene 
+              <strong style="color: #4299e1; font-size: 24px;">${nuevoPases}</strong> 
+              pase${parseInt(nuevoPases) > 1 ? 's' : ''}
+            </p>
+            <p style="color: #718096; font-size: 14px;">
+              ✅ Cambio reflejado en la invitación
+            </p>
+          </div>
+        `,
+          timer: 3000,
+          showConfirmButton: false,
+        });
+
+        // Recargar la lista
+        this.cargarInvitados();
+      } catch (error: any) {
+        console.error('Error al actualizar pases:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message || 'No se pudo actualizar los pases',
+          confirmButtonColor: '#e53e3e',
+          confirmButtonText: 'Entendido',
+        });
+      }
     }
   }
 }

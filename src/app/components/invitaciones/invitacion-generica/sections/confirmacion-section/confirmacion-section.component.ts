@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Confirmacion } from '../../../../../models/confirmacion.model';
 import { NgIcon } from '@ng-icons/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-confirmacion-section',
@@ -66,19 +67,41 @@ export class ConfirmacionSectionComponent implements OnInit {
 
   async confirmarAsistencia() {
     if (this.estadoActual === 'confirmado') {
-      alert('✅ Ya confirmaste tu asistencia');
+      await Swal.fire({
+        icon: 'info',
+        title: '✅ Ya confirmaste tu asistencia',
+        text: '¡Te esperamos! 🎉',
+        timer: 2000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end',
+      });
       return;
     }
 
     if (!this.invitadoId) {
-      alert(
-        '❌ Error: No se encontró tu invitación. Por favor, abre el enlace correcto.',
-      );
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se encontró tu invitación. Por favor, abre el enlace correcto.',
+        confirmButtonColor: '#e53e3e',
+        confirmButtonText: 'Entendido',
+      });
       return;
     }
 
-    const confirmar = confirm('🎉 ¿Confirmas tu asistencia?');
-    if (!confirmar) return;
+    // Confirmación con SweetAlert2 (solo 1 diálogo)
+    const result = await Swal.fire({
+      title: '🎉 ¿Confirmas tu asistencia?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#48bb78',
+      cancelButtonColor: '#718096',
+      confirmButtonText: '✅ Sí, confirmo',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (!result.isConfirmed) return;
 
     this.confirmando = true;
     try {
@@ -86,10 +109,26 @@ export class ConfirmacionSectionComponent implements OnInit {
         estado: 'confirmado',
       });
       this.estadoActual = 'confirmado';
-      alert('✅ ¡Asistencia confirmada! Te esperamos 🎉');
+
+      // Éxito (solo 1 diálogo)
+      await Swal.fire({
+        icon: 'success',
+        title: '✅ ¡Asistencia confirmada!',
+        text: 'Te esperamos 🎉',
+        timer: 2500,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end',
+      });
     } catch (error) {
       console.error('Error al confirmar:', error);
-      alert('❌ Error al confirmar. Intenta de nuevo.');
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo confirmar. Intenta de nuevo.',
+        confirmButtonColor: '#e53e3e',
+        confirmButtonText: 'Entendido',
+      });
     } finally {
       this.confirmando = false;
     }
@@ -97,19 +136,41 @@ export class ConfirmacionSectionComponent implements OnInit {
 
   async rechazarAsistencia() {
     if (this.estadoActual === 'rechazado') {
-      alert('✅ Ya confirmaste que no asistirás');
+      await Swal.fire({
+        icon: 'info',
+        title: '💔 Ya confirmaste que no asistirás',
+        text: '¡Te extrañaremos!',
+        timer: 2000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end',
+      });
       return;
     }
 
     if (!this.invitadoId) {
-      alert(
-        '❌ Error: No se encontró tu invitación. Por favor, abre el enlace correcto.',
-      );
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se encontró tu invitación. Por favor, abre el enlace correcto.',
+        confirmButtonColor: '#e53e3e',
+        confirmButtonText: 'Entendido',
+      });
       return;
     }
 
-    const rechazar = confirm('💔 ¿Confirmas que NO podrás asistir?');
-    if (!rechazar) return;
+    // Confirmación con SweetAlert2 (solo 1 diálogo)
+    const result = await Swal.fire({
+      title: '💔 ¿Confirmas que NO podrás asistir?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e53e3e',
+      cancelButtonColor: '#718096',
+      confirmButtonText: 'Sí, no podré asistir',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (!result.isConfirmed) return;
 
     this.confirmando = true;
     try {
@@ -117,10 +178,26 @@ export class ConfirmacionSectionComponent implements OnInit {
         estado: 'rechazado',
       });
       this.estadoActual = 'rechazado';
-      alert('💔 Gracias por avisar. ¡Te extrañaremos!');
+
+      // Éxito (solo 1 diálogo)
+      await Swal.fire({
+        icon: 'info',
+        title: '💔 Asistencia rechazada',
+        text: 'Gracias por avisar. ¡Te extrañaremos!',
+        timer: 2500,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end',
+      });
     } catch (error) {
       console.error('Error al rechazar:', error);
-      alert('❌ Error al rechazar. Intenta de nuevo.');
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo rechazar. Intenta de nuevo.',
+        confirmButtonColor: '#e53e3e',
+        confirmButtonText: 'Entendido',
+      });
     } finally {
       this.confirmando = false;
     }
