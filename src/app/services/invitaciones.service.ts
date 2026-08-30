@@ -13,7 +13,8 @@ import {
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Auth } from '@angular/fire/auth';
 import { Consideraciones } from '../models/consideraciones.model';
 import { Confirmacion } from '../models/confirmacion.model';
@@ -40,8 +41,8 @@ export interface Invitacion {
 
   // DISEÑO / HERO
   heroImage?: string;
-  heroImageMovil?: string; // 👈 AGREGAR
-  heroImageEscritorio?: string; // 👈 AGREGAR
+  heroImageMovil?: string;
+  heroImageEscritorio?: string;
   shareImage?: string;
   photos?: string[];
   primaryColor?: string;
@@ -59,7 +60,8 @@ export interface Invitacion {
   // INFO ADICIONAL DEL EVENTO
   evento?: string;
   anfitrion?: string;
-  anfitrionId?: string; // 👈 NUEVO: ID del usuario dueño
+  anfitrionId?: string; // ID del usuario dueño
+  colaboradores?: string[]; // 👈 AGREGADO: Lista de UIDs de colaboradores
   totalInvitados?: number;
   enviadas?: number;
 
@@ -99,7 +101,7 @@ export interface Invitacion {
     descripcion?: string;
     sugerencia?: string;
     notaAdicional?: string;
-    imagen?: string; // Si aún lo usas
+    imagen?: string;
   };
 
   historia?: {
@@ -173,10 +175,10 @@ export interface Invitacion {
     link?: string;
   };
   confirmacionData?: Confirmacion;
-  animacionHero?: string; // Animación seleccionada para el Hero Section
-  audio?: AudioConfig; // ✅ Solo agregar esta línea
+  animacionHero?: string;
+  audio?: AudioConfig;
   estiloAOS?: 'clasico' | 'moderno' | 'romantico' | 'minimalista' | 'dinamico';
-  animacionesAOS?: boolean; // true por defecto
+  animacionesAOS?: boolean;
 }
 
 @Injectable({
@@ -190,19 +192,40 @@ export class InvitacionesService {
     return collection(this.firestore, 'invitaciones');
   }
 
-  // 🔹 Obtener invitaciones SOLO del anfitrión actual
+  // 🔹 Obtener invitaciones del anfitrión Y las que tiene como colaborador (Observable)
   getMisInvitaciones(): Observable<Invitacion[]> {
     const user = this.auth.currentUser;
-    if (!user) return new Observable();
+    if (!user) return of([]);
 
-    const q = query(this.coleccion, where('anfitrionId', '==', user.uid));
-    return collectionData(q, { idField: 'id' }) as Observable<Invitacion[]>;
+    const qAnfitrion = query(
+      this.coleccion,
+      where('anfitrionId', '==', user.uid),
+    );
+    const qColaborador = query(
+      this.coleccion,
+      where('colaboradores', 'array-contains', user.uid),
+    );
+
+    const obsAnfitrion = collectionData(qAnfitrion, {
+      idField: 'id',
+    }) as Observable<Invitacion[]>;
+    const obsColaborador = collectionData(qColaborador, {
+      idField: 'id',
+    }) as Observable<Invitacion[]>;
+
+    return combineLatest([obsAnfitrion, obsColaborador]).pipe(
+      map(([anfitrionEvts, colaboradorEvts]) => {
+        const mapa = new Map<string, Invitacion>();
+        anfitrionEvts.forEach((e) => mapa.set(e.id, e));
+        colaboradorEvts.forEach((e) => mapa.set(e.id, e));
+        return Array.from(mapa.values());
+      }),
+    );
   }
 
-  // 🔹 Obtener invitación por slug (pública - cualquiera puede ver)
+  // 🔹 Obtener invitación por slug (pública)
   getInvitacionBySlug(slug: string): Observable<Invitacion | undefined> {
-    const ref = collection(this.firestore, 'invitaciones');
-    const q = query(ref, where('slug', '==', slug));
+    const q = query(this.coleccion, where('slug', '==', slug));
 
     return new Observable((observer) => {
       getDocs(q)
@@ -219,8 +242,8 @@ export class InvitacionesService {
     });
   }
 
-  // 🔹 Guardar nueva invitación (asigna automáticamente el anfitrionId)
-  async guardarInvitacion(invitacion: Invitacion) {
+  // 🔹 Guardar nueva invitación
+  async guardarInvitacion(invitacion: Invitacion): Promise<string> {
     const user = this.auth.currentUser;
     if (!user) throw new Error('Debes iniciar sesión');
 
@@ -228,6 +251,7 @@ export class InvitacionesService {
       ...invitacion,
       anfitrionId: user.uid,
       anfitrion: user.email,
+      colaboradores: [],
     };
 
     const docRef = await addDoc(this.coleccion, nuevaInvitacion);
@@ -244,22 +268,43 @@ export class InvitacionesService {
 
   // 🔹 Buscar por slug (público)
   async getBySlug(slug: string): Promise<Invitacion | undefined> {
-    const snapshot = await getDocs(collection(this.firestore, 'invitaciones'));
-    const invitaciones = snapshot.docs.map((doc) => doc.data() as Invitacion);
-    return invitaciones.find((inv) => inv.slug === slug);
+    const q = query(this.coleccion, where('slug', '==', slug));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) return undefined;
+
+    const docSnap = snapshot.docs[0];
+    const data = docSnap.data() as Omit<Invitacion, 'id'>;
+
+    return {
+      ...data,
+      id: docSnap.id,
+    };
   }
 
-  // 🔹 Obtener una invitación por ID (verifica que sea del usuario)
+  // 🔹 Obtener invitación por ID (Verifica si es anfitrión O colaborador)
   async getInvitacionById(id: string): Promise<Invitacion | undefined> {
     const docRef = doc(this.firestore, `invitaciones/${id}`);
-    const docSnap = await getDocs(query(this.coleccion, where('id', '==', id)));
-    const data = docSnap.docs[0]?.data() as Invitacion;
+    const docSnap = await getDoc(docRef);
 
+    if (!docSnap.exists()) return undefined;
+
+    // 👈 Cambiamos "Invitacion" por "Omit<Invitacion, 'id'>"
+    const data = docSnap.data() as Omit<Invitacion, 'id'>;
     const user = this.auth.currentUser;
-    if (data && user && data.anfitrionId !== user.uid) {
-      throw new Error('No tienes permiso para ver esta invitación');
+
+    if (user) {
+      const esAnfitrion = data.anfitrionId === user.uid;
+      const esColaborador = (data.colaboradores || []).includes(user.uid);
+
+      if (!esAnfitrion && !esColaborador) {
+        throw new Error('No tienes permiso para ver esta invitación');
+      }
     }
-    return data;
+
+    return {
+      ...data,
+      id: docSnap.id, // 👈 Pon el 'id' al final
+    };
   }
 
   // 🔹 Agregar nueva invitación
@@ -269,12 +314,13 @@ export class InvitacionesService {
 
     invitacion.slug = invitacion.name.toLowerCase().replace(/\s+/g, '-');
     invitacion.anfitrionId = user.uid;
+    invitacion.colaboradores = [];
 
     const docRef = await addDoc(this.coleccion, invitacion);
     return docRef.id;
   }
 
-  // 🔹 Actualizar invitación (solo si es dueño)
+  // 🔹 Actualizar invitación (ANFITRIÓN Y COLABORADOR PERMITIDOS)
   async updateInvitacion(id: string, data: Partial<Invitacion>): Promise<void> {
     const user = this.auth.currentUser;
     if (!user) throw new Error('Debes iniciar sesión');
@@ -283,14 +329,22 @@ export class InvitacionesService {
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) throw new Error('Invitación no encontrada');
-    if (docSnap.data()['anfitrionId'] !== user.uid) {
+
+    const currentData = docSnap.data();
+    const esAnfitrion = currentData['anfitrionId'] === user.uid;
+    const esColaborador = (currentData['colaboradores'] || []).includes(
+      user.uid,
+    );
+
+    // Permitir actualización si es anfitrión O colaborador
+    if (!esAnfitrion && !esColaborador) {
       throw new Error('No tienes permiso para editar esta invitación');
     }
 
     return updateDoc(docRef, { ...data });
   }
 
-  // 🔹 Eliminar invitación (solo si es dueño)
+  // 🔹 Eliminar invitación (EXCLUSIVO DEL ANFITRIÓN)
   async deleteInvitacion(id: string): Promise<void> {
     const user = this.auth.currentUser;
     if (!user) throw new Error('Debes iniciar sesión');
@@ -300,9 +354,167 @@ export class InvitacionesService {
 
     if (!docSnap.exists()) throw new Error('Invitación no encontrada');
     if (docSnap.data()['anfitrionId'] !== user.uid) {
-      throw new Error('No tienes permiso para eliminar esta invitación');
+      throw new Error('Solo el anfitrión puede eliminar esta invitación');
     }
 
     return deleteDoc(docRef);
+  }
+
+  // ================================================================
+  // 🤝 SISTEMA DE COLABORADORES
+  // ================================================================
+
+  // 1. Verificar si un usuario es colaborador de un evento
+  async esColaborador(eventoSlug: string): Promise<boolean> {
+    const user = this.auth.currentUser;
+    if (!user) return false;
+
+    try {
+      const eventoRef = doc(this.firestore, `invitaciones/${eventoSlug}`);
+      const eventoSnap = await getDoc(eventoRef);
+
+      if (!eventoSnap.exists()) return false;
+
+      const data = eventoSnap.data();
+      const colaboradores = data['colaboradores'] || [];
+
+      return colaboradores.includes(user.uid);
+    } catch (error) {
+      console.error('Error al verificar colaborador:', error);
+      return false;
+    }
+  }
+
+  // 2. Verificar si es el anfitrión
+  async esAnfitrion(eventoSlug: string): Promise<boolean> {
+    const user = this.auth.currentUser;
+    if (!user) return false;
+
+    try {
+      const eventoRef = doc(this.firestore, `invitaciones/${eventoSlug}`);
+      const eventoSnap = await getDoc(eventoRef);
+
+      if (!eventoSnap.exists()) return false;
+
+      return eventoSnap.data()['anfitrionId'] === user.uid;
+    } catch (error) {
+      console.error('Error al verificar anfitrión:', error);
+      return false;
+    }
+  }
+
+  // 3. Invitar a un colaborador
+  async invitarColaborador(
+    eventoSlug: string,
+    email: string,
+  ): Promise<{ message: string }> {
+    const user = this.auth.currentUser;
+    if (!user) throw new Error('Debes iniciar sesión');
+
+    const eventoRef = doc(this.firestore, `invitaciones/${eventoSlug}`);
+    const eventoSnap = await getDoc(eventoRef);
+
+    if (!eventoSnap.exists()) {
+      throw new Error('El evento no existe');
+    }
+
+    if (eventoSnap.data()['anfitrionId'] !== user.uid) {
+      throw new Error('Solo el anfitrión puede invitar colaboradores');
+    }
+
+    const usersRef = collection(this.firestore, 'users');
+    const q = query(usersRef, where('email', '==', email));
+    const userSnap = await getDocs(q);
+
+    if (userSnap.empty) {
+      throw new Error('El usuario no existe. Debe registrarse primero.');
+    }
+
+    const uid = userSnap.docs[0].id;
+    const colaboradoresActuales = eventoSnap.data()['colaboradores'] || [];
+
+    if (colaboradoresActuales.includes(uid)) {
+      throw new Error('Este usuario ya es colaborador');
+    }
+
+    await updateDoc(eventoRef, {
+      colaboradores: [...colaboradoresActuales, uid],
+    });
+
+    return { message: `✅ ${email} ahora es colaborador del evento` };
+  }
+
+  // 4. Quitar un colaborador
+  async quitarColaborador(
+    eventoSlug: string,
+    uid: string,
+  ): Promise<{ message: string }> {
+    const user = this.auth.currentUser;
+    if (!user) throw new Error('Debes iniciar sesión');
+
+    const eventoRef = doc(this.firestore, `invitaciones/${eventoSlug}`);
+    const eventoSnap = await getDoc(eventoRef);
+
+    if (!eventoSnap.exists()) {
+      throw new Error('El evento no existe');
+    }
+
+    if (eventoSnap.data()['anfitrionId'] !== user.uid) {
+      throw new Error('Solo el anfitrión puede quitar colaboradores');
+    }
+
+    const colaboradoresActuales = eventoSnap.data()['colaboradores'] || [];
+    const nuevosColaboradores = colaboradoresActuales.filter(
+      (id: string) => id !== uid,
+    );
+
+    await updateDoc(eventoRef, {
+      colaboradores: nuevosColaboradores,
+    });
+
+    return { message: '✅ Colaborador removido' };
+  }
+
+  // 5. Obtener lista de colaboradores con sus datos
+  async obtenerColaboradores(eventoSlug: string): Promise<any[]> {
+    const eventoRef = doc(this.firestore, `invitaciones/${eventoSlug}`);
+    const eventoSnap = await getDoc(eventoRef);
+
+    if (!eventoSnap.exists()) return [];
+
+    const colaboradoresIds = eventoSnap.data()['colaboradores'] || [];
+    if (colaboradoresIds.length === 0) return [];
+
+    const colaboradores: any[] = [];
+    for (const uid of colaboradoresIds) {
+      const userRef = doc(this.firestore, `users/${uid}`);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        colaboradores.push({
+          uid,
+          ...userSnap.data(),
+        });
+      }
+    }
+
+    return colaboradores;
+  }
+
+  // 6. Obtener eventos donde soy colaborador
+  async getEventosColaborador(): Promise<any[]> {
+    const user = this.auth.currentUser;
+    if (!user) return [];
+
+    const eventosRef = collection(this.firestore, 'invitaciones');
+    const q = query(
+      eventosRef,
+      where('colaboradores', 'array-contains', user.uid),
+    );
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
   }
 }

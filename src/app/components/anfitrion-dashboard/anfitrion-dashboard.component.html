@@ -16,6 +16,26 @@
             ¡Hola, <strong>{{ userName || userEmail || "Anfitrión" }}</strong
             >!
           </p>
+          @if (eventoSlug) {
+            <div class="rol-badge">
+              @if (esAnfitrion) {
+                <span class="badge-rol anfitrion">
+                  <ng-icon name="heroUser" size="14"></ng-icon>
+                  Anfitrión
+                </span>
+              } @else if (esColaborador) {
+                <span class="badge-rol colaborador">
+                  <ng-icon name="heroUserGroup" size="14"></ng-icon>
+                  Colaborador
+                </span>
+              } @else {
+                <span class="badge-rol invitado">
+                  <ng-icon name="heroUser" size="14"></ng-icon>
+                  Invitado
+                </span>
+              }
+            </div>
+          }
         </div>
       </div>
       <div class="evento-selector">
@@ -31,19 +51,23 @@
               [ngModelOptions]="{ standalone: true }"
               (change)="cambiarEvento()"
             >
-              @for (evento of misEventos; track evento) {
+              @for (evento of misEventos; track evento.slug) {
                 <option [value]="evento.slug">
                   {{ evento.name }}
+                  {{ evento.rol === "colaborador" ? "(Colaborador)" : "" }}
                 </option>
               }
             </select>
-            <button
-              class="btn-eliminar-evento"
-              (click)="eliminarEvento(eventoSlug, obtenerNombreEvento())"
-              title="Eliminar evento"
-            >
-              <ng-icon name="lucideTrash2" size="18"></ng-icon>
-            </button>
+            <!-- 👈 SOLO MOSTRAR SI ES ANFITRIÓN -->
+            @if (esAnfitrion) {
+              <button
+                class="btn-eliminar-evento"
+                (click)="eliminarEvento(eventoSlug, obtenerNombreEvento())"
+                title="Eliminar evento"
+              >
+                <ng-icon name="lucideTrash2" size="18"></ng-icon>
+              </button>
+            }
           } @else {
             <span class="no-eventos-msg">
               <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
@@ -72,7 +96,7 @@
     </div>
   </div>
 
-  <!-- 🆕 MENÚ DE NAVEGACIÓN CENTRALIZADO -->
+  <!-- MENÚ DE NAVEGACIÓN CENTRALIZADO -->
   <nav class="nav-central">
     <a routerLink="/anfitrion/dashboard" class="nav-item" [class.active]="true">
       <ng-icon name="heroHome" size="18"></ng-icon>
@@ -82,7 +106,9 @@
       <ng-icon name="heroPlusCircle" size="18"></ng-icon>
       Crear invitación
     </a>
-    @if (eventoSlug) {
+
+    <!-- Editar evento: ANFITRIÓN Y COLABORADOR -->
+    @if (eventoSlug && (esAnfitrion || esColaborador)) {
       <a
         [routerLink]="['/anfitrion/editar-invitacion', eventoSlug]"
         class="nav-item"
@@ -154,7 +180,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (inv of invitadosFiltrados; track inv) {
+          @for (inv of invitadosFiltrados; track inv.id || inv.slug) {
             <tr>
               <td>
                 <strong>{{ inv.nombre }}</strong>
@@ -197,6 +223,7 @@
                 </button>
               </td>
               <td class="acciones-cell">
+                <!-- WhatsApp: visible para todos -->
                 <button
                   class="btn-whatsapp"
                   (click)="enviarWhatsApp(inv)"
@@ -204,7 +231,11 @@
                 >
                   <ng-icon name="hugeWhatsapp" size="18"></ng-icon>
                 </button>
-                @if (inv.estado !== "confirmado") {
+
+                <!-- Confirmar: anfitrión Y colaborador -->
+                @if (
+                  (esAnfitrion || esColaborador) && inv.estado !== "confirmado"
+                ) {
                   <button
                     class="btn-estado"
                     (click)="cambiarEstado(inv, 'confirmado')"
@@ -213,7 +244,11 @@
                     <ng-icon name="heroCheck" size="16"></ng-icon>
                   </button>
                 }
-                @if (inv.estado !== "rechazado") {
+
+                <!-- Rechazar: anfitrión Y colaborador -->
+                @if (
+                  (esAnfitrion || esColaborador) && inv.estado !== "rechazado"
+                ) {
                   <button
                     class="btn-estado rechazar"
                     (click)="cambiarEstado(inv, 'rechazado')"
@@ -223,29 +258,34 @@
                   </button>
                 }
 
-                <!-- 🆕 Botón EDITAR PASES -->
-                <button
-                  class="btn-editar"
-                  (click)="editarPases(inv)"
-                  title="Editar número de pases"
-                >
-                  <ng-icon name="heroPencilSquare" size="16"></ng-icon>
-                </button>
+                <!-- Editar pases: anfitrión Y colaborador -->
+                @if (esAnfitrion || esColaborador) {
+                  <button
+                    class="btn-editar"
+                    (click)="editarPases(inv)"
+                    title="Editar número de pases"
+                  >
+                    <ng-icon name="heroPencilSquare" size="16"></ng-icon>
+                  </button>
+                }
 
-                <!-- 🆕 Botón ELIMINAR - SIEMPRE visible (FUERA de cualquier @if) -->
-                <button
-                  class="btn-eliminar"
-                  (click)="eliminarInvitado(inv)"
-                  title="Eliminar invitado"
-                >
-                  <ng-icon name="lucideTrash2" size="18"></ng-icon>
-                </button>
+                <!-- Eliminar invitado: SOLO ANFITRIÓN -->
+                @if (esAnfitrion) {
+                  <button
+                    class="btn-eliminar"
+                    (click)="eliminarInvitado(inv)"
+                    title="Eliminar invitado"
+                  >
+                    <ng-icon name="lucideTrash2" size="18"></ng-icon>
+                  </button>
+                }
               </td>
             </tr>
           }
         </tbody>
       </table>
-      <!-- 🆕 CONTROLES DE PAGINACIÓN -->
+
+      <!-- CONTROLES DE PAGINACIÓN -->
       @if (totalPaginas > 1) {
         <div class="pagination-container">
           <div class="pagination-info">
@@ -301,12 +341,6 @@
     } @else {
       <p>Cargando invitados...</p>
     }
-    @if ((invitados$ | async)?.length === 0) {
-      <div class="no-data">
-        <ng-icon name="hugeUserGroup" size="48"></ng-icon>
-        <p>No hay invitados en esta categoría</p>
-      </div>
-    }
   </div>
 
   <!-- Formulario agregar invitado -->
@@ -358,4 +392,89 @@
       Agregar invitado
     </button>
   </div>
+
+  <!-- Banner Colaborador Corregido -->
+  @if (esColaborador && !esAnfitrion) {
+    <div class="colaborador-banner">
+      <ng-icon name="heroInformationCircle" size="20"></ng-icon>
+      <span
+        >Estás viendo este evento como <strong>Colaborador</strong>. Puedes ver
+        y agregar invitados, confirmar/rechazar, editar pases y enviar
+        WhatsApp.</span
+      >
+    </div>
+  }
+
+  <!-- SECCIÓN DE COLABORADORES -->
+  @if (esAnfitrion) {
+    <div class="colaboradores-section">
+      <div class="section-header">
+        <h3>🤝 Colaboradores</h3>
+        <span class="badge">{{ colaboradores.length }}</span>
+      </div>
+
+      <!-- Lista de colaboradores -->
+      <div class="colaboradores-list">
+        @for (colab of colaboradores; track colab.uid) {
+          <div class="colaborador-item">
+            <div class="colab-info">
+              <div class="colab-avatar">
+                @if (colab.photoURL) {
+                  <img [src]="colab.photoURL" alt="Avatar" />
+                } @else {
+                  <ng-icon name="heroUser" size="20"></ng-icon>
+                }
+              </div>
+              <div class="colab-details">
+                <span class="colab-name">{{
+                  colab.nombre || colab.email
+                }}</span>
+                <span class="colab-email">{{ colab.email }}</span>
+                <span class="colab-rol">👤 Colaborador</span>
+              </div>
+            </div>
+            <button
+              class="btn-remove"
+              (click)="quitarColaborador(colab)"
+              title="Quitar colaborador"
+            >
+              <ng-icon name="heroXMark" size="16"></ng-icon>
+            </button>
+          </div>
+        }
+
+        @if (colaboradores.length === 0) {
+          <div class="no-colaboradores">
+            <p>No hay colaboradores aún</p>
+            <p class="sub">
+              Invita a otras personas para que te ayuden a administrar el evento
+            </p>
+          </div>
+        }
+      </div>
+
+      <!-- Invitar nuevo colaborador -->
+      <div class="invitar-colaborador">
+        <div class="invite-form">
+          <input
+            type="email"
+            [(ngModel)]="emailColaborador"
+            placeholder="Email del colaborador"
+            class="input-invite"
+          />
+          <button
+            (click)="invitarColaborador()"
+            class="btn-invite"
+            [disabled]="!emailColaborador"
+          >
+            <ng-icon name="heroUserPlus" size="16"></ng-icon>
+            Invitar
+          </button>
+        </div>
+        <small class="help-text">
+          💡 El colaborador debe tener una cuenta registrada en la plataforma
+        </small>
+      </div>
+    </div>
+  }
 </div>
