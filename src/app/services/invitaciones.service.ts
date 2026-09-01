@@ -341,6 +341,10 @@ export class InvitacionesService {
       throw new Error('No tienes permiso para editar esta invitación');
     }
 
+    // 🛡️ PROTECCIÓN: Garantizar que NUNCA se cambie el anfitrión original al editar
+    delete data.anfitrionId;
+    delete data.anfitrion;
+
     return updateDoc(docRef, { ...data });
   }
 

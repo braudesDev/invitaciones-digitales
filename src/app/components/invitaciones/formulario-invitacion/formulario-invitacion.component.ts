@@ -764,11 +764,8 @@ export class FormularioInvitacionComponent implements OnInit {
   eliminarFoto(index: number) {
     this.nuevaInvitacion.photos?.splice(index, 1);
   }
-
   // ==============================================================
   // 3.12 GUARDAR INVITACIÓN
-  // ==============================================================
-  // Guarda la invitación en Firestore
   // ==============================================================
   async guardarInvitacion() {
     // --- VALIDACIONES ---
@@ -779,11 +776,7 @@ export class FormularioInvitacionComponent implements OnInit {
 
     const user = this.auth.currentUser;
     if (!user) {
-      Swal.fire(
-        'Error',
-        'Debes iniciar sesión para guardar la invitación',
-        'error',
-      );
+      Swal.fire('Error', 'Debes iniciar sesión para guardar', 'error');
       return;
     }
 
@@ -792,176 +785,199 @@ export class FormularioInvitacionComponent implements OnInit {
       (p) => p.nombre && p.nombre.trim() !== '',
     );
 
-    // --- GENERAR SLUG ---
-    this.nuevaInvitacion.slug = this.nuevaInvitacion.name
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '');
-
-    console.log(
-      '📤 Datos a guardar - consideracionesData:',
-      this.nuevaInvitacion.consideracionesData,
-    );
-
-    // --- PREPARAR OBJETO PARA GUARDAR ---
-    const invitacionParaGuardar = {
+    // --- PREPARAR DATOS COMUNES ---
+    const datosBase = {
       ...this.nuevaInvitacion,
       padrinos: padrinosFiltrados,
-      anfitrionId: user.uid,
     };
 
-    console.log('📤 Objeto completo a guardar:', invitacionParaGuardar);
-
-    // --- GUARDAR EN FIRESTORE ---
-    const ref = doc(
-      this.firestore,
-      `invitaciones/${this.nuevaInvitacion.slug}`,
-    );
-
     try {
-      await setDoc(ref, invitacionParaGuardar);
-      Swal.fire('Éxito', 'Invitación guardada correctamente', 'success');
+      if (this.invitacionId) {
+        // ==========================================================
+        // MODO EDICIÓN (Anfitrión o Colaborador)
+        // ==========================================================
 
-      // --- RESETEAR FORMULARIO ---
-      this.nuevaInvitacion = {
-        name: '',
-        slug: '',
-        tipo: 'boda',
-        nombres: '',
-        fecha: new Date().toISOString().substring(0, 16),
-        lugar: '',
-        heroImage: '',
-        heroImageMovil: '', // 👈 AGREGAR
-        heroImageEscritorio: '', // 👈 AGREGAR
-        primaryColor: '#7A8B7D',
-        secondaryColor: '#CBB89D',
-        accentColor: '#B08A4A',
-        textColor: '#3F4A42',
-        fontFamily: "'Playfair Display', serif",
-        frasePrincipal: '',
-        mensajePrincipal: '',
-        historia: {
-          mostrarSeccion: true,
-          estilo: 'timeline',
-          titulo: 'Nuestra Historia',
-          descripcion: '',
-          momentos: [],
-        },
-        photos: [],
-        anfitrionId: '',
-        ceremonia: {
-          lugar: '',
-          direccion: '',
-          hora: '',
-          mapaUrl: '',
-          imagenTemplo: '',
-        },
-        recepcion: {
-          lugar: '',
-          direccion: '',
-          hora: '',
-          mapaUrl: '',
-          imagen: '',
-          descripcion: '',
-        },
-        dressCode: {
-          estilo: '',
-          colores: [],
-          coloresReservados: [],
-          titulo: '',
-          descripcion: '',
-          sugerencia: '',
-          notaAdicional: '',
-        },
-        padres: {
-          padreNovia: '',
-          madreNovia: '',
-          padreNovio: '',
-          madreNovio: '',
-          novio: '',
-          novia: '',
-          madreNoviaFallecida: false,
-          padreNoviaFallecido: false,
-          madreNovioFallecida: false,
-          padreNovioFallecido: false,
-        },
-        padrinos: [],
-        regalos: {
-          mostrarSeccion: true,
-          estilo: 'tarjetas',
-          titulo: 'Mesa de Regalos',
-          descripcion:
-            'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, encontrarás nuestras opciones aquí.',
-          opciones: [],
-          textoBoton: 'Ver mesa de regalos',
-        },
-        confirmacion: { telefono: '', whatsapp: '', link: '' },
-        confirmacionData: {
-          mostrarSeccion: true,
-          estilo: 'tarjetas',
-          titulo: 'Confirma tu asistencia',
-          descripcion:
-            'Nos encantaría compartir este momento contigo. Por favor confirma tu asistencia.',
-          mostrarConfirmar: true,
-          mostrarRechazar: true,
-          mostrarCalendario: true,
-        },
-        hashtag: {
-          titulo: 'HASHTAG',
-          subtitulo: 'Comparte tus momentos',
-          hashtag: '#MarianaYAlejandro',
-          mensaje: '¡Únete a la celebración!',
-          icono: 'fas fa-hashtag',
-          mostrarIcono: true,
-          resaltarHashtag: true,
-          mostrarCaracteristicas: true,
-        },
-        consideracionesData: {
-          mostrarSeccion: true,
-          estilo: 'iconos',
-          titulo: 'Consideraciones',
-          subtitulo: 'Para que todo salga perfecto',
-          mensajeIntro:
-            'Gracias por ser parte de este momento tan especial. Te compartimos algunas recomendaciones importantes.',
-          colorIconos: '#c9a87c',
-          items: [],
-        },
-        contador: {
-          mostrarSeccion: true,
-          fechaEvento: '',
-          estilo: 'clasico',
-          titulo: 'Faltan para nuestro gran día',
-          mensaje: '¡No podemos esperar para celebrar contigo!',
-          colorPrincipal: '#c9a87c',
-          colores: {
-            dias: '#5c3d2e',
-            horas: '#8b6b4a',
-            minutos: '#c9a87c',
-            segundos: '#e8d5c0',
-          },
-          etiquetas: {
-            dias: 'DÍAS',
-            horas: 'HORAS',
-            minutos: 'MINUTOS',
-            segundos: 'SEGUNDOS',
-          },
-        },
-        audio: {
-          habilitado: false,
-          canciones: [],
-          volumen: 0.7,
-          autoPlay: false,
-        },
-        // === ANIMACIONES AOS ===
-        estiloAOS: 'clasico',
-        animacionesAOS: true,
-      };
-      this.tabActivo = 'basico'; // Vuelve a la pestaña básica
+        // 🛡️ PROTECCIÓN CRÍTICA: Eliminar anfitrionId del payload
+        // para NUNCA cambiar al dueño original al editar.
+        delete datosBase.anfitrionId;
+
+        const docRef = doc(this.firestore, `invitaciones/${this.invitacionId}`);
+
+        // Usamos setDoc con merge para actualizar sin destruir campos no mapeados
+        await setDoc(docRef, datosBase, { merge: true });
+
+        Swal.fire('Éxito', 'Invitación actualizada correctamente', 'success');
+      } else {
+        // ==========================================================
+        // MODO CREACIÓN (Nueva Invitación)
+        // ==========================================================
+
+        this.nuevaInvitacion.slug = this.nuevaInvitacion.name
+          .toLowerCase()
+          .trim()
+          .replace(/\s+/g, '-')
+          .replace(/[^\w\-]+/g, '');
+
+        const invitacionNueva = {
+          ...datosBase,
+          anfitrionId: user.uid, // Solo se asigna al crear por primera vez
+          colaboradores: [], // Lista de colaboradores vacía inicialmente
+        };
+
+        const docRef = doc(
+          this.firestore,
+          `invitaciones/${this.nuevaInvitacion.slug}`,
+        );
+
+        await setDoc(docRef, invitacionNueva);
+        Swal.fire('Éxito', 'Invitación creada correctamente', 'success');
+
+        // Solo reseteamos el formulario si fue una CREACIÓN
+        this.resetearFormulario();
+      }
     } catch (err) {
-      console.error(err);
-      Swal.fire('Error', 'No se pudo guardar', 'error');
+      console.error('Error al guardar:', err);
+      Swal.fire('Error', 'No se pudo guardar la invitación', 'error');
     }
+  }
+
+  /**
+   * Helper para limpiar el formulario tras crear una invitación
+   */
+  private resetearFormulario() {
+    this.nuevaInvitacion = {
+      name: '',
+      slug: '',
+      tipo: 'boda',
+      nombres: '',
+      fecha: new Date().toISOString().substring(0, 16),
+      lugar: '',
+      heroImage: '',
+      heroImageMovil: '',
+      heroImageEscritorio: '',
+      primaryColor: '#7A8B7D',
+      secondaryColor: '#CBB89D',
+      accentColor: '#B08A4A',
+      textColor: '#3F4A42',
+      fontFamily: "'Playfair Display', serif",
+      frasePrincipal: '',
+      mensajePrincipal: '',
+      historia: {
+        mostrarSeccion: true,
+        estilo: 'timeline',
+        titulo: 'Nuestra Historia',
+        descripcion: '',
+        momentos: [],
+      },
+      photos: [],
+      anfitrionId: '',
+      ceremonia: {
+        lugar: '',
+        direccion: '',
+        hora: '',
+        mapaUrl: '',
+        imagenTemplo: '',
+      },
+      recepcion: {
+        lugar: '',
+        direccion: '',
+        hora: '',
+        mapaUrl: '',
+        imagen: '',
+        descripcion: '',
+      },
+      dressCode: {
+        estilo: '',
+        colores: [],
+        coloresReservados: [],
+        titulo: '',
+        descripcion: '',
+        sugerencia: '',
+        notaAdicional: '',
+      },
+      padres: {
+        padreNovia: '',
+        madreNovia: '',
+        padreNovio: '',
+        madreNovio: '',
+        novio: '',
+        novia: '',
+        madreNoviaFallecida: false,
+        padreNoviaFallecido: false,
+        madreNovioFallecida: false,
+        padreNovioFallecido: false,
+      },
+      padrinos: [],
+      regalos: {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Mesa de Regalos',
+        descripcion:
+          'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, encontrarás nuestras opciones aquí.',
+        opciones: [],
+        textoBoton: 'Ver mesa de regalos',
+      },
+      confirmacion: { telefono: '', whatsapp: '', link: '' },
+      confirmacionData: {
+        mostrarSeccion: true,
+        estilo: 'tarjetas',
+        titulo: 'Confirma tu asistencia',
+        descripcion:
+          'Nos encantaría compartir este momento contigo. Por favor confirma tu asistencia.',
+        mostrarConfirmar: true,
+        mostrarRechazar: true,
+        mostrarCalendario: true,
+      },
+      hashtag: {
+        titulo: 'HASHTAG',
+        subtitulo: 'Comparte tus momentos',
+        hashtag: '#MarianaYAlejandro',
+        mensaje: '¡Únete a la celebración!',
+        icono: 'fas fa-hashtag',
+        mostrarIcono: true,
+        resaltarHashtag: true,
+        mostrarCaracteristicas: true,
+      },
+      consideracionesData: {
+        mostrarSeccion: true,
+        estilo: 'iconos',
+        titulo: 'Consideraciones',
+        subtitulo: 'Para que todo salga perfecto',
+        mensajeIntro:
+          'Gracias por ser parte de este momento tan especial. Te compartimos algunas recomendaciones importantes.',
+        colorIconos: '#c9a87c',
+        items: [],
+      },
+      contador: {
+        mostrarSeccion: true,
+        fechaEvento: '',
+        estilo: 'clasico',
+        titulo: 'Faltan para nuestro gran día',
+        mensaje: '¡No podemos esperar para celebrar contigo!',
+        colorPrincipal: '#c9a87c',
+        colores: {
+          dias: '#5c3d2e',
+          horas: '#8b6b4a',
+          minutos: '#c9a87c',
+          segundos: '#e8d5c0',
+        },
+        etiquetas: {
+          dias: 'DÍAS',
+          horas: 'HORAS',
+          minutos: 'MINUTOS',
+          segundos: 'SEGUNDOS',
+        },
+      },
+      audio: {
+        habilitado: false,
+        canciones: [],
+        volumen: 0.7,
+        autoPlay: false,
+      },
+      estiloAOS: 'clasico',
+      animacionesAOS: true,
+    };
+    this.tabActivo = 'basico';
   }
 
   // ==============================================================
