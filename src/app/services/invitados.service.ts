@@ -153,14 +153,51 @@ export class InvitadosService {
     const user = this.auth.currentUser;
     if (!user) throw new Error('Debes iniciar sesión');
 
+    // 1. Obtener el documento del invitado
     const ref = doc(this.firestore, `invitados/${id}`);
     const docSnap = await getDoc(ref);
 
     if (!docSnap.exists()) throw new Error('Invitado no encontrado');
-    if (docSnap.data()['anfitrionId'] !== user.uid) {
-      throw new Error('No tienes permiso para eliminar este invitado');
+
+    const invitadoData = docSnap.data();
+
+    // 2. Verificar si es anfitrión directo en el documento del invitado
+    if (invitadoData['anfitrionId'] === user.uid) {
+      return deleteDoc(ref);
     }
 
-    return deleteDoc(ref);
+    // 3. Obtener el slug de la INVITACIÓN PADRE (eventoSlug es el campo correcto)
+    const invitacionSlug =
+      invitadoData['eventoSlug'] ||
+      invitadoData['invitacionId'] ||
+      invitadoData['invitacionSlug'];
+
+    if (invitacionSlug) {
+      try {
+        const invitacionRef = doc(
+          this.firestore,
+          `invitaciones/${invitacionSlug}`,
+        );
+        const invitacionSnap = await getDoc(invitacionRef);
+
+        if (invitacionSnap.exists()) {
+          const invData = invitacionSnap.data();
+          const esAnfitrion = invData['anfitrionId'] === user.uid;
+          const esColaborador = (invData['colaboradores'] || []).includes(
+            user.uid,
+          );
+
+          // 🛡️ Si el usuario logueado es anfitrión o colaborador de la invitación
+          if (esAnfitrion || esColaborador) {
+            return deleteDoc(ref);
+          }
+        }
+      } catch (e) {
+        console.error('Error al consultar la invitación padre:', e);
+      }
+    }
+
+    // 🛡️ Si no coincide con ninguna regla de permiso:
+    throw new Error('No tienes permiso para eliminar este invitado');
   }
 }
